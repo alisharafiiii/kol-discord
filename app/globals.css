@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111111;
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 80%;
+}
+
+@keyframes matrix {
+  0% { background-position: 0 0 }
+  100% { background-position: 0 1000px }
+}
+
+.animate-matrix {
+  background-image: linear-gradient(#0f0 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: matrix 3s linear infinite;
+}
