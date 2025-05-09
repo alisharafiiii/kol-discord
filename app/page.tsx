@@ -31,6 +31,7 @@ export default function Home() {
           Discover your favorite KOLs, explore their stats, and collaborate seamlessly on-chain.
         </p>
       </section>
+      
       {/* Action Buttons */}
       <div className="mt-auto mb-12 flex gap-8">
         <Link href="/about">
