@@ -287,6 +287,12 @@ function ProfileModal({
     }
   };
   
+  // Get display Twitter handle, prefer twitterHandle then handle
+  const displayHandle = user.twitterHandle || user.handle || 'No handle';
+  
+  // Get display follower count, prefer totalFollowers then followers
+  const displayFollowers = user.totalFollowers || user.followers || 0;
+  
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80">
       <div 
@@ -295,67 +301,57 @@ function ProfileModal({
       ></div>
       <div className="relative z-10 bg-black border-2 border-green-400 p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <button 
-          className="absolute top-2 right-2 text-green-300 hover:text-green-100"
+          className="absolute top-2 right-2 text-green-300 hover:text-white"
           onClick={onClose}
         >
           ✕
         </button>
         
-        <h2 className="text-xl mb-4 uppercase tracking-widest border-b border-green-400 pb-2">
-          User Profile
-        </h2>
-        
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Basic Info */}
-          <div className="mb-4">
-            <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Basic Info</h3>
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-green-300 border-b border-green-300/50 pb-2">
+              {user.name}
+            </h2>
+            
             <div className="space-y-1">
               <div className="flex">
                 <span className="font-bold mr-2 w-24">ID:</span>
-                <span className="text-xs font-mono pt-1 break-all">{user.id}</span>
+                <span>{user.id}</span>
               </div>
+              
               <div className="flex">
-                <span className="font-bold mr-2 w-24">Name:</span>
-                <span>{user.name || 'No name provided'}</span>
+                <span className="font-bold mr-2 w-24">Handle:</span>
+                <span>{displayHandle}</span>
               </div>
-              {user.handle && (
+              
+              {displayFollowers > 0 && (
                 <div className="flex">
-                  <span className="font-bold mr-2 w-24">Handle:</span>
-                  <span>{user.handle}</span>
+                  <span className="font-bold mr-2 w-24">Followers:</span>
+                  <span>{displayFollowers.toLocaleString()}</span>
                 </div>
               )}
-              {user.twitterHandle && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Twitter:</span>
-                  <span>{user.twitterHandle}</span>
-                </div>
-              )}
-              {user.email && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Email:</span>
-                  <span>{user.email}</span>
-                </div>
-              )}
+              
               <div className="flex">
                 <span className="font-bold mr-2 w-24">Status:</span>
-                <span 
-                  className={`px-2 rounded ${
-                    user.approvalStatus === 'approved' 
-                      ? 'bg-green-900 text-green-300' 
-                      : user.approvalStatus === 'rejected'
-                        ? 'bg-red-900 text-red-300'
-                        : 'bg-yellow-900 text-yellow-300'
-                  }`}
-                >
+                <span className={`px-2 py-0.5 rounded ${
+                  user.approvalStatus === 'approved' 
+                    ? 'bg-green-900 text-green-300' 
+                    : user.approvalStatus === 'rejected'
+                      ? 'bg-red-900 text-red-300'
+                      : 'bg-yellow-900 text-yellow-300'
+                }`}>
                   {user.approvalStatus || 'pending'}
                 </span>
               </div>
-              {user.role && (
+              
+              {user.country && (
                 <div className="flex">
-                  <span className="font-bold mr-2 w-24">User Role:</span>
-                  <span className="uppercase font-bold">{user.role}</span>
+                  <span className="font-bold mr-2 w-24">Country:</span>
+                  <span>{typeof user.country === 'string' ? user.country : Array.isArray(user.country) ? user.country.join(', ') : 'Unknown'}</span>
                 </div>
               )}
+              
               {user.createdAt && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Created:</span>
@@ -363,179 +359,118 @@ function ProfileModal({
                 </div>
               )}
             </div>
-          </div>
-          
-          {/* Stats */}
-          <div className="mb-4">
-            <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Stats</h3>
-            <div className="space-y-1">
-              <div className="flex">
-                <span className="font-bold mr-2 w-24">Followers:</span>
-                <span>{user.followers?.toLocaleString() || user.followerCount?.toLocaleString() || '0'}</span>
-              </div>
-              {user.totalFollowers && user.totalFollowers > 0 && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Total Followers:</span>
-                  <span>{user.totalFollowers.toLocaleString()}</span>
-                </div>
-              )}
-              {user.country && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Country:</span>
-                  <span>{Array.isArray(user.country) ? user.country.join(', ') : user.country}</span>
-                </div>
-              )}
-              {user.pricePerPost && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Per Post:</span>
-                  <span>${user.pricePerPost}</span>
-                </div>
-              )}
-              {user.postPricePerPost && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Per Post:</span>
-                  <span>${user.postPricePerPost}</span>
-                </div>
-              )}
-              {user.priceMonthly && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Monthly:</span>
-                  <span>${user.priceMonthly}</span>
-                </div>
-              )}
-              {user.monthlySupportBudget && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Monthly Budget:</span>
-                  <span>${user.monthlySupportBudget}</span>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Content */}
-          <div className="mb-4">
-            <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Content</h3>
-            <div className="space-y-1">
-              <div className="flex items-start">
-                <span className="font-bold mr-2 w-24">Content Types:</span>
-                <span>
-                  {Array.isArray(user.contentType) 
-                    ? user.contentType.join(', ')
-                    : typeof user.contentType === 'string'
-                      ? user.contentType
-                      : user.contentTypes || 'Not specified'}
-                </span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold mr-2 w-24">Audience:</span>
-                <span>
-                  {Array.isArray(user.targetAudience) 
-                    ? user.targetAudience.join(', ')
-                    : typeof user.targetAudience === 'string'
-                      ? user.targetAudience
-                      : user.audience || 'Not specified'}
-                </span>
-              </div>
-              {user.audienceTypes && user.audienceTypes.length > 0 && (
-                <div className="flex items-start">
-                  <span className="font-bold mr-2 w-24">Audience Types:</span>
-                  <span>{Array.isArray(user.audienceTypes) ? user.audienceTypes.join(', ') : user.audienceTypes}</span>
-                </div>
-              )}
-              {user.adminNotes && (
-                <div className="flex items-start">
-                  <span className="font-bold mr-2 w-24">Admin Notes:</span>
-                  <span>{user.adminNotes}</span>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Blockchain */}
-          <div className="mb-4">
-            <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Blockchain</h3>
-            <div className="space-y-1">
-              <div className="flex items-start">
-                <span className="font-bold mr-2 w-24">Chains:</span>
-                <span>
-                  {Array.isArray(user.chains)
-                    ? user.chains.join(', ')
-                    : typeof user.chains === 'string'
-                      ? user.chains
-                      : user.blockchains || user.activeChains || 'Not specified'}
-                </span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold mr-2 w-24">Wallets:</span>
-                <div className="flex-1">
-                  {user.walletAddresses && Object.keys(user.walletAddresses).length > 0 ? (
-                    <div className="flex flex-col gap-1">
-                      {Object.entries(user.walletAddresses).map(([type, address]) => (
-                        <div key={type} className="text-xs font-mono break-all">
-                          <span className="text-gray-400">{type}:</span> {address}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <span>No wallets connected</span>
-                  )}
-                </div>
+            
+            {/* Admin Actions */}
+            <div className="space-y-2 mt-4">
+              <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Admin Actions</h3>
+              <div className="flex gap-2">
+                <button 
+                  className="px-2 py-1 border border-green-500 text-green-400 hover:bg-green-900/30"
+                  onClick={() => onStatusChange(user.id, 'approved')}
+                >
+                  Approve
+                </button>
+                <button 
+                  className="px-2 py-1 border border-yellow-500 text-yellow-400 hover:bg-yellow-900/30"
+                  onClick={() => onStatusChange(user.id, 'pending')}
+                >
+                  Mark Pending
+                </button>
+                <button 
+                  className="px-2 py-1 border border-red-500 text-red-400 hover:bg-red-900/30"
+                  onClick={() => onStatusChange(user.id, 'rejected')}
+                >
+                  Reject
+                </button>
               </div>
             </div>
           </div>
           
-          {/* Social Accounts */}
-          {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
-            <div className="col-span-2 mb-4">
-              <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Social Platforms</h3>
-              <div className="space-y-1">
-                <div className="grid grid-cols-2 gap-2">
-                  {Object.entries(user.socialAccounts).map(([platform, account]) => (
-                    <div key={platform} className="flex items-center">
-                      <span className="font-bold mr-2 w-24 capitalize">{platform}:</span>
-                      <span>
-                        {account && typeof account === 'object' && 'handle' in account ? (
-                          <>
-                            {String(account.handle || 'No handle')}
-                            {account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
-                            {account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
-                          </>
-                        ) : (
-                          <span>Connected</span>
-                        )}
-                      </span>
+          {/* Additional Info */}
+          <div className="space-y-4">
+            {/* Social Accounts */}
+            {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
+              <div className="col-span-2 mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Social Platforms</h3>
+                <div className="space-y-1">
+                  <div className="grid grid-cols-2 gap-2">
+                    {Object.entries(user.socialAccounts).map(([platform, account]) => (
+                      <div key={platform} className="flex items-center">
+                        <span className="font-bold mr-2 w-24 capitalize">{platform}:</span>
+                        <span>
+                          {account && typeof account === 'object' && 'handle' in account ? (
+                            <>
+                              {String(account.handle || 'No handle')}
+                              {account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
+                              {account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
+                            </>
+                          ) : (
+                            <span>Connected</span>
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Wallet Addresses */}
+            {user.walletAddresses && Object.keys(user.walletAddresses).length > 0 && (
+              <div className="mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Wallet Addresses</h3>
+                <div className="space-y-1">
+                  {Object.entries(user.walletAddresses).map(([wallet, address]) => (
+                    <div key={wallet} className="flex items-start">
+                      <span className="font-bold mr-2 w-24 capitalize">{wallet}:</span>
+                      <span className="break-all">{address}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          )}
-          
-          {/* Actions */}
-          <div className="col-span-2 flex justify-end space-x-2 pt-4 border-t border-green-300/30">
-            <select
-              value={user.approvalStatus || 'pending'}
-              onChange={(e) => {
-                onStatusChange(user.id, e.target.value as 'approved' | 'pending' | 'rejected');
-              }}
-              className={`text-xs p-2 bg-black border ${
-                user.approvalStatus === 'approved' 
-                  ? 'border-green-500 text-green-400' 
-                  : user.approvalStatus === 'rejected'
-                    ? 'border-red-500 text-red-400'
-                    : 'border-yellow-500 text-yellow-400'
-              }`}
-            >
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
-            </select>
-            <button 
-              className="bg-green-800 text-green-100 px-4 py-2 text-xs hover:bg-green-700"
-              onClick={onClose}
-            >
-              Close
-            </button>
+            )}
+            
+            {/* Chains */}
+            {user.chains && user.chains.length > 0 && (
+              <div className="mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Active Chains</h3>
+                <div className="flex flex-wrap gap-1">
+                  {Array.isArray(user.chains) ? 
+                    user.chains.map(chain => (
+                      <span key={chain} className="px-2 py-1 bg-green-900/50 text-xs rounded">
+                        {chain}
+                      </span>
+                    )) : 
+                    <span className="px-2 py-1 bg-green-900/50 text-xs rounded">{String(user.chains)}</span>
+                  }
+                </div>
+              </div>
+            )}
+            
+            {/* Content Types */}
+            {user.contentType && (
+              <div className="mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Content Types</h3>
+                <div className="flex flex-wrap gap-1">
+                  {Array.isArray(user.contentType) ? 
+                    user.contentType.map(type => (
+                      <span key={type} className="px-2 py-1 bg-green-900/50 text-xs rounded">
+                        {type}
+                      </span>
+                    )) : 
+                    <span className="px-2 py-1 bg-green-900/50 text-xs rounded">{String(user.contentType)}</span>
+                  }
+                </div>
+              </div>
+            )}
+            
+            {/* Raw Data (Debug) */}
+            {/* <details className="mt-4">
+              <summary className="cursor-pointer text-xs">Raw User Data</summary>
+              <pre className="mt-2 text-xs bg-black/50 p-2 rounded overflow-auto max-h-[300px]">
+                {JSON.stringify(user, null, 2)}
+              </pre>
+            </details> */}
           </div>
         </div>
       </div>
@@ -1031,8 +966,8 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
       // Get a random blockchain
       const randomChain = chainOptions[Math.floor(Math.random() * chainOptions.length)];
       
-      // Create a unique ID
-      const userId = `user_${Date.now()}_${i}`;
+      // Create a unique ID that doesn't change between renders
+      const userId = `mockuser_${i}`;
       
       return {
         id: userId,

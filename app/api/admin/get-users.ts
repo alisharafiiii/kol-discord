@@ -20,28 +20,73 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         
         // Calculate total follower count from all social profiles
         let totalFollowers = profile.followerCount || 0
+        
+        // Use the twitter handle from socialAccounts if available
+        let handleFromSocial = ''
+        if (profile.socialAccounts && profile.socialAccounts.twitter && 
+            typeof profile.socialAccounts.twitter === 'object' && 
+            'handle' in profile.socialAccounts.twitter) {
+          handleFromSocial = profile.socialAccounts.twitter.handle || ''
+          // Also update followers from Twitter if available
+          if ('followers' in profile.socialAccounts.twitter && 
+              typeof profile.socialAccounts.twitter.followers === 'number') {
+            totalFollowers = profile.socialAccounts.twitter.followers
+          }
+        }
+        
+        // Handle other social accounts for total follower count
         if (profile.socialAccounts) {
-          Object.values(profile.socialAccounts).forEach((account: any) => {
-            if (account && 'followers' in account) {
-              totalFollowers += account.followers || 0
-            }
-            if (account && 'subscribers' in account) {
-              totalFollowers += account.subscribers || 0
+          Object.entries(profile.socialAccounts).forEach(([platform, account]) => {
+            if (platform !== 'twitter' && account && typeof account === 'object') {
+              if ('followers' in account && typeof account.followers === 'number') {
+                totalFollowers += account.followers
+              }
+              if ('subscribers' in account && typeof account.subscribers === 'number') {
+                totalFollowers += account.subscribers
+              }
             }
           })
         }
         
+        // Create a normalized user object with consistent properties
         return {
           ...profile,
-          // Ensure ID is set correctly
+          // Use consistent ID scheme
           id: profile.id || userId,
-          totalFollowers
+          // Use the Twitter handle from profile or social accounts, ensuring it has @ prefix
+          handle: profile.twitterHandle || 
+                 (handleFromSocial ? `@${handleFromSocial.replace(/^@/, '')}` : null),
+          // Keep both totalFollowers for UI and followerCount for original data
+          totalFollowers,
+          followerCount: profile.followerCount || totalFollowers
         }
       })
     )
     
-    // Filter out any null entries
-    const validUsers = users.filter(Boolean)
+    // Filter out any null entries and duplicates by ID
+    const uniqueIdMap = new Map()
+    users.filter(Boolean).forEach(user => {
+      if (user && user.id) {
+        // If we already have this ID, keep the most complete record
+        if (uniqueIdMap.has(user.id)) {
+          const existing = uniqueIdMap.get(user.id)
+          // Prefer the record with a valid handle
+          if (!existing.handle && user.handle) {
+            uniqueIdMap.set(user.id, user)
+          } 
+          // Prefer the record with more followers if both have handles
+          else if (existing.handle && user.handle && 
+                   user.totalFollowers > existing.totalFollowers) {
+            uniqueIdMap.set(user.id, user)
+          }
+        } else {
+          uniqueIdMap.set(user.id, user)
+        }
+      }
+    })
+    
+    // Convert the map back to an array
+    const validUsers = Array.from(uniqueIdMap.values())
     
     return res.status(200).json({ users: validUsers })
   } catch (error) {
