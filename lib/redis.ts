@@ -154,3 +154,112 @@ export async function getAllProfileKeys(): Promise<string[]> {
     return []
   }
 }
+
+/**
+ * Check if a user profile exists with the same Twitter handle or wallet address
+ * Returns existing profile or null if not found
+ */
+export async function findDuplicateProfile(profile: Partial<InfluencerProfile>): Promise<InfluencerProfile | null> {
+  try {
+    // Check by Twitter handle first
+    if (profile.twitterHandle) {
+      const handle = profile.twitterHandle.replace('@', '').toLowerCase();
+      const userIds = await redis.smembers(`idx:username:${handle}`);
+      
+      if (userIds && userIds.length > 0) {
+        const userData = await redis.json.get(`user:${userIds[0]}`);
+        return userData as InfluencerProfile;
+      }
+    }
+    
+    // Then check by wallet addresses
+    if (profile.walletAddresses && Object.keys(profile.walletAddresses).length > 0) {
+      for (const [_, address] of Object.entries(profile.walletAddresses)) {
+        if (typeof address === 'string') {
+          const userIds = await redis.smembers(`idx:wallet:${address.toLowerCase()}`);
+          if (userIds && userIds.length > 0) {
+            const userData = await redis.json.get(`user:${userIds[0]}`);
+            return userData as InfluencerProfile;
+          }
+        }
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error checking for duplicate profile:', error);
+    return null;
+  }
+}
+
+/**
+ * Save a profile to Redis, handling duplicate detection
+ * If a duplicate is found, it merges the profiles and updates
+ */
+export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile): Promise<InfluencerProfile> {
+  // Check for existing profile
+  const existingProfile = await findDuplicateProfile(profile);
+  
+  if (existingProfile) {
+    // Merge profiles and update
+    const mergedProfile = { ...existingProfile };
+    
+    // Update basic info if provided
+    if (profile.name) mergedProfile.name = profile.name;
+    if (profile.profileImageUrl) mergedProfile.profileImageUrl = profile.profileImageUrl;
+    if (profile.bio) mergedProfile.bio = profile.bio;
+    
+    // Merge wallet addresses
+    if (profile.walletAddresses) {
+      mergedProfile.walletAddresses = {
+        ...(mergedProfile.walletAddresses || {}),
+        ...profile.walletAddresses
+      };
+    }
+    
+    // Merge social accounts
+    if (profile.socialAccounts) {
+      mergedProfile.socialAccounts = {
+        ...(mergedProfile.socialAccounts || {}),
+        ...profile.socialAccounts
+      };
+    }
+    
+    // Save merged profile
+    await redis.json.set(`user:${existingProfile.id}`, '$', JSON.parse(JSON.stringify(mergedProfile)));
+    
+    // Update indexes for any new data
+    await updateProfileIndexes(mergedProfile);
+    
+    return mergedProfile;
+  } else {
+    // No duplicate found, save as new profile
+    await saveProfile(profile);
+    return profile;
+  }
+}
+
+/**
+ * Update profile indexes for new user data
+ */
+async function updateProfileIndexes(profile: InfluencerProfile): Promise<void> {
+  // Index username/Twitter handle
+  if (profile.twitterHandle) {
+    const handle = profile.twitterHandle.replace('@', '').toLowerCase();
+    await redis.sadd(`idx:username:${handle}`, profile.id);
+  }
+  
+  // Index wallet addresses
+  if (profile.walletAddresses) {
+    for (const [_, address] of Object.entries(profile.walletAddresses)) {
+      if (typeof address === 'string') {
+        await redis.sadd(`idx:wallet:${address.toLowerCase()}`, profile.id);
+      }
+    }
+  }
+  
+  // Index country
+  if (profile.country && typeof profile.country === 'string') {
+    await redis.sadd(`idx:country:${profile.country}`, profile.id);
+  }
+}

@@ -5,6 +5,7 @@ import OnchainKitProvider from '@/components/OnchainKitProvider'
 import SessionWrap from '@/components/SessionWrap'
 import { Wallet } from '@coinbase/onchainkit/wallet'
 import { Inter } from 'next/font/google'
+import UserIdentityManager from '@/components/UserIdentityManager'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             <OnchainKitProvider>
               <Wallet appName="kol">
                 {children}
+                <UserIdentityManager />
               </Wallet>
             </OnchainKitProvider>
           </WagmiProvider>

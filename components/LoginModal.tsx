@@ -5,6 +5,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { getNames, getCode } from 'country-list'
 import { useRouter } from 'next/navigation'
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom'
+import { identifyUser } from "@/lib/user-identity"
 
 // Define custom types for wallet interfaces
 interface PhantomProvider {
@@ -252,20 +253,43 @@ export default function LoginModal() {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false)
 
   // Real wallet connection handlers
-  const connectCoinbaseWallet = () => {
-    // Try to find the Coinbase Wallet connector, fallback to the first connector
-    const connector = connectors.find(c => c.id === 'coinbaseWallet') ?? connectors[0]
-    if (!connector) {
-      console.error('No wallet connectors available')
-      alert('No wallet connectors available. Please install a supported wallet.')
-      return
+  const connectCoinbaseWallet = async () => {
+    try {
+      setWalletConnectionPending(true);
+      
+      // Try to find the Coinbase Wallet connector, fallback to the first connector
+      const connector = connectors.find(c => c.id === 'coinbaseWallet') ?? connectors[0]
+      if (!connector) {
+        console.error('No wallet connectors available')
+        alert('No wallet connectors available. Please install a supported wallet.')
+        return
+      }
+      connect({ connector })
+      
+      // After successful connection:
+      // Use identity management to find or create user
+      const walletData = {
+        walletAddresses: {
+          coinbase: address
+        },
+        role: "user" as const
+      };
+      
+      await identifyUser(walletData);
+      
+      // Continue with existing success logic...
+      
+    } catch (error) {
+      console.error('Error connecting Coinbase wallet:', error)
+      alert('Failed to connect Coinbase wallet. Please try again.')
     }
-    connect({ connector })
   }
 
   // For Phantom, we need to detect if it's available in the browser
   const connectPhantomWallet = async () => {
     try {
+      setWalletConnectionPending(true);
+      
       // Check if we're on a mobile device
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       console.log('Connecting Phantom wallet on:', isMobile ? 'mobile' : 'desktop');
@@ -292,6 +316,17 @@ export default function LoginModal() {
               phantom: publicKey
             }
           }));
+          
+          // After successful connection:
+          // Use identity management to find or create user
+          const walletData = {
+            walletAddresses: {
+              phantom: publicKey
+            },
+            role: "user" as const
+          };
+          
+          await identifyUser(walletData);
         } catch (error) {
           console.error('Phantom extension connection error:', error);
           throw error;
@@ -318,6 +353,17 @@ export default function LoginModal() {
                 phantom: publicKey
               }
             }));
+            
+            // After successful connection:
+            // Use identity management to find or create user
+            const walletData = {
+              walletAddresses: {
+                phantom: publicKey
+              },
+              role: "user" as const
+            };
+            
+            await identifyUser(walletData);
           }
         } catch (adapterError) {
           console.error('Phantom adapter connection error:', adapterError);
@@ -752,6 +798,41 @@ export default function LoginModal() {
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // After successful wallet connection
+  const handleWalletConnect = async (walletAddress: string, walletType: string) => {
+    try {
+      // Create wallet data
+      const walletData = {
+        walletAddresses: {
+          [walletType]: walletAddress
+        },
+        role: "user" as const
+      };
+      
+      // Identify or create user
+      const { user, isNewUser } = await identifyUser(walletData);
+      
+      // Update state with user info
+      setConnectedWallets(prev => ({
+        ...prev,
+        [walletType === 'coinbase' ? 'coinbase' : false,
+        [walletType]: true,
+        addresses: {
+          ...prev.addresses,
+          [walletType]: walletAddress
+        }
+      }));
+      
+      // Close modal if needed
+      if (onSuccess) onSuccess(user);
+      
+      console.log(`User ${isNewUser ? 'created' : 'updated'} with wallet address: ${walletAddress}`);
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      setErrorMessage("Failed to connect wallet. Please try again.");
+    }
+  };
 
   if (stage === 'hidden') return null
 
