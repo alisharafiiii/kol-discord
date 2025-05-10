@@ -56,9 +56,19 @@ interface KOLProfile {
   priceMonthly?: number;
   roiPoints?: number;
   createdAt?: string;
-  country?: string;
+  country?: string | string[];
   walletCount?: number;
   platformsUsed?: string[];
+  twitterHandle?: string;
+  role?: string;
+  totalFollowers?: number;
+  followerCount?: number;
+  postPricePerPost?: number;
+  monthlySupportBudget?: number;
+  adminNotes?: string;
+  audienceTypes?: string[] | string;
+  walletAddresses?: Record<string, string>;
+  socialAccounts?: Record<string, { handle?: string; followers?: number; subscribers?: number; } | unknown>;
 }
 
 // Constants for filter options
@@ -267,6 +277,16 @@ function ProfileModal({
 }) {
   if (!user) return null;
   
+  // Format dates for better display
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'Not available';
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (e) {
+      return dateString;
+    }
+  };
+  
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80">
       <div 
@@ -292,16 +312,22 @@ function ProfileModal({
             <div className="space-y-1">
               <div className="flex">
                 <span className="font-bold mr-2 w-24">ID:</span>
-                <span className="text-xs font-mono pt-1">{user.id}</span>
+                <span className="text-xs font-mono pt-1 break-all">{user.id}</span>
               </div>
               <div className="flex">
                 <span className="font-bold mr-2 w-24">Name:</span>
-                <span>{user.name}</span>
+                <span>{user.name || 'No name provided'}</span>
               </div>
               {user.handle && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Handle:</span>
                   <span>{user.handle}</span>
+                </div>
+              )}
+              {user.twitterHandle && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Twitter:</span>
+                  <span>{user.twitterHandle}</span>
                 </div>
               )}
               {user.email && (
@@ -324,10 +350,16 @@ function ProfileModal({
                   {user.approvalStatus || 'pending'}
                 </span>
               </div>
+              {user.role && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">User Role:</span>
+                  <span className="uppercase font-bold">{user.role}</span>
+                </div>
+              )}
               {user.createdAt && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Created:</span>
-                  <span>{new Date(user.createdAt).toLocaleString()}</span>
+                  <span>{formatDate(user.createdAt)}</span>
                 </div>
               )}
             </div>
@@ -339,12 +371,18 @@ function ProfileModal({
             <div className="space-y-1">
               <div className="flex">
                 <span className="font-bold mr-2 w-24">Followers:</span>
-                <span>{user.followers?.toLocaleString() || '0'}</span>
+                <span>{user.followers?.toLocaleString() || user.followerCount?.toLocaleString() || '0'}</span>
               </div>
+              {user.totalFollowers && user.totalFollowers > 0 && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Total Followers:</span>
+                  <span>{user.totalFollowers.toLocaleString()}</span>
+                </div>
+              )}
               {user.country && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Country:</span>
-                  <span>{user.country}</span>
+                  <span>{Array.isArray(user.country) ? user.country.join(', ') : user.country}</span>
                 </div>
               )}
               {user.pricePerPost && (
@@ -353,10 +391,22 @@ function ProfileModal({
                   <span>${user.pricePerPost}</span>
                 </div>
               )}
+              {user.postPricePerPost && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Per Post:</span>
+                  <span>${user.postPricePerPost}</span>
+                </div>
+              )}
               {user.priceMonthly && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Monthly:</span>
                   <span>${user.priceMonthly}</span>
+                </div>
+              )}
+              {user.monthlySupportBudget && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Monthly Budget:</span>
+                  <span>${user.monthlySupportBudget}</span>
                 </div>
               )}
             </div>
@@ -386,6 +436,18 @@ function ProfileModal({
                       : user.audience || 'Not specified'}
                 </span>
               </div>
+              {user.audienceTypes && user.audienceTypes.length > 0 && (
+                <div className="flex items-start">
+                  <span className="font-bold mr-2 w-24">Audience Types:</span>
+                  <span>{Array.isArray(user.audienceTypes) ? user.audienceTypes.join(', ') : user.audienceTypes}</span>
+                </div>
+              )}
+              {user.adminNotes && (
+                <div className="flex items-start">
+                  <span className="font-bold mr-2 w-24">Admin Notes:</span>
+                  <span>{user.adminNotes}</span>
+                </div>
+              )}
             </div>
           </div>
           
@@ -406,10 +468,10 @@ function ProfileModal({
               <div className="flex items-start">
                 <span className="font-bold mr-2 w-24">Wallets:</span>
                 <div className="flex-1">
-                  {user.wallets && Object.keys(user.wallets).length > 0 ? (
+                  {user.walletAddresses && Object.keys(user.walletAddresses).length > 0 ? (
                     <div className="flex flex-col gap-1">
-                      {Object.entries(user.wallets).map(([type, address]) => (
-                        <div key={type} className="text-xs font-mono">
+                      {Object.entries(user.walletAddresses).map(([type, address]) => (
+                        <div key={type} className="text-xs font-mono break-all">
                           <span className="text-gray-400">{type}:</span> {address}
                         </div>
                       ))}
@@ -422,24 +484,32 @@ function ProfileModal({
             </div>
           </div>
           
-          {/* Platforms */}
-          <div className="col-span-2 mb-4">
-            <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Social Platforms</h3>
-            <div className="space-y-1">
-              {user.platformsUsed && user.platformsUsed.length > 0 ? (
+          {/* Social Accounts */}
+          {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
+            <div className="col-span-2 mb-4">
+              <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Social Platforms</h3>
+              <div className="space-y-1">
                 <div className="grid grid-cols-2 gap-2">
-                  {user.platformsUsed.map(platform => (
+                  {Object.entries(user.socialAccounts).map(([platform, account]) => (
                     <div key={platform} className="flex items-center">
-                      <span className="font-bold mr-2 w-24">{platform}:</span>
-                      <span>Connected</span>
+                      <span className="font-bold mr-2 w-24 capitalize">{platform}:</span>
+                      <span>
+                        {account && typeof account === 'object' && 'handle' in account ? (
+                          <>
+                            {String(account.handle || 'No handle')}
+                            {account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
+                            {account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
+                          </>
+                        ) : (
+                          <span>Connected</span>
+                        )}
+                      </span>
                     </div>
                   ))}
                 </div>
-              ) : (
-                <span>No platforms specified</span>
-              )}
+              </div>
             </div>
-          </div>
+          )}
           
           {/* Actions */}
           <div className="col-span-2 flex justify-end space-x-2 pt-4 border-t border-green-300/30">
