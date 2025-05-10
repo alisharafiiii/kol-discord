@@ -180,7 +180,14 @@ const getTop5Countries = (users: KOLProfile[]) => {
   
   users.forEach(user => {
     if (user.country) {
-      countryCounts[user.country] = (countryCounts[user.country] || 0) + 1;
+      // Handle both string and array country values
+      const countries = Array.isArray(user.country) ? user.country : [user.country];
+      
+      countries.forEach(country => {
+        if (typeof country === 'string') {
+          countryCounts[country] = (countryCounts[country] || 0) + 1;
+        }
+      });
     }
   });
   
@@ -293,6 +300,9 @@ function ProfileModal({
   // Get display follower count, prefer totalFollowers then followers
   const displayFollowers = user.totalFollowers || user.followers || 0;
   
+  // For debugging purposes, show all available properties
+  console.log('User profile details:', JSON.stringify(user, null, 2));
+  
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80">
       <div 
@@ -345,6 +355,26 @@ function ProfileModal({
                 </span>
               </div>
               
+              {/* Driver's License (ID) */}
+              <div className="flex">
+                <span className="font-bold mr-2 w-24">Drivers License:</span>
+                <span>{user.id || 'No ID available'}</span>
+              </div>
+              
+              {user.email && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Email:</span>
+                  <span>{user.email}</span>
+                </div>
+              )}
+              
+              {user.role && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">Role:</span>
+                  <span className="uppercase">{user.role}</span>
+                </div>
+              )}
+              
               {user.country && (
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Country:</span>
@@ -356,6 +386,14 @@ function ProfileModal({
                 <div className="flex">
                   <span className="font-bold mr-2 w-24">Created:</span>
                   <span>{formatDate(user.createdAt)}</span>
+                </div>
+              )}
+              
+              {/* FinGenius Metrics */}
+              {user.roiPoints && (
+                <div className="flex">
+                  <span className="font-bold mr-2 w-24">ROI Points:</span>
+                  <span>{user.roiPoints}</span>
                 </div>
               )}
             </div>
@@ -384,6 +422,27 @@ function ProfileModal({
                 </button>
               </div>
             </div>
+            
+            {/* Pricing Information */}
+            {(user.pricePerPost || user.postPricePerPost || user.priceMonthly || user.monthlySupportBudget) && (
+              <div className="mt-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Pricing</h3>
+                <div className="space-y-1">
+                  {(user.pricePerPost || user.postPricePerPost) && (
+                    <div className="flex">
+                      <span className="font-bold mr-2 w-24">Per Post:</span>
+                      <span>${user.pricePerPost || user.postPricePerPost}</span>
+                    </div>
+                  )}
+                  {(user.priceMonthly || user.monthlySupportBudget) && (
+                    <div className="flex">
+                      <span className="font-bold mr-2 w-24">Monthly:</span>
+                      <span>${user.priceMonthly || user.monthlySupportBudget}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
           
           {/* Additional Info */}
@@ -401,8 +460,8 @@ function ProfileModal({
                           {account && typeof account === 'object' && 'handle' in account ? (
                             <>
                               {String(account.handle || 'No handle')}
-                              {account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
-                              {account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
+                              {'followers' in account && account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
+                              {'subscribers' in account && account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
                             </>
                           ) : (
                             <span>Connected</span>
@@ -447,6 +506,23 @@ function ProfileModal({
               </div>
             )}
             
+            {/* Audience Types */}
+            {user.audienceTypes && (
+              <div className="mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Audience Types</h3>
+                <div className="flex flex-wrap gap-1">
+                  {Array.isArray(user.audienceTypes) ? 
+                    user.audienceTypes.map(type => (
+                      <span key={type} className="px-2 py-1 bg-green-900/50 text-xs rounded">
+                        {type}
+                      </span>
+                    )) : 
+                    <span className="px-2 py-1 bg-green-900/50 text-xs rounded">{String(user.audienceTypes)}</span>
+                  }
+                </div>
+              </div>
+            )}
+            
             {/* Content Types */}
             {user.contentType && (
               <div className="mb-4">
@@ -464,13 +540,21 @@ function ProfileModal({
               </div>
             )}
             
-            {/* Raw Data (Debug) */}
-            {/* <details className="mt-4">
+            {/* Admin Notes */}
+            {user.adminNotes && (
+              <div className="mb-4">
+                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Admin Notes</h3>
+                <div className="text-sm whitespace-pre-wrap">{user.adminNotes}</div>
+              </div>
+            )}
+            
+            {/* Debug Info */}
+            <details className="mt-4">
               <summary className="cursor-pointer text-xs">Raw User Data</summary>
               <pre className="mt-2 text-xs bg-black/50 p-2 rounded overflow-auto max-h-[300px]">
                 {JSON.stringify(user, null, 2)}
               </pre>
-            </details> */}
+            </details>
           </div>
         </div>
       </div>

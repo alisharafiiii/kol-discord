@@ -62,14 +62,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           })
         }
         
+        // Get Twitter handle from profile or social accounts
+        const twitterHandle = profile.twitterHandle || 
+                 (handleFromSocial ? `@${handleFromSocial.replace(/^@/, '')}` : null)
+        
         // Create a normalized user object with consistent properties
         return {
           ...profile,
           // Use consistent ID scheme
           id: profile.id || userId,
           // Use the Twitter handle from profile or social accounts, ensuring it has @ prefix
-          handle: profile.twitterHandle || 
-                 (handleFromSocial ? `@${handleFromSocial.replace(/^@/, '')}` : null),
+          handle: twitterHandle,
           // Keep both totalFollowers for UI and followerCount for original data
           totalFollowers,
           followerCount: profile.followerCount || totalFollowers
@@ -77,32 +80,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     )
     
-    // Filter out any null entries and duplicates by ID
-    const uniqueIdMap = new Map()
-    users.filter(Boolean).forEach(user => {
-      if (user && user.id) {
-        // If we already have this ID, keep the most complete record
-        if (uniqueIdMap.has(user.id)) {
-          const existing = uniqueIdMap.get(user.id)
-          // Prefer the record with a valid handle
-          if (!existing.handle && user.handle) {
-            uniqueIdMap.set(user.id, user)
-          } 
-          // Prefer the record with more followers if both have handles
-          else if (existing.handle && user.handle && 
-                   user.totalFollowers > existing.totalFollowers) {
-            uniqueIdMap.set(user.id, user)
+    // Filter out any null entries
+    const validUsers = users.filter(Boolean) as any[]
+    
+    // Deduplicate by Twitter handle (instead of ID) to ensure each user appears only once
+    const uniqueUsersMap = new Map()
+    
+    validUsers.forEach(user => {
+      const twitterHandle = user.handle?.toLowerCase() || user.twitterHandle?.toLowerCase()
+      
+      // If we don't have a Twitter handle, use the ID as fallback
+      const key = twitterHandle || user.id
+      
+      if (!key) return
+      
+      // If this Twitter handle is already in our map
+      if (uniqueUsersMap.has(key)) {
+        const existing = uniqueUsersMap.get(key)
+        
+        // Keep the record with more complete data
+        // If new record has more followers or has handle when existing doesn't
+        if ((!existing.handle && user.handle) || 
+            (user.totalFollowers > (existing.totalFollowers || 0))) {
+          
+          // Merge the records to keep the most complete data
+          const mergedUser = {
+            ...existing,
+            ...user,
+            // Ensure we keep the higher follower count
+            totalFollowers: Math.max(user.totalFollowers || 0, existing.totalFollowers || 0),
+            // Keep the handle if it exists
+            handle: user.handle || existing.handle,
+            twitterHandle: user.twitterHandle || existing.twitterHandle
           }
-        } else {
-          uniqueIdMap.set(user.id, user)
+          
+          uniqueUsersMap.set(key, mergedUser)
         }
+      } else {
+        // First time seeing this Twitter handle
+        uniqueUsersMap.set(key, user)
       }
     })
     
     // Convert the map back to an array
-    const validUsers = Array.from(uniqueIdMap.values())
+    const uniqueUsers = Array.from(uniqueUsersMap.values())
     
-    return res.status(200).json({ users: validUsers })
+    return res.status(200).json({ users: uniqueUsers })
   } catch (error) {
     console.error('Error fetching users:', error)
     return res.status(500).json({ error: 'Failed to fetch users' })
