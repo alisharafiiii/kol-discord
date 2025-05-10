@@ -127,7 +127,7 @@ type BarChartOptions = ChartOptions<'bar'>;
 type PieChartOptions = ChartOptions<'pie'>;
 type DoughnutChartOptions = ChartOptions<'doughnut'>;
 
-type Tab = 'dashboard' | 'search' | 'leaderboard'
+type Tab = 'dashboard' | 'search' | 'leaderboard' | 'roles'
 
 // Helper function to safely get follower count from social accounts
 const getFollowerCount = (data: unknown): number => {
@@ -1207,6 +1207,53 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     }
   };
   
+  /* =====================
+     Roles management state
+  ====================== */
+  const roleOptions = ['admin', 'core', 'scout', 'viewer'] as const
+  type RoleOption = typeof roleOptions[number]
+
+  const [rolesList, setRolesList] = useState<Array<{ wallet: string; role: RoleOption }>>([])
+  const [newWallet, setNewWallet] = useState('')
+  const [newRole, setNewRole] = useState<RoleOption>('viewer')
+
+  // Fetch roles when the tab becomes active
+  const fetchRoles = async () => {
+    try {
+      const res = await fetch('/api/admin/roles')
+      if (res.ok) {
+        const data = await res.json()
+        setRolesList(data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch roles', err)
+    }
+  }
+
+  useEffect(() => {
+    if (activeTab === 'roles') {
+      fetchRoles()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab])
+
+  const handleSaveRole = async () => {
+    if (!newWallet) return
+    try {
+      const res = await fetch('/api/admin/roles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wallet: newWallet.trim(), role: newRole })
+      })
+      if (res.ok) {
+        setNewWallet('')
+        fetchRoles()
+      }
+    } catch (err) {
+      console.error('Failed to save role', err)
+    }
+  }
+  
   return (
     <div className="fixed inset-0 z-50 bg-black font-mono text-green-300 p-4 overflow-auto">
       <div className="max-w-6xl mx-auto">
@@ -1239,6 +1286,13 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
             onClick={() => setActiveTab('leaderboard')}
           >
             Leaderboard
+          </button>
+          {/* Roles management tab – visible to admins only.  */}
+          <button
+            className={`px-4 py-2 ${activeTab === 'roles' ? 'bg-green-800' : ''}`}
+            onClick={() => setActiveTab('roles')}
+          >
+            Roles
           </button>
         </div>
         
@@ -1893,6 +1947,64 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                 }
               </tbody>
             </table>
+          </div>
+        )}
+        
+        {/* Roles Management Tab */}
+        {activeTab === 'roles' && (
+          <div className="space-y-6">
+            <h2 className="text-lg mb-4">Wallet Roles</h2>
+
+            {/* Add / Edit form */}
+            <div className="border border-green-300 p-4 flex flex-col md:flex-row gap-2 items-start md:items-end">
+              <input
+                type="text"
+                placeholder="Wallet address"
+                value={newWallet}
+                onChange={e => setNewWallet(e.target.value)}
+                className="flex-1 bg-black border border-green-300 p-2 text-xs w-full md:w-auto"
+              />
+              <select
+                value={newRole}
+                onChange={e => setNewRole(e.target.value as any)}
+                className="bg-black border border-green-300 p-2 text-xs"
+              >
+                {roleOptions.map(r => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
+              <button
+                onClick={handleSaveRole}
+                className="px-4 py-2 border border-green-300 text-xs hover:bg-green-800"
+              >
+                Save
+              </button>
+            </div>
+
+            {/* Roles list */}
+            <div className="border border-green-300 p-4">
+              {rolesList.length === 0 ? (
+                <div className="text-xs opacity-70">No roles assigned yet.</div>
+              ) : (
+                <ul className="space-y-2 text-xs">
+                  {rolesList.map(({ wallet, role }) => (
+                    <li key={wallet} className="flex justify-between items-center border-b border-green-800 pb-1">
+                      <span className="break-all mr-2">{wallet}</span>
+                      <span className="uppercase mr-2">{role}</span>
+                      <button
+                        className="underline hover:text-green-400"
+                        onClick={() => {
+                          setNewWallet(wallet)
+                          setNewRole(role as any)
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         )}
       </div>
