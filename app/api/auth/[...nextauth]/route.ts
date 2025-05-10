@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Twitter from "next-auth/providers/twitter";
-import { identifyUser } from "@/lib/user-identity";
+import { saveProfileWithDuplicateCheck } from "@/lib/redis";
 
 // Enable for debugging
 const DEBUG = true;
@@ -28,6 +28,36 @@ export const authOptions: NextAuthOptions = {
       if (account.provider !== "twitter") return true;
       
       try {
+        // Get follower count from Twitter API
+        let followerCount = 0;
+        
+        // Try to get follower data using Twitter API v2
+        if (account.access_token) {
+          try {
+            // Fetch user data including public metrics
+            const userId = profile?.data?.id;
+            const response = await fetch(
+              `https://api.twitter.com/2/users/${userId}?user.fields=public_metrics`,
+              {
+                headers: {
+                  Authorization: `Bearer ${account.access_token}`,
+                },
+              }
+            );
+            
+            if (response.ok) {
+              const userData = await response.json();
+              console.log("Twitter user data:", JSON.stringify(userData, null, 2));
+              
+              if (userData.data?.public_metrics?.followers_count) {
+                followerCount = userData.data.public_metrics.followers_count;
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching Twitter follower count:", error);
+          }
+        }
+        
         // Prepare user data from Twitter profile
         const userData = {
           twitterHandle: profile?.data?.username ? `@${profile.data.username}` : undefined,
@@ -37,41 +67,40 @@ export const authOptions: NextAuthOptions = {
           socialAccounts: {
             twitter: {
               handle: profile?.data?.username,
-              followers: 0, // We would need to fetch this separately
+              followers: followerCount,
             }
-          }
+          },
+          // Store selected chains if available in session
+          chains: Array.isArray(user.chains) ? user.chains : ["Ethereum", "Base"]
         };
         
-        // Use our identity management to find or create user
-        await identifyUser(userData);
+        console.log("Saving user profile:", JSON.stringify(userData, null, 2));
+        
+        // Save or update user profile
+        await saveProfileWithDuplicateCheck(userData as any);
         
         return true;
       } catch (error) {
-        console.error("Error in signIn callback:", error);
-        return true; // Still allow sign in even if our custom logic fails
+        console.error("Error in Twitter auth callback:", error);
+        return true; // Still allow sign in even if there's an error saving profile
       }
     },
-    
-    async session({ session, user, token }: any) {
-      if (session.user && token.sub) {
+    async session({ session, token, user }: any) {
+      // Add user info to session
+      if (session.user) {
         session.user.id = token.sub;
-        
-        // You can add more user data to the session here if needed
-        if (token.name) session.user.name = token.name;
-        if (token.picture) session.user.image = token.picture;
-      }
-      
-      return session;
-    },
-    
-    async jwt({ token, user, account, profile }: any) {
-      // Initial sign in
-      if (account && profile) {
-        if (account.provider === "twitter") {
-          token.twitterHandle = profile?.data?.username ? `@${profile.data.username}` : undefined;
+        // Add Twitter handle if available
+        if (token.twitterHandle) {
+          session.user.twitterHandle = token.twitterHandle;
         }
       }
-      
+      return session;
+    },
+    async jwt({ token, user, account, profile }: any) {
+      // Add Twitter handle to token if available
+      if (profile?.data?.username) {
+        token.twitterHandle = `@${profile.data.username}`;
+      }
       return token;
     },
   },
