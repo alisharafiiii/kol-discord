@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Team Placeholder Images</title>
+  <style>
+    body { font-family: monospace; background: #111; color: #0f0; padding: 20px; }
+    .avatar { width: 50px; height: 50px; border-radius: 50%; background: #0f0; color: #000; 
+              display: flex; align-items: center; justify-content: center; margin: 10px; font-weight: bold; }
+    .row { display: flex; align-items: center; margin-bottom: 10px; }
+    button { background: #0f0; color: #000; border: none; padding: 5px 10px; cursor: pointer; margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Team Avatar Generator</h1>
+  <p>Click on any avatar to download it as a .jpg file</p>
+  
+  <div id="avatars"></div>
+  
+  <script>
+    // Team members
+    const team = [
+      { name: 'nabu', role: 'founder / ops / architect' },
+      { name: 'parsa', role: 'kol ops / field manager' },
+      { name: 'azurite', role: 'external comms / radar' },
+      { name: 'nervyesi', role: 'discord matrix handler' },
+      { name: 'paria', role: 'social layer control' },
+      { name: 'parisa', role: 'vault key / protocol co-head' },
+      { name: 'alpha', role: 'social support / relay' },
+      { name: 'matt', role: 'social support / relay' },
+      { name: 'nixo', role: 'kol support node' },
+      { name: 'spider', role: 'visual stream (video)' },
+      { name: 'sina', role: 'visual grid (graphics)' }
+    ];
+    
+    // Get initials from name
+    function getInitials(name) {
+      if (name.length <= 2) return name.toUpperCase();
+      return name.slice(0, 2).toUpperCase();
+    }
+    
+    // Create avatars
+    team.forEach(member => {
+      const initials = getInitials(member.name);
+      
+      // Create row
+      const row = document.createElement('div');
+      row.className = 'row';
+      
+      // Create avatar
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = initials;
+      
+      // Create label
+      const label = document.createElement('span');
+      label.textContent = `${member.name} (${member.role})`;
+      
+      // Create download button
+      const btn = document.createElement('button');
+      btn.textContent = 'Download';
+      btn.onclick = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw circle
+        ctx.fillStyle = '#00ff00';
+        ctx.beginPath();
+        ctx.arc(50, 50, 50, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Draw text
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 40px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 50, 50);
+        
+        // Download
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/jpeg');
+        a.download = `${member.name}.jpg`;
+        a.click();
+      };
+      
+      // Add to row
+      row.appendChild(avatar);
+      row.appendChild(label);
+      row.appendChild(btn);
+      
+      // Add to container
+      document.getElementById('avatars').appendChild(row);
+    });
+  </script>
+</body>
+</html> 

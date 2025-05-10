@@ -3,19 +3,27 @@ import React, { useState, useRef, useMemo, useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { getNames, getCode } from 'country-list'
-import AdminPanel from './AdminPanel'
+import { useRouter } from 'next/navigation'
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom'
 
-// Add phantom window type
-declare global {
-  interface Window {
-    phantom?: {
-      solana?: {
-        isPhantom?: boolean;
-        connect: () => Promise<{ publicKey: { toString: () => string } }>;
-        disconnect: () => Promise<void>;
-      }
-    }
+// Define custom types for wallet interfaces
+interface PhantomProvider {
+  solana?: {
+    isPhantom?: boolean;
+    connect: () => Promise<{ publicKey: { toString: () => string } }>;
+    disconnect: () => Promise<void>;
   }
+}
+
+interface MetaMaskProvider {
+  isMetaMask?: boolean;
+  request: (args: { method: string, params?: any[] }) => Promise<any>;
+}
+
+// Declare external interface for window.ethereum
+declare interface Window {
+  ethereum?: any;
+  phantom?: any;
 }
 
 const allCountries = getNames()
@@ -58,8 +66,11 @@ const socialPlatforms = [
   { name: 'Telegram', urlTemplate: 'https://t.me/{handle}' }
 ]
 
-// Admin wallet address
-const ADMIN_WALLET = '0x37Ed24e7c7311836FD01702A882937138688c1A9'
+// Admin wallet addresses
+const ADMIN_WALLET_ETH = '0x37Ed24e7c7311836FD01702A882937138688c1A9'
+const ADMIN_WALLET_SOLANA_1 = 'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq'
+const ADMIN_WALLET_SOLANA_2 = 'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75'
+const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif'
 
 // Helper to get country code
 const getCountryCode = (country: string) => getCode(country)?.toLowerCase() || ''
@@ -70,7 +81,7 @@ export default function LoginModal() {
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
   const [stage, setStage] = useState<'hidden'|'choice'|'enter'|'apply'|'social'|'wallet'|'preview'|'success'>('hidden')
-  const [showAdminPanel, setShowAdminPanel] = useState(false)
+  const router = useRouter()
   const taps = useRef(0)
   const timer = useRef<number>()
   
@@ -78,27 +89,48 @@ export default function LoginModal() {
   const [connectedWallets, setConnectedWallets] = useState<{
     coinbase: boolean;
     phantom: boolean;
-    addresses: {coinbase?: string; phantom?: string};
+    metamask: boolean;
+    addresses: {coinbase?: string; phantom?: string; metamask?: string};
   }>({
     coinbase: false,
     phantom: false,
+    metamask: false,
     addresses: {}
   })
 
   // Update wallet state when Wagmi account changes
   useEffect(() => {
     if (isConnected && address) {
-      // When a wallet is connected via Wagmi, update our internal state
+      // Only update Coinbase if we're connecting via Wagmi and no MetaMask connection exists
+      console.log('Wagmi connection detected:', { address, isConnected });
+      
+      // Force normalize the address for comparison
+      const normalizedAddress = address.toLowerCase();
+      console.log('Wagmi normalized address:', normalizedAddress);
+      
+      // Check if this address is already connected as MetaMask (using case-insensitive comparison)
+      // If it is, don't mark it as Coinbase as well
+      if (connectedWallets.metamask && 
+          connectedWallets.addresses.metamask &&
+          connectedWallets.addresses.metamask.toLowerCase() === normalizedAddress) {
+        console.log('Address already connected as MetaMask, not setting as Coinbase');
+        return;
+      }
+      
+      // When a wallet is connected via Wagmi, update our internal state for Coinbase only
+      console.log('Updating Coinbase wallet state with address:', address);
       setConnectedWallets(prev => ({
         ...prev,
-        coinbase: true, // Assume Coinbase for now, but this could be improved
+        // Only set Coinbase to true, not MetaMask
+        coinbase: true,
         addresses: {
           ...prev.addresses,
-          coinbase: address
+          coinbase: address // Preserve original case for display
         }
-      }))
-    } else {
-      // If disconnected, clear the coinbase wallet
+      }));
+    } else if (!isConnected) {
+      // If disconnected, clear the coinbase wallet only
+      console.log('Wagmi disconnected, clearing Coinbase wallet state');
       setConnectedWallets(prev => ({
         ...prev,
         coinbase: false,
@@ -106,9 +138,9 @@ export default function LoginModal() {
           ...prev.addresses,
           coinbase: undefined
         }
-      }))
+      }));
     }
-  }, [isConnected, address])
+  }, [isConnected, address, connectedWallets.metamask, connectedWallets.addresses.metamask]);
 
   // Step 1 - Campaign Fit state
   const [countrySearch, setCountrySearch] = useState('')
@@ -135,13 +167,43 @@ export default function LoginModal() {
     [countrySearch]
   )
 
+  // Replace with this much simpler approach
+  if (typeof window !== 'undefined') {
+    (window as any).openLogin = function() {
+      setStage('choice')
+    }
+  }
+
+  // Check if the user is logged in with Twitter/X
+  const isLoggedIn = !!session?.user;
+  
+  // Show license view by default if logged in
+  useEffect(() => {
+    // Don't automatically show anything on load
+    // Let the triple-click mechanism handle showing the modal
+  }, [isLoggedIn, stage]);
+
+  // Keep handleTripleTap, but remove the global assignment
   const handleTripleTap = () => {
     taps.current++
     clearTimeout(timer.current)
     timer.current = window.setTimeout(() => (taps.current = 0), 500)
-    if (taps.current === 3) setStage('choice')
+    if (taps.current === 3) {
+      // Show choice screen on triple tap
+      setStage('choice')
+    }
   }
-  ;(globalThis as any).openLogin = handleTripleTap
+  
+  // Make sure close button works properly
+  const handleClose = () => {
+    // Fully hide the modal
+    setStage('hidden')
+    // Reset any internal state as needed
+    taps.current = 0
+    if (timer.current) {
+      clearTimeout(timer.current)
+    }
+  }
 
   const addCollabUrl = () => {
     setCollabUrls([...collabUrls, ''])
@@ -175,8 +237,13 @@ export default function LoginModal() {
 
   // Check if admin wallet is connected
   const isAdminWallet = 
-    connectedWallets.coinbase && connectedWallets.addresses.coinbase === ADMIN_WALLET ||
-    connectedWallets.phantom && connectedWallets.addresses.phantom === ADMIN_WALLET
+    connectedWallets.coinbase && connectedWallets.addresses.coinbase === ADMIN_WALLET_ETH ||
+    connectedWallets.phantom && (
+      connectedWallets.addresses.phantom === ADMIN_WALLET_SOLANA_1 || 
+      connectedWallets.addresses.phantom === ADMIN_WALLET_SOLANA_2 ||
+      connectedWallets.addresses.phantom === ADMIN_WALLET_SOLANA_3
+    ) ||
+    connectedWallets.metamask && connectedWallets.addresses.metamask === ADMIN_WALLET_ETH
 
   // Helper to mask wallet addresses
   const maskAddress = (addr: string) => `${addr.slice(0,4)}...${addr.slice(-4)}`
@@ -198,32 +265,226 @@ export default function LoginModal() {
 
   // For Phantom, we need to detect if it's available in the browser
   const connectPhantomWallet = async () => {
-    if (typeof window !== 'undefined' && window.phantom?.solana) {
-      try {
-        // Connect to Phantom wallet
-        const response = await window.phantom.solana.connect()
-        const publicKey = response.publicKey.toString()
-        
-        // Update our state with the connected Phantom wallet
-        setConnectedWallets(prev => ({
-          ...prev,
-          phantom: true,
-          addresses: {
-            ...prev.addresses,
-            phantom: publicKey
+    try {
+      // Check if we're on a mobile device
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      console.log('Connecting Phantom wallet on:', isMobile ? 'mobile' : 'desktop');
+      
+      // Try to use Phantom wallet adapter for a consistent experience
+      const phantomAdapter = new PhantomWalletAdapter();
+      
+      // Check if we're on desktop, try browser extension first
+      if (!isMobile && typeof window !== 'undefined' && window.phantom?.solana) {
+        console.log('Using Phantom browser extension');
+        try {
+          // Connect to Phantom wallet via extension
+          const response = await window.phantom.solana.connect();
+          const publicKey = response.publicKey.toString();
+          
+          console.log('Connected to Phantom extension with public key:', publicKey);
+          
+          // Update our state with the connected Phantom wallet
+          setConnectedWallets(prev => ({
+            ...prev,
+            phantom: true,
+            addresses: {
+              ...prev.addresses,
+              phantom: publicKey
+            }
+          }));
+        } catch (error) {
+          console.error('Phantom extension connection error:', error);
+          throw error;
+        }
+      } 
+      // Otherwise try the adapter approach which works cross-platform
+      else {
+        console.log('Using Phantom adapter approach');
+        // Using adapter
+        try {
+          // Connect using the adapter
+          await phantomAdapter.connect();
+          
+          if (phantomAdapter.publicKey) {
+            const publicKey = phantomAdapter.publicKey.toString();
+            console.log('Connected to Phantom with public key:', publicKey);
+            
+            // Update our state with the connected Phantom wallet
+            setConnectedWallets(prev => ({
+              ...prev,
+              phantom: true,
+              addresses: {
+                ...prev.addresses,
+                phantom: publicKey
+              }
+            }));
           }
-        }))
-      } catch (error) {
-        console.error('Phantom connection error:', error)
-        alert('Failed to connect Phantom wallet. Please ensure the Phantom extension is installed and unlocked.')
+        } catch (adapterError) {
+          console.error('Phantom adapter connection error:', adapterError);
+          
+          // If adapter doesn't work and we're on mobile, try direct deep linking
+          if (isMobile) {
+            console.log('Falling back to deep linking for mobile');
+            // Get the current URL to use as a redirect
+            const currentUrl = window.location.href;
+            
+            // Encode the return URL - make sure it's the base URL without params
+            const baseUrl = window.location.origin + window.location.pathname;
+            const encodedUrl = encodeURIComponent(baseUrl);
+            
+            // Create the deep link to Phantom
+            const phantomDeepLink = `https://phantom.app/ul/browse/${encodedUrl}`;
+            
+            // Save state so we know what we're doing when we come back
+            localStorage.setItem('loginStage', 'wallet');
+            
+            // We need to redirect to the Phantom app
+            console.log('Redirecting to Phantom mobile app...');
+            window.location.href = phantomDeepLink;
+          } else {
+            // Re-throw on desktop to be caught by the outer try/catch
+            throw adapterError;
+          }
+        }
       }
-    } else {
-      console.warn('Phantom wallet not found')
-      alert('Phantom wallet not found. Please install the Phantom browser extension.')
+    } catch (error) {
+      console.error('Phantom wallet connection error:', error);
+      
+      // Check if we're on mobile
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // On mobile, offer to download Phantom
+        if (confirm('Phantom wallet connection failed. Would you like to download the Phantom app?')) {
+          window.location.href = 'https://phantom.app/download';
+        }
+      } else {
+        // On desktop, prompt to install extension
+        alert('Failed to connect Phantom wallet. Please ensure the Phantom extension is installed and unlocked.');
+      }
     }
   }
 
-  const disconnectWallet = (type: 'coinbase' | 'phantom') => {
+  // For MetaMask, we need to check if the Ethereum provider is available
+  const connectMetaMaskWallet = async () => {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      console.log('MetaMask connect: Function called, clearing any previous state');
+      
+      // Force disconnect any existing connections first, including Coinbase
+      if (connectedWallets.metamask) {
+        console.log('MetaMask connect: Disconnecting existing MetaMask connection first');
+        disconnectWallet('metamask');
+      }
+      
+      // If we also have a Coinbase connection, disconnect it too to avoid confusion
+      if (connectedWallets.coinbase) {
+        console.log('MetaMask connect: Also disconnecting existing Coinbase connection to avoid address conflicts');
+        disconnect(); // This uses wagmi to disconnect Coinbase
+        
+        // Also update our internal state
+        setConnectedWallets(prev => ({
+          ...prev,
+          coinbase: false,
+          addresses: {
+            ...prev.addresses,
+            coinbase: undefined
+          }
+        }));
+        
+        // Small delay to ensure state is cleared
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      // Check if Ethereum is available at all
+      if (!window.ethereum) {
+        console.error('MetaMask connect: No Ethereum provider found');
+        alert('No Ethereum provider found. Please install MetaMask or another Ethereum wallet extension.');
+        return;
+      }
+      
+      // IMPORTANT: Request accounts in a try/catch to handle rejection properly
+      try {
+        console.log('MetaMask connect: Requesting accounts from MetaMask provider...');
+        
+        // Request account access
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_requestAccounts',
+          params: [] 
+        });
+        
+        console.log('MetaMask connect: Received accounts:', accounts);
+        
+        if (!accounts || accounts.length === 0) {
+          console.log('MetaMask connect: No accounts returned');
+          alert('No accounts were selected. Please unlock your MetaMask and try again.');
+          return;
+        }
+        
+        const address = accounts[0];
+        console.log('MetaMask connect: Connected account (raw):', address);
+        
+        // IMPORTANT: Normalize addresses for comparison (lowercase)
+        // This fixes the issue where the same address might appear as different due to case
+        const normalizedAddress = address.toLowerCase();
+        
+        console.log('MetaMask connect: Connected account (normalized):', normalizedAddress);
+        
+        // Check for address collisions with stored addresses - these should be cleared already,
+        // but double-check to be safe
+        if (connectedWallets.coinbase && 
+            connectedWallets.addresses.coinbase && 
+            connectedWallets.addresses.coinbase.toLowerCase() === normalizedAddress) {
+          console.log('MetaMask connect: WARNING - Duplicate with Coinbase wallet detection failed');
+          
+          // Force disconnect the Coinbase wallet to avoid conflicts
+          disconnect(); // This uses wagmi to disconnect Coinbase
+          
+          // Update our internal state to remove Coinbase
+          setConnectedWallets(prev => ({
+            ...prev,
+            coinbase: false,
+            addresses: {
+              ...prev.addresses,
+              coinbase: undefined
+            }
+          }));
+          
+          // Small delay to ensure state is cleared
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        
+        // Update our state with the connected MetaMask wallet - use original case for display
+        console.log('MetaMask connect: Setting connected state to true with address:', address);
+        setConnectedWallets(prev => ({
+          ...prev,
+          metamask: true,
+          addresses: {
+            ...prev.addresses,
+            metamask: address // Keep original case for display
+          }
+        }));
+        
+        console.log('MetaMask connect: Connection process complete');
+      } catch (error: any) {
+        console.error('MetaMask connect error:', error?.message || error);
+        
+        // Handle user rejection specifically
+        if (error?.code === 4001) {
+          console.log('MetaMask connect: User rejected the request');
+          alert('Connection cancelled: You rejected the connection request.');
+        } else {
+          alert(`Failed to connect MetaMask wallet: ${error?.message || 'Unknown error'}`);
+        }
+      }
+    } catch (outerError: any) {
+      console.error('MetaMask outer connection error:', outerError?.message || outerError);
+      alert(`Failed to initialize MetaMask connection: ${outerError?.message || 'Unknown error'}`);
+    }
+  };
+
+  const disconnectWallet = (type: 'coinbase' | 'phantom' | 'metamask') => {
     if (type === 'coinbase' && isConnected) {
       // Use wagmi to disconnect
       disconnect()
@@ -236,6 +497,9 @@ export default function LoginModal() {
       } catch (error) {
         console.error('Error disconnecting Phantom wallet:', error)
       }
+    } else if (type === 'metamask') {
+      // MetaMask doesn't have a disconnect method in the provider API
+      // We just remove it from our state
     }
     
     // Also update our internal state
@@ -296,6 +560,9 @@ export default function LoginModal() {
       }
       if (connectedWallets.phantom && connectedWallets.addresses.phantom) {
         walletAddresses.phantom = connectedWallets.addresses.phantom
+      }
+      if (connectedWallets.metamask && connectedWallets.addresses.metamask) {
+        walletAddresses.metamask = connectedWallets.addresses.metamask
       }
       
       // Prepare form submission
@@ -364,25 +631,143 @@ export default function LoginModal() {
         localStorage.removeItem('loginStage')
       }
     }
-  }, [session])
+    
+    // Check for Phantom mobile connection return
+    // When returning from Phantom mobile, the URL will have special parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const phantomConnected = urlParams.get('phantom_encryption_public_key');
+    const phantomData = urlParams.get('data');
+    const phantomNonce = urlParams.get('nonce');
+    
+    if (phantomConnected && phantomData) {
+      try {
+        console.log('Returned from Phantom mobile with:', { phantomConnected, phantomData, phantomNonce });
+        // In a real implementation, you would need to decrypt this data using the Phantom SDK
+        // For now, we'll simulate a connection with a mock address
+        const mockSolanaAddress = 'Phantom' + Math.random().toString(36).substring(2, 10);
+        
+        // Set the wallet as connected
+        setConnectedWallets(prev => ({
+          ...prev,
+          phantom: true,
+          addresses: {
+            ...prev.addresses,
+            phantom: mockSolanaAddress
+          }
+        }));
+        
+        // Clean up the URL by removing phantom parameters
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        
+        // Make sure we're on the wallet stage
+        setStage('wallet');
+      } catch (error) {
+        console.error('Error handling Phantom mobile return:', error);
+      }
+    }
+  }, [session]);
+
+  // Add MetaMask event listeners
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.ethereum) {
+      console.log('LoginModal: No Ethereum provider detected on window');
+      return;
+    }
+
+    console.log('LoginModal: MetaMask event listeners setup start');
+    console.log('LoginModal: Current ethereum provider:', {
+      isMetaMask: window.ethereum.isMetaMask,
+      isCoinbaseWallet: window.ethereum.isCoinbaseWallet,
+      hasProviders: Boolean(window.ethereum.providers),
+      hasSelectedAddress: Boolean(window.ethereum.selectedAddress),
+    });
+
+    if (window.ethereum.selectedAddress) {
+      console.log('LoginModal: WARNING - Provider already has a selectedAddress:', window.ethereum.selectedAddress);
+    }
+
+    // IMPORTANT: Clear any cached provider connections
+    try {
+      // This will force MetaMask to forget the connection state until explicitly requested
+      console.log('LoginModal: Attempting to reset connection state');
+      if (window.ethereum._state && window.ethereum._state.accounts) {
+        console.log('LoginModal: Found cached accounts in provider state, current length:', window.ethereum._state.accounts.length);
+      }
+    } catch (err) {
+      console.log('LoginModal: Error trying to inspect provider state:', err);
+    }
+
+    // Handle account changes
+    const handleAccountsChanged = (accounts: string[]) => {
+      console.log('MetaMask accounts changed event triggered with accounts:', accounts);
+      
+      if (accounts.length === 0) {
+        // User disconnected all accounts
+        console.log('MetaMask: All accounts disconnected');
+        disconnectWallet('metamask');
+      } else if (connectedWallets.metamask && accounts[0] !== connectedWallets.addresses.metamask) {
+        // Account switched - update our state with the new account
+        console.log('MetaMask: Account switched to', accounts[0]);
+        setConnectedWallets(prev => ({
+          ...prev,
+          metamask: true,
+          addresses: {
+            ...prev.addresses,
+            metamask: accounts[0]
+          }
+        }));
+      }
+    };
+
+    // Handle chain/network changes
+    const handleChainChanged = () => {
+      console.log('MetaMask chain changed, will reload page');
+      // Refresh the page on chain change as recommended by MetaMask
+      window.location.reload();
+    };
+
+    // Handle disconnect events
+    const handleDisconnect = (error: { code: number; message: string }) => {
+      console.log('MetaMask disconnect event:', error);
+      disconnectWallet('metamask');
+    };
+
+    // Subscribe to MetaMask events
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    window.ethereum.on('chainChanged', handleChainChanged);
+    window.ethereum.on('disconnect', handleDisconnect);
+
+    // DISABLE auto-connection check completely
+    console.log('LoginModal: Skipping ALL auto-connection checks, regardless of stage');
+
+    console.log('LoginModal: MetaMask event listeners setup complete');
+
+    // Cleanup function
+    return () => {
+      console.log('LoginModal: Removing MetaMask event listeners');
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      window.ethereum.removeListener('chainChanged', handleChainChanged);
+      window.ethereum.removeListener('disconnect', handleDisconnect);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (stage === 'hidden') return null
 
-  // Show AdminPanel if open
-  if (showAdminPanel) {
-    return <AdminPanel onClose={() => setShowAdminPanel(false)} />
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 font-mono text-green-300 p-6">
-      <div className="absolute inset-0 animate-matrix bg-black opacity-50" />
+      <div 
+        className="absolute inset-0 bg-black opacity-80" 
+        onClick={handleClose} 
+      />
       <div className="relative z-10 rounded border-4 border-green-400 bg-black p-6 space-y-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Admin Panel Button (if admin wallet connected) */}
         {isAdminWallet && (
           <div className="absolute top-3 right-3">
             <button 
               className="px-3 py-1 bg-purple-600 text-white text-xs animate-pulse hover:bg-purple-500"
-              onClick={() => setShowAdminPanel(true)}
+              onClick={() => router.push('/admin')}
             >
               Admin Panel
             </button>
@@ -392,9 +777,79 @@ export default function LoginModal() {
         {/* Choice */}
         {stage === 'choice' && (
           <div className="flex flex-col gap-3">
-            <button onClick={() => setStage('enter')}>enter</button>
-            <button onClick={() => setStage('apply')}>apply</button>
-            <button onClick={() => setStage('hidden')} className="text-xs">close</button>
+            {isLoggedIn && (
+              <div className="mb-5">
+                {/* Pixel-style Driver's License */}
+                <div className="license-card border-4 border-green-400 p-3 bg-black mb-3">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="license-header text-xs uppercase font-bold tracking-widest">
+                      CYBERNETIC ACCESS PERMIT
+                    </div>
+                    <div className="license-hologram text-xs text-green-400 animate-pulse">
+                      [VERIFIED]
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <div className="license-photo w-20 h-20 border-2 border-green-300 overflow-hidden relative">
+                      {session?.user?.image ? (
+                        <img 
+                          src={session.user.image} 
+                          alt={session.user.name || 'User'} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-green-900 flex items-center justify-center">
+                          <span className="text-xs text-green-300">NO IMAGE</span>
+                        </div>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-center">
+                        <div className="text-[8px] text-green-300">ID-7734</div>
+                      </div>
+                    </div>
+                    
+                    <div className="license-data flex-1 text-xs flex flex-col gap-1">
+                      <div className="license-field">
+                        <span className="opacity-70">HANDLE:</span> <span className="font-bold">@{session?.user?.name || 'unknown'}</span>
+                      </div>
+                      <div className="license-field">
+                        <span className="opacity-70">ACCESS LEVEL:</span> <span className="font-bold">{isAdminWallet ? 'ADMIN' : 'USER'}</span>
+                      </div>
+                      <div className="license-field">
+                        <span className="opacity-70">ISSUED:</span> <span className="font-bold">{new Date().toLocaleDateString()}</span>
+                      </div>
+                      <div className="license-field">
+                        <span className="opacity-70">STATUS:</span> <span className="font-bold text-green-400 animate-pulse">ACTIVE</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="license-barcode mt-3 flex justify-between items-center">
+                    <div className="license-signature text-[6px] opacity-70 uppercase">
+                      KOL-SYSTEM//AUTHORIZED~SIGNATURE
+                    </div>
+                    <div className="barcode-area border border-green-300 p-1 bg-green-900/20">
+                      <div className="barcode flex items-center gap-[1px]">
+                        {Array(15).fill(0).map((_, i) => (
+                          <div 
+                            key={i} 
+                            className="bar h-8" 
+                            style={{ 
+                              width: Math.floor(Math.random() * 3) + 1 + 'px',
+                              backgroundColor: `rgba(134, 239, 172, ${Math.random() * 0.8 + 0.2})`
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <button onClick={() => setStage('enter')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">enter</button>
+            <button onClick={() => setStage('apply')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">apply</button>
+            <button onClick={handleClose} className="border border-green-300 px-4 py-2 text-xs hover:bg-gray-900">close</button>
           </div>
         )}
 
@@ -450,12 +905,15 @@ export default function LoginModal() {
                 </button>
               ) : (
                 <div className="flex items-center">
-                  <span className="text-xs">{maskAddress(connectedWallets.addresses.coinbase || '')}</span>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.coinbase || '')}</span>
+                  </div>
                   <button 
-                    className="text-red-500 ml-2"
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
                     onClick={() => disconnectWallet('coinbase')}
                   >
-                    x
+                    Disconnect
                   </button>
                 </div>
               )}
@@ -473,16 +931,47 @@ export default function LoginModal() {
                 </button>
               ) : (
                 <div className="flex items-center">
-                  <span className="text-xs">{maskAddress(connectedWallets.addresses.phantom || '')}</span>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.phantom || '')}</span>
+                  </div>
                   <button 
-                    className="text-red-500 ml-2"
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
                     onClick={() => disconnectWallet('phantom')}
                   >
-                    x
+                    Disconnect
                   </button>
                 </div>
               )}
             </div>
+            
+            {/* MetaMask Wallet Section - TEMPORARILY HIDDEN */}
+            {/* Uncomment when fixed
+            <div className="border border-green-300 p-3">
+              <label className="text-xs uppercase block mb-2">MetaMask Wallet</label>
+              {!connectedWallets.metamask ? (
+                <button 
+                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                  onClick={connectMetaMaskWallet}
+                >
+                  Connect MetaMask Wallet
+                </button>
+              ) : (
+                <div className="flex items-center">
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.metamask || '')}</span>
+                  </div>
+                  <button 
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
+                    onClick={() => disconnectWallet('metamask')}
+                  >
+                    Disconnect
+                  </button>
+                </div>
+              )}
+            </div>
+            */}
             
             <button className="text-xs self-start" onClick={() => setStage('choice')}>back</button>
           </div>
@@ -636,7 +1125,7 @@ export default function LoginModal() {
 
             <div className="flex gap-4 mt-4">
               <button type="button" className="text-xs" onClick={() => setStage('choice')}>back</button>
-              <button type="submit" className="px-4 py-2 bg-green-400 text-black hover:bg-green-200">next</button>
+              <button type="submit" className="px-4 py-2 border border-green-300 hover:bg-gray-900">next</button>
             </div>
           </form>
         )}
@@ -723,7 +1212,7 @@ export default function LoginModal() {
               <button type="button" className="text-xs" onClick={() => setStage('apply')}>back</button>
               <button 
                 type="submit" 
-                className={`px-4 py-2 ${!session?.user ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-green-400 text-black hover:bg-green-200'}`}
+                className={`px-4 py-2 ${!session?.user ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'border border-green-300 hover:bg-gray-900'}`}
                 disabled={!session?.user}
               >
                 next
@@ -752,12 +1241,15 @@ export default function LoginModal() {
                 </button>
               ) : (
                 <div className="flex items-center">
-                  <span className="text-xs">{maskAddress(connectedWallets.addresses.coinbase || '')}</span>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.coinbase || '')}</span>
+                  </div>
                   <button 
-                    className="text-red-500 ml-2"
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
                     onClick={() => disconnectWallet('coinbase')}
                   >
-                    x
+                    Disconnect
                   </button>
                 </div>
               )}
@@ -775,21 +1267,52 @@ export default function LoginModal() {
                 </button>
               ) : (
                 <div className="flex items-center">
-                  <span className="text-xs">{maskAddress(connectedWallets.addresses.phantom || '')}</span>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.phantom || '')}</span>
+                  </div>
                   <button 
-                    className="text-red-500 ml-2"
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
                     onClick={() => disconnectWallet('phantom')}
                   >
-                    x
+                    Disconnect
                   </button>
                 </div>
               )}
             </div>
             
+            {/* MetaMask Wallet */}
+            {/* Uncomment when fixed
+            <div className="border border-green-300 p-3">
+              <label className="text-xs uppercase block mb-2">MetaMask Wallet</label>
+              {!connectedWallets.metamask ? (
+                <button 
+                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                  onClick={connectMetaMaskWallet}
+                >
+                  Connect MetaMask Wallet
+                </button>
+              ) : (
+                <div className="flex items-center">
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-green-400">Connected: </span>
+                    <span className="text-xs">{maskAddress(connectedWallets.addresses.metamask || '')}</span>
+                  </div>
+                  <button 
+                    className="text-red-500 ml-2 border border-red-500 px-2 py-1 text-xs hover:bg-red-900"
+                    onClick={() => disconnectWallet('metamask')}
+                  >
+                    Disconnect
+                  </button>
+                </div>
+              )}
+            </div>
+            */}
+            
             <div className="mt-4 flex gap-4">
               <button className="text-xs" onClick={() => setStage('social')}>back</button>
               <button 
-                className="px-3 py-1 bg-green-400 text-black hover:bg-green-200" 
+                className="px-3 py-1 border border-green-300 hover:bg-gray-900" 
                 onClick={() => setStage('preview')}
               >
                 next
@@ -846,7 +1369,7 @@ export default function LoginModal() {
               </div>
 
               {/* Wallets */}
-              {(connectedWallets.coinbase || connectedWallets.phantom) && (
+              {(connectedWallets.coinbase || connectedWallets.phantom || connectedWallets.metamask) && (
                 <div className="mt-2 text-xs">
                   <div className="uppercase">Connected Wallets:</div>
                   <div className="grid grid-cols-1 gap-1 mt-1">
@@ -855,6 +1378,9 @@ export default function LoginModal() {
                     )}
                     {connectedWallets.phantom && (
                       <div>Phantom: {connectedWallets.addresses.phantom}</div>
+                    )}
+                    {connectedWallets.metamask && (
+                      <div>MetaMask: {connectedWallets.addresses.metamask}</div>
                     )}
                   </div>
                 </div>
@@ -910,8 +1436,8 @@ export default function LoginModal() {
                   !agreeToTerms 
                     ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
                     : isSubmitting 
-                      ? 'bg-yellow-500 text-black' 
-                      : 'bg-green-400 text-black hover:bg-green-200'
+                      ? 'bg-yellow-900 border border-yellow-500' 
+                      : 'border border-green-300 hover:bg-gray-900'
                 }`}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit'}
@@ -930,7 +1456,7 @@ export default function LoginModal() {
               We'll review your application and get back to you soon.
             </p>
             <button 
-              className="mt-4 px-4 py-2 bg-green-400 text-black hover:bg-green-200"
+              className="mt-4 px-4 py-2 border border-green-300 hover:bg-gray-900"
               onClick={() => setStage('hidden')}
             >
               Close

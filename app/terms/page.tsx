@@ -1,40 +1,103 @@
+'use client'
+
+import Header from '@/components/Header'
 import Link from 'next/link'
 
-export default function TermsPage() {
+export default function Terms() {
   return (
-    <main className="flex flex-col min-h-screen items-center bg-black font-mono text-green-300 p-8">
-      <h1 className="text-2xl uppercase mb-4 border-b border-green-300 pb-2">Terms & Conditions</h1>
-      <div className="max-w-2xl space-y-4 text-xs">
-        <p>Effective Date: January 1, 2025</p>
-        <p>
-          By accessing or using Nabulines, you agree to be bound by these Terms & Conditions. If you do not agree, please
-          do not use the Service.
-        </p>
-        <h2 className="text-sm uppercase mt-4">1. Use of Service</h2>
-        <p>
-          You agree to use Nabulines only for lawful purposes. You may not use the Service in violation of any applicable
-          laws or regulations.
-        </p>
-        <h2 className="text-sm uppercase mt-4">2. Intellectual Property</h2>
-        <p>
-          All content, branding, and UI elements on Nabulines are the intellectual property of Nabulines or its licensors.
-          Unauthorized use is prohibited.
-        </p>
-        <h2 className="text-sm uppercase mt-4">3. Limitation of Liability</h2>
-        <p>
-          Nabulines is provided "as is" and we are not liable for any damages arising from your use of the Service.
-        </p>
-        <h2 className="text-sm uppercase mt-4">4. Changes to Terms</h2>
-        <p>
-          We may update these Terms from time to time. Continued use of the Service signifies your acceptance of any
-          updated terms.
-        </p>
+    <main className="relative flex min-h-screen flex-col items-center bg-black font-mono text-green-300">
+      <Header />
+      
+      <div className="mt-10 max-w-2xl px-4 w-full">
+        <h1 className="text-2xl mb-8 text-center text-white">𓁺 terms & conditions 𓁺</h1>
+        <p className="text-sm mb-8 text-center">last updated: {new Date().toLocaleDateString()}</p>
+        
+        <div className="space-y-8 text-sm leading-relaxed text-center">
+          <p className="italic">by connecting your wallet/x using this site, or even lurking — you agree to the following. no exceptions, no excuses.</p>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">⚠︎ this ain't advice</h2>
+            <ul className="space-y-2">
+              <li className="text-white">𓂀 not financial advice</li>
+              <li className="text-white">𓂀 not legal advice</li>
+              <li className="text-white">𓂀 not life advice</li>
+            </ul>
+            <p className="mt-2">dyor, frens. consult your own professionals if you're not sure.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">♱ your wallet, your risk</h2>
+            <p>you connect — you consent.</p>
+            <p>we don't store keys.</p>
+            <p>we don't hold tokens.</p>
+            <p>you click wrong? that's on you.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">࿇ no promises</h2>
+            <p>we don't owe you an airdrop.</p>
+            <p>we don't owe you a pump.</p>
+            <p>we might build cool shit.</p>
+            <p>or disappear into the metaverse.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">𓆩 onchain = on record 𓆪</h2>
+            <p>every move onchain is public.</p>
+            <p>we might display your activity.</p>
+            <p>so will others.</p>
+            <p>don't do dumb stuff.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">⚠︎ data? nah</h2>
+            <p>no personal info.</p>
+            <p>no creepy cookies.</p>
+            <p>no web2 tracking.</p>
+            <p>only vibes + analytics.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">♱ laws exist (unfortunately)</h2>
+            <p>your region = your responsibility.</p>
+            <p>if your local laws say crypto is bad,</p>
+            <p>close this tab and pretend you never came.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">𓂀 don't be a bozo</h2>
+            <p>no scams.</p>
+            <p>no hate.</p>
+            <p>no spam.</p>
+            <p>degens only. villains get banished.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">⚠︎ use at your own risk</h2>
+            <p>bugs. exploits. rugs.</p>
+            <p>we ship fast, break stuff, and fix it later.</p>
+            <p>this is experimental.</p>
+            <p>you accept the chaos.</p>
+          </section>
+          
+          <section>
+            <h2 className="text-lg mb-4 text-white">𓁹 tl;dr</h2>
+            <p>by using this, you agree to all of the above.</p>
+            <p>don't agree?</p>
+            <p>then don't click anything.</p>
+          </section>
+          
+          <p className="text-center text-lg mt-12 text-white">𓆩 stay sovereign. stay spooky. stay degen. 𓆪</p>
+        </div>
+        
+        <div className="mt-12 text-center">
+          <Link href="/">
+            <button className="px-6 py-3 text-sm border border-green-300 rounded hover:bg-green-800">
+              Back to Home
+            </button>
+          </Link>
+        </div>
       </div>
-      <Link href="/">
-        <button className="mt-8 px-6 py-2 text-sm border border-green-300 rounded hover:bg-green-800">
-          Back to Home
-        </button>
-      </Link>
     </main>
   )
 } 

@@ -132,3 +132,25 @@ export async function searchProfiles(
     return true
   })
 }
+
+// Add new functions for admin panel
+export async function getProfile(id: string): Promise<InfluencerProfile | null> {
+  try {
+    const profile = await redis.json.get(`user:${id}`)
+    return profile as InfluencerProfile | null
+  } catch (error) {
+    console.error(`Error fetching profile ${id}:`, error)
+    return null
+  }
+}
+
+export async function getAllProfileKeys(): Promise<string[]> {
+  try {
+    const keys = await redis.keys('user:*')
+    // Extract just the profile IDs from the keys
+    return keys.map(key => key.replace('user:', ''))
+  } catch (error) {
+    console.error('Error fetching profile keys:', error)
+    return []
+  }
+}
