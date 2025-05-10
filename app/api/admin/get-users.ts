@@ -1,20 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { redis, InfluencerProfile } from '@/lib/redis'
 
-type SocialAccount = {
-  handle: string;
-  followers?: number;
-  subscribers?: number;
-}
-
-type SocialAccounts = {
-  twitter?: SocialAccount;
-  instagram?: SocialAccount;
-  tiktok?: SocialAccount;
-  youtube?: SocialAccount;
-  telegram?: SocialAccount;
-}
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -35,15 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Calculate total follower count from all social profiles
         let totalFollowers = profile.followerCount || 0
         if (profile.socialAccounts) {
-          const accounts = profile.socialAccounts as SocialAccounts
-          Object.values(accounts).forEach((account) => {
-            if (account) {
-              if ('followers' in account) {
-                totalFollowers += account.followers || 0
-              }
-              if ('subscribers' in account) {
-                totalFollowers += account.subscribers || 0
-              }
+          Object.values(profile.socialAccounts).forEach((account: any) => {
+            if (account && 'followers' in account) {
+              totalFollowers += account.followers || 0
+            }
+            if (account && 'subscribers' in account) {
+              totalFollowers += account.subscribers || 0
             }
           })
         }

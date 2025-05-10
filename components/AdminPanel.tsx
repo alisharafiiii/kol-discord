@@ -961,8 +961,11 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
       // Get a random blockchain
       const randomChain = chainOptions[Math.floor(Math.random() * chainOptions.length)];
       
+      // Create a unique ID
+      const userId = `user_${Date.now()}_${i}`;
+      
       return {
-        id: `user_${i}`,
+        id: userId,
         name: `User ${i}`,
         handle: `@user${i}`,
         email: `user${i}@example.com`,
@@ -1013,12 +1016,15 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     ))
   }
   
+  // View detailed user profile
+  const [selectedUser, setSelectedUser] = useState<KOLProfile | null>(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const handleView = (userId: string) => {
     // Find the user from the list
     const user = users.find(u => u.id === userId);
     if (user) {
-      // Simple alert with user details
-      alert(`User Profile: ${user.name}\nHandle: ${user.handle || 'N/A'}\nFollowers: ${user.followers?.toLocaleString() || '0'}\nApproval Status: ${user.approvalStatus || 'pending'}`);
+      setSelectedUser(user);
+      setShowProfileModal(true);
     } else {
       console.error(`User not found with ID: ${userId}`);
     }
@@ -1216,17 +1222,23 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
   const [rolesList, setRolesList] = useState<Array<{ wallet: string; role: RoleOption }>>([])
   const [newWallet, setNewWallet] = useState('')
   const [newRole, setNewRole] = useState<RoleOption>('viewer')
+  const [roleActionStatus, setRoleActionStatus] = useState<{ message: string; isError: boolean } | null>(null)
 
   // Fetch roles when the tab becomes active
   const fetchRoles = async () => {
+    setRoleActionStatus(null)
     try {
       const res = await fetch('/api/admin/roles')
       if (res.ok) {
         const data = await res.json()
         setRolesList(data)
+        if (data.length === 0) {
+          setRoleActionStatus({ message: 'No roles assigned yet. Add one below.', isError: false })
+        }
       }
     } catch (err) {
       console.error('Failed to fetch roles', err)
+      setRoleActionStatus({ message: 'Error loading roles', isError: true })
     }
   }
 
@@ -1239,6 +1251,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
 
   const handleSaveRole = async () => {
     if (!newWallet) return
+    setRoleActionStatus({ message: 'Saving role...', isError: false })
     try {
       const res = await fetch('/api/admin/roles', {
         method: 'POST',
@@ -1247,10 +1260,15 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
       })
       if (res.ok) {
         setNewWallet('')
+        setRoleActionStatus({ message: 'Role saved successfully!', isError: false })
         fetchRoles()
+      } else {
+        const error = await res.json()
+        setRoleActionStatus({ message: `Error: ${error.error || 'Failed to save role'}`, isError: true })
       }
     } catch (err) {
       console.error('Failed to save role', err)
+      setRoleActionStatus({ message: 'Error saving role', isError: true })
     }
   }
   
@@ -1981,6 +1999,13 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               </button>
             </div>
 
+            {/* Status message */}
+            {roleActionStatus && (
+              <div className={`mt-2 text-sm ${roleActionStatus.isError ? 'text-red-400' : 'text-green-400'}`}>
+                {roleActionStatus.message}
+              </div>
+            )}
+
             {/* Roles list */}
             <div className="border border-green-300 p-4">
               {rolesList.length === 0 ? (
@@ -2008,6 +2033,14 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           </div>
         )}
       </div>
+      {/* User Profile Modal */}
+      {showProfileModal && selectedUser && (
+        <ProfileModal
+          user={selectedUser}
+          onClose={() => setShowProfileModal(false)}
+          onStatusChange={updateUserStatus}
+        />
+      )}
     </div>
   );
 }
