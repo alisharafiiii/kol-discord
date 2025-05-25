@@ -13,9 +13,9 @@ export default function AddKOLModal({ onClose, onAdd }: AddKOLModalProps) {
   const [name, setName] = useState('')
   const [stage, setStage] = useState<KOL['stage']>('reached-out')
   const [device, setDevice] = useState<KOL['device']>('N/A')
-  const [budget, setBudget] = useState('free')
+  const [budget, setBudget] = useState('')
   const [payment, setPayment] = useState<KOL['payment']>('pending')
-  const [views, setViews] = useState(0)
+  const [views, setViews] = useState<number | ''>('')
   const [links, setLinks] = useState('')
   const [platform, setPlatform] = useState('')
   const [contact, setContact] = useState('')
@@ -24,6 +24,7 @@ export default function AddKOLModal({ onClose, onAdd }: AddKOLModalProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
   const [pfpUrl, setPfpUrl] = useState<string | undefined>(undefined)
+  const [uploadedImage, setUploadedImage] = useState<string | undefined>(undefined)
 
   // Fetch approved users
   useEffect(() => {
@@ -75,15 +76,26 @@ export default function AddKOLModal({ onClose, onAdd }: AddKOLModalProps) {
       device,
       budget,
       payment,
-      views,
+      views: views === '' ? 0 : views,
       links: links.split(',').map(l => l.trim()).filter(Boolean),
-      platform: platform.split(',').map(p => p.trim()).filter(Boolean),
+      platform: platform ? [platform] : [],
       contact: contact || undefined,
       tier: tier || undefined,
-      pfp: pfpUrl || `https://unavatar.io/twitter/${handle}`
+      pfp: uploadedImage || pfpUrl || `https://unavatar.io/twitter/${handle}`
     }
 
     onAdd(kol)
+  }
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   return (
@@ -252,7 +264,7 @@ export default function AddKOLModal({ onClose, onAdd }: AddKOLModalProps) {
             <input
               type="number"
               value={views}
-              onChange={(e) => setViews(parseInt(e.target.value) || 0)}
+              onChange={(e) => setViews(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
               className="w-full px-3 py-2 bg-black border border-green-300 text-green-300"
             />
           </div>
@@ -269,14 +281,39 @@ export default function AddKOLModal({ onClose, onAdd }: AddKOLModalProps) {
           </div>
 
           <div>
-            <label className="block text-xs uppercase mb-2">Platforms (comma separated)</label>
-            <input
-              type="text"
+            <label className="block text-xs uppercase mb-2">Platform</label>
+            <select
               value={platform}
               onChange={(e) => setPlatform(e.target.value)}
-              placeholder="Twitter, Instagram, YouTube"
               className="w-full px-3 py-2 bg-black border border-green-300 text-green-300"
-            />
+            >
+              <option value="">Select Platform</option>
+              <option value="twitter">Twitter/X</option>
+              <option value="instagram">Instagram</option>
+              <option value="youtube">YouTube</option>
+              <option value="tiktok">TikTok</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="telegram">Telegram</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase mb-2">Profile Image</label>
+            <div className="flex items-center gap-2">
+              {uploadedImage && (
+                <img 
+                  src={uploadedImage} 
+                  alt="Profile" 
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="text-xs"
+              />
+            </div>
           </div>
 
           <div className="flex gap-4 mt-6">

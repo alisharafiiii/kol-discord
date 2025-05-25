@@ -22,6 +22,20 @@ interface CampaignChartsProps {
   onClose: () => void
 }
 
+// Color scheme for charts
+const COLORS = {
+  twitter: '#1DA1F2',
+  instagram: '#E4405F',
+  youtube: '#FF0000',
+  tiktok: '#000000',
+  linkedin: '#0077B5',
+  telegram: '#0088CC',
+  hero: '#9333ea',
+  star: '#eab308',
+  rising: '#9333ea', // Changed from blue to purple
+  micro: '#6b7280'
+}
+
 export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
   // Process data for charts
   const chartData = useMemo(() => {
@@ -115,7 +129,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
     switch (tier) {
       case 'hero': return '#9333ea'
       case 'star': return '#eab308'
-      case 'rising': return '#3b82f6'
+      case 'rising': return '#9333ea'
       case 'micro': return '#6b7280'
       default: return '#374151'
     }

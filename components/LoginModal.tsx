@@ -881,9 +881,13 @@ export default function LoginModal() {
         if (saved && saved === 'social') {
           setStage(saved)
           localStorage.removeItem('loginStage')
+        } else if (saved) {
+          // If there's any other saved stage, restore it
+          setStage(saved)
+          localStorage.removeItem('loginStage')
         } else {
-          // If no saved stage, hide the modal
-          setStage('hidden')
+          // If no saved stage but user just logged in, show the choice screen with their card
+          setStage('choice')
         }
       }
       

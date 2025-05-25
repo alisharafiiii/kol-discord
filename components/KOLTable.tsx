@@ -150,7 +150,17 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                     <img src={`https://unavatar.io/twitter/${kol.handle}`} alt={kol.handle} className="w-8 h-8 rounded-full" />
                   )}
                   <div>
-                    <div className="font-bold">{kol.name}</div>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                      <span className="font-medium">{kol.name}</span>
+                      <span className={`inline-flex px-2 py-0.5 text-xs rounded-full ${
+                        kol.tier === 'hero' ? 'bg-purple-100 text-purple-800' :
+                        kol.tier === 'star' ? 'bg-yellow-100 text-yellow-800' :
+                        kol.tier === 'rising' ? 'bg-blue-100 text-blue-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {kol.tier}
+                      </span>
+                    </div>
                     <div className="text-xs text-gray-500">@{kol.handle}</div>
                   </div>
                 </div>
@@ -315,15 +325,25 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                     onClick={() => canEdit && startEdit(kol.id, 'contact', kol.contact || '')}
                   >
                     {kol.contact ? (
-                      <a 
-                        href={formatContactLink(kol.contact)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {getContactDisplay(kol.contact)}
-                      </a>
+                      kol.contact.startsWith('@') ? (
+                        <a 
+                          href={`https://t.me/${kol.contact.substring(1)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-400 hover:underline"
+                        >
+                          {kol.contact}
+                        </a>
+                      ) : kol.contact.includes('@') ? (
+                        <a 
+                          href={`mailto:${kol.contact}`}
+                          className="text-green-400 hover:underline"
+                        >
+                          {kol.contact}
+                        </a>
+                      ) : (
+                        kol.contact
+                      )
                     ) : (
                       <span className="text-gray-500">No contact</span>
                     )}
