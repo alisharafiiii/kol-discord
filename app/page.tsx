@@ -111,9 +111,11 @@ export default function Home() {
   // Triple-click handler with matrix rain
   const handleLogoClick = () => {
     logoClickCount.current += 1
+    
     if (logoClickTimer.current) {
       clearTimeout(logoClickTimer.current)
     }
+    
     if (logoClickCount.current === 3) {
       logoClickCount.current = 0
       
@@ -122,25 +124,19 @@ export default function Home() {
       
       // After 1.5 seconds, show login modal
       setTimeout(() => {
-        // Show login modal immediately after matrix animation starts
-        // Call window.openLogin (already set in LoginModal component)
+        // Show login modal
         if (typeof window !== 'undefined' && typeof (window as any).openLogin === 'function') {
           (window as any).openLogin()
         }
       }, 1500)
       
-      // Hide matrix rain after 2 seconds
+      // Hide matrix rain after 4.5 seconds (1.5s delay + 3s after modal)
       setTimeout(() => {
         setShowMatrixRain(false)
-      }, 2000)
+      }, 4500)
     } else {
       logoClickTimer.current = setTimeout(() => {
-        if (logoClickCount.current === 1) {
-          // Regular single click behavior
-          if (typeof window !== 'undefined' && typeof (window as any).openLogin === 'function') {
-            (window as any).openLogin()
-          }
-        }
+        // Reset count after timeout, don't open login on single click
         logoClickCount.current = 0
       }, 400)
     }
