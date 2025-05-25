@@ -667,33 +667,26 @@ export default function LoginModal() {
       // We just remove it from our state
     }
     
-    // Also update our internal state
+    // Update our internal state
     setConnectedWallets(prev => {
       const newAddresses = {...prev.addresses}
       delete newAddresses[type]
       
-      return {
+      const newState = {
         ...prev,
         [type]: false,
         addresses: newAddresses
       }
+      
+      // Persist the updated state
+      try {
+        localStorage.setItem('connectedWallets', JSON.stringify(newState))
+      } catch (error) {
+        console.error('Error persisting wallet state:', error)
+      }
+      
+      return newState
     })
-    
-    // Clear wallet connection status in localStorage and cookies if we have no connected wallets left
-    const noWalletsLeft = Object.values(connectedWallets).every(val => 
-      typeof val === 'boolean' ? !val : true
-    );
-    
-    if (noWalletsLeft) {
-      // Clear all wallet connection data
-      localStorage.removeItem('walletAddress');
-      localStorage.removeItem('walletType');
-      
-      // Clear cookies
-      document.cookie = 'walletAddress=; path=/; max-age=0';
-      
-      console.log('All wallets disconnected, cleared connection data');
-    }
   }
 
   const handleSubmit = async () => {
@@ -806,11 +799,31 @@ export default function LoginModal() {
 
     // If we already have a user session, try to resume the saved stage
     if (session?.user) {
-      const saved = localStorage.getItem('loginStage') as typeof stage | null
-      if (saved) {
-        setStage(saved)
-        localStorage.removeItem('loginStage')
+      const checkExistingProfile = async () => {
+        try {
+          // Check if user has already applied
+          const response = await fetch(`/api/user/profile?handle=${encodeURIComponent(session.user?.name || '')}`)
+          if (response.ok) {
+            const data = await response.json()
+            if (data.user && data.user.socialAccounts) {
+              // User has already applied, don't force them through the apply flow
+              console.log('User has existing profile, skipping apply flow')
+              return
+            }
+          }
+        } catch (error) {
+          console.error('Error checking existing profile:', error)
+        }
+        
+        // Only restore saved stage if user hasn't already applied
+        const saved = localStorage.getItem('loginStage') as typeof stage | null
+        if (saved && saved === 'social') {
+          setStage(saved)
+          localStorage.removeItem('loginStage')
+        }
       }
+      
+      checkExistingProfile()
     }
     
     // Check for Phantom mobile connection return
@@ -973,6 +986,32 @@ export default function LoginModal() {
       setErrorMessage("Failed to connect wallet. Please try again.");
     }
   };
+
+  // Load persisted wallet connections on mount
+  useEffect(() => {
+    const loadPersistedWallets = () => {
+      try {
+        const persistedWallets = localStorage.getItem('connectedWallets')
+        if (persistedWallets) {
+          const parsed = JSON.parse(persistedWallets)
+          setConnectedWallets(parsed)
+        }
+      } catch (error) {
+        console.error('Error loading persisted wallets:', error)
+      }
+    }
+    
+    loadPersistedWallets()
+  }, [])
+  
+  // Persist wallet connections whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets))
+    } catch (error) {
+      console.error('Error persisting wallets:', error)
+    }
+  }, [connectedWallets])
 
   if (stage === 'hidden') return null
 
