@@ -101,6 +101,12 @@ export default function LoginModal() {
   const [walletConnectionPending, setWalletConnectionPending] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   
+  // User profile state for cybernetic access permit
+  const [userProfile, setUserProfile] = useState<{
+    approvalStatus: 'pending' | 'approved' | 'rejected';
+    twitterHandle: string;
+  } | null>(null)
+  
   // Connected wallets state
   const [connectedWallets, setConnectedWallets] = useState<{
     coinbase: boolean;
@@ -113,6 +119,43 @@ export default function LoginModal() {
     metamask: false,
     addresses: {}
   })
+
+  // Fetch user profile when session changes
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!session?.user?.name) {
+        setUserProfile(null)
+        return
+      }
+      
+      try {
+        const handle = (session as any)?.twitterHandle || session.user.name
+        const normalizedHandle = handle.replace('@', '')
+        const res = await fetch(`/api/user/profile?handle=${encodeURIComponent(normalizedHandle)}`)
+        
+        if (res.ok) {
+          const data = await res.json()
+          console.log('User profile data:', data) // Debug log
+          
+          if (data.user) {
+            setUserProfile({
+              approvalStatus: data.user.approvalStatus || 'pending',
+              twitterHandle: data.user.twitterHandle || handle
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error)
+      }
+    }
+    
+    fetchUserProfile()
+    
+    // Poll for updates every 5 seconds to catch admin panel changes
+    const interval = setInterval(fetchUserProfile, 5000)
+    
+    return () => clearInterval(interval)
+  }, [session])
 
   // Update wallet state when Wagmi account changes
   useEffect(() => {
@@ -963,8 +1006,14 @@ export default function LoginModal() {
                     <div className="license-header text-xs uppercase font-bold tracking-widest">
                       CYBERNETIC ACCESS PERMIT
                     </div>
-                    <div className="license-hologram text-xs text-green-400 animate-pulse">
-                      [VERIFIED]
+                    <div className={`license-hologram text-xs animate-pulse ${
+                      userProfile?.approvalStatus === 'approved' ? 'text-green-400' : 
+                      userProfile?.approvalStatus === 'rejected' ? 'text-red-400' : 
+                      'text-yellow-400'
+                    }`}>
+                      [{userProfile?.approvalStatus === 'approved' ? 'VERIFIED' : 
+                        userProfile?.approvalStatus === 'rejected' ? 'DENIED' : 
+                        'PENDING'}]
                     </div>
                   </div>
                   
@@ -988,7 +1037,7 @@ export default function LoginModal() {
                     
                     <div className="license-data flex-1 text-xs flex flex-col gap-1">
                       <div className="license-field">
-                        <span className="opacity-70">HANDLE:</span> <span className="font-bold">@{session?.user?.name || 'unknown'}</span>
+                        <span className="opacity-70">HANDLE:</span> <span className="font-bold">@{userProfile?.twitterHandle?.replace('@', '') || (session as any)?.twitterHandle || session?.user?.name || 'unknown'}</span>
                       </div>
                       <div className="license-field">
                         <span className="opacity-70">ACCESS LEVEL:</span> <span className="font-bold">{isAdminWallet ? 'ADMIN' : 'USER'}</span>
@@ -997,7 +1046,14 @@ export default function LoginModal() {
                         <span className="opacity-70">ISSUED:</span> <span className="font-bold">{new Date().toLocaleDateString()}</span>
                       </div>
                       <div className="license-field">
-                        <span className="opacity-70">STATUS:</span> <span className="font-bold text-green-400 animate-pulse">ACTIVE</span>
+                        <span className="opacity-70">STATUS:</span> 
+                        <span className={`font-bold ${
+                          userProfile?.approvalStatus === 'approved' ? 'text-green-400 animate-pulse' : 
+                          userProfile?.approvalStatus === 'rejected' ? 'text-red-400' : 
+                          'text-yellow-400'
+                        }`}>
+                          {userProfile?.approvalStatus?.toUpperCase() || 'PENDING'}
+                        </span>
                       </div>
                     </div>
                   </div>
