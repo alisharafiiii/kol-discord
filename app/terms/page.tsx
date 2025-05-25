@@ -2,21 +2,22 @@
 
 import Header from '@/components/Header'
 import Link from 'next/link'
+import styles from '../page.module.css'
 
 export default function Terms() {
   return (
-    <main className="relative flex min-h-screen flex-col items-center bg-black font-mono text-green-300">
+    <main className="relative flex min-h-screen flex-col items-center bg-black font-mono text-green-300" style={{ fontFamily: 'Roboto Mono, monospace' }}>
       <Header />
       
       <div className="mt-10 max-w-2xl px-4 w-full">
-        <h1 className="text-2xl mb-8 text-center text-white">𓁺 terms & conditions 𓁺</h1>
-        <p className="text-sm mb-8 text-center">last updated: {new Date().toLocaleDateString()}</p>
+        <h1 className="text-2xl mb-8 text-center text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>𓁺 terms & conditions 𓁺</h1>
+        <p className="text-sm mb-8 text-center" style={{ fontFamily: 'Roboto Mono, monospace' }}>last updated: {new Date().toLocaleDateString()}</p>
         
-        <div className="space-y-8 text-sm leading-relaxed text-center">
+        <div className="space-y-8 text-sm leading-relaxed text-center" style={{ fontFamily: 'Roboto Mono, monospace' }}>
           <p className="italic">by connecting your wallet/x using this site, or even lurking — you agree to the following. no exceptions, no excuses.</p>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">⚠︎ this ain't advice</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>⚠︎ this ain't advice</h2>
             <ul className="space-y-2">
               <li className="text-white">𓂀 not financial advice</li>
               <li className="text-white">𓂀 not legal advice</li>
@@ -26,7 +27,7 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">♱ your wallet, your risk</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>♱ your wallet, your risk</h2>
             <p>you connect — you consent.</p>
             <p>we don't store keys.</p>
             <p>we don't hold tokens.</p>
@@ -34,7 +35,7 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">࿇ no promises</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>࿇ no promises</h2>
             <p>we don't owe you an airdrop.</p>
             <p>we don't owe you a pump.</p>
             <p>we might build cool shit.</p>
@@ -42,7 +43,7 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">𓆩 onchain = on record 𓆪</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>𓆩 onchain = on record 𓆪</h2>
             <p>every move onchain is public.</p>
             <p>we might display your activity.</p>
             <p>so will others.</p>
@@ -50,7 +51,7 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">⚠︎ data? nah</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>⚠︎ data? nah</h2>
             <p>no personal info.</p>
             <p>no creepy cookies.</p>
             <p>no web2 tracking.</p>
@@ -58,14 +59,14 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">♱ laws exist (unfortunately)</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>♱ laws exist (unfortunately)</h2>
             <p>your region = your responsibility.</p>
             <p>if your local laws say crypto is bad,</p>
             <p>close this tab and pretend you never came.</p>
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">𓂀 don't be a bozo</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>𓂀 don't be a bozo</h2>
             <p>no scams.</p>
             <p>no hate.</p>
             <p>no spam.</p>
@@ -73,7 +74,7 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">⚠︎ use at your own risk</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>⚠︎ use at your own risk</h2>
             <p>bugs. exploits. rugs.</p>
             <p>we ship fast, break stuff, and fix it later.</p>
             <p>this is experimental.</p>
@@ -81,20 +82,22 @@ export default function Terms() {
           </section>
           
           <section>
-            <h2 className="text-lg mb-4 text-white">𓁹 tl;dr</h2>
+            <h2 className="text-lg mb-4 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>𓁹 tl;dr</h2>
             <p>by using this, you agree to all of the above.</p>
             <p>don't agree?</p>
             <p>then don't click anything.</p>
           </section>
           
-          <p className="text-center text-lg mt-12 text-white">𓆩 stay sovereign. stay spooky. stay degen. 𓆪</p>
+          <p className="text-center text-lg mt-12 text-white" style={{ fontFamily: 'Roboto Mono, monospace' }}>𓆩 stay sovereign. stay spooky. stay degen. 𓆪</p>
         </div>
         
         <div className="mt-12 text-center">
           <Link href="/">
-            <button className="px-6 py-3 text-sm border border-green-300 rounded hover:bg-green-800">
-              Back to Home
-            </button>
+            <div className={styles.buttonContainer}>
+              <button className={`${styles.buttonGlitch} ${styles.regularButton}`} style={{ fontFamily: 'Roboto Mono, monospace' }}>
+                <span>Back to Home</span>
+              </button>
+            </div>
           </Link>
         </div>
       </div>

@@ -1,9 +1,14 @@
 'use client'
 import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 export default function Header() {
   const { data: session } = useSession()
-  if (!session?.user) return null
+  const pathname = usePathname()
+  
+  // Don't show header on landing page
+  if (pathname === '/' || !session?.user) return null
+  
   return (
     <div className="absolute top-4 right-4 flex items-center gap-2">
       <img 

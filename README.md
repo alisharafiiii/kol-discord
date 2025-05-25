@@ -48,6 +48,11 @@ FARCASTER_SIGNATURE=
 # Required for webhooks and background notifications
 REDIS_URL=
 REDIS_TOKEN=
+
+# Twitter Authentication
+TWITTER_CLIENT_ID=
+TWITTER_CLIENT_SECRET=
+TWITTER_BEARER_TOKEN=  # Required for fetching follower counts
 ```
 
 3. Start the development server:

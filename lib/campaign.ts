@@ -1,0 +1,287 @@
+import { redis } from './redis'
+import { nanoid } from 'nanoid'
+
+export interface KOL {
+  id: string
+  handle: string
+  name: string
+  stage: 'cancelled' | 'reached-out' | 'waiting-for-device' | 'waiting-for-brief' | 'posted' | 'preparing' | 'done'
+  device: 'preparing' | 'received' | 'N/A' | 'on-the-way' | 'sent-before'
+  budget: string // "free", "with device", or actual amount
+  /** Optional profile picture URL (e.g. from Twitter) */
+  pfp?: string
+  payment: 'approved' | 'paid' | 'pending' | 'rejected'
+  views: number
+  links: string[]
+  platform: string[] // array of platform names
+  contact?: string // contact link (email, telegram, etc)
+  tier?: 'hero' | 'star' | 'rising' | 'micro' // KOL tier/badge
+  addedBy?: string // handle of team member who added this KOL
+  lastUpdated?: string
+}
+
+export interface Campaign {
+  id: string
+  name: string
+  slug: string // URL-friendly version of name
+  startDate: string
+  endDate: string
+  projects: string[] // project IDs from scout
+  projectBudgets?: Record<string, { usd: string; devices: string }> // budgets per project
+  teamMembers: string[] // twitter handles with edit access
+  kols: KOL[]
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+  status: 'draft' | 'active' | 'completed' | 'cancelled'
+}
+
+// Generate URL-friendly slug from campaign name
+export function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 50)
+}
+
+// Create a new campaign
+export async function createCampaign(data: {
+  name: string
+  startDate: string
+  endDate: string
+  projects: string[]
+  projectBudgets?: Record<string, { usd: string; devices: string }>
+  teamMembers: string[]
+  createdBy: string
+}): Promise<Campaign> {
+  const id = `campaign:${nanoid()}`
+  const slug = generateSlug(data.name)
+  
+  // Check if slug already exists
+  let finalSlug = slug
+  let counter = 1
+  while (await redis.exists(`campaign:slug:${finalSlug}`)) {
+    finalSlug = `${slug}-${counter}`
+    counter++
+  }
+  
+  const campaign: Campaign = {
+    id,
+    name: data.name,
+    slug: finalSlug,
+    startDate: data.startDate,
+    endDate: data.endDate,
+    projects: data.projects,
+    projectBudgets: data.projectBudgets || {},
+    teamMembers: data.teamMembers,
+    kols: [],
+    createdBy: data.createdBy,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    status: 'draft'
+  }
+  
+  // Save campaign
+  await redis.json.set(id, '$', campaign as any)
+  
+  // Save slug mapping
+  await redis.set(`campaign:slug:${finalSlug}`, id)
+  
+  // Add to campaigns list
+  await redis.sadd('campaigns:all', id)
+  
+  // Add to creator's campaigns
+  await redis.sadd(`campaigns:creator:${data.createdBy}`, id)
+  
+  return campaign
+}
+
+// Get campaign by ID
+export async function getCampaign(id: string): Promise<Campaign | null> {
+  try {
+    const campaign = await redis.json.get(id, '$') as any
+    return campaign?.[0] || null
+  } catch {
+    return null
+  }
+}
+
+// Get campaign by slug
+export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
+  const id = await redis.get(`campaign:slug:${slug}`) as string | null
+  if (!id) return null
+  return getCampaign(id)
+}
+
+// Get all campaigns
+export async function getAllCampaigns(): Promise<Campaign[]> {
+  const ids = await redis.smembers('campaigns:all')
+  const campaigns: Campaign[] = []
+  
+  for (const id of ids) {
+    const campaign = await getCampaign(id)
+    if (campaign) campaigns.push(campaign)
+  }
+  
+  return campaigns.sort((a, b) => 
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
+}
+
+// Get campaigns for a specific user
+export async function getUserCampaigns(userHandle: string): Promise<Campaign[]> {
+  const allCampaigns = await getAllCampaigns()
+  
+  // Return campaigns where user is creator or team member
+  return allCampaigns.filter(campaign => 
+    campaign.createdBy === userHandle || 
+    campaign.teamMembers.includes(userHandle)
+  )
+}
+
+// Update campaign
+export async function updateCampaign(
+  id: string, 
+  updates: Partial<Campaign>,
+  userHandle: string
+): Promise<Campaign | null> {
+  const campaign = await getCampaign(id)
+  if (!campaign) return null
+  
+  // Check if user has permission to edit
+  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+    throw new Error('Unauthorized')
+  }
+  
+  // If name is being updated, update slug too
+  if (updates.name && updates.name !== campaign.name) {
+    const newSlug = generateSlug(updates.name)
+    let finalSlug = newSlug
+    let counter = 1
+    
+    // Check if new slug conflicts
+    while (await redis.exists(`campaign:slug:${finalSlug}`) && finalSlug !== campaign.slug) {
+      finalSlug = `${newSlug}-${counter}`
+      counter++
+    }
+    
+    // Delete old slug mapping
+    await redis.del(`campaign:slug:${campaign.slug}`)
+    
+    // Set new slug
+    updates.slug = finalSlug
+    await redis.set(`campaign:slug:${finalSlug}`, id)
+  }
+  
+  const updatedCampaign = {
+    ...campaign,
+    ...updates,
+    updatedAt: new Date().toISOString()
+  }
+  
+  await redis.json.set(id, '$', updatedCampaign as any)
+  return updatedCampaign
+}
+
+// Add KOL to campaign
+export async function addKOLToCampaign(
+  campaignId: string,
+  kol: Omit<KOL, 'id' | 'lastUpdated'>,
+  userHandle: string
+): Promise<Campaign | null> {
+  const campaign = await getCampaign(campaignId)
+  if (!campaign) return null
+  
+  // Check permissions
+  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+    throw new Error('Unauthorized')
+  }
+  
+  const newKOL: KOL = {
+    ...kol,
+    id: nanoid(),
+    addedBy: userHandle,
+    lastUpdated: new Date().toISOString()
+  }
+  
+  campaign.kols.push(newKOL)
+  campaign.updatedAt = new Date().toISOString()
+  
+  await redis.json.set(campaignId, '$', campaign as any)
+  return campaign
+}
+
+// Update KOL in campaign
+export async function updateKOLInCampaign(
+  campaignId: string,
+  kolId: string,
+  updates: Partial<KOL>,
+  userHandle: string
+): Promise<Campaign | null> {
+  const campaign = await getCampaign(campaignId)
+  if (!campaign) return null
+  
+  // Check permissions
+  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+    throw new Error('Unauthorized')
+  }
+  
+  const kolIndex = campaign.kols.findIndex(k => k.id === kolId)
+  if (kolIndex === -1) return null
+  
+  campaign.kols[kolIndex] = {
+    ...campaign.kols[kolIndex],
+    ...updates,
+    lastUpdated: new Date().toISOString()
+  }
+  
+  campaign.updatedAt = new Date().toISOString()
+  
+  await redis.json.set(campaignId, '$', campaign as any)
+  return campaign
+}
+
+// Remove KOL from campaign
+export async function removeKOLFromCampaign(
+  campaignId: string,
+  kolId: string,
+  userHandle: string
+): Promise<Campaign | null> {
+  const campaign = await getCampaign(campaignId)
+  if (!campaign) return null
+  
+  // Check permissions
+  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+    throw new Error('Unauthorized')
+  }
+  
+  campaign.kols = campaign.kols.filter(k => k.id !== kolId)
+  campaign.updatedAt = new Date().toISOString()
+  
+  await redis.json.set(campaignId, '$', campaign as any)
+  return campaign
+}
+
+// Delete campaign
+export async function deleteCampaign(id: string, userHandle: string): Promise<boolean> {
+  const campaign = await getCampaign(id)
+  if (!campaign) return false
+  
+  // Only creator can delete
+  if (campaign.createdBy !== userHandle) {
+    throw new Error('Unauthorized')
+  }
+  
+  // Delete campaign data
+  await redis.del(id)
+  
+  // Delete slug mapping
+  await redis.del(`campaign:slug:${campaign.slug}`)
+  
+  // Remove from lists
+  await redis.srem('campaigns:all', id)
+  await redis.srem(`campaigns:creator:${campaign.createdBy}`, id)
+  
+  return true
+} 

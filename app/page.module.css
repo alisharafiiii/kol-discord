@@ -19,13 +19,13 @@
 }
 
 .pixelFont {
-  font-family: 'Courier New', monospace;
+  font-family: 'Press Start 2P', monospace !important;
   letter-spacing: 4px;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
   transform: scale(1, 1.2);
-  font-size: 1.5em;
+  font-size: 3em;
   image-rendering: pixelated;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
@@ -48,4 +48,137 @@
 
 .matrixRain.active {
   opacity: 0.9;
+}
+
+/* Simple full-button pixelated glitch effect */
+@keyframes fullButtonGlitch {
+  /* Normal state - 90% of the time */
+  0%, 90%, 95%, 100% {
+    transform: translate(0, 0);
+    filter: none;
+    clip-path: none;
+    text-shadow: none;
+    letter-spacing: normal;
+    opacity: 1;
+    border: 2px solid #0F0;
+  }
+  
+  /* First glitch - fragmentation */
+  90.1% {
+    transform: translate(-3px, 2px);
+    filter: hue-rotate(90deg) contrast(1.5);
+    clip-path: inset(10% 0% 20% 0%);
+    text-shadow: -2px 0 #0FF, 2px 0 #F0F;
+    letter-spacing: -1px;
+    opacity: 0.9;
+    border-style: dashed;
+  }
+  
+  /* Second glitch - pixelation and skew */
+  90.3% {
+    transform: translate(3px, -2px) skew(-10deg, 5deg);
+    filter: hue-rotate(-90deg) saturate(2);
+    clip-path: inset(20% 10% 30% 10%);
+    text-shadow: 2px 1px #F0F, -1px -1px #0FF;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    border-width: 1px 3px 2px 1px;
+  }
+  
+  /* Third glitch - RGB split */
+  90.5% {
+    transform: translate(0, 3px) scale(1.05, 0.95);
+    filter: blur(1px) brightness(1.5);
+    clip-path: inset(5% 5% 5% 5%);
+    text-shadow: -3px 0 #F00, 0 2px #0F0, 3px 0 #00F;
+    letter-spacing: -2px;
+    opacity: 1;
+    border-style: solid;
+    border-width: 3px;
+    border-color: transparent;
+  }
+  
+  /* Fourth glitch - max distortion */
+  90.7% {
+    transform: translate(-5px, -3px) skew(15deg, -10deg) scale(1.1);
+    filter: saturate(2) contrast(2) brightness(1.2);
+    clip-path: polygon(10% 0%, 90% 10%, 100% 90%, 0% 100%);
+    text-shadow: 2px 2px #F0F, -2px -2px #0FF;
+    letter-spacing: 3px;
+    opacity: 0.85;
+    border: none;
+  }
+  
+  /* Recovery phase - still distorted but calming down */
+  91%, 91.5% {
+    transform: translate(2px, 1px) skew(-5deg, 3deg);
+    filter: hue-rotate(45deg) saturate(1.5);
+    clip-path: inset(5% 0% 5% 0%);
+    text-shadow: 1px 1px #0FF;
+    letter-spacing: normal;
+    opacity: 0.9;
+    border: 2px solid #0FF;
+  }
+  
+  /* Almost normal with slight flicker */
+  92%, 93%, 94% {
+    transform: translate(0, 0);
+    filter: none;
+    clip-path: none;
+    text-shadow: none;
+    letter-spacing: normal;
+    opacity: 0.95;
+    border: 2px solid #0F0;
+  }
+  
+  /* Brief final glitch */
+  94.2% {
+    transform: translate(1px, -1px);
+    filter: brightness(1.2);
+    opacity: 0.98;
+    text-shadow: 1px 0 rgba(0, 255, 0, 0.5);
+    border-color: #0F0;
+  }
+}
+
+.buttonContainer {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.buttonGlitch {
+  animation: fullButtonGlitch 15s infinite;
+  position: relative;
+  border: 2px solid #0F0;
+  background-color: black;
+  color: #0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+  overflow: visible;
+  font-size: 12px;
+  transition: background-color 0.2s, color 0.2s;
+  image-rendering: pixelated;
+}
+
+.buttonGlitch:hover {
+  background-color: #0F0;
+  color: black;
+}
+
+/* Adjust font size for pixel font button to ensure visual alignment */
+.pixelButton {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* Adjust font size for regular font button */
+.regularButton {
+  font-size: 9px;
+  letter-spacing: 0.1px;
 } 

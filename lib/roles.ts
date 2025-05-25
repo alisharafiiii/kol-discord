@@ -12,9 +12,12 @@ const ROLE_HASH_KEY = 'walletRoles'
 export async function setRole(wallet: string, role: Role): Promise<void> {
   if (!wallet) throw new Error('wallet is required')
   if (!ROLES.includes(role)) throw new Error(`invalid role: ${role}`)
-  // Normalise wallet addresses to lowercase so look-ups are consistent.
-  const key = wallet.trim()
-  await redis.hset(ROLE_HASH_KEY, { [key]: role })
+
+  const rawKey = wallet.trim()
+  const normalisedKey = rawKey.startsWith('0x') ? rawKey.toLowerCase() : rawKey
+
+  // Save under both keys for backwards-compat.
+  await redis.hset(ROLE_HASH_KEY, { [normalisedKey]: role, [rawKey]: role })
 }
 
 /**
@@ -22,8 +25,18 @@ export async function setRole(wallet: string, role: Role): Promise<void> {
  */
 export async function getRole(wallet: string): Promise<Role | null> {
   if (!wallet) return null
-  const key = wallet.trim()
-  const role = (await redis.hget(ROLE_HASH_KEY, key)) as Role | null
+
+  const rawKey = wallet.trim()
+  const normalisedKey = rawKey.startsWith('0x') ? rawKey.toLowerCase() : rawKey
+
+  // Try normalised key first
+  let role = (await redis.hget(ROLE_HASH_KEY, normalisedKey)) as Role | null
+
+  if (!role) {
+    // Fallback to raw key (legacy records)
+    role = (await redis.hget(ROLE_HASH_KEY, rawKey)) as Role | null
+  }
+
   return role
 }
 

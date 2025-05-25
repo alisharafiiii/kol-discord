@@ -11,8 +11,10 @@ import { identifyUser } from "@/lib/user-identity"
 interface PhantomProvider {
   solana?: {
     isPhantom?: boolean;
+    isConnected?: boolean;
     connect: () => Promise<{ publicKey: { toString: () => string } }>;
     disconnect: () => Promise<void>;
+    publicKey?: { toString: () => string };
   }
 }
 
@@ -21,10 +23,19 @@ interface MetaMaskProvider {
   request: (args: { method: string, params?: any[] }) => Promise<any>;
 }
 
-// Declare external interface for window.ethereum
-declare interface Window {
-  ethereum?: any;
-  phantom?: any;
+// Declare augmented window interface
+declare global {
+  interface Window {
+    ethereum?: any;
+    phantom?: PhantomProvider;
+    solana?: {
+      isPhantom?: boolean;
+      connect: (opts?: { onlyIfTrusted: boolean }) => Promise<{ publicKey: { toString: () => string } }>;
+      disconnect: () => Promise<void>;
+      publicKey?: { toString: () => string };
+      isConnected?: boolean;
+    };
+  }
 }
 
 const allCountries = getNames()
@@ -85,6 +96,10 @@ export default function LoginModal() {
   const router = useRouter()
   const taps = useRef(0)
   const timer = useRef<number>()
+  
+  // Wallet connection state
+  const [walletConnectionPending, setWalletConnectionPending] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   
   // Connected wallets state
   const [connectedWallets, setConnectedWallets] = useState<{
@@ -237,7 +252,30 @@ export default function LoginModal() {
   }
 
   // Check if admin wallet is connected
-  const isAdminWallet = 
+  const [isAdminRole, setIsAdminRole] = useState(false);
+
+  // Fetch role for any newly connected wallet
+  useEffect(() => {
+    const checkRole = async (addr?: string) => {
+      if (!addr) return;
+      try {
+        const res = await fetch(`/api/admin/check-role?wallet=${addr}`);
+        if (res.ok) {
+          const data = await res.json();
+          setIsAdminRole(data.role === 'admin');
+        }
+      } catch (e) {
+        console.error('Role check failed', e);
+      }
+    };
+
+    if (connectedWallets.coinbase) checkRole(connectedWallets.addresses.coinbase);
+    else if (connectedWallets.phantom) checkRole(connectedWallets.addresses.phantom);
+    else if (connectedWallets.metamask) checkRole(connectedWallets.addresses.metamask);
+  }, [connectedWallets]);
+
+  // Check if admin wallet is connected (hardcoded OR role)
+  const isAdminWallet = isAdminRole || (
     connectedWallets.coinbase && connectedWallets.addresses.coinbase === ADMIN_WALLET_ETH ||
     connectedWallets.phantom && (
       connectedWallets.addresses.phantom === ADMIN_WALLET_SOLANA_1 || 
@@ -245,6 +283,7 @@ export default function LoginModal() {
       connectedWallets.addresses.phantom === ADMIN_WALLET_SOLANA_3
     ) ||
     connectedWallets.metamask && connectedWallets.addresses.metamask === ADMIN_WALLET_ETH
+  );
 
   // Helper to mask wallet addresses
   const maskAddress = (addr: string) => `${addr.slice(0,4)}...${addr.slice(-4)}`
@@ -256,32 +295,51 @@ export default function LoginModal() {
   const connectCoinbaseWallet = async () => {
     try {
       setWalletConnectionPending(true);
+      setErrorMessage(''); // Clear any previous error
       
       // Try to find the Coinbase Wallet connector, fallback to the first connector
       const connector = connectors.find(c => c.id === 'coinbaseWallet') ?? connectors[0]
       if (!connector) {
         console.error('No wallet connectors available')
-        alert('No wallet connectors available. Please install a supported wallet.')
+        setErrorMessage('No wallet connectors available. Please install a supported wallet.');
+        setWalletConnectionPending(false);
         return
       }
-      connect({ connector })
       
-      // After successful connection:
-      // Use identity management to find or create user
-      const walletData = {
-        walletAddresses: {
-          coinbase: address
-        },
-        role: "user" as const
-      };
+      // Set a timeout to handle cases where the connection hangs
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Connection timed out. Please try again.')), 20000);
+      });
       
-      await identifyUser(walletData);
+      // Connect with a timeout
+      const connectionPromise = connect({ connector });
       
-      // Continue with existing success logic...
-      
+      try {
+        await Promise.race([connectionPromise, timeoutPromise]);
+        
+        // After successful connection:
+        // Use identity management to find or create user if we have an address
+        if (address) {
+          const walletData = {
+            walletAddresses: {
+              coinbase: address
+            },
+            role: "user" as const
+          };
+          
+          await identifyUser(walletData);
+        }
+        
+        setWalletConnectionPending(false);
+      } catch (timeoutError) {
+        console.error('Coinbase wallet connection timed out:', timeoutError);
+        setErrorMessage('Connection timed out. Please try again.');
+        setWalletConnectionPending(false);
+      }
     } catch (error) {
       console.error('Error connecting Coinbase wallet:', error)
-      alert('Failed to connect Coinbase wallet. Please try again.')
+      setErrorMessage('Failed to connect Coinbase wallet. Please try again.');
+      setWalletConnectionPending(false);
     }
   }
 
@@ -289,25 +347,85 @@ export default function LoginModal() {
   const connectPhantomWallet = async () => {
     try {
       setWalletConnectionPending(true);
+      setErrorMessage(''); // Clear any previous errors
       
       // Check if we're on a mobile device
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      console.log('Connecting Phantom wallet on:', isMobile ? 'mobile' : 'desktop');
+      const isBrave = navigator.userAgent.includes('Brave') || (window.navigator as any).brave;
       
-      // Try to use Phantom wallet adapter for a consistent experience
-      const phantomAdapter = new PhantomWalletAdapter();
+      console.log('Connecting Phantom wallet on:', 
+        isMobile ? 'mobile' : 'desktop', 
+        isBrave ? '(Brave browser)' : ''
+      );
       
-      // Check if we're on desktop, try browser extension first
-      if (!isMobile && typeof window !== 'undefined' && window.phantom?.solana) {
-        console.log('Using Phantom browser extension');
+      // First, detect if Phantom is properly installed
+      const isPhantomInstalled = window.phantom?.solana && window.phantom.solana.isPhantom;
+      
+      // Check if we're in Phantom's in-app browser (mobile)
+      const isPhantomMobileBrowser = isMobile && window.solana && (window.solana as any).isPhantom;
+      
+      if (!isPhantomInstalled && !isPhantomMobileBrowser) {
+        console.error('Phantom wallet not detected or not properly installed');
+        
+        // Different message based on device
+        if (isMobile) {
+          setErrorMessage('Please open this site in the Phantom app browser to connect your wallet.');
+          setWalletConnectionPending(false);
+          
+          // Create deep link to open in Phantom app
+          const currentUrl = window.location.href;
+          const encodedUrl = encodeURIComponent(currentUrl);
+          const ref = encodeURIComponent(window.location.origin);
+          // Use the correct Phantom deep link format that opens in their browser
+          const phantomDeepLink = `https://phantom.app/ul/v1/browse/${encodedUrl}?ref=${ref}`;
+          
+          // Offer to open in Phantom app
+          if (confirm('Would you like to open this site in the Phantom app browser?')) {
+            window.location.href = phantomDeepLink;
+          }
+          return;
+        } else {
+          setErrorMessage('Phantom wallet not detected. Please install the Phantom extension and reload this page.');
+          setWalletConnectionPending(false);
+          
+          // Offer to install extension
+          if (confirm('Phantom wallet not detected. Would you like to install the Phantom extension?')) {
+            window.open('https://phantom.app/download', '_blank');
+          }
+          return;
+        }
+      }
+      
+      // Get the correct wallet reference (mobile or desktop)
+      const phantomWallet = isPhantomMobileBrowser ? 
+        (window.solana as any) : 
+        window.phantom?.solana;
+      
+      if (phantomWallet && typeof phantomWallet.connect === 'function') {
         try {
-          // Connect to Phantom wallet via extension
-          const response = await window.phantom.solana.connect();
+          // Always request connection explicitly - never auto-connect
+          console.log('Requesting Phantom wallet connection...');
+          
+          // Attempt to connect with added timeout to prevent hanging
+          const connectionPromise = phantomWallet.connect({ onlyIfTrusted: false });
+          
+          // Set a timeout for the connection attempt
+          const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Connection timed out')), 15000);
+          });
+          
+          // Race the connection against a timeout
+          const response = await Promise.race([connectionPromise, timeoutPromise]) as { publicKey: { toString: () => string } };
+          
+          if (!response || !response.publicKey) {
+            throw new Error('No public key returned from wallet');
+          }
+          
           const publicKey = response.publicKey.toString();
+          console.log('Connected to Phantom with public key:', publicKey);
           
-          console.log('Connected to Phantom extension with public key:', publicKey);
-          
-          // Update our state with the connected Phantom wallet
+          // Update our state with the connected Phantom wallet FIRST
+          // This ensures the UI shows connected even if the API call fails
           setConnectedWallets(prev => ({
             ...prev,
             phantom: true,
@@ -317,45 +435,15 @@ export default function LoginModal() {
             }
           }));
           
+          // Store wallet connection in localStorage and cookies
+          localStorage.setItem('walletAddress', publicKey);
+          localStorage.setItem('walletType', 'phantom');
+          document.cookie = `walletAddress=${publicKey}; path=/; max-age=3600`;
+          
           // After successful connection:
           // Use identity management to find or create user
-          const walletData = {
-            walletAddresses: {
-              phantom: publicKey
-            },
-            role: "user" as const
-          };
-          
-          await identifyUser(walletData);
-        } catch (error) {
-          console.error('Phantom extension connection error:', error);
-          throw error;
-        }
-      } 
-      // Otherwise try the adapter approach which works cross-platform
-      else {
-        console.log('Using Phantom adapter approach');
-        // Using adapter
-        try {
-          // Connect using the adapter
-          await phantomAdapter.connect();
-          
-          if (phantomAdapter.publicKey) {
-            const publicKey = phantomAdapter.publicKey.toString();
-            console.log('Connected to Phantom with public key:', publicKey);
-            
-            // Update our state with the connected Phantom wallet
-            setConnectedWallets(prev => ({
-              ...prev,
-              phantom: true,
-              addresses: {
-                ...prev.addresses,
-                phantom: publicKey
-              }
-            }));
-            
-            // After successful connection:
-            // Use identity management to find or create user
+          // But wrap in try/catch to handle API failures gracefully
+          try {
             const walletData = {
               walletAddresses: {
                 phantom: publicKey
@@ -364,50 +452,38 @@ export default function LoginModal() {
             };
             
             await identifyUser(walletData);
+          } catch (identifyError) {
+            console.error('Error identifying user after wallet connection:', identifyError);
+            // Don't show error to user since the wallet is connected
+            // Just log it for debugging
           }
-        } catch (adapterError) {
-          console.error('Phantom adapter connection error:', adapterError);
           
-          // If adapter doesn't work and we're on mobile, try direct deep linking
-          if (isMobile) {
-            console.log('Falling back to deep linking for mobile');
-            // Get the current URL to use as a redirect
-            const currentUrl = window.location.href;
-            
-            // Encode the return URL - make sure it's the base URL without params
-            const baseUrl = window.location.origin + window.location.pathname;
-            const encodedUrl = encodeURIComponent(baseUrl);
-            
-            // Create the deep link to Phantom
-            const phantomDeepLink = `https://phantom.app/ul/browse/${encodedUrl}`;
-            
-            // Save state so we know what we're doing when we come back
-            localStorage.setItem('loginStage', 'wallet');
-            
-            // We need to redirect to the Phantom app
-            console.log('Redirecting to Phantom mobile app...');
-            window.location.href = phantomDeepLink;
+          setWalletConnectionPending(false);
+        } catch (error: any) {
+          console.error('Phantom connection error:', error);
+          
+          // Check for specific error types
+          if (error.message === 'Connection timed out') {
+            setErrorMessage('Connection to Phantom wallet timed out. Please try again.');
+          } else if (error.message?.includes('User rejected')) {
+            setErrorMessage('Connection rejected. Please approve the connection request in Phantom.');
           } else {
-            // Re-throw on desktop to be caught by the outer try/catch
-            throw adapterError;
+            setErrorMessage(`Failed to connect: ${error.message || 'Unknown error'}`);
           }
-        }
-      }
-    } catch (error) {
-      console.error('Phantom wallet connection error:', error);
-      
-      // Check if we're on mobile
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        // On mobile, offer to download Phantom
-        if (confirm('Phantom wallet connection failed. Would you like to download the Phantom app?')) {
-          window.location.href = 'https://phantom.app/download';
+          
+          setWalletConnectionPending(false);
+          return;
         }
       } else {
-        // On desktop, prompt to install extension
-        alert('Failed to connect Phantom wallet. Please ensure the Phantom extension is installed and unlocked.');
+        console.error('Phantom wallet detected but connect method not available');
+        setErrorMessage('Phantom wallet is locked or not properly initialized. Please unlock your wallet and try again.');
+        setWalletConnectionPending(false);
+        return;
       }
+    } catch (error: any) {
+      console.error('Phantom wallet connection error:', error);
+      setErrorMessage('Failed to connect Phantom wallet. Please ensure the extension is installed, unlocked, and try again.');
+      setWalletConnectionPending(false);
     }
   }
 
@@ -559,6 +635,22 @@ export default function LoginModal() {
         addresses: newAddresses
       }
     })
+    
+    // Clear wallet connection status in localStorage and cookies if we have no connected wallets left
+    const noWalletsLeft = Object.values(connectedWallets).every(val => 
+      typeof val === 'boolean' ? !val : true
+    );
+    
+    if (noWalletsLeft) {
+      // Clear all wallet connection data
+      localStorage.removeItem('walletAddress');
+      localStorage.removeItem('walletType');
+      
+      // Clear cookies
+      document.cookie = 'walletAddress=; path=/; max-age=0';
+      
+      console.log('All wallets disconnected, cleared connection data');
+    }
   }
 
   const handleSubmit = async () => {
@@ -816,7 +908,7 @@ export default function LoginModal() {
       // Update state with user info
       setConnectedWallets(prev => ({
         ...prev,
-        [walletType === 'coinbase' ? 'coinbase' : false,
+        ...(walletType === 'coinbase' ? { coinbase: true } : {}),
         [walletType]: true,
         addresses: {
           ...prev.addresses,
@@ -824,8 +916,13 @@ export default function LoginModal() {
         }
       }));
       
-      // Close modal if needed
-      if (onSuccess) onSuccess(user);
+      // Store wallet connection status in localStorage and cookies for security checks
+      // But keep it simple with just the bare minimum
+      localStorage.setItem('walletAddress', walletAddress);
+      localStorage.setItem('walletType', walletType);
+      
+      // Set cookies for server-side access - only basic info
+      document.cookie = `walletAddress=${walletAddress}; path=/; max-age=3600`;
       
       console.log(`User ${isNewUser ? 'created' : 'updated'} with wallet address: ${walletAddress}`);
     } catch (error) {
@@ -978,12 +1075,16 @@ export default function LoginModal() {
             <div className="border border-green-300 p-3">
               <label className="text-xs uppercase block mb-2">Coinbase Wallet</label>
               {!connectedWallets.coinbase ? (
-                <button 
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={connectCoinbaseWallet}
-                >
-                  Connect Coinbase Wallet
-                </button>
+                <div>
+                  <button 
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={connectCoinbaseWallet}
+                    disabled={walletConnectionPending}
+                  >
+                    {walletConnectionPending ? 'Connecting...' : 'Connect Coinbase Wallet'}
+                  </button>
+                  {errorMessage && <p className="text-red-500 text-xs mt-1">{errorMessage}</p>}
+                </div>
               ) : (
                 <div className="flex items-center">
                   <div className="flex-1">
@@ -1004,12 +1105,16 @@ export default function LoginModal() {
             <div className="border border-green-300 p-3">
               <label className="text-xs uppercase block mb-2">Phantom Wallet</label>
               {!connectedWallets.phantom ? (
-                <button 
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={connectPhantomWallet}
-                >
-                  Connect Phantom Wallet
-                </button>
+                <div>
+                  <button 
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={connectPhantomWallet}
+                    disabled={walletConnectionPending}
+                  >
+                    {walletConnectionPending ? 'Connecting...' : 'Connect Phantom Wallet'}
+                  </button>
+                  {errorMessage && <p className="text-red-500 text-xs mt-1">{errorMessage}</p>}
+                </div>
               ) : (
                 <div className="flex items-center">
                   <div className="flex-1">
@@ -1314,12 +1419,16 @@ export default function LoginModal() {
             <div className="border border-green-300 p-3">
               <label className="text-xs uppercase block mb-2">Coinbase Wallet</label>
               {!connectedWallets.coinbase ? (
-                <button 
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={connectCoinbaseWallet}
-                >
-                  Connect Coinbase Wallet
-                </button>
+                <div>
+                  <button 
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={connectCoinbaseWallet}
+                    disabled={walletConnectionPending}
+                  >
+                    {walletConnectionPending ? 'Connecting...' : 'Connect Coinbase Wallet'}
+                  </button>
+                  {errorMessage && <p className="text-red-500 text-xs mt-1">{errorMessage}</p>}
+                </div>
               ) : (
                 <div className="flex items-center">
                   <div className="flex-1">
@@ -1340,12 +1449,16 @@ export default function LoginModal() {
             <div className="border border-green-300 p-3">
               <label className="text-xs uppercase block mb-2">Phantom Wallet</label>
               {!connectedWallets.phantom ? (
-                <button 
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={connectPhantomWallet}
-                >
-                  Connect Phantom Wallet
-                </button>
+                <div>
+                  <button 
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={connectPhantomWallet}
+                    disabled={walletConnectionPending}
+                  >
+                    {walletConnectionPending ? 'Connecting...' : 'Connect Phantom Wallet'}
+                  </button>
+                  {errorMessage && <p className="text-red-500 text-xs mt-1">{errorMessage}</p>}
+                </div>
               ) : (
                 <div className="flex items-center">
                   <div className="flex-1">

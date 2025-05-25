@@ -3,15 +3,15 @@ import type { Metadata } from 'next'
 import WagmiProvider from '@/components/WagmiProvider'
 import OnchainKitProvider from '@/components/OnchainKitProvider'
 import SessionWrap from '@/components/SessionWrap'
-import { Wallet } from '@coinbase/onchainkit/wallet'
 import { Inter } from 'next/font/google'
 import UserIdentityManager from '@/components/UserIdentityManager'
+import { pressStart2P, ibmPlexMono } from './fonts'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'nabulines kol platform',
-  description: 'retro kol connector',
+  title: 'NABULINES',
+  description: 'A retro cyberpunk KOL connector application',
 }
 
 export default function RootLayout({
@@ -20,15 +20,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${inter.className} ${pressStart2P.variable} ${ibmPlexMono.variable}`}>
+      <body>
         <SessionWrap>
           <WagmiProvider>
             <OnchainKitProvider>
-              <Wallet appName="kol">
-                {children}
-                <UserIdentityManager />
-              </Wallet>
+              {children}
+              <UserIdentityManager />
             </OnchainKitProvider>
           </WagmiProvider>
         </SessionWrap>

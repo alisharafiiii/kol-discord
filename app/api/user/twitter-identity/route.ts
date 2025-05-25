@@ -1,43 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth-options';
 import { identifyUser } from '@/lib/user-identity';
 
 /**
  * API endpoint to handle Twitter-based identity management
- * This will find or create a user based on Twitter handle
  */
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
-    const { twitterHandle, name, profileImageUrl } = data;
+    // Get the user's session
+    const session = await getServerSession(authOptions);
     
-    if (!twitterHandle) {
-      return NextResponse.json(
-        { error: 'Twitter handle is required' },
-        { status: 400 }
-      );
+    // Check if we have a logged in user with Twitter data
+    if (!session?.user) {
+      return NextResponse.json({ 
+        error: 'No authenticated session found',
+        identity: null 
+      }, { status: 401 });
     }
     
-    // Create Twitter data
-    const twitterData = {
-      twitterHandle,
-      name: name || twitterHandle,
-      profileImageUrl,
-      role: "user" as const,
-      socialAccounts: {
-        twitter: {
-          handle: twitterHandle.replace('@', ''),
-          followers: 0 // We would need to fetch this separately
+    // Extract Twitter data from session
+    const { name, image } = session.user;
+    // Get Twitter handle from token if available
+    const twitterHandle = (session as any)?.twitterHandle || name;
+    
+    if (twitterHandle) {
+      // Create Twitter data - DO NOT include role or approvalStatus to preserve admin settings
+      const twitterData = {
+        twitterHandle: twitterHandle.startsWith('@') ? twitterHandle : `@${twitterHandle}`,
+        name: name || twitterHandle,
+        profileImageUrl: image || undefined,
+        socialAccounts: {
+          twitter: {
+            handle: twitterHandle.replace('@', ''),
+            followers: 0 // We would need to fetch this separately
+          }
         }
-      }
-    };
+      };
+      
+      // Identify or create user
+      const { user, isNewUser } = await identifyUser(twitterData);
+      
+      return NextResponse.json({
+        success: true,
+        identity: {
+          name: user.name,
+          username: twitterHandle,
+          profile_image_url: user.profileImageUrl || image,
+          approvalStatus: user.approvalStatus || 'pending'
+        },
+        isNewUser
+      });
+    }
     
-    // Identify or create user
-    const { user, isNewUser } = await identifyUser(twitterData);
-    
+    // Return session data even if we couldn't process it fully
     return NextResponse.json({
       success: true,
-      user,
-      isNewUser
+      identity: {
+        name: session.user.name,
+        username: (session.user as any)?.username || session.user.name,
+        profile_image_url: session.user.image,
+        approvalStatus: 'pending'
+      }
     });
   } catch (error) {
     console.error('Error in Twitter identity API:', error);

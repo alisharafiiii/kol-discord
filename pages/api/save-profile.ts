@@ -1,4 +1,4 @@
-import { saveProfile, InfluencerProfile } from '../../lib/redis'
+import { saveProfileWithDuplicateCheck, InfluencerProfile } from '../../lib/redis'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -12,13 +12,15 @@ export default async function handler(
   try {
     const formData = req.body
 
-    if (!formData.id) {
-      return res.status(400).json({ message: 'User ID is required' })
-    }
+    // Remove the ID requirement - we'll generate it based on Twitter handle
+    // if (!formData.id) {
+    //   return res.status(400).json({ message: 'User ID is required' })
+    // }
 
-    // Create profile object
-    const profile: InfluencerProfile = {
-      id: formData.id,
+    // Create profile object without specifying ID - let the system handle it
+    const profile: Partial<InfluencerProfile> = {
+      // Remove the hardcoded ID - the duplicate check will handle this
+      // id: formData.id,
       name: formData.name,
       twitterHandle: formData.twitterHandle,
       profileImageUrl: formData.profileImageUrl,
@@ -40,9 +42,10 @@ export default async function handler(
       role: 'user',
     }
 
-    await saveProfile(profile)
+    // Use saveProfileWithDuplicateCheck to prevent duplicate creation
+    const savedProfile = await saveProfileWithDuplicateCheck(profile as InfluencerProfile)
 
-    return res.status(200).json({ success: true })
+    return res.status(200).json({ success: true, profile: savedProfile })
   } catch (error) {
     console.error('Error saving profile:', error)
     return res.status(500).json({ message: 'Failed to save profile', error: String(error) })

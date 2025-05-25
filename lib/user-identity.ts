@@ -1,4 +1,5 @@
 import { redis, InfluencerProfile } from './redis';
+import { getRole } from './roles';
 
 /**
  * User identity management with priority-based matching:
@@ -7,13 +8,33 @@ import { redis, InfluencerProfile } from './redis';
  * 3. Other data is considered last
  */
 
+// Add a helper function to check if Redis is properly configured
+export function isRedisConfigured(): boolean {
+  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+}
+
+// Add graceful fallback for when Redis isn't available
+async function safeRedisOperation<T>(operation: () => Promise<T>, fallback: T): Promise<T> {
+  if (!isRedisConfigured()) {
+    console.warn('Redis is not properly configured, using fallback data');
+    return fallback;
+  }
+  
+  try {
+    return await operation();
+  } catch (error) {
+    console.error('Redis operation failed:', error);
+    return fallback;
+  }
+}
+
 /**
  * Find a user by username (Twitter handle)
  */
 export async function findUserByUsername(username: string): Promise<InfluencerProfile | null> {
   if (!username) return null;
   
-  try {
+  return safeRedisOperation(async () => {
     // Query by username index
     const userIds = await redis.smembers(`idx:username:${username.toLowerCase()}`);
     if (userIds && userIds.length > 0) {
@@ -21,10 +42,7 @@ export async function findUserByUsername(username: string): Promise<InfluencerPr
       return userData as InfluencerProfile;
     }
     return null;
-  } catch (error) {
-    console.error('Error finding user by username:', error);
-    return null;
-  }
+  }, null);
 }
 
 /**
@@ -33,7 +51,7 @@ export async function findUserByUsername(username: string): Promise<InfluencerPr
 export async function findUserByWallet(walletAddress: string): Promise<InfluencerProfile | null> {
   if (!walletAddress) return null;
   
-  try {
+  return safeRedisOperation(async () => {
     // Query by wallet index
     const userIds = await redis.smembers(`idx:wallet:${walletAddress.toLowerCase()}`);
     if (userIds && userIds.length > 0) {
@@ -60,10 +78,7 @@ export async function findUserByWallet(walletAddress: string): Promise<Influence
     }
     
     return null;
-  } catch (error) {
-    console.error('Error finding user by wallet:', error);
-    return null;
-  }
+  }, null);
 }
 
 /**
@@ -78,6 +93,36 @@ export async function identifyUser(
   userData: Partial<InfluencerProfile>
 ): Promise<{ user: InfluencerProfile; isNewUser: boolean }> {
   try {
+    // If Redis is not configured, create a temporary local user
+    if (!isRedisConfigured()) {
+      console.warn('Redis not configured, creating temporary local user');
+      const now = new Date().toISOString();
+      
+      // Create a simple local user based on the provided data
+      const localUser: InfluencerProfile = {
+        id: `local_${Date.now()}`,
+        name: userData.name || 'Local User',
+        role: userData.role || 'viewer',
+        approvalStatus: 'pending',
+        createdAt: now,
+        walletAddresses: userData.walletAddresses || {},
+        twitterHandle: userData.twitterHandle,
+        profileImageUrl: userData.profileImageUrl,
+      };
+      
+      // Store in local storage if in browser
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('localUser', JSON.stringify(localUser));
+        } catch (e) {
+          console.error('Failed to save local user to localStorage:', e);
+        }
+      }
+      
+      return { user: localUser, isNewUser: true };
+    }
+    
+    // Normal flow with Redis
     let existingUser: InfluencerProfile | null = null;
     
     // Priority 1: Try to match by username/Twitter handle
@@ -107,7 +152,19 @@ export async function identifyUser(
     }
   } catch (error) {
     console.error('Error identifying user:', error);
-    throw error;
+    
+    // Fallback to a minimal local user object when Redis fails
+    const now = new Date().toISOString();
+    const emergencyUser: InfluencerProfile = {
+      id: `emergency_${Date.now()}`,
+      name: userData.name || 'Emergency User',
+      role: userData.role || 'viewer',
+      approvalStatus: 'pending',
+      createdAt: now,
+      walletAddresses: userData.walletAddresses || {},
+    };
+    
+    return { user: emergencyUser, isNewUser: true };
   }
 }
 
@@ -136,10 +193,16 @@ async function updateUserProfile(
       }
     }
     
-    // Update other fields if they're provided
+    // Update other fields ONLY if they're provided (preserve existing values)
     if (newData.name) updatedUser.name = newData.name;
     if (newData.profileImageUrl) updatedUser.profileImageUrl = newData.profileImageUrl;
     if (newData.bio) updatedUser.bio = newData.bio;
+    
+    // CRITICAL: Only update role and approvalStatus if explicitly provided
+    // This prevents overwriting admin-set approval status during login
+    if (newData.role !== undefined) updatedUser.role = newData.role;
+    if (newData.approvalStatus !== undefined) updatedUser.approvalStatus = newData.approvalStatus;
+    
     if (newData.socialAccounts) {
       updatedUser.socialAccounts = {
         ...(updatedUser.socialAccounts || {}),
@@ -147,8 +210,13 @@ async function updateUserProfile(
       };
     }
     
+    // Always update the timestamp
+    updatedUser.updatedAt = new Date().toISOString();
+    
     // Save updated user back to Redis
     await redis.json.set(`user:${existingUser.id}`, '$', JSON.parse(JSON.stringify(updatedUser)));
+    
+    console.log(`Updated user ${existingUser.id}: preserved approvalStatus=${updatedUser.approvalStatus}, role=${updatedUser.role}`);
     
     return updatedUser;
   } catch (error) {
@@ -188,7 +256,7 @@ async function createNewUser(userData: Partial<InfluencerProfile>): Promise<Infl
       name: userData.name || 'Anonymous User',
       createdAt: now,
       updatedAt: now,
-      role: 'user',
+      role: userData.role || 'user',
       approvalStatus: 'pending',
       ...(userData as any)
     };
@@ -218,4 +286,225 @@ async function createNewUser(userData: Partial<InfluencerProfile>): Promise<Infl
     console.error('Error creating new user:', error);
     throw error;
   }
-} 
+}
+
+/**
+ * Check if a wallet has admin access
+ */
+export async function hasAdminAccess(wallet: string): Promise<boolean> {
+  if (!wallet) return false;
+  
+  // Check hardcoded admin wallets first
+  const ADMIN_WALLET_ETH = '0x37Ed24e7c7311836FD01702A882937138688c1A9'
+  const ADMIN_WALLET_SOLANA_1 = 'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq'
+  const ADMIN_WALLET_SOLANA_2 = 'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75'
+  const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif'
+  
+  // Different comparison for ETH vs Solana addresses
+  if (wallet.startsWith('0x') && wallet.toLowerCase() === ADMIN_WALLET_ETH.toLowerCase()) {
+    return true;
+  }
+  
+  if (wallet === ADMIN_WALLET_SOLANA_1 || 
+      wallet === ADMIN_WALLET_SOLANA_2 || 
+      wallet === ADMIN_WALLET_SOLANA_3) {
+    return true;
+  }
+  
+  try {
+    // Get the user role from Redis
+    const role = await getRole(wallet);
+    return role === 'admin';
+  } catch (error) {
+    console.error('Error checking admin access:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if a wallet has core access (admin or core role)
+ */
+export async function hasCoreAccess(wallet: string): Promise<boolean> {
+  if (!wallet) return false;
+  
+  // Admin wallets always have core access
+  if (await hasAdminAccess(wallet)) {
+    return true;
+  }
+  
+  try {
+    // Get the user role from Redis
+    const role = await getRole(wallet);
+    return role === 'admin' || role === 'core';
+  } catch (error) {
+    console.error('Error checking core access:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if a wallet has scout access (admin, core, or scout role)
+ */
+export async function hasScoutAccess(wallet: string): Promise<boolean> {
+  if (!wallet) return false;
+  
+  // Admin and core wallets always have scout access
+  if (await hasCoreAccess(wallet)) {
+    return true;
+  }
+  
+  try {
+    // Get the user role from Redis
+    const role = await getRole(wallet);
+    return role === 'admin' || role === 'core' || role === 'scout';
+  } catch (error) {
+    console.error('Error checking scout access:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if a wallet has any access level (including viewer)
+ */
+export async function hasAnyAccess(wallet: string): Promise<boolean> {
+  if (!wallet) return false;
+  
+  // Check if wallet has any role at all
+  try {
+    const role = await getRole(wallet);
+    return !!role; // Return true if role exists, false otherwise
+  } catch (error) {
+    console.error('Error checking viewer access:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if wallet has any of the specified roles
+ * @param walletAddress - The wallet address to check
+ * @param requiredRoles - Array of roles that provide access
+ * @returns Object with role and hasAccess properties
+ */
+export async function checkUserRole(walletAddress: string, requiredRoles: string[] = ['admin']) {
+  try {
+    if (!walletAddress) {
+      console.error('checkUserRole: No wallet address provided');
+      return { role: null, hasAccess: false };
+    }
+
+    // Debug log for troubleshooting
+    console.log('Role check - Original wallet:', JSON.stringify(walletAddress), '→', walletAddress.startsWith('0x') 
+      ? `Normalized: ${walletAddress.toLowerCase()}`
+      : `Trimmed: ${walletAddress.trim()}`);
+    
+    // Normalize wallet address - lowercase for ETH addresses
+    const normalizedWalletAddress = walletAddress.startsWith('0x')
+      ? walletAddress.toLowerCase()
+      : walletAddress.trim();
+      
+    // Debug wallet role check info
+    console.log('🔍 ROLE CHECK:', {
+      original: walletAddress,
+      normalized: normalizedWalletAddress,
+      isEVM: walletAddress.startsWith('0x'),
+      isSame: walletAddress === normalizedWalletAddress,
+      originalLength: walletAddress.length,
+      normalizedLength: normalizedWalletAddress.length,
+      requiredRoles
+    });
+    
+    let role: string | null = null;
+    
+    // PRIORITY 1: Check if user has a Twitter-based role
+    // Find user by wallet and check if they have a Twitter handle
+    const userIds = await redis.smembers(`idx:wallet:${normalizedWalletAddress}`);
+    if (userIds.length > 0) {
+      const userId = userIds[0];
+      const user = await redis.json.get(`user:${userId}`);
+      if (user && (user as any).twitterHandle) {
+        // User has Twitter handle, use their Twitter-based role
+        role = (user as any).role || 'user'; // Default to user for Twitter users
+        console.log(`✅ Found Twitter user with role: ${role}`);
+      }
+    }
+    
+    // PRIORITY 2: If no Twitter-based role, check wallet role (deprecated)
+    if (!role) {
+      // First, try legacy string key
+      const roleStringKey = await redis.get(`role:${normalizedWalletAddress}`);
+      if (roleStringKey) {
+        role = String(roleStringKey);
+        console.log('⚠️ Using deprecated wallet role:', role);
+      } else {
+        // Fallback to new hash storage
+        const hashRole = await getRole(normalizedWalletAddress);
+        if (hashRole) {
+          role = hashRole;
+          console.log('⚠️ Using deprecated wallet hash role:', role);
+        }
+      }
+    }
+    
+    // Check if the user's role is in the list of required roles
+    const hasAccess = role !== null && requiredRoles.includes(role);
+    
+    // Also check hardcoded admin wallets for backward compatibility
+    const ADMIN_WALLET_ETH = '0x37Ed24e7c7311836FD01702A882937138688c1A9';
+    const ADMIN_WALLET_SOLANA_1 = 'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq';
+    const ADMIN_WALLET_SOLANA_2 = 'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75';
+    const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif';
+    
+    // Check if wallet is a hardcoded admin
+    let isHardcodedAdmin = false;
+    
+    // For ETH addresses (case-insensitive comparison)
+    if (walletAddress.startsWith('0x') && walletAddress.toLowerCase() === ADMIN_WALLET_ETH.toLowerCase()) {
+      isHardcodedAdmin = true;
+      console.log('✅ Found hardcoded ETH admin wallet');
+    }
+    
+    // For Solana addresses (case-sensitive comparison)
+    if (walletAddress === ADMIN_WALLET_SOLANA_1 || 
+        walletAddress === ADMIN_WALLET_SOLANA_2 || 
+        walletAddress === ADMIN_WALLET_SOLANA_3) {
+      isHardcodedAdmin = true;
+      console.log('✅ Found hardcoded Solana admin wallet');
+    }
+    
+    // If hardcoded admin and 'admin' role is acceptable, grant access
+    if (isHardcodedAdmin && requiredRoles.includes('admin')) {
+      console.log('✅ Granting access to hardcoded admin wallet');
+      return { role: 'admin', hasAccess: true };
+    }
+    
+    console.log('🔑 Final role check result for', JSON.stringify(walletAddress) + ':', role, '(hasAccess:', hasAccess + ')');
+    
+    return { role, hasAccess };
+  } catch (error) {
+    console.error('Error in checkUserRole:', error);
+    return { role: null, hasAccess: false };
+  }
+}
+
+// Check if request has valid admin access
+export async function getUserIdFromWallet(walletAddress: string): Promise<string | null> {
+  try {
+    if (!walletAddress) return null;
+    
+    // Normalize wallet address
+    const normalizedWalletAddress = walletAddress.startsWith('0x')
+      ? walletAddress.toLowerCase()
+      : walletAddress;
+    
+    // Get user IDs associated with this wallet
+    const userIds = await redis.smembers(`idx:wallet:${normalizedWalletAddress}`);
+    
+    if (!userIds || userIds.length === 0) return null;
+    
+    // Return the first user ID (we assume a wallet is only associated with one user)
+    return userIds[0];
+  } catch (error) {
+    console.error('Error getting user ID from wallet:', error);
+    return null;
+  }
+}

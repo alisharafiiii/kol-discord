@@ -69,6 +69,8 @@ interface KOLProfile {
   audienceTypes?: string[] | string;
   walletAddresses?: Record<string, string>;
   socialAccounts?: Record<string, { handle?: string; followers?: number; subscribers?: number; } | unknown>;
+  profileImageUrl?: string;
+  bestCollabUrls?: string[]; // Add best collaboration URLs
 }
 
 // Constants for filter options
@@ -137,7 +139,7 @@ type BarChartOptions = ChartOptions<'bar'>;
 type PieChartOptions = ChartOptions<'pie'>;
 type DoughnutChartOptions = ChartOptions<'doughnut'>;
 
-type Tab = 'dashboard' | 'search' | 'leaderboard' | 'roles'
+type Tab = 'dashboard' | 'search' | 'leaderboard'
 
 // Helper function to safely get follower count from social accounts
 const getFollowerCount = (data: unknown): number => {
@@ -276,11 +278,13 @@ const getPlatformsDistribution = (users: KOLProfile[]) => {
 function ProfileModal({ 
   user, 
   onClose, 
-  onStatusChange 
+  onStatusChange,
+  onDelete 
 }: { 
   user: KOLProfile; 
   onClose: () => void; 
   onStatusChange: (userId: string, newStatus: 'approved' | 'pending' | 'rejected') => void;
+  onDelete: (userId: string) => void;
 }) {
   if (!user) return null;
   
@@ -300,8 +304,11 @@ function ProfileModal({
   // Get display follower count, prefer totalFollowers then followers
   const displayFollowers = user.totalFollowers || user.followers || 0;
   
-  // For debugging purposes, show all available properties
-  console.log('User profile details:', JSON.stringify(user, null, 2));
+  // Get profile image - check multiple sources for the image
+  const profileImageUrl = user.profileImageUrl || 
+    (user.socialAccounts?.twitter && typeof user.socialAccounts.twitter === 'object' && 'imageUrl' in user.socialAccounts.twitter 
+      ? user.socialAccounts.twitter.imageUrl as string 
+      : null);
   
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80">
@@ -309,7 +316,7 @@ function ProfileModal({
         className="absolute inset-0"
         onClick={onClose}
       ></div>
-      <div className="relative z-10 bg-black border-2 border-green-400 p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative z-10 bg-black border-2 border-green-400 p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <button 
           className="absolute top-2 right-2 text-green-300 hover:text-white"
           onClick={onClose}
@@ -317,183 +324,180 @@ function ProfileModal({
           ✕
         </button>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Basic Info */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-green-300 border-b border-green-300/50 pb-2">
-              {user.name}
+        {/* Profile Header with Image */}
+        <div className="flex flex-col md:flex-row items-center gap-6 border-b border-green-300/30 pb-6 mb-6">
+          {/* Profile Image */}
+          <div className="w-32 h-32 rounded-lg overflow-hidden border-2 border-green-400 flex items-center justify-center bg-black/50">
+            {profileImageUrl ? (
+              <img 
+                src={profileImageUrl} 
+                alt={user.name || 'Profile'} 
+                className="w-full h-full object-cover" 
+              />
+            ) : displayHandle.startsWith('@') ? (
+              <div className="text-4xl font-bold text-green-300">{displayHandle.substring(1, 3).toUpperCase()}</div>
+            ) : (
+              <div className="text-4xl font-bold text-green-300">{(user.name || "User").substring(0, 2).toUpperCase()}</div>
+            )}
+          </div>
+          
+          {/* Basic Profile Info */}
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-xl font-bold text-green-300 mb-2">
+              {user.name || 'Unnamed User'}
             </h2>
             
-            <div className="space-y-1">
-              <div className="flex">
-                <span className="font-bold mr-2 w-24">ID:</span>
-                <span>{user.id}</span>
-              </div>
-              
-              <div className="flex">
-                <span className="font-bold mr-2 w-24">Handle:</span>
-                <span>{displayHandle}</span>
-              </div>
-              
+            <div className="mb-2">
+              <span className="text-green-400">{displayHandle}</span>
               {displayFollowers > 0 && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Followers:</span>
-                  <span>{displayFollowers.toLocaleString()}</span>
-                </div>
-              )}
-              
-              <div className="flex">
-                <span className="font-bold mr-2 w-24">Status:</span>
-                <span className={`px-2 py-0.5 rounded ${
-                  user.approvalStatus === 'approved' 
-                    ? 'bg-green-900 text-green-300' 
-                    : user.approvalStatus === 'rejected'
-                      ? 'bg-red-900 text-red-300'
-                      : 'bg-yellow-900 text-yellow-300'
-                }`}>
-                  {user.approvalStatus || 'pending'}
-                </span>
-              </div>
-              
-              {/* Driver's License (ID) */}
-              <div className="flex">
-                <span className="font-bold mr-2 w-24">Drivers License:</span>
-                <span>{user.id || 'No ID available'}</span>
-              </div>
-              
-              {user.email && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Email:</span>
-                  <span>{user.email}</span>
-                </div>
-              )}
-              
-              {user.role && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Role:</span>
-                  <span className="uppercase">{user.role}</span>
-                </div>
-              )}
-              
-              {user.country && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Country:</span>
-                  <span>{typeof user.country === 'string' ? user.country : Array.isArray(user.country) ? user.country.join(', ') : 'Unknown'}</span>
-                </div>
-              )}
-              
-              {user.createdAt && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">Created:</span>
-                  <span>{formatDate(user.createdAt)}</span>
-                </div>
-              )}
-              
-              {/* FinGenius Metrics */}
-              {user.roiPoints && (
-                <div className="flex">
-                  <span className="font-bold mr-2 w-24">ROI Points:</span>
-                  <span>{user.roiPoints}</span>
-                </div>
+                <span className="text-sm ml-2">({displayFollowers.toLocaleString()} followers)</span>
               )}
             </div>
             
-            {/* Admin Actions */}
-            <div className="space-y-2 mt-4">
-              <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Admin Actions</h3>
-              <div className="flex gap-2">
-                <button 
-                  className="px-2 py-1 border border-green-500 text-green-400 hover:bg-green-900/30"
-                  onClick={() => onStatusChange(user.id, 'approved')}
-                >
-                  Approve
-                </button>
-                <button 
-                  className="px-2 py-1 border border-yellow-500 text-yellow-400 hover:bg-yellow-900/30"
-                  onClick={() => onStatusChange(user.id, 'pending')}
-                >
-                  Mark Pending
-                </button>
-                <button 
-                  className="px-2 py-1 border border-red-500 text-red-400 hover:bg-red-900/30"
-                  onClick={() => onStatusChange(user.id, 'rejected')}
-                >
-                  Reject
-                </button>
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+              <span className={`px-2 py-0.5 rounded text-sm ${
+                user.approvalStatus === 'approved' 
+                  ? 'bg-green-900 text-green-300' 
+                  : user.approvalStatus === 'rejected'
+                    ? 'bg-red-900 text-red-300'
+                    : 'bg-yellow-900 text-yellow-300'
+              }`}>
+                {user.approvalStatus || 'pending'}
+              </span>
+              
+              {user.role && (
+                <span className="px-2 py-0.5 bg-purple-900 text-purple-300 rounded text-sm uppercase">
+                  {user.role}
+                </span>
+              )}
+              
+              {user.country && (
+                <span className="px-2 py-0.5 bg-blue-900 text-blue-300 rounded text-sm">
+                  {typeof user.country === 'string' ? user.country : Array.isArray(user.country) ? user.country.join(', ') : 'Unknown'}
+                </span>
+              )}
+            </div>
+          </div>
+          
+          {/* Admin Actions */}
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <button 
+                className="px-2 py-1 border border-green-500 text-green-400 hover:bg-green-900/30"
+                onClick={() => onStatusChange(user.id, 'approved')}
+              >
+                Approve
+              </button>
+              <button 
+                className="px-2 py-1 border border-yellow-500 text-yellow-400 hover:bg-yellow-900/30"
+                onClick={() => onStatusChange(user.id, 'pending')}
+              >
+                Pending
+              </button>
+              <button 
+                className="px-2 py-1 border border-red-500 text-red-400 hover:bg-red-900/30"
+                onClick={() => onStatusChange(user.id, 'rejected')}
+              >
+                Reject
+              </button>
+            </div>
+            <button 
+              className="px-2 py-1 border border-red-700 text-red-600 hover:bg-red-900/50 w-full mt-2"
+              onClick={() => {
+                if (confirm(`Are you sure you want to delete user ${user.name || user.id}?`)) {
+                  onDelete(user.id)
+                }
+              }}
+            >
+              Delete User
+            </button>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Column - Identification & Metrics */}
+          <div className="space-y-6">
+            {/* User Identification */}
+            <div className="border border-green-400/30 p-4 rounded-sm">
+              <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">User Information</h3>
+              
+              <div className="space-y-2 text-sm">
+                {user.id && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">User ID:</span>
+                    <span className="text-green-200 break-all">{user.id}</span>
+                  </div>
+                )}
+                
+                {user.email && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">Email:</span>
+                    <span className="text-green-200">{user.email}</span>
+                  </div>
+                )}
+                
+                {user.createdAt && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">Joined:</span>
+                    <span className="text-green-200">{formatDate(user.createdAt)}</span>
+                  </div>
+                )}
               </div>
             </div>
             
             {/* Pricing Information */}
             {(user.pricePerPost || user.postPricePerPost || user.priceMonthly || user.monthlySupportBudget) && (
-              <div className="mt-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Pricing</h3>
-                <div className="space-y-1">
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Pricing</h3>
+                <div className="space-y-2 text-sm">
                   {(user.pricePerPost || user.postPricePerPost) && (
                     <div className="flex">
                       <span className="font-bold mr-2 w-24">Per Post:</span>
-                      <span>${user.pricePerPost || user.postPricePerPost}</span>
+                      <span className="text-green-200">${user.pricePerPost || user.postPricePerPost}</span>
                     </div>
                   )}
                   {(user.priceMonthly || user.monthlySupportBudget) && (
                     <div className="flex">
                       <span className="font-bold mr-2 w-24">Monthly:</span>
-                      <span>${user.priceMonthly || user.monthlySupportBudget}</span>
+                      <span className="text-green-200">${user.priceMonthly || user.monthlySupportBudget}</span>
                     </div>
                   )}
                 </div>
               </div>
             )}
-          </div>
-          
-          {/* Additional Info */}
-          <div className="space-y-4">
-            {/* Social Accounts */}
-            {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
-              <div className="col-span-2 mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Social Platforms</h3>
-                <div className="space-y-1">
-                  <div className="grid grid-cols-2 gap-2">
-                    {Object.entries(user.socialAccounts).map(([platform, account]) => (
-                      <div key={platform} className="flex items-center">
-                        <span className="font-bold mr-2 w-24 capitalize">{platform}:</span>
-                        <span>
-                          {account && typeof account === 'object' && 'handle' in account ? (
-                            <>
-                              {String(account.handle || 'No handle')}
-                              {'followers' in account && account.followers ? ` (${Number(account.followers).toLocaleString()} followers)` : ''}
-                              {'subscribers' in account && account.subscribers ? ` (${Number(account.subscribers).toLocaleString()} subscribers)` : ''}
-                            </>
-                          ) : (
-                            <span>Connected</span>
-                          )}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
             
-            {/* Wallet Addresses */}
-            {user.walletAddresses && Object.keys(user.walletAddresses).length > 0 && (
-              <div className="mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Wallet Addresses</h3>
-                <div className="space-y-1">
-                  {Object.entries(user.walletAddresses).map(([wallet, address]) => (
-                    <div key={wallet} className="flex items-start">
-                      <span className="font-bold mr-2 w-24 capitalize">{wallet}:</span>
-                      <span className="break-all">{address}</span>
-                    </div>
-                  ))}
-                </div>
+            {/* ROI & Metrics */}
+            <div className="border border-green-400/30 p-4 rounded-sm">
+              <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Metrics</h3>
+              <div className="space-y-2 text-sm">
+                {displayFollowers > 0 && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">Followers:</span>
+                    <span className="text-green-200">{displayFollowers.toLocaleString()}</span>
+                  </div>
+                )}
+                
+                {user.roiPoints && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">ROI Score:</span>
+                    <span className="text-green-200">{user.roiPoints}</span>
+                  </div>
+                )}
+                
+                {user.walletAddresses && (
+                  <div className="flex">
+                    <span className="font-bold mr-2 w-24">Wallets:</span>
+                    <span className="text-green-200">{Object.keys(user.walletAddresses).length}</span>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
             
             {/* Chains */}
             {user.chains && user.chains.length > 0 && (
-              <div className="mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Active Chains</h3>
-                <div className="flex flex-wrap gap-1">
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Active Chains</h3>
+                <div className="flex flex-wrap gap-2">
                   {Array.isArray(user.chains) ? 
                     user.chains.map(chain => (
                       <span key={chain} className="px-2 py-1 bg-green-900/50 text-xs rounded">
@@ -508,9 +512,9 @@ function ProfileModal({
             
             {/* Audience Types */}
             {user.audienceTypes && (
-              <div className="mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Audience Types</h3>
-                <div className="flex flex-wrap gap-1">
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Audience Types</h3>
+                <div className="flex flex-wrap gap-2">
                   {Array.isArray(user.audienceTypes) ? 
                     user.audienceTypes.map(type => (
                       <span key={type} className="px-2 py-1 bg-green-900/50 text-xs rounded">
@@ -525,9 +529,9 @@ function ProfileModal({
             
             {/* Content Types */}
             {user.contentType && (
-              <div className="mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Content Types</h3>
-                <div className="flex flex-wrap gap-1">
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Content Types</h3>
+                <div className="flex flex-wrap gap-2">
                   {Array.isArray(user.contentType) ? 
                     user.contentType.map(type => (
                       <span key={type} className="px-2 py-1 bg-green-900/50 text-xs rounded">
@@ -539,28 +543,150 @@ function ProfileModal({
                 </div>
               </div>
             )}
-            
-            {/* Admin Notes */}
-            {user.adminNotes && (
-              <div className="mb-4">
-                <h3 className="text-md border-b border-green-300/50 mb-2 pb-1">Admin Notes</h3>
-                <div className="text-sm whitespace-pre-wrap">{user.adminNotes}</div>
+          </div>
+          
+          {/* Right Column - Social & Wallet Info */}
+          <div className="space-y-6">
+            {/* Social Accounts with Icons */}
+            {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Social Platforms</h3>
+                <div className="space-y-3">
+                  {Object.entries(user.socialAccounts).map(([platform, account]) => {
+                    // Create icon element based on platform
+                    let icon = '🌐';
+                    
+                    if (platform.toLowerCase().includes('twitter')) icon = '𝕏';
+                    if (platform.toLowerCase().includes('instagram')) icon = '📷';
+                    if (platform.toLowerCase().includes('youtube')) icon = '▶️';
+                    if (platform.toLowerCase().includes('tiktok')) icon = '📱';
+                    if (platform.toLowerCase().includes('discord')) icon = '💬';
+                    if (platform.toLowerCase().includes('twitch')) icon = '🎮';
+                    if (platform.toLowerCase().includes('linkedin')) icon = '💼';
+                    if (platform.toLowerCase().includes('telegram')) icon = '📢';
+                    
+                    // Get follower count
+                    let followers = 0;
+                    if (account && typeof account === 'object') {
+                      if ('followers' in account && typeof account.followers === 'number') {
+                        followers = account.followers;
+                      } else if ('subscribers' in account && typeof account.subscribers === 'number') {
+                        followers = account.subscribers;
+                      }
+                    }
+                    
+                    // Get handle
+                    let handle = '';
+                    if (account && typeof account === 'object' && 'handle' in account) {
+                      handle = account.handle as string || '';
+                    }
+                    
+                    return (
+                      <div key={platform} className="flex items-center border border-green-400/20 p-2 rounded-sm">
+                        <div className="text-xl mr-3">{icon}</div>
+                        <div className="flex-1">
+                          <div className="text-xs text-green-400/80 uppercase">{platform}</div>
+                          <div className="text-green-200">
+                            {handle || 'Connected'}
+                            {followers > 0 && <span className="text-xs ml-2 text-green-400/70">({followers.toLocaleString()} followers)</span>}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
             
-            {/* Debug Info */}
-            <details className="mt-4">
-              <summary className="cursor-pointer text-xs">Raw User Data</summary>
-              <pre className="mt-2 text-xs bg-black/50 p-2 rounded overflow-auto max-h-[300px]">
-                {JSON.stringify(user, null, 2)}
-              </pre>
-            </details>
+            {/* Wallet Addresses */}
+            {user.walletAddresses && Object.keys(user.walletAddresses).length > 0 && (
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Wallet Addresses</h3>
+                <div className="space-y-3">
+                  {Object.entries(user.walletAddresses).map(([wallet, address]) => {
+                    // Create icon element based on wallet type
+                    let icon = '🔑';
+                    
+                    if (wallet.toLowerCase().includes('ethereum') || wallet.toLowerCase().includes('metamask')) icon = 'Ξ';
+                    if (wallet.toLowerCase().includes('solana')) icon = '◎';
+                    if (wallet.toLowerCase().includes('phantom')) icon = '◎';
+                    if (wallet.toLowerCase().includes('coinbase')) icon = '🅒';
+                    if (wallet.toLowerCase().includes('bitcoin')) icon = '₿';
+                    
+                    return (
+                      <div key={wallet} className="border border-green-400/20 p-2 rounded-sm">
+                        <div className="flex items-center mb-1">
+                          <div className="text-xl mr-3">{icon}</div>
+                          <div className="text-xs text-green-400/80 uppercase">{wallet}</div>
+                        </div>
+                        <div className="text-green-200 break-all text-xs pl-8">
+                          {address}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            
+            {/* Collaboration Examples */}
+            {user.bestCollabUrls && user.bestCollabUrls.length > 0 && (
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Best Collaborations</h3>
+                <div className="space-y-2 text-sm">
+                  {user.bestCollabUrls.map((url, index) => (
+                    <div key={index} className="break-all">
+                      <a 
+                        href={url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-400 hover:underline"
+                      >
+                        {url}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Admin Notes */}
+            {user.adminNotes && (
+              <div className="border border-green-400/30 p-4 rounded-sm">
+                <h3 className="text-md border-b border-green-300/50 mb-4 pb-1 uppercase">Admin Notes</h3>
+                <div className="text-sm whitespace-pre-wrap">{user.adminNotes}</div>
+              </div>
+            )}
           </div>
         </div>
+        
+        {/* Debug Button & Raw Data */}
+        <details className="mt-6 border-t border-green-300/30 pt-4">
+          <summary className="cursor-pointer text-xs text-green-400/60 hover:text-green-400">Debug: View Raw User Data</summary>
+          <pre className="mt-2 text-xs bg-black/50 p-2 rounded overflow-auto max-h-[200px] text-green-300/60">
+            {JSON.stringify(user, null, 2)}
+          </pre>
+        </details>
       </div>
     </div>
   );
 }
+
+// inside component file, before export default AdminPanel, define PixelLoader component
+const PixelLoader: React.FC<{text?: string}> = ({ text = 'Loading...' }) => (
+  <div className="flex flex-col items-center justify-center text-green-300">
+    <div className="grid grid-cols-4 gap-0.5">
+      {Array.from({ length: 16 }).map((_, i) => (
+        <div
+          key={i}
+          className="w-2 h-2 bg-green-500 animate-ping"
+          style={{ animationDelay: `${i * 0.05}s`, animationDuration: '1.2s' }}
+        />
+      ))}
+    </div>
+    <span className="mt-2 text-[10px] font-press-start-2p tracking-tight">{text}</span>
+  </div>
+);
 
 export default function AdminPanel({ onClose }: AdminPanelProps) {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard')
@@ -915,13 +1041,26 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               handle: user.handle || `@user_${Math.random().toString(36).substring(7)}`,
               email: user.email,
               approvalStatus: user.approvalStatus || 'pending',
-              followers: user.totalFollowers || Math.floor(Math.random() * 100000),
+              followers: user.totalFollowers ?? user.followerCount ?? Math.floor(Math.random() * 100000),
               chains: user.chains || [chainOptions[Math.floor(Math.random() * chainOptions.length)]],
               createdAt: user.createdAt || new Date().toISOString(),
               country: user.country || 'United States',
               walletCount: user.wallets ? Object.keys(user.wallets).length : 0,
               contentType: user.contentType || ['Thread'],
-              platformsUsed: user.socialProfiles ? Object.keys(user.socialProfiles) : ['Twitter']
+              platformsUsed: user.socialProfiles ? Object.keys(user.socialProfiles) : ['Twitter'],
+              // Add profile image URL from user data
+              profileImageUrl: user.profileImageUrl || 
+                (user.socialAccounts?.twitter && typeof user.socialAccounts.twitter === 'object' && 'imageUrl' in user.socialAccounts.twitter 
+                  ? user.socialAccounts.twitter.imageUrl 
+                  : null),
+              // Add social accounts data
+              socialAccounts: user.socialAccounts,
+              // Add wallet addresses
+              walletAddresses: user.walletAddresses,
+              // Add collaboration URLs
+              bestCollabUrls: user.bestCollabUrls,
+              // Add audience types
+              audienceTypes: user.audienceTypes
             }))
           : generateMockUsers();
         
@@ -1255,57 +1394,169 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
   // Function to update user status
   const updateUserStatus = async (userId: string, newStatus: 'approved' | 'pending' | 'rejected') => {
     try {
-      // Optimistically update UI first
-      setUsers(prevUsers => 
-        prevUsers.map(user => 
-          user.id === userId 
-            ? { ...user, approvalStatus: newStatus } 
-            : user
-        )
-      );
+      // Ensure we have a valid wallet cookie
+      const walletCookie = getCookie('walletAddress');
+      if (!walletCookie) {
+        console.error('No wallet cookie found');
+        alert('Unable to update user status. Please ensure you are connected with your wallet.');
+        return;
+      }
+
+      // Make sure wallet is set as cookie for the request
+      setCookie('walletAddress', walletCookie, 1);
       
-      // Update status totals
-      setStatusTotals(prev => {
-        const user = users.find(u => u.id === userId);
-        const oldStatus = user?.approvalStatus || 'pending';
-        
-        return {
-          ...prev,
-          [oldStatus]: (prev[oldStatus] || 0) - 1,
-          [newStatus]: (prev[newStatus] || 0) + 1
-        };
-      });
-      
-      // Then send update to server
       const response = await fetch('/api/admin/update-status', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Wallet-Address': walletCookie // Also send as header
         },
-        body: JSON.stringify({
-          userId,
-          status: newStatus
-        })
-      });
+        body: JSON.stringify({ userId, status: newStatus }),
+      })
       
       if (!response.ok) {
-        throw new Error('Failed to update user status');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update status')
       }
       
-      console.log(`Successfully updated user ${userId} status to ${newStatus}`);
-    } catch (error) {
-      console.error('Error updating user status:', error);
-      alert('Failed to update user status. Please try again.');
+      // Update local state
+      setUsers(prevUsers => 
+        prevUsers.map(u => 
+          u.id === userId ? { ...u, approvalStatus: newStatus } : u
+        )
+      )
       
-      // Revert the optimistic update if the API call fails
-      setUsers(prevUsers => [...prevUsers]); // Re-fetch from server would be better
+      // Update totals
+      const oldUser = users.find(u => u.id === userId)
+      if (oldUser) {
+        const oldStatus = oldUser.approvalStatus || 'pending'
+        setStatusTotals(prev => ({
+          ...prev,
+          [oldStatus]: Math.max(0, prev[oldStatus] - 1),
+          [newStatus]: prev[newStatus] + 1
+        }))
+      }
+      
+      // Re-render the charts with updated data
+      updateChartData()
+    } catch (error) {
+      console.error('Error updating user status:', error)
+      alert(`Failed to update user status: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-  };
+  }
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const walletCookie = getCookie('walletAddress');
+      if (!walletCookie) {
+        console.error('No wallet cookie found');
+        alert('Unable to delete user. Please ensure you are connected with your wallet.');
+        return;
+      }
+
+      setCookie('walletAddress', walletCookie, 1);
+      
+      console.log(`Attempting to delete user: ${userId}`);
+      
+      const response = await fetch('/api/admin/delete-user', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Wallet-Address': walletCookie
+        },
+        body: JSON.stringify({ userId }),
+      })
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete user')
+      }
+      
+      console.log(`User ${userId} deleted successfully`);
+      
+      // Update local state immediately
+      const deletedUser = users.find(u => u.id === userId);
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.filter(u => u.id !== userId);
+        console.log(`Updated user list: ${newUsers.length} users remaining`);
+        return newUsers;
+      });
+      
+      // Update totals
+      if (deletedUser) {
+        const status = deletedUser.approvalStatus || 'pending'
+        setStatusTotals(prev => ({
+          ...prev,
+          [status]: Math.max(0, prev[status] - 1)
+        }))
+      }
+      
+      // Close modal
+      setShowProfileModal(false)
+      setSelectedUser(null)
+      
+      // Refresh data from server to ensure consistency
+      setTimeout(async () => {
+        try {
+          console.log('Refreshing user data from server...');
+          const response = await fetch('/api/admin/get-users');
+          if (response.ok) {
+            const userData = await response.json();
+            const refreshedUsers = userData.users.length > 0 
+              ? userData.users.map((user: any) => ({
+                  id: user.id || `user_${Math.random().toString(36).substring(7)}`,
+                  name: user.name || 'No Name',
+                  handle: user.handle || `@user_${Math.random().toString(36).substring(7)}`,
+                  email: user.email,
+                  approvalStatus: user.approvalStatus || 'pending',
+                  followers: user.totalFollowers ?? user.followerCount ?? Math.floor(Math.random() * 100000),
+                  chains: user.chains || [chainOptions[Math.floor(Math.random() * chainOptions.length)]],
+                  createdAt: user.createdAt || new Date().toISOString(),
+                  country: user.country || 'United States',
+                  walletCount: user.wallets ? Object.keys(user.wallets).length : 0,
+                  contentType: user.contentType || ['Thread'],
+                  platformsUsed: user.socialProfiles ? Object.keys(user.socialProfiles) : ['Twitter'],
+                  profileImageUrl: user.profileImageUrl || 
+                    (user.socialAccounts?.twitter && typeof user.socialAccounts.twitter === 'object' && 'imageUrl' in user.socialAccounts.twitter 
+                      ? user.socialAccounts.twitter.imageUrl 
+                      : null),
+                  socialAccounts: user.socialAccounts,
+                  walletAddresses: user.walletAddresses,
+                  bio: user.bio,
+                  role: user.role,
+                  twitterHandle: user.twitterHandle
+                }))
+              : [];
+            
+            console.log(`Server refresh: ${refreshedUsers.length} users found`);
+            setUsers(refreshedUsers);
+            
+            // Recalculate status totals
+            const newTotals = refreshedUsers.reduce((acc: any, user: any) => {
+              const status = user.approvalStatus || 'pending';
+              acc[status] = (acc[status] || 0) + 1;
+              return acc;
+            }, { approved: 0, pending: 0, rejected: 0 });
+            
+            setStatusTotals(newTotals);
+            updateChartData();
+          }
+        } catch (error) {
+          console.error('Error refreshing user data:', error);
+        }
+      }, 500);
+      
+      alert('User deleted successfully')
+    } catch (error) {
+      console.error('Error deleting user:', error)
+      alert(`Failed to delete user: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  }
   
   /* =====================
      Roles management state
   ====================== */
-  const roleOptions = ['admin', 'core', 'scout', 'viewer'] as const
+  const roleOptions = ['admin', 'core', 'scout', 'user', 'viewer'] as const
   type RoleOption = typeof roleOptions[number]
 
   const [rolesList, setRolesList] = useState<Array<{ wallet: string; role: RoleOption }>>([])
@@ -1361,11 +1612,92 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     }
   }
   
+  /* Twitter Roles state */
+  const [twitterRoles, setTwitterRoles] = useState<Array<{ handle: string; role: string; profileImage?: string }>>([])
+  const [twitterRoleSearch, setTwitterRoleSearch] = useState('')
+  const [loadingTwitterRoles, setLoadingTwitterRoles] = useState(false)
+  const [twitterRoleStatus, setTwitterRoleStatus] = useState<{ message: string; isError: boolean } | null>(null)
+  
+  // Fetch Twitter roles
+  const fetchTwitterRoles = async () => {
+    setLoadingTwitterRoles(true)
+    setTwitterRoleStatus(null)
+    try {
+      const res = await fetch('/api/admin/twitter-roles')
+      if (res.ok) {
+        const data = await res.json()
+        setTwitterRoles(data.users || [])
+        if (data.users?.length === 0) {
+          setTwitterRoleStatus({ message: 'No Twitter users found.', isError: false })
+        }
+      } else {
+        setTwitterRoleStatus({ message: 'Error loading Twitter roles', isError: true })
+      }
+    } catch (err) {
+      console.error('Failed to fetch Twitter roles', err)
+      setTwitterRoleStatus({ message: 'Error loading Twitter roles', isError: true })
+    } finally {
+      setLoadingTwitterRoles(false)
+    }
+  }
+  
+  // Update Twitter role
+  const updateTwitterRole = async (handle: string, role: string) => {
+    setTwitterRoleStatus({ message: 'Updating role...', isError: false })
+    try {
+      const res = await fetch('/api/admin/twitter-roles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, role })
+      })
+      if (res.ok) {
+        setTwitterRoleStatus({ message: 'Role updated successfully!', isError: false })
+        fetchTwitterRoles()
+      } else {
+        const error = await res.json()
+        setTwitterRoleStatus({ message: `Error: ${error.error || 'Failed to update role'}`, isError: true })
+      }
+    } catch (err) {
+      console.error('Failed to update Twitter role', err)
+      setTwitterRoleStatus({ message: 'Error updating role', isError: true })
+    }
+  }
+  
+  const handleAddTwitterRole = async () => {
+    if (!twitterRoleSearch) return
+    setTwitterRoleStatus({ message: 'Adding Twitter role...', isError: false })
+    try {
+      const res = await fetch('/api/admin/twitter-roles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle: twitterRoleSearch })
+      })
+      if (res.ok) {
+        setTwitterRoleSearch('')
+        setTwitterRoleStatus({ message: 'Twitter role added successfully!', isError: false })
+        fetchTwitterRoles()
+      } else {
+        const error = await res.json()
+        setTwitterRoleStatus({ message: `Error: ${error.error || 'Failed to add Twitter role'}`, isError: true })
+      }
+    } catch (err) {
+      console.error('Failed to add Twitter role', err)
+      setTwitterRoleStatus({ message: 'Error adding Twitter role', isError: true })
+    }
+  }
+  
+  useEffect(() => {
+    if (activeTab === 'twitter-roles') {
+      fetchTwitterRoles()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab])
+  
   return (
     <div className="fixed inset-0 z-50 bg-black font-mono text-green-300 p-4 overflow-auto">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl uppercase tracking-wider">Admin Panel</h1>
+          <h1 className="text-2xl uppercase tracking-wider font-press-start-2p animate-pulse">The System.</h1>
           <button 
             onClick={onClose}
             className="px-4 py-1 border border-green-300 hover:bg-green-800"
@@ -1395,12 +1727,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
             Leaderboard
           </button>
           {/* Roles management tab – visible to admins only.  */}
-          <button
-            className={`px-4 py-2 ${activeTab === 'roles' ? 'bg-green-800' : ''}`}
-            onClick={() => setActiveTab('roles')}
-          >
-            Roles
-          </button>
+          {/* Roles tabs removed */}
         </div>
         
         {/* Dashboard Tab */}
@@ -1446,30 +1773,34 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               {/* User Signup Trend */}
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">User Signup Trend</h3>
-                <div className="h-64 bg-black">
-                  {signupTrendData && <Line 
-                    data={signupTrendData} 
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                <div className="h-64 bg-black flex items-center justify-center">
+                  {signupTrendData ? (
+                    <Line 
+                      data={signupTrendData} 
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          },
+                          x: {
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          }
                         },
-                        x: {
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                        plugins: {
+                          legend: {
+                            labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                          }
                         }
-                      },
-                      plugins: {
-                        legend: {
-                          labels: { color: 'rgba(134, 239, 172, 0.8)' }
-                        }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
@@ -1477,80 +1808,92 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">Approval Status</h3>
                 <div className="h-64 bg-black flex items-center justify-center">
-                  {approvalStatusData && <Pie 
-                    data={approvalStatusData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          position: 'right',
-                          labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                  {approvalStatusData ? (
+                    <Pie 
+                      data={approvalStatusData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            position: 'right',
+                            labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                          }
                         }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
               {/* Users by Country */}
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">Users by Country</h3>
-                <div className="h-64 bg-black">
-                  {countryDistributionData && <Bar 
-                    data={countryDistributionData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      indexAxis: 'y',
-                      scales: {
-                        y: {
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                <div className="h-64 bg-black flex items-center justify-center">
+                  {countryDistributionData ? (
+                    <Bar 
+                      data={countryDistributionData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                          y: {
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          },
+                          x: {
+                            beginAtZero: true,
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          }
                         },
-                        x: {
-                          beginAtZero: true,
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                        plugins: {
+                          legend: {
+                            display: false
+                          }
                         }
-                      },
-                      plugins: {
-                        legend: {
-                          display: false
-                        }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
               {/* Users by Chain */}
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">Users by Chain</h3>
-                <div className="h-64 bg-black">
-                  {chainDistributionData && <Bar 
-                    data={chainDistributionData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                <div className="h-64 bg-black flex items-center justify-center">
+                  {chainDistributionData ? (
+                    <Bar 
+                      data={chainDistributionData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          },
+                          x: {
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          }
                         },
-                        x: {
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                        plugins: {
+                          legend: {
+                            display: false
+                          }
                         }
-                      },
-                      plugins: {
-                        legend: {
-                          display: false
-                        }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
@@ -1558,19 +1901,23 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">Content Type Distribution</h3>
                 <div className="h-64 bg-black flex items-center justify-center">
-                  {contentTypeData && <Pie 
-                    data={contentTypeData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          position: 'right',
-                          labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                  {contentTypeData ? (
+                    <Pie 
+                      data={contentTypeData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            position: 'right',
+                            labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                          }
                         }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
@@ -1578,49 +1925,57 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
               <div className="border border-green-300 p-4">
                 <h3 className="text-lg mb-4">Wallet Connection Ratio</h3>
                 <div className="h-64 bg-black flex items-center justify-center">
-                  {walletConnectionData && <Doughnut 
-                    data={walletConnectionData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          position: 'right',
-                          labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                  {walletConnectionData ? (
+                    <Doughnut 
+                      data={walletConnectionData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            position: 'right',
+                            labels: { color: 'rgba(134, 239, 172, 0.8)' }
+                          }
                         }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
               
               {/* Platform Distribution */}
               <div className="border border-green-300 p-4 col-span-1 md:col-span-2">
                 <h3 className="text-lg mb-4">Platform Distribution</h3>
-                <div className="h-64 bg-black">
-                  {platformsDistributionData && <Bar 
-                    data={platformsDistributionData}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                <div className="h-64 bg-black flex items-center justify-center">
+                  {platformsDistributionData ? (
+                    <Bar 
+                      data={platformsDistributionData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          },
+                          x: {
+                            ticks: { color: 'rgba(134, 239, 172, 0.8)' },
+                            grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                          }
                         },
-                        x: {
-                          ticks: { color: 'rgba(134, 239, 172, 0.8)' },
-                          grid: { color: 'rgba(134, 239, 172, 0.1)' }
+                        plugins: {
+                          legend: {
+                            display: false
+                          }
                         }
-                      },
-                      plugins: {
-                        legend: {
-                          display: false
-                        }
-                      }
-                    }}
-                  />}
+                      }}
+                    />
+                  ) : (
+                    <PixelLoader />
+                  )}
                 </div>
               </div>
             </div>
@@ -1966,25 +2321,171 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
             <div className="users-table">
               <div className="mb-2 text-xs opacity-70">{filteredUsers.length} results</div>
               {filteredUsers.map(user => (
-                <div key={user.id} className="border border-green-300 p-3 mb-2">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <div className="flex items-center">
+                <div key={user.id} className="border border-green-300 p-3 mb-3 hover:bg-green-900/10">
+                  <div className="flex gap-4">
+                    {/* Profile Image */}
+                    <div 
+                      className="w-16 h-16 rounded-lg overflow-hidden border border-green-400 flex items-center justify-center bg-black/50 cursor-pointer"
+                      onClick={() => handleView(user.id)}
+                    >
+                      {user.profileImageUrl ? (
+                        <img 
+                          src={user.profileImageUrl} 
+                          alt={user.name || 'Profile'} 
+                          className="w-full h-full object-cover" 
+                        />
+                      ) : user.handle?.startsWith('@') ? (
+                        <div className="text-2xl font-bold text-green-300">{user.handle.substring(1, 3).toUpperCase()}</div>
+                      ) : (
+                        <div className="text-2xl font-bold text-green-300">{(user.name || "User").substring(0, 2).toUpperCase()}</div>
+                      )}
+                    </div>
+                    
+                    {/* User Info */}
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
                         <div 
-                          className="mr-2 font-bold cursor-pointer hover:text-green-400" 
+                          className="font-bold cursor-pointer hover:text-green-400" 
                           onClick={() => handleView(user.id)}
                         >
                           {user.name}
                         </div>
-                        <div className="text-xs opacity-70">{user.handle}</div>
+                        <div className="text-xs text-green-400">{user.handle}</div>
+                        
+                        {/* Status Badge */}
+                        <span className={`text-xs px-1.5 py-0.5 rounded ${
+                          user.approvalStatus === 'approved' 
+                            ? 'bg-green-900/50 text-green-300' 
+                            : user.approvalStatus === 'rejected'
+                              ? 'bg-red-900/50 text-red-300'
+                              : 'bg-yellow-900/50 text-yellow-300'
+                        }`}>
+                          {user.approvalStatus || 'pending'}
+                        </span>
+                        
+                        {/* Role Badge (if exists) */}
+                        {user.role && (
+                          <span className="text-xs px-1.5 py-0.5 bg-purple-900/50 text-purple-300 rounded uppercase">
+                            {user.role}
+                          </span>
+                        )}
                       </div>
-                      <div className="text-xs my-1">
-                        <span className="opacity-70">Followers:</span> {user.followers?.toLocaleString()}
+                      
+                      {/* User Stats - First Row */}
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1 mb-2">
+                        {/* Followers */}
+                        <div className="text-xs flex items-center">
+                          <span className="opacity-70 mr-1">👥</span>
+                          <span>{user.followers?.toLocaleString() || 0} followers</span>
+                        </div>
+                        
+                        {/* Country */}
+                        {user.country && (
+                          <div className="text-xs flex items-center">
+                            <span className="opacity-70 mr-1">🌍</span>
+                            <span>{typeof user.country === 'string' 
+                              ? user.country 
+                              : Array.isArray(user.country) 
+                                ? user.country[0] + (user.country.length > 1 ? ` +${user.country.length-1}` : '')
+                                : 'Unknown'}</span>
+                          </div>
+                        )}
+                        
+                        {/* Joined Date */}
+                        {user.createdAt && (
+                          <div className="text-xs flex items-center">
+                            <span className="opacity-70 mr-1">📅</span>
+                            <span>Joined {new Date(user.createdAt).toLocaleDateString()}</span>
+                          </div>
+                        )}
+                        
+                        {/* Pricing info */}
+                        {(user.pricePerPost || user.postPricePerPost) && (
+                          <div className="text-xs flex items-center">
+                            <span className="opacity-70 mr-1">💲</span>
+                            <span>${user.pricePerPost || user.postPricePerPost}/post</span>
+                          </div>
+                        )}
+                        
+                        {/* Monthly budget */}
+                        {(user.priceMonthly || user.monthlySupportBudget) && (
+                          <div className="text-xs flex items-center">
+                            <span className="opacity-70 mr-1">💰</span>
+                            <span>${user.priceMonthly || user.monthlySupportBudget}/month</span>
+                          </div>
+                        )}
+                        
+                        {/* Wallet count */}
+                        {user.walletCount !== undefined && (
+                          <div className="text-xs flex items-center">
+                            <span className="opacity-70 mr-1">🔑</span>
+                            <span>{user.walletCount} wallet{user.walletCount !== 1 ? 's' : ''}</span>
+                          </div>
+                        )}
                       </div>
-                      <div className="text-xs">
-                        <span className="opacity-70">Chains:</span> {Array.isArray(user.chains) ? user.chains.join(', ') : user.chains}
+                      
+                      {/* User Stats - Second Row */}
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        {/* Active Chains */}
+                        {user.chains && user.chains.length > 0 && (
+                          <div className="flex flex-wrap gap-1">
+                            {Array.isArray(user.chains) 
+                              ? user.chains.slice(0, 3).map(chain => (
+                                <span key={chain} className="px-1.5 py-0.5 bg-green-900/30 text-xs rounded">
+                                  {chain}
+                                </span>
+                              ))
+                              : <span className="px-1.5 py-0.5 bg-green-900/30 text-xs rounded">{String(user.chains)}</span>
+                            }
+                            {Array.isArray(user.chains) && user.chains.length > 3 && (
+                              <span className="text-xs text-green-400">+{user.chains.length - 3} more</span>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Content Types */}
+                        {user.contentType && (
+                          <div className="flex flex-wrap gap-1">
+                            {Array.isArray(user.contentType) 
+                              ? user.contentType.slice(0, 2).map(type => (
+                                <span key={type} className="px-1.5 py-0.5 bg-blue-900/30 text-blue-200 text-xs rounded">
+                                  {type}
+                                </span>
+                              ))
+                              : <span className="px-1.5 py-0.5 bg-blue-900/30 text-blue-200 text-xs rounded">{String(user.contentType)}</span>
+                            }
+                            {Array.isArray(user.contentType) && user.contentType.length > 2 && (
+                              <span className="text-xs text-blue-400">+{user.contentType.length - 2} more</span>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Social Platforms */}
+                        {user.socialAccounts && Object.keys(user.socialAccounts).length > 0 && (
+                          <div className="flex gap-1">
+                            {Object.entries(user.socialAccounts).slice(0, 4).map(([platform]) => {
+                              let icon = '🌐';
+                              if (platform.toLowerCase().includes('twitter')) icon = '𝕏';
+                              if (platform.toLowerCase().includes('instagram')) icon = '📷';
+                              if (platform.toLowerCase().includes('youtube')) icon = '▶️';
+                              if (platform.toLowerCase().includes('tiktok')) icon = '📱';
+                              if (platform.toLowerCase().includes('discord')) icon = '💬';
+                              if (platform.toLowerCase().includes('twitch')) icon = '🎮';
+                              return (
+                                <span key={platform} className="w-6 h-6 flex items-center justify-center bg-green-900/30 rounded-full text-xs">
+                                  {icon}
+                                </span>
+                              );
+                            })}
+                            {Object.keys(user.socialAccounts).length > 4 && (
+                              <span className="text-xs text-green-400">+{Object.keys(user.socialAccounts).length - 4}</span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
+                    
+                    {/* Actions */}
                     <div className="flex flex-col gap-2">
                       <select
                         value={user.approvalStatus || 'pending'}
@@ -2036,7 +2537,16 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                       <td className="p-2">{index + 1}</td>
                       <td className="p-2">
                         <div className="flex items-center">
-                          <div className="w-6 h-6 bg-green-800 rounded-full mr-2"></div>
+                          {user.profileImageUrl ? (
+                            <img
+                              src={user.profileImageUrl}
+                              alt={user.name}
+                              className="w-6 h-6 rounded-full mr-2 object-cover"
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
+                          ) : (
+                            <div className="w-6 h-6 bg-green-800 rounded-full mr-2" />
+                          )}
                           <div>
                             <div 
                               className="font-bold cursor-pointer hover:text-green-400" 
@@ -2058,67 +2568,88 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
         )}
         
         {/* Roles Management Tab */}
-        {activeTab === 'roles' && (
+        {/* Roles management section removed */}
+        
+        {/* Twitter Roles Management Tab */}
+        {activeTab === 'twitter-roles' && (
           <div className="space-y-6">
-            <h2 className="text-lg mb-4">Wallet Roles</h2>
-
-            {/* Add / Edit form */}
-            <div className="border border-green-300 p-4 flex flex-col md:flex-row gap-2 items-start md:items-end">
+            <h2 className="text-lg mb-4">Twitter Roles Management</h2>
+            <p className="text-xs opacity-70 mb-4">Manage roles for users who have logged in with Twitter</p>
+ 
+            {/* Search */}
+            <div className="mb-4">
               <input
                 type="text"
-                placeholder="Wallet address"
-                value={newWallet}
-                onChange={e => setNewWallet(e.target.value)}
-                className="flex-1 bg-black border border-green-300 p-2 text-xs w-full md:w-auto"
+                placeholder="Search by Twitter handle..."
+                value={twitterRoleSearch}
+                onChange={e => setTwitterRoleSearch(e.target.value)}
+                className="w-full bg-black border border-green-300 p-2"
               />
-              <select
-                value={newRole}
-                onChange={e => setNewRole(e.target.value as any)}
-                className="bg-black border border-green-300 p-2 text-xs"
-              >
-                {roleOptions.map(r => (
-                  <option key={r} value={r}>{r}</option>
-                ))}
-              </select>
-              <button
-                onClick={handleSaveRole}
-                className="px-4 py-2 border border-green-300 text-xs hover:bg-green-800"
-              >
-                Save
-              </button>
             </div>
-
+ 
             {/* Status message */}
-            {roleActionStatus && (
-              <div className={`mt-2 text-sm ${roleActionStatus.isError ? 'text-red-400' : 'text-green-400'}`}>
-                {roleActionStatus.message}
+            {twitterRoleStatus && (
+              <div className={`mb-4 text-sm ${twitterRoleStatus.isError ? 'text-red-400' : 'text-green-400'}`}>
+                {twitterRoleStatus.message}
               </div>
             )}
-
-            {/* Roles list */}
-            <div className="border border-green-300 p-4">
-              {rolesList.length === 0 ? (
-                <div className="text-xs opacity-70">No roles assigned yet.</div>
-              ) : (
-                <ul className="space-y-2 text-xs">
-                  {rolesList.map(({ wallet, role }) => (
-                    <li key={wallet} className="flex justify-between items-center border-b border-green-800 pb-1">
-                      <span className="break-all mr-2">{wallet}</span>
-                      <span className="uppercase mr-2">{role}</span>
-                      <button
-                        className="underline hover:text-green-400"
-                        onClick={() => {
-                          setNewWallet(wallet)
-                          setNewRole(role as any)
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+ 
+            {/* Loading state */}
+            {loadingTwitterRoles ? (
+              <PixelLoader text="Loading Twitter users..." />
+            ) : twitterRoles.filter(u => 
+                !twitterRoleSearch || u.handle.toLowerCase().includes(twitterRoleSearch.toLowerCase())
+              ).length === 0 ? (
+              <div className="border border-green-300 p-4 text-center text-sm opacity-70">
+                {twitterRoleSearch ? 'No users found matching your search.' : 'No Twitter users found.'}
+              </div>
+            ) : (
+              <div className="border border-green-300 overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead className="bg-green-900/30">
+                    <tr>
+                      <th className="p-2 text-left">Avatar</th>
+                      <th className="p-2 text-left">Handle</th>
+                      <th className="p-2 text-left">Current Role</th>
+                      <th className="p-2 text-left">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {twitterRoles
+                      .filter(u => !twitterRoleSearch || u.handle.toLowerCase().includes(twitterRoleSearch.toLowerCase()))
+                      .map(({ handle, role, profileImage }) => (
+                      <tr key={handle} className="border-t border-green-800">
+                        <td className="p-2">
+                          <img 
+                            src={profileImage || `https://unavatar.io/twitter/${handle.replace('@', '')}`}
+                            alt={handle}
+                            className="w-8 h-8 rounded-full"
+                            onError={(e) => {
+                              e.currentTarget.src = `https://api.dicebear.com/8.x/identicon/svg?seed=${handle}`;
+                            }}
+                          />
+                        </td>
+                        <td className="p-2">{handle}</td>
+                        <td className="p-2">
+                          <select
+                            value={role}
+                            onChange={e => updateTwitterRole(handle, e.target.value)}
+                            className="bg-black border border-green-300 p-1 text-xs"
+                          >
+                            {roleOptions.map(r => (
+                              <option key={r} value={r}>{r}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="p-2">
+                          <span className="text-xs text-green-500">{role === 'admin' ? '👑' : role === 'core' ? '⭐' : role === 'scout' ? '🔍' : ''}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -2128,8 +2659,24 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           user={selectedUser}
           onClose={() => setShowProfileModal(false)}
           onStatusChange={updateUserStatus}
+          onDelete={handleDeleteUser}
         />
       )}
     </div>
   );
+}
+
+// Helper functions for cookies
+const getCookie = (name: string): string | undefined => {
+  if (typeof document === 'undefined') return undefined;
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : undefined;
+}
+
+const setCookie = (name: string, value: string, days: number = 1) => {
+  if (typeof document === 'undefined') return;
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
 }

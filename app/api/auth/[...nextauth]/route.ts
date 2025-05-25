@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Twitter from "next-auth/providers/twitter";
 import { saveProfileWithDuplicateCheck } from "@/lib/redis";
+import { nanoid } from 'nanoid';
 
 // Enable for debugging
 const DEBUG = true;
@@ -32,15 +33,18 @@ export const authOptions: NextAuthOptions = {
         let followerCount = 0;
         
         // Try to get follower data using Twitter API v2
-        if (account.access_token) {
+        // Use Bearer token from environment variable for better access
+        const bearerToken = process.env.TWITTER_BEARER_TOKEN || account.access_token;
+        
+        if (bearerToken) {
           try {
             // Fetch user data including public metrics
             const userId = profile?.data?.id;
             const response = await fetch(
-              `https://api.twitter.com/2/users/${userId}?user.fields=public_metrics`,
+              `https://api.twitter.com/2/users/${userId}?user.fields=public_metrics,profile_image_url`,
               {
                 headers: {
-                  Authorization: `Bearer ${account.access_token}`,
+                  Authorization: `Bearer ${bearerToken}`,
                 },
               }
             );
@@ -52,18 +56,30 @@ export const authOptions: NextAuthOptions = {
               if (userData.data?.public_metrics?.followers_count) {
                 followerCount = userData.data.public_metrics.followers_count;
               }
+            } else {
+              console.error("Twitter API response error:", response.status, await response.text());
             }
           } catch (error) {
             console.error("Error fetching Twitter follower count:", error);
           }
         }
         
+        // IMPORTANT: Use the correct Twitter handle from profile data
+        const twitterHandle = profile?.data?.username ? `@${profile.data.username}` : undefined;
+        
+        // Generate a unique ID based on Twitter username to prevent duplicates
+        const profileId = twitterHandle ? `user_${profile.data.username.toLowerCase()}` : `user_${nanoid()}`;
+        
         // Prepare user data from Twitter profile
         const userData = {
-          twitterHandle: profile?.data?.username ? `@${profile.data.username}` : undefined,
+          id: profileId, // Use consistent ID based on Twitter username
+          twitterHandle: twitterHandle,
           name: profile?.data?.name || user.name,
           profileImageUrl: profile?.data?.profile_image_url || user.image,
           role: "user" as const,
+          approvalStatus: "pending" as const,
+          createdAt: new Date().toISOString(),
+          followerCount: followerCount, // Store follower count at top level
           socialAccounts: {
             twitter: {
               handle: profile?.data?.username,
@@ -74,7 +90,7 @@ export const authOptions: NextAuthOptions = {
           chains: Array.isArray(user.chains) ? user.chains : ["Ethereum", "Base"]
         };
         
-        console.log("Saving user profile:", JSON.stringify(userData, null, 2));
+        console.log("Saving user profile with correct handle:", JSON.stringify(userData, null, 2));
         
         // Save or update user profile
         await saveProfileWithDuplicateCheck(userData as any);
@@ -93,7 +109,17 @@ export const authOptions: NextAuthOptions = {
         if (token.twitterHandle) {
           session.user.twitterHandle = token.twitterHandle;
         }
+        // Add follower count if available
+        if (token.followerCount) {
+          session.user.followerCount = token.followerCount;
+        }
       }
+      
+      // Also add Twitter handle at top level for easier access
+      if (token.twitterHandle) {
+        session.twitterHandle = token.twitterHandle;
+      }
+      
       return session;
     },
     async jwt({ token, user, account, profile }: any) {
@@ -101,6 +127,34 @@ export const authOptions: NextAuthOptions = {
       if (profile?.data?.username) {
         token.twitterHandle = `@${profile.data.username}`;
       }
+      
+      // Store follower count if it's a new sign in
+      if (account && profile) {
+        // Try to get follower count during JWT creation as well
+        const bearerToken = process.env.TWITTER_BEARER_TOKEN;
+        if (bearerToken && profile?.data?.id) {
+          try {
+            const response = await fetch(
+              `https://api.twitter.com/2/users/${profile.data.id}?user.fields=public_metrics`,
+              {
+                headers: {
+                  Authorization: `Bearer ${bearerToken}`,
+                },
+              }
+            );
+            
+            if (response.ok) {
+              const userData = await response.json();
+              if (userData.data?.public_metrics?.followers_count) {
+                token.followerCount = userData.data.public_metrics.followers_count;
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching follower count in JWT:", error);
+          }
+        }
+      }
+      
       return token;
     },
   },

@@ -1,9 +1,41 @@
 import { Redis } from '@upstash/redis';
 
-export const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Check if Redis is properly configured - used to provide fallbacks when Redis isn't available
+const isRedisConfigured = Boolean(
+  process.env.UPSTASH_REDIS_REST_URL && 
+  process.env.UPSTASH_REDIS_REST_TOKEN
+);
+
+// Create Redis client with graceful error handling
+let redisClient: Redis;
+
+try {
+  redisClient = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL || 'https://no-url-configured.upstash.io',
+    token: process.env.UPSTASH_REDIS_REST_TOKEN || 'no-token-configured',
+  });
+  
+  if (!isRedisConfigured) {
+    console.warn('Redis is not properly configured! Using dummy Redis implementation.');
+  }
+} catch (error) {
+  console.error('Failed to initialize Redis client:', error);
+  
+  // Create dummy Redis implementation that doesn't throw errors
+  redisClient = {
+    json: {
+      get: async () => null,
+      set: async () => 'OK'
+    },
+    keys: async () => [],
+    smembers: async () => [],
+    sadd: async () => 1,
+    zadd: async () => 1,
+    // Add other methods as dummy implementations as needed
+  } as any;
+}
+
+export const redis = redisClient;
 
 export interface InfluencerProfile {
   id: string
@@ -64,7 +96,7 @@ export interface InfluencerProfile {
     monthlyFeePaid?: boolean
   }
   roiRank?: 'bronze' | 'silver' | 'gold' | 'platinum' | 'diamond'
-  role: 'user' | 'intern' | 'admin'
+  role: 'viewer' | 'scout' | 'core' | 'admin' | 'user' | 'intern'
   createdAt: string                   // ISO timestamp
   updatedAt?: string
   updatedBy?: string                  // admin who made the last change
@@ -172,6 +204,22 @@ export async function findDuplicateProfile(profile: Partial<InfluencerProfile>):
       }
     }
     
+    // Check by display name to prevent duplicates based on name
+    if (profile.name) {
+      const displayName = profile.name.toLowerCase().replace(/\s+/g, '');
+      const userIds = await redis.smembers(`idx:displayname:${displayName}`);
+      
+      if (userIds && userIds.length > 0) {
+        // Verify this is actually a duplicate (same person)
+        const userData = await redis.json.get(`user:${userIds[0]}`) as InfluencerProfile;
+        // Only consider it a duplicate if the name matches and no twitter handle is stored yet
+        // This prevents false positives but catches the "Bahram" case
+        if (userData && !userData.twitterHandle && profile.name === userData.name) {
+          return userData;
+        }
+      }
+    }
+    
     // Then check by wallet addresses
     if (profile.walletAddresses && Object.keys(profile.walletAddresses).length > 0) {
       for (const [_, address] of Object.entries(profile.walletAddresses)) {
@@ -197,10 +245,11 @@ export async function findDuplicateProfile(profile: Partial<InfluencerProfile>):
  * If a duplicate is found, it merges the profiles and updates
  */
 export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile): Promise<InfluencerProfile> {
-  // Check for existing profile
+  // Check for existing profile by Twitter handle FIRST
   const existingProfile = await findDuplicateProfile(profile);
   
   if (existingProfile) {
+    console.log(`Found existing profile for ${profile.twitterHandle}, updating...`);
     // Merge profiles and update
     const mergedProfile = { ...existingProfile };
     
@@ -208,6 +257,11 @@ export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile):
     if (profile.name) mergedProfile.name = profile.name;
     if (profile.profileImageUrl) mergedProfile.profileImageUrl = profile.profileImageUrl;
     if (profile.bio) mergedProfile.bio = profile.bio;
+    
+    // Update follower count if provided
+    if (profile.followerCount !== undefined) {
+      mergedProfile.followerCount = profile.followerCount;
+    }
     
     // Merge wallet addresses
     if (profile.walletAddresses) {
@@ -225,6 +279,9 @@ export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile):
       };
     }
     
+    // Update timestamp
+    mergedProfile.updatedAt = new Date().toISOString();
+    
     // Save merged profile
     await redis.json.set(`user:${existingProfile.id}`, '$', JSON.parse(JSON.stringify(mergedProfile)));
     
@@ -233,8 +290,24 @@ export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile):
     
     return mergedProfile;
   } else {
+    console.log(`Creating new profile for ${profile.twitterHandle}`);
+    // Ensure we have required fields for new profile
+    if (!profile.id) {
+      throw new Error('Profile ID is required for new profiles');
+    }
+    if (!profile.createdAt) {
+      profile.createdAt = new Date().toISOString();
+    }
+    if (!profile.approvalStatus) {
+      profile.approvalStatus = 'pending';
+    }
+    
     // No duplicate found, save as new profile
     await saveProfile(profile);
+    
+    // Index the new profile
+    await updateProfileIndexes(profile);
+    
     return profile;
   }
 }
@@ -243,10 +316,16 @@ export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile):
  * Update profile indexes for new user data
  */
 async function updateProfileIndexes(profile: InfluencerProfile): Promise<void> {
-  // Index username/Twitter handle
+  // Index username/Twitter handle - use normalized version
   if (profile.twitterHandle) {
     const handle = profile.twitterHandle.replace('@', '').toLowerCase();
     await redis.sadd(`idx:username:${handle}`, profile.id);
+    
+    // Also index the display name to prevent that being used as a duplicate
+    const displayName = profile.name?.toLowerCase().replace(/\s+/g, '');
+    if (displayName && displayName !== handle) {
+      await redis.sadd(`idx:displayname:${displayName}`, profile.id);
+    }
   }
   
   // Index wallet addresses
@@ -261,5 +340,15 @@ async function updateProfileIndexes(profile: InfluencerProfile): Promise<void> {
   // Index country
   if (profile.country && typeof profile.country === 'string') {
     await redis.sadd(`idx:country:${profile.country}`, profile.id);
+  }
+  
+  // Index by approval status
+  if (profile.approvalStatus) {
+    await redis.sadd(`idx:status:${profile.approvalStatus}`, profile.id);
+  }
+  
+  // Index by role
+  if (profile.role) {
+    await redis.sadd(`idx:role:${profile.role}`, profile.id);
   }
 }

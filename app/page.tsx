@@ -7,6 +7,13 @@ import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
 import styles from './page.module.css'
 
+// Define slogans array outside the component for a stable reference
+const ALL_SLOGANS = [
+  'welcome to The System.',
+  'access isnt given, its granted.',
+  'but only to a few... real ones.'
+];
+
 export default function Home() {
   const [slogan, setSlogan] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
@@ -15,12 +22,6 @@ export default function Home() {
   const logoClickTimer = useRef<NodeJS.Timeout | null>(null)
   const [showMatrixRain, setShowMatrixRain] = useState(false)
   const matrixCanvasRef = useRef<HTMLCanvasElement>(null)
-
-  const slogans = [
-    'welcome to The System.',
-    'access isnt given, its granted.',
-    'but only to a few... real ones.'
-  ]
 
   // Matrix rain animation
   useEffect(() => {
@@ -79,23 +80,23 @@ export default function Home() {
   useEffect(() => {
     let timeout: NodeJS.Timeout
     const typeText = () => {
-      const currentSlogan = slogans[sloganIndex]
+      const currentFullSlogan = ALL_SLOGANS[sloganIndex] // Use the stable ALL_SLOGANS array
       if (!isDeleting) {
-        if (slogan.length < currentSlogan.length) {
-          setSlogan(currentSlogan.slice(0, slogan.length + 1))
-          timeout = setTimeout(typeText, 0.5)
+        if (slogan.length < currentFullSlogan.length) {
+          setSlogan(currentFullSlogan.slice(0, slogan.length + 1))
+          timeout = setTimeout(typeText, 100)
         } else {
-          if (sloganIndex < slogans.length - 1) {
+          if (sloganIndex < ALL_SLOGANS.length - 1) { // Use the stable ALL_SLOGANS array
             timeout = setTimeout(() => {
               setIsDeleting(true)
-              timeout = setTimeout(typeText, 1000)
-            }, 2500)
+              timeout = setTimeout(typeText, 500)
+            }, 1500)
           }
         }
       } else {
         if (slogan.length > 0) {
-          setSlogan(currentSlogan.slice(0, slogan.length - 1))
-          timeout = setTimeout(typeText, 0.25)
+          setSlogan(currentFullSlogan.slice(0, slogan.length - 1)) // Use currentFullSlogan here
+          timeout = setTimeout(typeText, 50)
         } else {
           setIsDeleting(false)
           setSloganIndex(prev => prev + 1)
@@ -105,7 +106,7 @@ export default function Home() {
     }
     timeout = setTimeout(typeText, 500)
     return () => clearTimeout(timeout)
-  }, [slogan, isDeleting, sloganIndex, slogans])
+  }, [slogan, isDeleting, sloganIndex]) // Remove ALL_SLOGANS from dependencies as it's stable
 
   // Triple-click handler with matrix rain
   const handleLogoClick = () => {
@@ -168,15 +169,15 @@ export default function Home() {
         />
       </div>
       {/* NABULINES text with retro pixel font */}
-      <h1 className={`mt-3 text-2xl uppercase tracking-widest ${styles.pixelFont}`}>NABULINES</h1>
+      <h1 className="mt-3 uppercase tracking-widest font-pixel text-white" style={{ fontSize: '19px' }}>NABULINES</h1>
       {/* Typing animation slogan */}
-      <div className="mt-2 h-6 text-sm font-light tracking-wide">
+      <div className="mt-2 font-light tracking-wide text-white font-pixel" style={{ fontSize: '9px', height: '11px' }}>
         {slogan}
         <span className={styles.cursor}>|</span>
       </div>
       {/* Cyberpunk Manifesto */}
       <section className="mt-8 max-w-xl text-center px-4 space-y-4">
-        <div className="text-xs leading-relaxed space-y-3 font-light tracking-wide">
+        <div style={{ fontSize: '12px', fontFamily: 'var(--font-ibm-plex-mono), monospace' }} className="leading-relaxed space-y-3 font-light tracking-wide text-gray-400">
           <p>the feeds are lies. the noise is endless.</p>
           <p>but in the dark, the real ones glow.</p>
           <p>nabulines is a covert layer of connection — tracking influence across chains.</p>
@@ -189,21 +190,29 @@ export default function Home() {
         </div>
       </section>
       {/* After the cyberpunk manifesto section, add this new team section */}
-      <section className="mt-12 mb-8">
-        <Link href="/team">
-          <button className="px-6 py-3 text-sm border border-green-300 rounded hover:bg-green-800">
-            Our Team
-          </button>
+      <div className="flex justify-center space-x-6 my-12">
+        <Link href="/team" className="w-48">
+          <div className={styles.buttonContainer}>
+            <button 
+              className={`${styles.buttonGlitch} ${styles.pixelButton}`}
+              style={{ fontFamily: 'Press Start 2P, monospace' }}
+            >
+              <span>Our Team</span>
+            </button>
+          </div>
         </Link>
-      </section>
-      {/* Action Buttons - About button removed */}
-      <div className="mt-auto mb-12">
-        <Link href="/terms">
-          <button className="px-6 py-3 text-sm border border-green-300 rounded hover:bg-green-800">
-            Terms & Conditions
-          </button>
+        <Link href="/terms" className="w-48">
+          <div className={styles.buttonContainer}>
+            <button 
+              className={`${styles.buttonGlitch} ${styles.regularButton}`}
+              style={{ fontFamily: 'Roboto Mono, monospace' }}
+            >
+              <span>Terms & Conditions</span>
+            </button>
+          </div>
         </Link>
       </div>
+      {/* Action Buttons - removed sections */}
       <LoginModal />
     </main>
   )
