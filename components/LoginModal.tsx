@@ -797,7 +797,7 @@ export default function LoginModal() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // If we already have a user session, try to resume the saved stage
+    // If we already have a user session
     if (session?.user) {
       const checkExistingProfile = async () => {
         try {
@@ -807,7 +807,8 @@ export default function LoginModal() {
             const data = await response.json()
             if (data.user && data.user.socialAccounts) {
               // User has already applied, don't force them through the apply flow
-              console.log('User has existing profile, skipping apply flow')
+              console.log('User has existing profile, clearing any saved stage')
+              localStorage.removeItem('loginStage') // Clear any saved stage
               return
             }
           }
@@ -1120,6 +1121,30 @@ export default function LoginModal() {
               </div>
             )}
             
+            {/* Show navigation buttons for approved users */}
+            {userProfile?.approvalStatus === 'approved' && (
+              <div className="mb-3 space-y-2">
+                <button 
+                  onClick={() => {
+                    router.push('/scout')
+                    handleClose()
+                  }} 
+                  className="w-full border border-green-300 px-4 py-2 hover:bg-green-900 text-green-300"
+                >
+                  Scout Projects
+                </button>
+                <button 
+                  onClick={() => {
+                    router.push('/campaigns')
+                    handleClose()
+                  }} 
+                  className="w-full border border-green-300 px-4 py-2 hover:bg-green-900 text-green-300"
+                >
+                  View Campaigns
+                </button>
+              </div>
+            )}
+            
             <button onClick={() => setStage('enter')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">enter</button>
             <button onClick={() => setStage('apply')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">apply</button>
             <button onClick={handleClose} className="border border-green-300 px-4 py-2 text-xs hover:bg-gray-900">close</button>
@@ -1145,7 +1170,10 @@ export default function LoginModal() {
                   <span className="text-xs ml-2">{session.user.name}</span>
                   <button 
                     className="text-red-500 ml-auto"
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      // Only sign out of Twitter, don't disconnect wallets
+                      signOut()
+                    }}
                   >
                     x
                   </button>
@@ -1430,7 +1458,10 @@ export default function LoginModal() {
                   <span className="text-xs ml-2">{session.user.name}</span>
                   <button 
                     className="text-red-500 ml-auto"
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      // Only sign out of Twitter, don't disconnect wallets
+                      signOut()
+                    }}
                   >
                     x
                   </button>
