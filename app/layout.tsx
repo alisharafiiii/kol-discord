@@ -5,6 +5,7 @@ import OnchainKitProvider from '@/components/OnchainKitProvider'
 import SessionWrap from '@/components/SessionWrap'
 import { Inter } from 'next/font/google'
 import UserIdentityManager from '@/components/UserIdentityManager'
+import LayoutWrapper from '@/components/LayoutWrapper'
 import { pressStart2P, ibmPlexMono } from './fonts'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,7 +26,9 @@ export default function RootLayout({
         <SessionWrap>
           <WagmiProvider>
             <OnchainKitProvider>
-              {children}
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
               <UserIdentityManager />
             </OnchainKitProvider>
           </WagmiProvider>

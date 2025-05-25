@@ -1693,17 +1693,19 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab])
   
+  // Fetch twitter roles when tab changes
+  useEffect(() => {
+    if (activeTab === 'dashboard') {
+      updateChartData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab])
+  
   return (
     <div className="fixed inset-0 z-50 bg-black font-mono text-green-300 p-4 overflow-auto">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl uppercase tracking-wider font-press-start-2p animate-pulse">The System.</h1>
-          <button 
-            onClick={onClose}
-            className="px-4 py-1 border border-green-300 hover:bg-green-800"
-          >
-            Close
-          </button>
         </div>
         
         {/* Tabs */}

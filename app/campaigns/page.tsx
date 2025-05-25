@@ -111,22 +111,14 @@ export default function CampaignsPage() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 md:mb-8">
           <h1 className="text-xl md:text-2xl font-bold">CAMPAIGN MANAGEMENT</h1>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          {session?.user && (
             <button
-              onClick={() => router.push('/scout')}
-              className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
+              onClick={() => setShowModal(true)}
+              className="px-3 py-1.5 md:px-4 md:py-2 bg-green-900 border border-green-300 hover:bg-green-800 text-sm md:text-base"
             >
-              Scout Projects
+              + New Campaign
             </button>
-            {session?.user && (
-              <button
-                onClick={() => setShowModal(true)}
-                className="px-3 py-1.5 md:px-4 md:py-2 bg-green-900 border border-green-300 hover:bg-green-800 text-sm md:text-base"
-              >
-                + New Campaign
-              </button>
-            )}
-          </div>
+          )}
         </div>
 
         {/* Tabs */}

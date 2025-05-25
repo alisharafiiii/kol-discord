@@ -264,12 +264,6 @@ export default function ScoutPage() {
             >
               + New Project
             </button>
-            <button
-              onClick={() => router.push('/')}
-              className="px-3 py-1.5 sm:px-4 sm:py-2 border border-green-300 hover:bg-green-900/30 text-sm transition-colors duration-300 rounded-md shadow-md hover:shadow-green-900/50"
-            >
-              Exit
-            </button>
           </div>
         </div>
 
