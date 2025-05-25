@@ -66,9 +66,6 @@ export default function NavigationHeader() {
                 priority
               />
             </div>
-            <span className="text-green-300 font-mono text-sm sm:text-base font-bold hidden sm:block">
-              NABULINES
-            </span>
           </div>
           
           {/* Navigation */}

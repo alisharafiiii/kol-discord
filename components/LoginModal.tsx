@@ -650,9 +650,21 @@ export default function LoginModal() {
   };
 
   const disconnectWallet = (type: 'coinbase' | 'phantom' | 'metamask') => {
-    if (type === 'coinbase' && isConnected) {
-      // Use wagmi to disconnect
-      disconnect()
+    // Handle each wallet type independently
+    if (type === 'coinbase') {
+      if (isConnected) {
+        // Use wagmi to disconnect Coinbase
+        disconnect()
+      }
+      // Update only Coinbase state
+      setConnectedWallets(prev => ({
+        ...prev,
+        coinbase: false,
+        addresses: {
+          ...prev.addresses,
+          coinbase: undefined
+        }
+      }))
     } else if (type === 'phantom') {
       // For Phantom wallet
       try {
@@ -662,31 +674,43 @@ export default function LoginModal() {
       } catch (error) {
         console.error('Error disconnecting Phantom wallet:', error)
       }
+      // Update only Phantom state
+      setConnectedWallets(prev => ({
+        ...prev,
+        phantom: false,
+        addresses: {
+          ...prev.addresses,
+          phantom: undefined
+        }
+      }))
     } else if (type === 'metamask') {
       // MetaMask doesn't have a disconnect method in the provider API
-      // We just remove it from our state
+      // Update only MetaMask state
+      setConnectedWallets(prev => ({
+        ...prev,
+        metamask: false,
+        addresses: {
+          ...prev.addresses,
+          metamask: undefined
+        }
+      }))
     }
     
-    // Update our internal state
-    setConnectedWallets(prev => {
-      const newAddresses = {...prev.addresses}
-      delete newAddresses[type]
-      
-      const newState = {
-        ...prev,
+    // Persist the updated state
+    try {
+      const currentState = connectedWallets
+      const updatedState = {
+        ...currentState,
         [type]: false,
-        addresses: newAddresses
+        addresses: {
+          ...currentState.addresses,
+          [type]: undefined
+        }
       }
-      
-      // Persist the updated state
-      try {
-        localStorage.setItem('connectedWallets', JSON.stringify(newState))
-      } catch (error) {
-        console.error('Error persisting wallet state:', error)
-      }
-      
-      return newState
-    })
+      localStorage.setItem('connectedWallets', JSON.stringify(updatedState))
+    } catch (error) {
+      console.error('Error persisting wallet state:', error)
+    }
   }
 
   const handleSubmit = async () => {
@@ -797,38 +821,7 @@ export default function LoginModal() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // If we already have a user session
-    if (session?.user) {
-      const checkExistingProfile = async () => {
-        try {
-          // Check if user has already applied
-          const response = await fetch(`/api/user/profile?handle=${encodeURIComponent(session.user?.name || '')}`)
-          if (response.ok) {
-            const data = await response.json()
-            if (data.user && data.user.socialAccounts) {
-              // User has already applied, don't force them through the apply flow
-              console.log('User has existing profile, clearing any saved stage')
-              localStorage.removeItem('loginStage') // Clear any saved stage
-              return
-            }
-          }
-        } catch (error) {
-          console.error('Error checking existing profile:', error)
-        }
-        
-        // Only restore saved stage if user hasn't already applied
-        const saved = localStorage.getItem('loginStage') as typeof stage | null
-        if (saved && saved === 'social') {
-          setStage(saved)
-          localStorage.removeItem('loginStage')
-        }
-      }
-      
-      checkExistingProfile()
-    }
-    
-    // Check for Phantom mobile connection return
-    // When returning from Phantom mobile, the URL will have special parameters
+    // Check for Phantom mobile connection return FIRST
     const urlParams = new URLSearchParams(window.location.search);
     const phantomConnected = urlParams.get('phantom_encryption_public_key');
     const phantomData = urlParams.get('data');
@@ -857,9 +850,44 @@ export default function LoginModal() {
         
         // Make sure we're on the wallet stage
         setStage('wallet');
+        return; // Exit early, don't process OAuth return
       } catch (error) {
         console.error('Error handling Phantom mobile return:', error);
       }
+    }
+
+    // If we already have a user session (OAuth return)
+    if (session?.user) {
+      const checkExistingProfile = async () => {
+        try {
+          // Check if user has already applied
+          const response = await fetch(`/api/user/profile?handle=${encodeURIComponent(session.user?.name || '')}`)
+          if (response.ok) {
+            const data = await response.json()
+            if (data.user && data.user.socialAccounts) {
+              // User has already applied, clear any saved stage and hide modal
+              console.log('User has existing profile, clearing saved stage and hiding modal')
+              localStorage.removeItem('loginStage')
+              setStage('hidden') // Hide the modal completely
+              return
+            }
+          }
+        } catch (error) {
+          console.error('Error checking existing profile:', error)
+        }
+        
+        // Only restore saved stage if user hasn't already applied
+        const saved = localStorage.getItem('loginStage') as typeof stage | null
+        if (saved && saved === 'social') {
+          setStage(saved)
+          localStorage.removeItem('loginStage')
+        } else {
+          // If no saved stage, hide the modal
+          setStage('hidden')
+        }
+      }
+      
+      checkExistingProfile()
     }
   }, [session]);
 
