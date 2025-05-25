@@ -66,19 +66,86 @@ export default function CampaignsPage() {
     })()
   }, [session, isApproved, router])
 
-  // Filter campaigns based on search and status
-  const filteredCampaigns = campaigns.filter(campaign => {
-    const matchesSearch = campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      campaign.createdBy.toLowerCase().includes(searchTerm.toLowerCase())
+  // Check if user has access to campaigns (is a team member)
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (!session?.user?.name) {
+        router.push('/access-denied')
+        return
+      }
+      
+      try {
+        // Fetch all campaigns to check if user is a team member
+        const res = await fetch('/api/campaigns')
+        if (res.ok) {
+          const allCampaigns = await res.json()
+          const userHandle = (session as any)?.twitterHandle || session.user.name
+          
+          // Check if user is a team member in any campaign
+          const hasAccess = allCampaigns.some((campaign: Campaign) => 
+            campaign.teamMembers.includes(userHandle) || 
+            campaign.createdBy === userHandle
+          )
+          
+          if (!hasAccess && !isApproved) {
+            router.push('/access-denied')
+            return
+          }
+          
+          setCampaigns(allCampaigns)
+        }
+      } catch (error) {
+        console.error('Error checking campaign access:', error)
+      }
+      setLoading(false)
+    }
     
-    const matchesStatus = statusFilter === 'all' || campaign.status === statusFilter
-    
-    return matchesSearch && matchesStatus
-  })
+    checkAccess()
+  }, [session, router, isApproved])
 
-  const handleCampaignCreated = (campaign: Campaign) => {
-    setCampaigns(prev => [campaign, ...prev])
-    setShowModal(false)
+  // Filter campaigns based on search and status
+  const filteredCampaigns = campaigns
+    .filter(campaign => {
+      // Filter by active tab
+      if (activeTab === 'my') {
+        const userHandle = (session as any)?.twitterHandle || session?.user?.name
+        const isTeamMember = campaign.teamMembers.includes(userHandle)
+        const isCreator = campaign.createdBy === userHandle
+        if (!isTeamMember && !isCreator) return false
+      }
+      
+      // Filter by status
+      if (statusFilter !== 'all' && campaign.status !== statusFilter) return false
+      
+      // Filter by search term
+      if (searchTerm) {
+        const search = searchTerm.toLowerCase()
+        return (
+          campaign.name.toLowerCase().includes(search) ||
+          campaign.slug.toLowerCase().includes(search) ||
+          campaign.teamMembers.some(member => member.toLowerCase().includes(search))
+        )
+      }
+      
+      return true
+    })
+
+  const handleCreateCampaign = async (campaignData: any) => {
+    try {
+      const response = await fetch('/api/campaigns', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(campaignData)
+      })
+      
+      if (response.ok) {
+        const newCampaign = await response.json()
+        setCampaigns([...campaigns, newCampaign])
+        setShowModal(false)
+      }
+    } catch (error) {
+      console.error('Error creating campaign:', error)
+    }
   }
 
   const handleDeleteCampaign = async (campaignId: string) => {
@@ -201,7 +268,7 @@ export default function CampaignsPage() {
         {showModal && (
           <CampaignModal
             onClose={() => setShowModal(false)}
-            onCampaignCreated={handleCampaignCreated}
+            onCampaignCreated={handleCreateCampaign}
           />
         )}
       </div>

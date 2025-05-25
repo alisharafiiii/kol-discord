@@ -24,17 +24,29 @@ interface CampaignChartsProps {
 
 // Color scheme for charts
 const COLORS = {
-  twitter: '#1DA1F2',
-  instagram: '#E4405F',
-  youtube: '#FF0000',
-  tiktok: '#000000',
-  linkedin: '#0077B5',
-  telegram: '#0088CC',
+  twitter: '#9333ea',
+  instagram: '#a855f7',
+  youtube: '#c084fc',
+  tiktok: '#e9d5ff',
+  linkedin: '#8b5cf6',
+  telegram: '#7c3aed',
   hero: '#9333ea',
-  star: '#eab308',
-  rising: '#9333ea', // Changed from blue to purple
-  micro: '#6b7280'
+  star: '#fbbf24',
+  rising: '#a78bfa',
+  micro: '#c4b5fd'
 }
+
+// Platform colors for stacked bar chart
+const PLATFORM_COLORS = [
+  '#9333ea', // purple-600
+  '#a855f7', // purple-500
+  '#c084fc', // purple-400
+  '#e9d5ff', // purple-200
+  '#8b5cf6', // violet-500
+  '#7c3aed', // violet-600
+  '#ddd6fe', // violet-200
+  '#a78bfa'  // violet-400
+]
 
 export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
   // Process data for charts
@@ -128,10 +140,10 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
   function getTierColor(tier?: KOL['tier'] | 'none') {
     switch (tier) {
       case 'hero': return '#9333ea'
-      case 'star': return '#eab308'
-      case 'rising': return '#9333ea'
-      case 'micro': return '#6b7280'
-      default: return '#374151'
+      case 'star': return '#fbbf24'
+      case 'rising': return '#a78bfa'
+      case 'micro': return '#c4b5fd'
+      default: return '#6b7280'
     }
   }
 
@@ -167,11 +179,11 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
 
   const getHeatmapColor = (costPerView: number) => {
     if (costPerView === 0) return '#1f2937' // Dark gray for free
-    if (costPerView < 0.01) return '#065f46' // Dark green - excellent
-    if (costPerView < 0.05) return '#059669' // Green - good
-    if (costPerView < 0.1) return '#eab308' // Yellow - moderate
-    if (costPerView < 0.5) return '#ea580c' // Orange - expensive
-    return '#dc2626' // Red - very expensive
+    if (costPerView < 0.01) return '#581c87' // purple-900 - excellent
+    if (costPerView < 0.05) return '#7c3aed' // violet-600 - good
+    if (costPerView < 0.1) return '#a78bfa' // violet-400 - moderate
+    if (costPerView < 0.5) return '#e9d5ff' // purple-200 - expensive
+    return '#fbbf24' // amber-400 - very expensive
   }
 
   return (
@@ -206,7 +218,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
                     key={platform}
                     dataKey={platform}
                     stackId="a"
-                    fill={`hsl(${index * 360 / chartData.platforms.length}, 70%, 50%)`}
+                    fill={PLATFORM_COLORS[index % PLATFORM_COLORS.length]}
                   />
                 ))}
               </BarChart>
@@ -303,23 +315,23 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
               <div className="mt-2 flex flex-wrap gap-1 sm:gap-2 text-xs">
                 <span>Cost/View:</span>
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#065f46' }}></span>
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#581c87' }}></span>
                   &lt;$0.01
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#059669' }}></span>
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#7c3aed' }}></span>
                   &lt;$0.05
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#eab308' }}></span>
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#a78bfa' }}></span>
                   &lt;$0.10
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#ea580c' }}></span>
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#e9d5ff' }}></span>
                   &lt;$0.50
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#dc2626' }}></span>
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 rounded" style={{ backgroundColor: '#fbbf24' }}></span>
                   &gt;$0.50
                 </span>
               </div>

@@ -34,7 +34,11 @@ export async function POST(
       payment: kolData.payment || 'pending',
       views: kolData.views || 0,
       links: kolData.links || [],
-      platform: kolData.platform || []
+      platform: kolData.platform || [],
+      // Include optional fields if provided
+      ...(kolData.tier && { tier: kolData.tier }),
+      ...(kolData.contact && { contact: kolData.contact }),
+      ...(kolData.pfp && { pfp: kolData.pfp })
     }
     
     const campaign = await addKOLToCampaign(params.id, kol, session.user.name)

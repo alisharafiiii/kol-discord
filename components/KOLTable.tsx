@@ -150,17 +150,7 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                     <img src={`https://unavatar.io/twitter/${kol.handle}`} alt={kol.handle} className="w-8 h-8 rounded-full" />
                   )}
                   <div>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                      <span className="font-medium">{kol.name}</span>
-                      <span className={`inline-flex px-2 py-0.5 text-xs rounded-full ${
-                        kol.tier === 'hero' ? 'bg-purple-100 text-purple-800' :
-                        kol.tier === 'star' ? 'bg-yellow-100 text-yellow-800' :
-                        kol.tier === 'rising' ? 'bg-blue-100 text-blue-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {kol.tier}
-                      </span>
-                    </div>
+                    <div className="font-medium">{kol.name}</div>
                     <div className="text-xs text-gray-500">@{kol.handle}</div>
                   </div>
                 </div>

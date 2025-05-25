@@ -879,15 +879,23 @@ export default function LoginModal() {
         // Only restore saved stage if user hasn't already applied
         const saved = localStorage.getItem('loginStage') as typeof stage | null
         if (saved && saved === 'social') {
-          setStage(saved)
-          localStorage.removeItem('loginStage')
-        } else if (saved) {
-          // If there's any other saved stage, restore it
+          // Check if they have a profile
+          const response = await fetch(`/api/user/profile?handle=${encodeURIComponent(session.user?.name || '')}`)
+          if (response.ok) {
+            const data = await response.json()
+            if (data.user && data.user.socialAccounts) {
+              // User has profile, don't show apply form
+              localStorage.removeItem('loginStage')
+              setStage('hidden')
+              return
+            }
+          }
+          // No profile, continue with apply flow
           setStage(saved)
           localStorage.removeItem('loginStage')
         } else {
-          // If no saved stage but user just logged in, show the choice screen with their card
-          setStage('choice')
+          // No saved stage, hide modal and stay on landing page
+          setStage('hidden')
         }
       }
       
