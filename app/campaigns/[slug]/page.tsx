@@ -10,6 +10,7 @@ import KOLTable from '@/components/KOLTable'
 import AddKOLModal from '@/components/AddKOLModal'
 import CampaignCharts from '@/components/CampaignCharts'
 import CampaignBrief from '@/components/CampaignBrief'
+import EditCampaignModal from '@/components/EditCampaignModal'
 
 // Cache for projects to avoid repeated fetches
 let projectsCache: Project[] | null = null
@@ -23,7 +24,9 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true)
   const [showAddKOL, setShowAddKOL] = useState(false)
   const [showCharts, setShowCharts] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [projectDetails, setProjectDetails] = useState<Project[]>([])
+  const [allProjects, setAllProjects] = useState<Project[]>([])
 
   const fetchCampaign = async () => {
     try {
@@ -70,6 +73,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
           projectsCacheTime = Date.now()
         }
         
+        setAllProjects(list)
         const filtered = list.filter((p: Project) => campaign.projects.includes(p.id))
         setProjectDetails(filtered)
       } catch (err) {
@@ -142,6 +146,30 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     }
   }
 
+  const handleCampaignUpdate = async (updates: Partial<Campaign>) => {
+    if (!campaign) return
+
+    const res = await fetch(`/api/campaigns/${campaign.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates)
+    })
+
+    if (!res.ok) {
+      const error = await res.json()
+      throw new Error(error.error || 'Failed to update campaign')
+    }
+
+    const updatedCampaign = await res.json()
+    setCampaign(updatedCampaign)
+    
+    // Refresh project details if projects were updated
+    if (updates.projects) {
+      const filtered = allProjects.filter((p: Project) => updates.projects!.includes(p.id))
+      setProjectDetails(filtered)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-green-300 font-sans p-6">
@@ -199,7 +227,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                   + Add KOL
                 </button>
                 <button
-                  onClick={() => router.push(`/campaigns/${campaign.slug}/edit`)}
+                  onClick={() => setShowEditModal(true)}
                   className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
                 >
                   Edit Campaign
@@ -292,6 +320,16 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
           <CampaignCharts
             kols={campaign.kols}
             onClose={() => setShowCharts(false)}
+          />
+        )}
+
+        {/* Edit Campaign Modal */}
+        {showEditModal && (
+          <EditCampaignModal
+            campaign={campaign}
+            projects={allProjects}
+            onClose={() => setShowEditModal(false)}
+            onSave={handleCampaignUpdate}
           />
         )}
       </div>
