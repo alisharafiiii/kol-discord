@@ -1,0 +1,19 @@
+{
+  "name": "kol-test",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "TWITTER_CLIENT_ID": "@twitter-client-id",
+    "TWITTER_CLIENT_SECRET": "@twitter-client-secret",
+    "NEXTAUTH_URL": "@nextauth-url-test",
+    "NEXTAUTH_SECRET": "@nextauth-secret",
+    "TWITTER_BEARER_TOKEN": "@twitter-bearer-token",
+    "REDIS_URL": "@redis-url",
+    "SMTP_HOST": "@smtp-host",
+    "SMTP_PORT": "@smtp-port",
+    "SMTP_USER": "@smtp-user",
+    "SMTP_PASS": "@smtp-pass",
+    "SMTP_FROM": "@smtp-from"
+  }
+} 

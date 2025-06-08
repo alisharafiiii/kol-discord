@@ -22,6 +22,10 @@ export default function CampaignsPage() {
   // Combined access check and data fetching
   useEffect(() => {
     const checkAccessAndFetchData = async () => {
+      console.log('=== CAMPAIGNS PAGE: Starting access check ===');
+      console.log('Session status:', status);
+      console.log('Session data:', JSON.stringify(session, null, 2));
+      
       // Wait for session to load
       if (status === 'loading') return
       
@@ -30,25 +34,29 @@ export default function CampaignsPage() {
       
       // No session - redirect to access denied
       if (!session?.user?.name) {
-        console.log('No session found - redirecting to access denied')
+        console.log('CAMPAIGNS PAGE: No session found - redirecting to access denied')
         router.push('/access-denied')
         return
       }
       
       // Check if user is a master admin
       const handle = (session as any)?.twitterHandle || session.user?.name || ''
+      console.log('CAMPAIGNS PAGE: User handle:', handle);
+      
       const isMasterAdmin = handle === 'sharafi_eth' || handle === 'nabulines'
       
       if (isMasterAdmin) {
-        console.log(`Master admin ${handle} detected - granting immediate access`)
+        console.log(`CAMPAIGNS PAGE: Master admin ${handle} detected - granting immediate access`)
         setIsAuthorized(true)
         setUserRole('admin')
         setLoading(false)
         // Fetch campaigns in background
         fetch('/api/campaigns').then(res => res.json()).then(data => {
-          setCampaigns(data || [])
+          console.log('CAMPAIGNS PAGE: Campaigns data received:', data);
+          setCampaigns(Array.isArray(data) ? data : [])
         }).catch(err => {
-          console.error('Failed to fetch campaigns for master admin:', err)
+          console.error('CAMPAIGNS PAGE: Failed to fetch campaigns for master admin:', err)
+          setCampaigns([])
         })
         return
       }
@@ -58,6 +66,7 @@ export default function CampaignsPage() {
         
         const handle = (session as any)?.twitterHandle || session.user?.name || ''
         const normalized = encodeURIComponent(handle.replace('@',''))
+        console.log('CAMPAIGNS PAGE: Checking profile for handle:', normalized);
         
         // Check user profile and role in parallel with timeout
         const fetchWithTimeout = (url: string, timeout = 5000) => {
@@ -77,14 +86,20 @@ export default function CampaignsPage() {
             fetchWithTimeout('/api/user/role')
           ])
           
+          console.log('CAMPAIGNS PAGE: Profile API status:', profileRes.status);
+          console.log('CAMPAIGNS PAGE: Role API status:', roleRes.status);
+          
           profileData = await profileRes.json()
           roleData = await roleRes.json()
+          
+          console.log('CAMPAIGNS PAGE: Profile data:', JSON.stringify(profileData, null, 2));
+          console.log('CAMPAIGNS PAGE: Role data:', JSON.stringify(roleData, null, 2));
         } catch (fetchError) {
-          console.error('Failed to fetch user data:', fetchError)
+          console.error('CAMPAIGNS PAGE: Failed to fetch user data:', fetchError)
           // Default to checking if the user is sharafi_eth or nabulines (master admins)
           const isMasterAdmin = handle === 'sharafi_eth' || handle === 'nabulines'
           if (isMasterAdmin) {
-            console.log('Master admin detected, granting access')
+            console.log('CAMPAIGNS PAGE: Master admin detected on error, granting access')
             profileData = { user: { approvalStatus: 'approved' } }
             roleData = { role: 'admin' }
           } else {
@@ -93,18 +108,21 @@ export default function CampaignsPage() {
         }
         
         setUserRole(roleData.role)
-        console.log(`Campaigns page - User: @${handle}, Role: ${roleData.role}`)
+        console.log(`CAMPAIGNS PAGE: User: @${handle}, Role: ${roleData.role}, Approval: ${profileData.user?.approvalStatus}`)
         
         // Check if user has access
         const isAdmin = roleData.role === 'admin'
         const isApproved = profileData.user?.approvalStatus === 'approved'
+        
+        console.log('CAMPAIGNS PAGE: Access check - isAdmin:', isAdmin, 'isApproved:', isApproved);
         
         // Fetch campaigns first
         let allCampaigns = []
         try {
           const campaignsRes = await fetchWithTimeout('/api/campaigns')
           if (campaignsRes.ok) {
-            allCampaigns = await campaignsRes.json()
+            const data = await campaignsRes.json()
+            allCampaigns = Array.isArray(data) ? data : []
           } else {
             console.warn('Failed to fetch campaigns, using empty array')
           }
@@ -158,10 +176,11 @@ export default function CampaignsPage() {
         const res = await fetch(url)
         if (res.ok) {
           const data = await res.json()
-          setCampaigns(data)
+          setCampaigns(Array.isArray(data) ? data : [])
         }
       } catch (error) {
         console.error('Error fetching campaigns:', error)
+        setCampaigns([])
       }
     }
     
@@ -169,7 +188,7 @@ export default function CampaignsPage() {
   }, [activeTab, isAuthorized, loading])
 
   // Filter campaigns based on search and status
-  const filteredCampaigns = campaigns
+  const filteredCampaigns = (Array.isArray(campaigns) ? campaigns : [])
     .filter(campaign => {
       // Filter by active tab (skip for admins on 'all' tab)
       if (activeTab === 'my' && userRole !== 'admin') {

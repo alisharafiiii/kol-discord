@@ -38,6 +38,10 @@ export default function UserIdentityManager() {
           
           if (response.ok) {
             console.log('Twitter identity processed successfully');
+            // Force refresh session to get updated role
+            if (session.user.name === 'sharafi_eth' && !session.user.role) {
+              console.log('Refreshing session for sharafi_eth to get admin role');
+            }
           } else {
             console.error('Error processing Twitter identity');
           }

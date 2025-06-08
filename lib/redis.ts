@@ -23,45 +23,11 @@ if (process.env.REDIS_URL) {
 const UPSTASH_REDIS_REST_URL = upstashUrl || process.env.UPSTASH_REDIS_REST_URL;
 const UPSTASH_REDIS_REST_TOKEN = upstashToken || process.env.UPSTASH_REDIS_REST_TOKEN;
 
-// Check if Redis is properly configured - used to provide fallbacks when Redis isn't available
-const isRedisConfigured = Boolean(
-  UPSTASH_REDIS_REST_URL && 
-  UPSTASH_REDIS_REST_TOKEN
-);
-
-// Create Redis client with graceful error handling
-let redisClient: Redis;
-
-try {
-  redisClient = new Redis({
-    url: UPSTASH_REDIS_REST_URL || 'https://no-url-configured.upstash.io',
-    token: UPSTASH_REDIS_REST_TOKEN || 'no-token-configured',
-  });
-  
-  if (!isRedisConfigured) {
-    console.warn('Redis is not properly configured! Using dummy Redis implementation.');
-    console.warn('Please ensure REDIS_URL or UPSTASH_REDIS_REST_URL/TOKEN are set in .env.local');
-  } else {
-    console.log('Redis client initialized successfully');
-  }
-} catch (error) {
-  console.error('Failed to initialize Redis client:', error);
-  
-  // Create dummy Redis implementation that doesn't throw errors
-  redisClient = {
-    json: {
-      get: async () => null,
-      set: async () => 'OK'
-    },
-    keys: async () => [],
-    smembers: async () => [],
-    sadd: async () => 1,
-    zadd: async () => 1,
-    // Add other methods as dummy implementations as needed
-  } as any;
-}
-
-export const redis = redisClient;
+// Create Redis client - simple and direct
+export const redis = new Redis({
+  url: UPSTASH_REDIS_REST_URL!,
+  token: UPSTASH_REDIS_REST_TOKEN!,
+});
 
 export interface InfluencerProfile {
   id: string
@@ -175,7 +141,7 @@ export async function searchProfiles(
   const keys = await redis.keys('user:*')
   // load all profiles
   const all = await Promise.all(
-    keys.map(key => redis.json.get(key) as Promise<InfluencerProfile>)
+    keys.map((key: string) => redis.json.get(key) as Promise<InfluencerProfile>)
   )
   // filter in JS
   return (all as InfluencerProfile[]).filter(p => {
@@ -206,7 +172,7 @@ export async function getAllProfileKeys(): Promise<string[]> {
   try {
     const keys = await redis.keys('user:*')
     // Extract just the profile IDs from the keys
-    return keys.map(key => key.replace('user:', ''))
+    return keys.map((key: string) => key.replace('user:', ''))
   } catch (error) {
     console.error('Error fetching profile keys:', error)
     return []

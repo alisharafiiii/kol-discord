@@ -1221,18 +1221,20 @@ export default function LoginModal() {
                   </button>
                 </div>
               ) : (
-                <button 
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={() => {
-                    // Save progress so that after OAuth redirect we resume from social step
-                    if (typeof window !== 'undefined') {
-                      localStorage.setItem('loginStage', 'social')
-                    }
-                    signIn('twitter')
-                  }}
-                >
-                  Login with 𝕏
-                </button>
+                <div className="flex flex-col gap-2">
+                  <button 
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={() => {
+                      // Save progress so that after OAuth redirect we resume from social step
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('loginStage', 'social')
+                      }
+                      signIn('twitter')
+                    }}
+                  >
+                    Login with 𝕏
+                  </button>
+                </div>
               )}
             </div>
             
@@ -1509,19 +1511,21 @@ export default function LoginModal() {
                   </button>
                 </div>
               ) : (
-                <button 
-                  type="button"
-                  className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
-                  onClick={() => {
-                    // Save progress so that after OAuth redirect we resume from social step
-                    if (typeof window !== 'undefined') {
-                      localStorage.setItem('loginStage', 'social')
-                    }
-                    signIn('twitter')
-                  }}
-                >
-                  Connect X (Twitter) Account
-                </button>
+                <div className="flex flex-col gap-2">
+                  <button 
+                    type="button"
+                    className="bg-black border border-green-300 hover:bg-green-800 text-xs p-2"
+                    onClick={() => {
+                      // Save progress so that after OAuth redirect we resume from social step
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('loginStage', 'social')
+                      }
+                      signIn('twitter')
+                    }}
+                  >
+                    Login with 𝕏
+                  </button>
+                </div>
               )}
             </div>
             

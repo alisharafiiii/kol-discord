@@ -3,20 +3,28 @@ import { findUserByWallet, findUserByUsername } from '@/lib/user-identity';
 import { redis, InfluencerProfile } from '@/lib/redis';
 
 export async function GET(req: NextRequest) {
+  console.log('=== USER PROFILE API: Request received ===');
+  
   try {
     // Get the identifier from the query parameter - could be wallet or handle
     const { searchParams } = new URL(req.url);
     const wallet = searchParams.get('wallet');
     const handle = searchParams.get('handle');
     
+    console.log('USER PROFILE API: Params - wallet:', wallet, 'handle:', handle);
+    
     if (!wallet && !handle) {
+      console.log('USER PROFILE API: No wallet or handle provided');
       return NextResponse.json({ error: 'Either wallet address or handle is required' }, { status: 400 });
     }
     
     // Temporary fix for sharafi_eth while Redis is down
     const identifier = (wallet || handle || '').toLowerCase();
+    console.log('USER PROFILE API: Checking identifier:', identifier);
+    
     if (identifier === 'sharafi_eth' || identifier === '@sharafi_eth') {
-      return NextResponse.json({ 
+      console.log('USER PROFILE API: Master admin sharafi_eth detected - returning admin profile');
+      const response = { 
         user: {
           id: 'sharafi_eth_admin',
           name: 'sharafi_eth',
@@ -25,7 +33,9 @@ export async function GET(req: NextRequest) {
           approvalStatus: 'approved',
           role: 'admin'
         }
-      });
+      };
+      console.log('USER PROFILE API: Returning hardcoded admin response:', JSON.stringify(response, null, 2));
+      return NextResponse.json(response);
     }
     
     let user = null;
@@ -33,13 +43,19 @@ export async function GET(req: NextRequest) {
     try {
       // Try to find by wallet first
       if (wallet) {
+        console.log('USER PROFILE API: Searching by wallet:', wallet);
         user = await findUserByWallet(wallet);
+        console.log('USER PROFILE API: User found by wallet:', user ? 'Yes' : 'No');
       }
       
       // If no user found by wallet, or if handle is provided, try by handle
       if (!user && handle) {
         const normalizedHandle = handle.replace('@', '').toLowerCase();
+        console.log('USER PROFILE API: Searching by handle in Redis:', normalizedHandle);
+        
         const userIds = await redis.smembers(`idx:username:${normalizedHandle}`);
+        console.log('USER PROFILE API: User IDs found:', userIds);
+        
         if (userIds && userIds.length > 0) {
           let chosen: InfluencerProfile | null = null;
           for (const id of userIds) {
@@ -51,31 +67,36 @@ export async function GET(req: NextRequest) {
             }
           }
           user = chosen;
+          console.log('USER PROFILE API: User found in Redis:', user ? 'Yes' : 'No');
         }
       }
       
       // If still no user and wallet was provided, try treating wallet as a Twitter handle
       if (!user && wallet) {
         const normalizedWallet = wallet.replace('@', '').toLowerCase();
+        console.log('USER PROFILE API: Trying wallet as Twitter handle:', normalizedWallet);
         user = await findUserByUsername(normalizedWallet);
+        console.log('USER PROFILE API: User found by username:', user ? 'Yes' : 'No');
       }
     } catch (redisError) {
-      console.error('Redis connection error:', redisError);
+      console.error('USER PROFILE API: Redis connection error:', redisError);
       // Continue with default response
     }
     
     if (!user) {
-      return NextResponse.json({ 
+      const defaultResponse = { 
         user: {
           id: (wallet || handle || '').substring(0, 8),
           profileImageUrl: null,
           approvalStatus: 'pending'
         }
-      });
+      };
+      console.log('USER PROFILE API: No user found, returning default:', JSON.stringify(defaultResponse, null, 2));
+      return NextResponse.json(defaultResponse);
     }
     
     // Return the user profile with necessary fields including approval status
-    return NextResponse.json({
+    const response = {
       user: {
         id: user.id,
         name: user.name,
@@ -84,10 +105,12 @@ export async function GET(req: NextRequest) {
         approvalStatus: user.approvalStatus || 'pending',
         role: user.role || 'user'
       }
-    });
+    };
+    console.log('USER PROFILE API: Returning user data:', JSON.stringify(response, null, 2));
+    return NextResponse.json(response);
     
   } catch (error) {
-    console.error('Error fetching user profile:', error);
+    console.error('USER PROFILE API: Error fetching user profile:', error);
     return NextResponse.json({ error: 'Failed to fetch user profile' }, { status: 500 });
   }
 } 

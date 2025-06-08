@@ -1,1 +1,47 @@
 Sun Jun  8 02:00:00 EDT 2025: Changes detected, creating backup commit...
+[main e5e4b86] Auto-backup: 2025-06-08 02:00:01
+ Committer: nabu <nabu@52:8a:b3:16:94:66.home>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 36 files changed, 2227 insertions(+), 141 deletions(-)
+ delete mode 100644 app/api/campaigns/slug/[slug]/route.ts
+ create mode 100644 app/api/notifications/history/route.ts
+ create mode 100644 app/api/notifications/process/route.ts
+ create mode 100644 components/TimelineAnalytics.tsx
+ create mode 100644 components/charts/ChartComponents.tsx
+ create mode 100644 lib/notification-service.ts
+ create mode 100644 lib/pdf-export.ts
+ rename {pages => pages.backup}/_app.tsx (100%)
+ rename {pages => pages.backup}/api/admin/approve.ts (100%)
+ rename {pages => pages.backup}/api/admin/check-role.ts (100%)
+ rename {pages => pages.backup}/api/admin/get-users.ts (100%)
+ rename {pages => pages.backup}/api/admin/reject.ts (100%)
+ rename {pages => pages.backup}/api/admin/stats.ts (100%)
+ rename {pages => pages.backup}/api/admin/update-profile.ts (100%)
+ rename {pages => pages.backup}/api/admin/users.ts (100%)
+ rename {pages => pages.backup}/api/check-wallet-role.ts (100%)
+ rename {pages => pages.backup}/api/create-test-user.ts (100%)
+ rename {pages => pages.backup}/api/debug-user.ts (100%)
+ rename {pages => pages.backup}/api/redis-ping.ts (100%)
+ rename {pages => pages.backup}/api/save-profile.ts (100%)
+ rename {pages => pages.backup}/api/save-test.ts (100%)
+ rename {pages => pages.backup}/api/test-profile.ts (100%)
+ rename {pages => pages.backup}/api/update-user-data.ts (100%)
+ rename {pages => pages.backup}/profile/[id].tsx (100%)
+ create mode 100644 scripts/auto-commit.log
+ create mode 100644 scripts/set-smtp-credentials.js
+ create mode 100644 scripts/update-smtp-config.js
+ create mode 100644 scripts/update-twitter-credentials.js
+ create mode 100644 scripts/verify-credentials.js
+fatal: could not read Username for 'https://github.com': Device not configured
+Sun Jun  8 02:00:01 EDT 2025: Backup completed successfully

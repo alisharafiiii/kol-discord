@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Project } from '@/lib/project';
 
 // Import social platform base URLs
@@ -88,6 +88,13 @@ const getSocialLink = (platform: string, username: string): string => {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator = false, creatorProfileUrl }) => {
   const [creatorImage, setCreatorImage] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
+  const [isLoadingCreator, setIsLoadingCreator] = useState(false);
+  
+  // Memoize the creator identicon to prevent flickering
+  const creatorIdenticon = useMemo(() => 
+    `https://api.dicebear.com/8.x/identicon/svg?seed=${project.createdBy}`,
+    [project.createdBy]
+  );
   
   console.log(`[ProjectCard] Rendering project: ${project.id} - ${project.twitterHandle}`);
   console.log(`[ProjectCard] Project profile image: ${project.profileImageUrl || 'none'}`);
@@ -95,37 +102,42 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator
   
   // Fetch creator profile picture
   useEffect(() => {
+    let mounted = true;
+    
     const fetchCreatorProfile = async () => {
+      // Skip if already loading or if we have an image
+      if (isLoadingCreator || creatorImage) return;
+      
       try {
         if (project.createdBy) {
-          console.log(`[ProjectCard] Fetching creator profile for ${project.createdBy}`);
+          setIsLoadingCreator(true);
           // Clean the handle - remove @ if present
           const cleanHandle = project.createdBy.replace('@', '');
           const response = await fetch(`/api/user/profile?handle=${encodeURIComponent(cleanHandle)}`);
           
-          console.log(`[ProjectCard] Creator profile response status: ${response.status}`);
-          
-          if (response.ok) {
+          if (mounted && response.ok) {
             const data = await response.json();
-            console.log(`[ProjectCard] Creator profile data:`, data);
             
             if (data.user && data.user.profileImageUrl) {
-              console.log(`[ProjectCard] Setting creator image:`, data.user.profileImageUrl);
               setCreatorImage(data.user.profileImageUrl);
-            } else {
-              console.log(`[ProjectCard] No profile image found for creator`);
             }
-          } else {
-            console.log(`[ProjectCard] Failed to fetch creator profile: ${response.status}`);
           }
         }
       } catch (error) {
         console.error('[ProjectCard] Error fetching creator profile:', error);
+      } finally {
+        if (mounted) {
+          setIsLoadingCreator(false);
+        }
       }
     };
 
     fetchCreatorProfile();
-  }, [project.createdBy]);
+    
+    return () => {
+      mounted = false;
+    };
+  }, [project.createdBy]); // Remove creatorImage from dependencies to prevent loops
 
   return (
     <div 
@@ -204,18 +216,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator
         <div className="license-data flex-1 text-xs flex flex-col gap-1">
           <div className="license-field">
             <span className="opacity-70">HANDLE:</span> 
-            <a 
-              href={`https://twitter.com/${project.twitterHandle.replace('@', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold ml-1 hover:text-blue-400"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {project.twitterHandle}
-            </a>
+            {project.twitterHandle ? (
+              <a 
+                href={`https://twitter.com/${project.twitterHandle.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold ml-1 hover:text-blue-400"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {project.twitterHandle}
+              </a>
+            ) : (
+              <span className="font-bold ml-1 text-gray-500">N/A</span>
+            )}
           </div>
           <div className="license-field">
-            <span className="opacity-70">FOLLOWERS:</span> <span className="font-bold">{project.followerCount.toLocaleString()}</span>
+            <span className="opacity-70">FOLLOWERS:</span> <span className="font-bold">{project.followerCount?.toLocaleString() || 'N/A'}</span>
           </div>
           <div className="license-field flex items-center">
             <span className="opacity-70 mr-1">PRIORITY:</span> 
@@ -250,7 +266,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator
           {/* If creatorImage failed earlier, identicon is set; this fallback rarely triggers */}
           {!creatorImage && (
             <img
-              src={`https://api.dicebear.com/8.x/identicon/svg?seed=${project.createdBy}`}
+              src={creatorIdenticon}
               alt="Creator"
               className="w-6 h-6 rounded-full border border-green-300"
             />

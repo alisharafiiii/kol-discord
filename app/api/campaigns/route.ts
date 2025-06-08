@@ -12,16 +12,26 @@ export async function GET(request: NextRequest) {
     
     if (userOnly && session?.user?.name) {
       // Get campaigns for logged in user
-      const campaigns = await getUserCampaigns(session.user.name)
-      return NextResponse.json(campaigns)
+      try {
+        const campaigns = await getUserCampaigns(session.user.name)
+        return NextResponse.json(campaigns)
+      } catch (redisError) {
+        console.error('Redis error fetching user campaigns:', redisError)
+        return NextResponse.json([]) // Return empty array when Redis is down
+      }
     } else {
       // Get all campaigns
-      const campaigns = await getAllCampaigns()
-      return NextResponse.json(campaigns)
+      try {
+        const campaigns = await getAllCampaigns()
+        return NextResponse.json(campaigns)
+      } catch (redisError) {
+        console.error('Redis error fetching all campaigns:', redisError)
+        return NextResponse.json([]) // Return empty array when Redis is down
+      }
     }
   } catch (error) {
     console.error('Error fetching campaigns:', error)
-    return NextResponse.json({ error: 'Failed to fetch campaigns' }, { status: 500 })
+    return NextResponse.json([]) // Return empty array instead of error
   }
 }
 

@@ -112,11 +112,24 @@ export const authOptions: NextAuthOptions = {
         if (token.followerCount) {
           session.user.followerCount = token.followerCount;
         }
+        // Add role if available
+        if (token.role) {
+          session.user.role = token.role;
+        }
+        // Add approval status if available
+        if (token.approvalStatus) {
+          session.user.approvalStatus = token.approvalStatus;
+        }
       }
       
       // Also add Twitter handle at top level for easier access
       if (token.twitterHandle) {
         session.twitterHandle = token.twitterHandle;
+      }
+      
+      // Add role at top level too
+      if (token.role) {
+        session.role = token.role;
       }
       
       return session;
@@ -151,6 +164,28 @@ export const authOptions: NextAuthOptions = {
           } catch (error) {
             console.error("Error fetching follower count in JWT:", error);
           }
+        }
+      }
+      
+      // Fetch user role and approval status
+      if (token.twitterHandle) {
+        try {
+          // Use absolute URL for API calls
+          const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+          const profileRes = await fetch(`${baseUrl}/api/user/profile?handle=${token.twitterHandle}`);
+          
+          if (profileRes.ok) {
+            const profileData = await profileRes.json();
+            if (profileData.user) {
+              token.role = profileData.user.role || 'user';
+              token.approvalStatus = profileData.user.approvalStatus || 'pending';
+              
+              // Log for debugging
+              console.log(`[NextAuth] User ${token.twitterHandle} - Role: ${token.role}, Status: ${token.approvalStatus}`);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user profile in JWT:", error);
         }
       }
       
