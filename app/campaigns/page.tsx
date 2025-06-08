@@ -8,7 +8,7 @@ import CampaignCard from '@/components/CampaignCard'
 import type { Campaign } from '@/lib/campaign'
 
 export default function CampaignsPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [loading, setLoading] = useState(true)
@@ -16,98 +16,163 @@ export default function CampaignsPage() {
   const [activeTab, setActiveTab] = useState<'my' | 'all'>('my')
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<Campaign['status'] | 'all'>('all')
-  const [isApproved, setIsApproved] = useState<boolean | null>(null)
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null)
+  const [userRole, setUserRole] = useState<string | null>(null)
 
-  // Fetch campaigns
-  const fetchCampaigns = async () => {
-    try {
-      setLoading(true)
-      const url = activeTab === 'my' ? '/api/campaigns?user=true' : '/api/campaigns'
-      const res = await fetch(url)
-      if (res.ok) {
-        const data = await res.json()
-        setCampaigns(data)
-      }
-    } catch (error) {
-      console.error('Error fetching campaigns:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  // Combined access check and data fetching
   useEffect(() => {
-    fetchCampaigns()
-  }, [activeTab])
-
-  // Check approval status once session available
-  useEffect(() => {
-    if (!session) return
-    if (isApproved !== null) return
-
-    const handle = (session as any)?.twitterHandle || session.user?.name || ''
-    if (!handle) return
-
-    const normalized = encodeURIComponent(handle.replace('@',''))
-
-    ;(async () => {
-      try {
-        const res = await fetch(`/api/user/profile?handle=${normalized}`)
-        const data = await res.json()
-        if (data.user?.approvalStatus === 'approved') {
-          setIsApproved(true)
-        } else {
-          setIsApproved(false)
-          router.replace('/access-denied')
-        }
-      } catch {
-        setIsApproved(false)
-        router.replace('/access-denied')
-      }
-    })()
-  }, [session, isApproved, router])
-
-  // Check if user has access to campaigns (is a team member)
-  useEffect(() => {
-    const checkAccess = async () => {
+    const checkAccessAndFetchData = async () => {
+      // Wait for session to load
+      if (status === 'loading') return
+      
+      console.log('Campaigns page - Session:', session)
+      console.log('Campaigns page - Session status:', status)
+      
+      // No session - redirect to access denied
       if (!session?.user?.name) {
+        console.log('No session found - redirecting to access denied')
         router.push('/access-denied')
         return
       }
       
-      try {
-        // Fetch all campaigns to check if user is a team member
-        const res = await fetch('/api/campaigns')
-        if (res.ok) {
-          const allCampaigns = await res.json()
-          const userHandle = (session as any)?.twitterHandle || session.user.name
-          
-          // Check if user is a team member in any campaign
-          const hasAccess = allCampaigns.some((campaign: Campaign) => 
-            campaign.teamMembers.includes(userHandle) || 
-            campaign.createdBy === userHandle
-          )
-          
-          if (!hasAccess && !isApproved) {
-            router.push('/access-denied')
-            return
-          }
-          
-          setCampaigns(allCampaigns)
-        }
-      } catch (error) {
-        console.error('Error checking campaign access:', error)
+      // Check if user is a master admin
+      const handle = (session as any)?.twitterHandle || session.user?.name || ''
+      const isMasterAdmin = handle === 'sharafi_eth' || handle === 'nabulines'
+      
+      if (isMasterAdmin) {
+        console.log(`Master admin ${handle} detected - granting immediate access`)
+        setIsAuthorized(true)
+        setUserRole('admin')
+        setLoading(false)
+        // Fetch campaigns in background
+        fetch('/api/campaigns').then(res => res.json()).then(data => {
+          setCampaigns(data || [])
+        }).catch(err => {
+          console.error('Failed to fetch campaigns for master admin:', err)
+        })
+        return
       }
-      setLoading(false)
+      
+      try {
+        setLoading(true)
+        
+        const handle = (session as any)?.twitterHandle || session.user?.name || ''
+        const normalized = encodeURIComponent(handle.replace('@',''))
+        
+        // Check user profile and role in parallel with timeout
+        const fetchWithTimeout = (url: string, timeout = 5000) => {
+          return Promise.race([
+            fetch(url),
+            new Promise<Response>((_, reject) => 
+              setTimeout(() => reject(new Error('Request timeout')), timeout)
+            )
+          ])
+        }
+        
+        let profileData, roleData
+        
+        try {
+          const [profileRes, roleRes] = await Promise.all([
+            fetchWithTimeout(`/api/user/profile?handle=${normalized}`),
+            fetchWithTimeout('/api/user/role')
+          ])
+          
+          profileData = await profileRes.json()
+          roleData = await roleRes.json()
+        } catch (fetchError) {
+          console.error('Failed to fetch user data:', fetchError)
+          // Default to checking if the user is sharafi_eth or nabulines (master admins)
+          const isMasterAdmin = handle === 'sharafi_eth' || handle === 'nabulines'
+          if (isMasterAdmin) {
+            console.log('Master admin detected, granting access')
+            profileData = { user: { approvalStatus: 'approved' } }
+            roleData = { role: 'admin' }
+          } else {
+            throw fetchError
+          }
+        }
+        
+        setUserRole(roleData.role)
+        console.log(`Campaigns page - User: @${handle}, Role: ${roleData.role}`)
+        
+        // Check if user has access
+        const isAdmin = roleData.role === 'admin'
+        const isApproved = profileData.user?.approvalStatus === 'approved'
+        
+        // Fetch campaigns first
+        let allCampaigns = []
+        try {
+          const campaignsRes = await fetchWithTimeout('/api/campaigns')
+          if (campaignsRes.ok) {
+            allCampaigns = await campaignsRes.json()
+          } else {
+            console.warn('Failed to fetch campaigns, using empty array')
+          }
+        } catch (campaignError) {
+          console.error('Error fetching campaigns:', campaignError)
+          // Continue with empty campaigns for master admins
+          if (roleData.role === 'admin') {
+            console.log('Admin user, continuing with empty campaigns')
+            allCampaigns = []
+          } else {
+            throw campaignError
+          }
+        }
+        
+        // Check if user is a team member in any campaign
+        const userHandle = (session as any)?.twitterHandle || session.user.name
+        const isTeamMember = allCampaigns.some((campaign: Campaign) => 
+          campaign.teamMembers.includes(userHandle) || 
+          campaign.createdBy === userHandle
+        )
+        
+        // Allow access if: admin OR approved OR team member
+        if (isAdmin || isApproved || isTeamMember) {
+          setIsAuthorized(true)
+          setCampaigns(allCampaigns)
+        } else {
+          console.log('Access denied - not admin, not approved, not team member')
+          setIsAuthorized(false)
+          router.push('/access-denied')
+        }
+        
+      } catch (error) {
+        console.error('Error checking access:', error)
+        setIsAuthorized(false)
+        router.push('/access-denied')
+      } finally {
+        setLoading(false)
+      }
     }
     
-    checkAccess()
-  }, [session, router, isApproved])
+    checkAccessAndFetchData()
+  }, [session, status, router])
+
+  // Refetch campaigns when tab changes
+  useEffect(() => {
+    if (!isAuthorized || loading) return
+    
+    const fetchCampaigns = async () => {
+      try {
+        const url = activeTab === 'my' ? '/api/campaigns?user=true' : '/api/campaigns'
+        const res = await fetch(url)
+        if (res.ok) {
+          const data = await res.json()
+          setCampaigns(data)
+        }
+      } catch (error) {
+        console.error('Error fetching campaigns:', error)
+      }
+    }
+    
+    fetchCampaigns()
+  }, [activeTab, isAuthorized, loading])
 
   // Filter campaigns based on search and status
   const filteredCampaigns = campaigns
     .filter(campaign => {
-      // Filter by active tab
-      if (activeTab === 'my') {
+      // Filter by active tab (skip for admins on 'all' tab)
+      if (activeTab === 'my' && userRole !== 'admin') {
         const userHandle = (session as any)?.twitterHandle || session?.user?.name
         const isTeamMember = campaign.teamMembers.includes(userHandle)
         const isCreator = campaign.createdBy === userHandle
@@ -168,7 +233,17 @@ export default function CampaignsPage() {
     }
   }
 
-  if (isApproved === false) {
+  // Show loading while checking access
+  if (loading || status === 'loading') {
+    return (
+      <div className="min-h-screen bg-black text-green-300 font-sans flex items-center justify-center">
+        <div className="animate-pulse">Checking access...</div>
+      </div>
+    )
+  }
+
+  // Don't render if not authorized
+  if (!isAuthorized) {
     return null
   }
 
@@ -187,6 +262,13 @@ export default function CampaignsPage() {
             </button>
           )}
         </div>
+
+        {/* Admin Notice */}
+        {userRole === 'admin' && (
+          <div className="mb-4 p-3 border border-purple-500 bg-purple-900/20 text-purple-300 text-sm">
+            <span className="font-bold">Admin Mode:</span> You have access to all campaigns
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex gap-2 md:gap-4 mb-4 md:mb-6">
@@ -235,11 +317,7 @@ export default function CampaignsPage() {
         </div>
 
         {/* Campaigns Grid */}
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-pulse">Loading campaigns...</div>
-          </div>
-        ) : filteredCampaigns.length === 0 ? (
+        {filteredCampaigns.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500">No campaigns found</p>
             {session?.user && activeTab === 'my' && (

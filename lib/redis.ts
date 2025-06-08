@@ -1,9 +1,32 @@
 import { Redis } from '@upstash/redis';
 
+// Parse REDIS_URL if available
+let upstashUrl: string | undefined;
+let upstashToken: string | undefined;
+
+if (process.env.REDIS_URL) {
+  try {
+    // Parse redis://default:TOKEN@HOST:PORT format
+    const url = new URL(process.env.REDIS_URL);
+    const token = url.password; // The password part is the token
+    const host = url.hostname;
+    
+    // Convert to Upstash REST API format
+    upstashUrl = `https://${host}`;
+    upstashToken = token;
+  } catch (error) {
+    console.error('Failed to parse REDIS_URL:', error);
+  }
+}
+
+// Use parsed values or fall back to individual env vars
+const UPSTASH_REDIS_REST_URL = upstashUrl || process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_REDIS_REST_TOKEN = upstashToken || process.env.UPSTASH_REDIS_REST_TOKEN;
+
 // Check if Redis is properly configured - used to provide fallbacks when Redis isn't available
 const isRedisConfigured = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL && 
-  process.env.UPSTASH_REDIS_REST_TOKEN
+  UPSTASH_REDIS_REST_URL && 
+  UPSTASH_REDIS_REST_TOKEN
 );
 
 // Create Redis client with graceful error handling
@@ -11,12 +34,15 @@ let redisClient: Redis;
 
 try {
   redisClient = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL || 'https://no-url-configured.upstash.io',
-    token: process.env.UPSTASH_REDIS_REST_TOKEN || 'no-token-configured',
+    url: UPSTASH_REDIS_REST_URL || 'https://no-url-configured.upstash.io',
+    token: UPSTASH_REDIS_REST_TOKEN || 'no-token-configured',
   });
   
   if (!isRedisConfigured) {
     console.warn('Redis is not properly configured! Using dummy Redis implementation.');
+    console.warn('Please ensure REDIS_URL or UPSTASH_REDIS_REST_URL/TOKEN are set in .env.local');
+  } else {
+    console.log('Redis client initialized successfully');
   }
 } catch (error) {
   console.error('Failed to initialize Redis client:', error);
@@ -300,6 +326,11 @@ export async function saveProfileWithDuplicateCheck(profile: InfluencerProfile):
     }
     if (!profile.approvalStatus) {
       profile.approvalStatus = 'pending';
+    }
+    
+    // Set default role for NEW users only
+    if (!profile.role) {
+      profile.role = 'user';
     }
     
     // No duplicate found, save as new profile

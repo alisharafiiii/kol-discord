@@ -10,7 +10,11 @@ import { getRole } from './roles';
 
 // Add a helper function to check if Redis is properly configured
 export function isRedisConfigured(): boolean {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+  // Check for either REDIS_URL or Upstash-specific variables
+  return Boolean(
+    process.env.REDIS_URL || 
+    (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  );
 }
 
 // Add graceful fallback for when Redis isn't available
@@ -290,92 +294,64 @@ async function createNewUser(userData: Partial<InfluencerProfile>): Promise<Infl
 
 /**
  * Check if a wallet has admin access
+ * DISABLED: Wallet-based authentication is disabled. Use Twitter login.
  */
 export async function hasAdminAccess(wallet: string): Promise<boolean> {
-  if (!wallet) return false;
-  
-  // Check hardcoded admin wallets first
-  const ADMIN_WALLET_ETH = '0x37Ed24e7c7311836FD01702A882937138688c1A9'
-  const ADMIN_WALLET_SOLANA_1 = 'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq'
-  const ADMIN_WALLET_SOLANA_2 = 'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75'
-  const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif'
-  
-  // Different comparison for ETH vs Solana addresses
-  if (wallet.startsWith('0x') && wallet.toLowerCase() === ADMIN_WALLET_ETH.toLowerCase()) {
-    return true;
-  }
-  
-  if (wallet === ADMIN_WALLET_SOLANA_1 || 
-      wallet === ADMIN_WALLET_SOLANA_2 || 
-      wallet === ADMIN_WALLET_SOLANA_3) {
-    return true;
-  }
-  
-  try {
-    // Get the user role from Redis
-    const role = await getRole(wallet);
-    return role === 'admin';
-  } catch (error) {
-    console.error('Error checking admin access:', error);
-    return false;
-  }
+  console.log('⚠️ Wallet-based admin access check is disabled. Use Twitter login.');
+  return false;
 }
 
 /**
  * Check if a wallet has core access (admin or core role)
+ * DISABLED: Wallet-based authentication is disabled. Use Twitter login.
  */
 export async function hasCoreAccess(wallet: string): Promise<boolean> {
-  if (!wallet) return false;
-  
-  // Admin wallets always have core access
-  if (await hasAdminAccess(wallet)) {
-    return true;
-  }
-  
-  try {
-    // Get the user role from Redis
-    const role = await getRole(wallet);
-    return role === 'admin' || role === 'core';
-  } catch (error) {
-    console.error('Error checking core access:', error);
-    return false;
-  }
+  console.log('⚠️ Wallet-based core access check is disabled. Use Twitter login.');
+  return false;
 }
 
 /**
  * Check if a wallet has scout access (admin, core, or scout role)
+ * DISABLED: Wallet-based authentication is disabled. Use Twitter login.
  */
 export async function hasScoutAccess(wallet: string): Promise<boolean> {
-  if (!wallet) return false;
-  
-  // Admin and core wallets always have scout access
-  if (await hasCoreAccess(wallet)) {
-    return true;
-  }
-  
-  try {
-    // Get the user role from Redis
-    const role = await getRole(wallet);
-    return role === 'admin' || role === 'core' || role === 'scout';
-  } catch (error) {
-    console.error('Error checking scout access:', error);
-    return false;
-  }
+  console.log('⚠️ Wallet-based scout access check is disabled. Use Twitter login.');
+  return false;
 }
 
 /**
  * Check if a wallet has any access level (including viewer)
+ * DISABLED: Wallet-based authentication is disabled. Use Twitter login.
  */
 export async function hasAnyAccess(wallet: string): Promise<boolean> {
-  if (!wallet) return false;
+  console.log('⚠️ Wallet-based access check is disabled. Use Twitter login.');
+  return false;
+}
+
+/**
+ * Get user role from Twitter session (no wallet checks)
+ * @param twitterHandle - The Twitter handle from the session
+ * @returns The user's role or null if not found
+ */
+export async function getRoleFromTwitterSession(twitterHandle: string | undefined): Promise<string | null> {
+  if (!twitterHandle) return null;
   
-  // Check if wallet has any role at all
   try {
-    const role = await getRole(wallet);
-    return !!role; // Return true if role exists, false otherwise
+    // Normalize the handle
+    const handle = twitterHandle.replace('@', '').toLowerCase();
+    
+    // Find user by Twitter handle
+    const user = await findUserByUsername(handle);
+    
+    if (user) {
+      console.log(`✅ Found Twitter user ${handle} with role: ${user.role}`);
+      return user.role || 'user'; // Default to 'user' role if not set
+    }
+    
+    return null;
   } catch (error) {
-    console.error('Error checking viewer access:', error);
-    return false;
+    console.error('Error getting role from Twitter session:', error);
+    return null;
   }
 }
 
@@ -387,101 +363,40 @@ export async function hasAnyAccess(wallet: string): Promise<boolean> {
  */
 export async function checkUserRole(walletAddress: string, requiredRoles: string[] = ['admin']) {
   try {
-    if (!walletAddress) {
-      console.error('checkUserRole: No wallet address provided');
+    // DISABLED WALLET CHECKS - Always return no access for wallet-based auth
+    // This forces the application to use Twitter-based authentication only
+    console.log('⚠️ Wallet-based authentication is disabled. Please use Twitter login.');
+    return { role: null, hasAccess: false };
+  } catch (error) {
+    console.error('Error in checkUserRole:', error);
+    return { role: null, hasAccess: false };
+  }
+}
+
+/**
+ * Check user role based on Twitter session only
+ * @param session - The NextAuth session object
+ * @param requiredRoles - Array of roles that provide access
+ * @returns Object with role and hasAccess properties
+ */
+export async function checkUserRoleFromSession(session: any, requiredRoles: string[] = ['admin']) {
+  try {
+    if (!session?.twitterHandle) {
+      console.log('No Twitter handle in session');
       return { role: null, hasAccess: false };
     }
-
-    // Debug log for troubleshooting
-    console.log('Role check - Original wallet:', JSON.stringify(walletAddress), '→', walletAddress.startsWith('0x') 
-      ? `Normalized: ${walletAddress.toLowerCase()}`
-      : `Trimmed: ${walletAddress.trim()}`);
     
-    // Normalize wallet address - lowercase for ETH addresses
-    const normalizedWalletAddress = walletAddress.startsWith('0x')
-      ? walletAddress.toLowerCase()
-      : walletAddress.trim();
-      
-    // Debug wallet role check info
-    console.log('🔍 ROLE CHECK:', {
-      original: walletAddress,
-      normalized: normalizedWalletAddress,
-      isEVM: walletAddress.startsWith('0x'),
-      isSame: walletAddress === normalizedWalletAddress,
-      originalLength: walletAddress.length,
-      normalizedLength: normalizedWalletAddress.length,
-      requiredRoles
-    });
+    // Remove any @ symbols from the handle
+    const cleanHandle = session.twitterHandle.replace(/^@+/, '');
     
-    let role: string | null = null;
-    
-    // PRIORITY 1: Check if user has a Twitter-based role
-    // Find user by wallet and check if they have a Twitter handle
-    const userIds = await redis.smembers(`idx:wallet:${normalizedWalletAddress}`);
-    if (userIds.length > 0) {
-      const userId = userIds[0];
-      const user = await redis.json.get(`user:${userId}`);
-      if (user && (user as any).twitterHandle) {
-        // User has Twitter handle, use their Twitter-based role
-        role = (user as any).role || 'user'; // Default to user for Twitter users
-        console.log(`✅ Found Twitter user with role: ${role}`);
-      }
-    }
-    
-    // PRIORITY 2: If no Twitter-based role, check wallet role (deprecated)
-    if (!role) {
-      // First, try legacy string key
-      const roleStringKey = await redis.get(`role:${normalizedWalletAddress}`);
-      if (roleStringKey) {
-        role = String(roleStringKey);
-        console.log('⚠️ Using deprecated wallet role:', role);
-      } else {
-        // Fallback to new hash storage
-        const hashRole = await getRole(normalizedWalletAddress);
-        if (hashRole) {
-          role = hashRole;
-          console.log('⚠️ Using deprecated wallet hash role:', role);
-        }
-      }
-    }
-    
-    // Check if the user's role is in the list of required roles
+    const role = await getRoleFromTwitterSession(cleanHandle);
     const hasAccess = role !== null && requiredRoles.includes(role);
     
-    // Also check hardcoded admin wallets for backward compatibility
-    const ADMIN_WALLET_ETH = '0x37Ed24e7c7311836FD01702A882937138688c1A9';
-    const ADMIN_WALLET_SOLANA_1 = 'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq';
-    const ADMIN_WALLET_SOLANA_2 = 'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75';
-    const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif';
-    
-    // Check if wallet is a hardcoded admin
-    let isHardcodedAdmin = false;
-    
-    // For ETH addresses (case-insensitive comparison)
-    if (walletAddress.startsWith('0x') && walletAddress.toLowerCase() === ADMIN_WALLET_ETH.toLowerCase()) {
-      isHardcodedAdmin = true;
-      console.log('✅ Found hardcoded ETH admin wallet');
-    }
-    
-    // For Solana addresses (case-sensitive comparison)
-    if (walletAddress === ADMIN_WALLET_SOLANA_1 || 
-        walletAddress === ADMIN_WALLET_SOLANA_2 || 
-        walletAddress === ADMIN_WALLET_SOLANA_3) {
-      isHardcodedAdmin = true;
-      console.log('✅ Found hardcoded Solana admin wallet');
-    }
-    
-    // If hardcoded admin and 'admin' role is acceptable, grant access
-    if (isHardcodedAdmin && requiredRoles.includes('admin')) {
-      console.log('✅ Granting access to hardcoded admin wallet');
-      return { role: 'admin', hasAccess: true };
-    }
-    
-    console.log('🔑 Final role check result for', JSON.stringify(walletAddress) + ':', role, '(hasAccess:', hasAccess + ')');
+    console.log(`🔑 Twitter session role check for ${cleanHandle}: ${role} (hasAccess: ${hasAccess})`);
     
     return { role, hasAccess };
   } catch (error) {
-    console.error('Error in checkUserRole:', error);
+    console.error('Error checking role from session:', error);
     return { role: null, hasAccess: false };
   }
 }

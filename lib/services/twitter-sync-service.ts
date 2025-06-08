@@ -1,0 +1,340 @@
+import { redis } from '@/lib/redis'
+import { TweetMetrics } from '@/lib/types/profile'
+import { CampaignKOLService } from './campaign-kol-service'
+
+interface RateLimitInfo {
+  remaining: number
+  reset: number
+  limit: number
+}
+
+interface TweetData {
+  id: string
+  text: string
+  public_metrics: {
+    impression_count: number
+    like_count: number
+    retweet_count: number
+    reply_count: number
+    quote_count: number
+    bookmark_count: number
+  }
+}
+
+export class TwitterSyncService {
+  private static readonly RATE_LIMIT_KEY = 'twitter:ratelimit'
+  private static readonly SYNC_QUEUE_KEY = 'twitter:sync:queue'
+  private static readonly BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN
+  
+  // Twitter API v2 rate limits (Free tier)
+  private static readonly RATE_LIMITS = {
+    TWEETS_LOOKUP: { limit: 300, window: 15 * 60 * 1000 }, // 300 requests per 15 min
+    USERS_LOOKUP: { limit: 300, window: 15 * 60 * 1000 },
+  }
+  
+  /**
+   * Extract tweet ID from URL
+   */
+  private static extractTweetId(url: string): string | null {
+    const match = url.match(/status\/(\d+)/)
+    return match ? match[1] : null
+  }
+  
+  /**
+   * Get current rate limit status
+   */
+  static async getRateLimitStatus(): Promise<RateLimitInfo> {
+    try {
+      const cached = await redis.get(this.RATE_LIMIT_KEY)
+      if (cached) {
+        return JSON.parse(cached as string)
+      }
+      
+      return {
+        remaining: this.RATE_LIMITS.TWEETS_LOOKUP.limit,
+        reset: Date.now() + this.RATE_LIMITS.TWEETS_LOOKUP.window,
+        limit: this.RATE_LIMITS.TWEETS_LOOKUP.limit,
+      }
+    } catch (error) {
+      console.error('Error getting rate limit:', error)
+      return {
+        remaining: 0,
+        reset: Date.now() + this.RATE_LIMITS.TWEETS_LOOKUP.window,
+        limit: this.RATE_LIMITS.TWEETS_LOOKUP.limit,
+      }
+    }
+  }
+  
+  /**
+   * Update rate limit after API call
+   */
+  private static async updateRateLimit(headers: Headers): Promise<void> {
+    try {
+      const remaining = parseInt(headers.get('x-rate-limit-remaining') || '0')
+      const reset = parseInt(headers.get('x-rate-limit-reset') || '0') * 1000
+      const limit = parseInt(headers.get('x-rate-limit-limit') || '300')
+      
+      const rateLimitInfo: RateLimitInfo = {
+        remaining,
+        reset,
+        limit,
+      }
+      
+      await redis.setex(
+        this.RATE_LIMIT_KEY,
+        Math.floor((reset - Date.now()) / 1000),
+        JSON.stringify(rateLimitInfo)
+      )
+    } catch (error) {
+      console.error('Error updating rate limit:', error)
+    }
+  }
+  
+  /**
+   * Check if we can make an API call
+   */
+  private static async canMakeRequest(): Promise<boolean> {
+    const rateLimit = await this.getRateLimitStatus()
+    
+    if (rateLimit.remaining <= 0 && Date.now() < rateLimit.reset) {
+      console.log(`Rate limited until ${new Date(rateLimit.reset).toISOString()}`)
+      return false
+    }
+    
+    return true
+  }
+  
+  /**
+   * Fetch tweet metrics from Twitter API
+   */
+  static async fetchTweetMetrics(tweetId: string): Promise<TweetData | null> {
+    try {
+      if (!this.BEARER_TOKEN) {
+        throw new Error('Twitter Bearer Token not configured')
+      }
+      
+      if (!(await this.canMakeRequest())) {
+        throw new Error('Rate limited')
+      }
+      
+      const response = await fetch(
+        `https://api.twitter.com/2/tweets/${tweetId}?tweet.fields=public_metrics`,
+        {
+          headers: {
+            'Authorization': `Bearer ${this.BEARER_TOKEN}`,
+          },
+        }
+      )
+      
+      await this.updateRateLimit(response.headers)
+      
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(`Twitter API error: ${error.detail || response.statusText}`)
+      }
+      
+      const data = await response.json()
+      return data.data
+    } catch (error) {
+      console.error(`Error fetching tweet ${tweetId}:`, error)
+      return null
+    }
+  }
+  
+  /**
+   * Batch fetch multiple tweets (up to 100 per request)
+   */
+  static async batchFetchTweets(tweetIds: string[]): Promise<Map<string, TweetData>> {
+    const results = new Map<string, TweetData>()
+    
+    try {
+      if (!this.BEARER_TOKEN) {
+        throw new Error('Twitter Bearer Token not configured')
+      }
+      
+      if (!(await this.canMakeRequest())) {
+        throw new Error('Rate limited')
+      }
+      
+      // Twitter allows up to 100 tweets per request
+      const batchSize = 100
+      for (let i = 0; i < tweetIds.length; i += batchSize) {
+        const batch = tweetIds.slice(i, i + batchSize)
+        const ids = batch.join(',')
+        
+        const response = await fetch(
+          `https://api.twitter.com/2/tweets?ids=${ids}&tweet.fields=public_metrics`,
+          {
+            headers: {
+              'Authorization': `Bearer ${this.BEARER_TOKEN}`,
+            },
+          }
+        )
+        
+        await this.updateRateLimit(response.headers)
+        
+        if (!response.ok) {
+          console.error('Batch fetch failed:', await response.text())
+          continue
+        }
+        
+        const data = await response.json()
+        if (data.data) {
+          data.data.forEach((tweet: TweetData) => {
+            results.set(tweet.id, tweet)
+          })
+        }
+        
+        // Small delay between batches
+        if (i + batchSize < tweetIds.length) {
+          await new Promise(resolve => setTimeout(resolve, 1000))
+        }
+      }
+    } catch (error) {
+      console.error('Error batch fetching tweets:', error)
+    }
+    
+    return results
+  }
+  
+  /**
+   * Sync tweets for a campaign
+   */
+  static async syncCampaignTweets(campaignId: string): Promise<{
+    synced: number
+    failed: number
+    rateLimited: boolean
+  }> {
+    const result = {
+      synced: 0,
+      failed: 0,
+      rateLimited: false,
+    }
+    
+    try {
+      // Get all KOLs in the campaign
+      const kols = await CampaignKOLService.getCampaignKOLs(campaignId)
+      
+      // Collect all tweet IDs
+      const tweetIdMap = new Map<string, string>() // tweetId -> kolId
+      
+      for (const kol of kols) {
+        for (const link of kol.links) {
+          const tweetId = this.extractTweetId(link)
+          if (tweetId) {
+            tweetIdMap.set(tweetId, kol.id)
+          }
+        }
+      }
+      
+      if (tweetIdMap.size === 0) {
+        console.log('No tweets to sync for campaign', campaignId)
+        return result
+      }
+      
+      // Check rate limit
+      const rateLimit = await this.getRateLimitStatus()
+      if (rateLimit.remaining < tweetIdMap.size) {
+        console.log(`Need ${tweetIdMap.size} requests but only ${rateLimit.remaining} remaining`)
+        result.rateLimited = true
+        
+        // Queue for later processing
+        await this.queueCampaignForSync(campaignId)
+        return result
+      }
+      
+      // Batch fetch tweets
+      const tweetIds = Array.from(tweetIdMap.keys())
+      const tweets = await this.batchFetchTweets(tweetIds)
+      
+      // Update KOL metrics
+      for (const [tweetId, tweet] of Array.from(tweets)) {
+        const kolId = tweetIdMap.get(tweetId)
+        if (!kolId) continue
+        
+        try {
+          await CampaignKOLService.updateKOLMetrics(kolId, {
+            views: tweet.public_metrics.impression_count,
+            likes: tweet.public_metrics.like_count,
+            retweets: tweet.public_metrics.retweet_count,
+            replies: tweet.public_metrics.reply_count,
+          })
+          
+          result.synced++
+        } catch (error) {
+          console.error(`Error updating metrics for KOL ${kolId}:`, error)
+          result.failed++
+        }
+      }
+      
+      // Mark campaign as synced
+      await redis.setex(
+        `campaign:${campaignId}:lastSync`,
+        3600, // Cache for 1 hour
+        new Date().toISOString()
+      )
+      
+    } catch (error) {
+      console.error('Error syncing campaign tweets:', error)
+      if (error instanceof Error && error.message.includes('Rate limited')) {
+        result.rateLimited = true
+      }
+    }
+    
+    return result
+  }
+  
+  /**
+   * Queue a campaign for later sync
+   */
+  static async queueCampaignForSync(campaignId: string): Promise<void> {
+    await redis.sadd(this.SYNC_QUEUE_KEY, campaignId)
+  }
+  
+  /**
+   * Process queued campaigns (run periodically)
+   */
+  static async processQueuedCampaigns(): Promise<void> {
+    try {
+      const campaignIds = await redis.smembers(this.SYNC_QUEUE_KEY)
+      
+      for (const campaignId of campaignIds) {
+        const result = await this.syncCampaignTweets(campaignId)
+        
+        if (!result.rateLimited) {
+          // Remove from queue if successful
+          await redis.srem(this.SYNC_QUEUE_KEY, campaignId)
+        } else {
+          // Stop processing if rate limited
+          break
+        }
+        
+        // Delay between campaigns
+        await new Promise(resolve => setTimeout(resolve, 2000))
+      }
+    } catch (error) {
+      console.error('Error processing queued campaigns:', error)
+    }
+  }
+  
+  /**
+   * Get sync status for a campaign
+   */
+  static async getCampaignSyncStatus(campaignId: string): Promise<{
+    lastSync: Date | null
+    inQueue: boolean
+    rateLimit: RateLimitInfo
+  }> {
+    const [lastSyncStr, inQueue, rateLimit] = await Promise.all([
+      redis.get(`campaign:${campaignId}:lastSync`),
+      redis.sismember(this.SYNC_QUEUE_KEY, campaignId),
+      this.getRateLimitStatus(),
+    ])
+    
+    return {
+      lastSync: lastSyncStr ? new Date(lastSyncStr as string) : null,
+      inQueue: Boolean(inQueue),
+      rateLimit,
+    }
+  }
+} 

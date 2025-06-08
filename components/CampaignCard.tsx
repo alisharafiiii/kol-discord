@@ -162,12 +162,26 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
           View Details
         </button>
         {canEdit && (
-          <button
-            onClick={() => router.push(`/campaigns/${campaign.slug}/edit`)}
-            className="px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
-          >
-            Edit
-          </button>
+          <>
+            <button
+              onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
+              className="px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
+            >
+              KOLs
+            </button>
+            <button
+              onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
+              className="px-3 py-1 border border-purple-300 text-purple-300 hover:bg-purple-900 text-xs"
+            >
+              Analytics
+            </button>
+            <button
+              onClick={() => router.push(`/campaigns/${campaign.slug}/edit`)}
+              className="px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
+            >
+              Edit
+            </button>
+          </>
         )}
         {isOwner && (
           <button

@@ -1,32 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllProjects, getProjectsByAssignee, getProjectsByCreator } from '@/lib/project';
-import { checkUserRole } from '@/lib/user-identity';
-import { redis } from '@/lib/redis';
+import { checkAuth } from '@/lib/auth-utils';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/lib/auth-options';
 import { Project } from '@/lib/project';
 
 const CACHE_TTL = 60; // Cache for 60 seconds
 
 export async function GET(req: NextRequest) {
   try {
-    // Get wallet from request cookies or custom header
-    const walletFromCookie = req.cookies.get('walletAddress')?.value || req.cookies.get('wallet')?.value;
-    const walletFromHeader = req.headers.get('X-Wallet-Address');
-    const walletAddress = walletFromCookie || walletFromHeader;
+    // Check authentication and role using Twitter session
+    const authCheck = await checkAuth(req, ['admin', 'core', 'scout']);
     
-    console.log(`Project listing attempt - Cookie wallet: ${walletFromCookie || 'none'}, Header wallet: ${walletFromHeader || 'none'}`);
+    console.log(`Project listing attempt - User: ${authCheck.user?.twitterHandle || 'none'}, Role: ${authCheck.role || 'none'}`);
     
-    if (!walletAddress) {
-      console.error('Project listing failed: No wallet address in cookies or headers');
-      return NextResponse.json({ error: 'No wallet connected' }, { status: 401 });
+    if (!authCheck.authenticated) {
+      console.error('Project listing failed: No authenticated session');
+      return NextResponse.json({ 
+        error: 'Authentication required',
+        message: 'Please log in with Twitter to view projects' 
+      }, { status: 401 });
     }
     
-    // Check if user has any of these roles
-    const roleCheck = await checkUserRole(walletAddress, ['admin', 'core', 'scout']);
-    console.log(`Project listing role check for ${walletAddress}: `, roleCheck);
-    
-    if (!roleCheck.hasAccess) {
-      console.error(`Project listing failed: User with wallet ${walletAddress} is not authorized. Role: ${roleCheck.role || 'none'}`);
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!authCheck.hasAccess) {
+      console.error(`Project listing failed: User @${authCheck.user?.twitterHandle} is not authorized. Role: ${authCheck.role || 'none'}`);
+      return NextResponse.json({ 
+        error: 'Unauthorized',
+        message: 'You need scout, core, or admin role to view projects'
+      }, { status: 403 });
     }
     
     // Get filter params
@@ -34,11 +35,16 @@ export async function GET(req: NextRequest) {
     const filter = searchParams.get('filter');
     
     let projects: Project[] = [];
+    
+    // For user-specific filters, use the Twitter handle as identifier
+    const userIdentifier = authCheck.user?.twitterHandle || '';
 
     if (filter === 'assigned') {
-      projects = await getProjectsByAssignee(walletAddress);
+      // Note: This might need adjustment based on how projects are assigned
+      // For now, using Twitter handle as the identifier
+      projects = await getProjectsByAssignee(userIdentifier);
     } else if (filter === 'created') {
-      projects = await getProjectsByCreator(walletAddress);
+      projects = await getProjectsByCreator(userIdentifier);
     } else {
       projects = await getAllProjects();
     }

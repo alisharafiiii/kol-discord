@@ -64,20 +64,19 @@ export const authOptions: NextAuthOptions = {
           }
         }
         
-        // IMPORTANT: Use the correct Twitter handle from profile data
-        const twitterHandle = profile?.data?.username ? `@${profile.data.username}` : undefined;
+        // IMPORTANT: Use the correct Twitter handle from profile data (without @ prefix)
+        const twitterHandle = profile?.data?.username || undefined;
         
         // Generate a unique ID based on Twitter username to prevent duplicates
         const profileId = twitterHandle ? `user_${profile.data.username.toLowerCase()}` : `user_${nanoid()}`;
         
         // Prepare user data from Twitter profile
+        // DON'T set role or approvalStatus - let saveProfileWithDuplicateCheck handle existing users
         const userData = {
           id: profileId, // Use consistent ID based on Twitter username
           twitterHandle: twitterHandle,
           name: profile?.data?.name || user.name,
           profileImageUrl: profile?.data?.profile_image_url || user.image,
-          role: "user" as const,
-          approvalStatus: "pending" as const,
           createdAt: new Date().toISOString(),
           followerCount: followerCount, // Store follower count at top level
           socialAccounts: {
@@ -123,9 +122,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user, account, profile }: any) {
-      // Add Twitter handle to token if available
+      // Add Twitter handle to token if available (without @ prefix)
       if (profile?.data?.username) {
-        token.twitterHandle = `@${profile.data.username}`;
+        token.twitterHandle = profile.data.username; // Store without @ prefix
       }
       
       // Store follower count if it's a new sign in

@@ -1,61 +1,86 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { addKOLToCampaign, updateKOLInCampaign, removeKOLFromCampaign } from '@/lib/campaign'
+import { CampaignKOLService } from '@/lib/services/campaign-kol-service'
+import { checkAuth } from '@/lib/auth-utils'
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const campaignId = params.id
+    
+    // Get KOLs for the campaign
+    const kols = await CampaignKOLService.getCampaignKOLs(campaignId)
+    
+    return NextResponse.json(kols)
+  } catch (error) {
+    console.error('Error fetching campaign KOLs:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch KOLs' },
+      { status: 500 }
+    )
+  }
+}
 
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.name) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // Check auth - only admin, core, and team can add KOLs
+    const auth = await checkAuth(request, ['admin', 'core', 'team'])
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
     }
     
-    const kolData = await request.json()
+    if (!auth.hasAccess) {
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        { status: 403 }
+      )
+    }
+    
+    const campaignId = params.id
+    const data = await request.json()
     
     // Validate required fields
-    if (!kolData.handle || !kolData.name) {
+    if (!data.kolHandle || !data.kolName || !data.tier || !data.budget || !data.platform) {
       return NextResponse.json(
-        { error: 'Missing required fields: handle and name' }, 
+        { error: 'Missing required fields' },
         { status: 400 }
       )
     }
     
-    // Set defaults for required fields
-    const kol = {
-      handle: kolData.handle,
-      name: kolData.name,
-      stage: kolData.stage || 'reached-out',
-      device: kolData.device || 'N/A',
-      budget: kolData.budget || 'free',
-      payment: kolData.payment || 'pending',
-      views: kolData.views || 0,
-      links: kolData.links || [],
-      platform: kolData.platform || [],
-      // Include optional fields if provided
-      ...(kolData.tier && { tier: kolData.tier }),
-      ...(kolData.contact && { contact: kolData.contact }),
-      ...(kolData.pfp && { pfp: kolData.pfp })
+    // Parse contact field if provided
+    if (data.contact) {
+      data.contact = CampaignKOLService.parseContact(data.contact)
     }
     
-    const campaign = await addKOLToCampaign(params.id, kol, session.user.name)
+    // Add KOL to campaign
+    const kol = await CampaignKOLService.addKOLToCampaign({
+      campaignId,
+      campaignName: data.campaignName || campaignId,
+      kolHandle: data.kolHandle.replace('@', ''),
+      kolName: data.kolName,
+      kolImage: data.kolImage,
+      tier: data.tier,
+      budget: data.budget,
+      platform: data.platform,
+      addedBy: auth.user?.twitterHandle || auth.user?.name || 'unknown',
+    })
     
-    if (!campaign) {
-      return NextResponse.json({ error: 'Campaign not found' }, { status: 404 })
-    }
-    
-    return NextResponse.json(campaign)
-  } catch (error: any) {
+    return NextResponse.json(kol)
+  } catch (error) {
     console.error('Error adding KOL to campaign:', error)
-    
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    }
-    
-    return NextResponse.json({ error: 'Failed to add KOL' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to add KOL' },
+      { status: 500 }
+    )
   }
 }
 
@@ -64,33 +89,46 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions)
+    // Check auth
+    const auth = await checkAuth(request, ['admin', 'core', 'team'])
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
     
-    if (!session?.user?.name) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!auth.hasAccess) {
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        { status: 403 }
+      )
     }
     
     const { kolId, ...updates } = await request.json()
     
     if (!kolId) {
-      return NextResponse.json({ error: 'KOL ID required' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'KOL ID is required' },
+        { status: 400 }
+      )
     }
     
-    const campaign = await updateKOLInCampaign(params.id, kolId, updates, session.user.name)
-    
-    if (!campaign) {
-      return NextResponse.json({ error: 'Campaign or KOL not found' }, { status: 404 })
+    // Parse contact field if updated
+    if (updates.contact) {
+      updates.contact = CampaignKOLService.parseContact(updates.contact)
     }
     
-    return NextResponse.json(campaign)
-  } catch (error: any) {
+    // Update KOL
+    const updated = await CampaignKOLService.updateCampaignKOL(kolId, updates)
+    
+    return NextResponse.json(updated)
+  } catch (error) {
     console.error('Error updating KOL:', error)
-    
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    }
-    
-    return NextResponse.json({ error: 'Failed to update KOL' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to update KOL' },
+      { status: 500 }
+    )
   }
 }
 
@@ -99,32 +137,40 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.name) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // Check auth
+    const auth = await checkAuth(request, ['admin', 'core'])
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
     }
     
+    if (!auth.hasAccess) {
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        { status: 403 }
+      )
+    }
+    
+    const campaignId = params.id
     const { kolId } = await request.json()
     
     if (!kolId) {
-      return NextResponse.json({ error: 'KOL ID required' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'KOL ID is required' },
+        { status: 400 }
+      )
     }
     
-    const campaign = await removeKOLFromCampaign(params.id, kolId, session.user.name)
+    await CampaignKOLService.removeKOLFromCampaign(campaignId, kolId)
     
-    if (!campaign) {
-      return NextResponse.json({ error: 'Campaign not found' }, { status: 404 })
-    }
-    
-    return NextResponse.json(campaign)
-  } catch (error: any) {
+    return NextResponse.json({ success: true })
+  } catch (error) {
     console.error('Error removing KOL:', error)
-    
-    if (error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    }
-    
-    return NextResponse.json({ error: 'Failed to remove KOL' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to remove KOL' },
+      { status: 500 }
+    )
   }
 } 

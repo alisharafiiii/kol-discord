@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { findUserByUsername } from '@/lib/user-identity';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth-options';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export async function GET(req: NextRequest) {
   try {

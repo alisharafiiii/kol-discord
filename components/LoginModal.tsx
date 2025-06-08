@@ -105,6 +105,7 @@ export default function LoginModal() {
   const [userProfile, setUserProfile] = useState<{
     approvalStatus: 'pending' | 'approved' | 'rejected';
     twitterHandle: string;
+    role?: string;
   } | null>(null)
   
   // Connected wallets state
@@ -140,7 +141,8 @@ export default function LoginModal() {
           if (data.user) {
             setUserProfile({
               approvalStatus: data.user.approvalStatus || 'pending',
-              twitterHandle: data.user.twitterHandle || handle
+              twitterHandle: data.user.twitterHandle || handle,
+              role: data.user.role
             })
           }
         }
@@ -1063,8 +1065,8 @@ export default function LoginModal() {
         onClick={handleClose} 
       />
       <div className="relative z-10 rounded border-4 border-green-400 bg-black p-6 space-y-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
-        {/* Admin Panel Button (if admin wallet connected) */}
-        {isAdminWallet && (
+        {/* Admin Panel Button (if user has admin role) */}
+        {userProfile?.role === 'admin' && (
           <div className="absolute top-3 right-3">
             <button 
               className="px-3 py-1 bg-purple-600 text-white text-xs animate-pulse hover:bg-purple-500"
@@ -1120,7 +1122,7 @@ export default function LoginModal() {
                         <span className="opacity-70">HANDLE:</span> <span className="font-bold">@{userProfile?.twitterHandle?.replace('@', '') || (session as any)?.twitterHandle || session?.user?.name || 'unknown'}</span>
                       </div>
                       <div className="license-field">
-                        <span className="opacity-70">ACCESS LEVEL:</span> <span className="font-bold">{isAdminWallet ? 'ADMIN' : 'USER'}</span>
+                        <span className="opacity-70">ACCESS LEVEL:</span> <span className="font-bold">{userProfile?.role?.toUpperCase() || 'USER'}</span>
                       </div>
                       <div className="license-field">
                         <span className="opacity-70">ISSUED:</span> <span className="font-bold">{new Date().toLocaleDateString()}</span>

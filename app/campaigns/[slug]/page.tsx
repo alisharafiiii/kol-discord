@@ -180,10 +180,16 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
             {canEdit && (
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => setShowCharts(true)}
+                  onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
                   className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
                 >
                   📊 Analytics
+                </button>
+                <button
+                  onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
+                  className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base"
+                >
+                  👥 KOL Manager
                 </button>
                 <button
                   onClick={() => setShowAddKOL(true)}
@@ -261,8 +267,13 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
         {/* Add KOL Modal */}
         {showAddKOL && (
           <AddKOLModal
+            campaignId={campaign.id}
+            campaignName={campaign.name}
             onClose={() => setShowAddKOL(false)}
-            onAdd={handleKOLAdd}
+            onKOLAdded={() => {
+              setShowAddKOL(false)
+              fetchCampaign() // Refresh campaign data
+            }}
           />
         )}
 

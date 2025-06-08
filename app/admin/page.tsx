@@ -6,55 +6,47 @@ import { useEffect, useState } from 'react'
 import AdminPanel from '@/components/AdminPanel'
 import Link from 'next/link'
 
-// Admin wallet addresses to authorize access
-const ADMIN_WALLETS = [
-  '0x37Ed24e7c7311836FD01702A882937138688c1A9', // ETH
-  'D1ZuvAKwpk6NQwJvFcbPvjujRByA6Kjk967WCwEt17Tq', // Solana 1
-  'Eo5EKS2emxMNggKQJcq7LYwWjabrj3zvpG5rHAdmtZ75', // Solana 2
-  '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif'  // Solana 3
-]
-
 export default function AdminPage() {
   const router = useRouter()
   const { data: session, status } = useSession()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [userRole, setUserRole] = useState<string | null>(null)
 
   useEffect(() => {
     // Check if user is authorized to access the admin panel
     const checkAuthorization = async () => {
       try {
-        // Get wallet from localStorage
-        const walletAddress = localStorage.getItem('walletAddress')
+        // Wait for session to load
+        if (status === 'loading') {
+          return
+        }
         
-        if (!walletAddress) {
-          console.log('No wallet address found - redirecting from admin page')
+        // Check if user is logged in
+        if (status === 'unauthenticated' || !session) {
+          console.log('No session found - user not logged in')
+          setError('Please log in with Twitter to access the admin panel')
           setIsAuthorized(false)
           setLoading(false)
           return
         }
         
-        // Check if wallet is in admin list
-        const isHardcodedAdmin = ADMIN_WALLETS.some(admin => {
-          if (admin.startsWith('0x')) {
-            // Case-insensitive comparison for ETH addresses
-            return admin.toLowerCase() === walletAddress.toLowerCase()
-          } else {
-            // Case-sensitive comparison for Solana addresses
-            return admin === walletAddress
-          }
-        })
+        // Get Twitter handle from session
+        const twitterHandle = (session as any).twitterHandle
         
-        if (isHardcodedAdmin) {
-          console.log('Admin access granted for hardcoded wallet:', walletAddress)
-          setIsAuthorized(true)
+        if (!twitterHandle) {
+          console.log('No Twitter handle in session')
+          setError('Twitter handle not found in session')
+          setIsAuthorized(false)
           setLoading(false)
           return
         }
         
-        // If not hardcoded, check with the API
-        const response = await fetch(`/api/admin/check-role?wallet=${walletAddress}`)
+        console.log('Checking role for Twitter user:', twitterHandle)
+        
+        // Check user role via API
+        const response = await fetch('/api/user/role')
         
         if (!response.ok) {
           throw new Error(`Role check failed with status: ${response.status}`)
@@ -62,6 +54,8 @@ export default function AdminPage() {
         
         const data = await response.json()
         console.log('Role check result:', data)
+        
+        setUserRole(data.role)
         
         // Only allow admin role
         if (data.role === 'admin') {
@@ -80,14 +74,14 @@ export default function AdminPage() {
     }
     
     checkAuthorization()
-  }, [router])
+  }, [session, status, router])
 
   // Handle closing/exiting the admin panel
   const handleClose = () => {
     router.push('/')
   }
 
-  if (loading) {
+  if (loading || status === 'loading') {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black font-mono text-green-300">
         <div className="animate-pulse">Loading...</div>
@@ -101,6 +95,16 @@ export default function AdminPage() {
         <div className="border border-red-500 p-6 max-w-md text-center">
           <h1 className="text-xl uppercase mb-4" style={{ fontFamily: 'Press Start 2P, monospace' }}>Access Denied</h1>
           <p className="mb-4 text-sm" style={{ fontFamily: 'Roboto Mono, monospace' }}>{error || "You don't have permission to access the admin panel."}</p>
+          {session && (
+            <p className="mb-2 text-xs" style={{ fontFamily: 'Roboto Mono, monospace' }}>
+              Logged in as: @{(session as any).twitterHandle || session.user?.name}
+            </p>
+          )}
+          {userRole && (
+            <p className="mb-4 text-xs" style={{ fontFamily: 'Roboto Mono, monospace' }}>
+              Your role: {userRole}
+            </p>
+          )}
           <p className="mb-4 text-xs" style={{ fontFamily: 'Roboto Mono, monospace' }}>
             Only users with admin role can access this page.
           </p>
