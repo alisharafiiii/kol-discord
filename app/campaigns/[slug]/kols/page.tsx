@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plus, RefreshCw, Download, Filter, ChevronDown } from '@/components/icons'
+import { Plus, RefreshCw, Download, Filter, ChevronDown, FileText, Calculator } from '@/components/icons'
 import AddKOLModal from '@/components/AddKOLModal'
 import EditKOLModal from '@/components/EditKOLModal'
+import BriefComposer from '@/components/BriefComposer'
+import BudgetCalculator from '@/components/BudgetCalculator'
 import type { CampaignKOL, KOLTier, CampaignStage, PaymentStatus } from '@/lib/types/profile'
 
 export default function CampaignKOLsPage({ params }: { params: { slug: string } }) {
@@ -23,6 +25,8 @@ export default function CampaignKOLsPage({ params }: { params: { slug: string } 
   // Modals
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingKOL, setEditingKOL] = useState<CampaignKOL | null>(null)
+  const [showBriefComposer, setShowBriefComposer] = useState(false)
+  const [showBudgetCalculator, setShowBudgetCalculator] = useState(false)
   
   // Filters
   const [searchTerm, setSearchTerm] = useState('')
@@ -191,6 +195,30 @@ export default function CampaignKOLsPage({ params }: { params: { slug: string } 
     setEditingKOL(null)
   }
   
+  const handleSaveBrief = async (brief: string) => {
+    if (!campaignId) return
+    
+    try {
+      const res = await fetch(`/api/campaigns/${campaignId}/brief`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ brief })
+      })
+      
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Failed to save brief')
+      }
+      
+      alert('Brief saved successfully!')
+    } catch (err: any) {
+      alert(err.message || 'Failed to save brief')
+      throw err
+    }
+  }
+  
   // Calculate stats
   const stats = {
     totalKOLs: kols.length,
@@ -287,6 +315,20 @@ export default function CampaignKOLsPage({ params }: { params: { slug: string } 
             >
               <Plus className="w-4 h-4" />
               Add KOL
+            </button>
+            <button
+              onClick={() => setShowBriefComposer(true)}
+              className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors flex items-center gap-2"
+            >
+              <FileText className="w-4 h-4" />
+              Campaign Brief
+            </button>
+            <button
+              onClick={() => setShowBudgetCalculator(true)}
+              className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors flex items-center gap-2"
+            >
+              <Calculator className="w-4 h-4" />
+              Budget Calculator
             </button>
             <button
               onClick={syncTweets}
@@ -533,6 +575,24 @@ export default function CampaignKOLsPage({ params }: { params: { slug: string } 
           onClose={() => setEditingKOL(null)}
           onKOLUpdated={handleKOLUpdated}
           onKOLRemoved={handleKOLRemoved}
+        />
+      )}
+      
+      {showBriefComposer && campaign && campaignId && (
+        <BriefComposer
+          campaignId={campaignId}
+          campaignName={campaign.name}
+          initialBrief={campaign.brief}
+          onClose={() => setShowBriefComposer(false)}
+          onSave={handleSaveBrief}
+        />
+      )}
+      
+      {showBudgetCalculator && campaign && (
+        <BudgetCalculator
+          kols={kols}
+          campaignName={campaign.name}
+          onClose={() => setShowBudgetCalculator(false)}
         />
       )}
     </div>

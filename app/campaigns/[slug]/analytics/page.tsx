@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Download, RefreshCw } from '@/components/icons'
+import { ArrowLeft, Download, RefreshCw, Calculator } from '@/components/icons'
+import BudgetCalculator from '@/components/BudgetCalculator'
 import type { CampaignKOL, KOLTier, SocialPlatform } from '@/lib/types/profile'
 import type { Campaign } from '@/lib/campaign'
 
@@ -20,6 +21,7 @@ export default function CampaignAnalyticsPage({ params }: { params: { slug: stri
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [showBudgetCalculator, setShowBudgetCalculator] = useState(false)
   
   useEffect(() => {
     loadData()
@@ -293,6 +295,13 @@ export default function CampaignAnalyticsPage({ params }: { params: { slug: stri
             </div>
             <div className="flex gap-3">
               <button
+                onClick={() => setShowBudgetCalculator(true)}
+                className="px-4 py-2 border border-green-500 text-green-300 rounded hover:bg-green-900/30 transition-colors flex items-center gap-2"
+              >
+                <Calculator className="w-4 h-4" />
+                Budget
+              </button>
+              <button
                 onClick={refreshData}
                 disabled={refreshing}
                 className="px-4 py-2 border border-green-500 text-green-300 rounded hover:bg-green-900/30 transition-colors disabled:opacity-50 flex items-center gap-2"
@@ -544,6 +553,15 @@ export default function CampaignAnalyticsPage({ params }: { params: { slug: stri
           </div>
         </div>
       </div>
+      
+      {/* Budget Calculator Modal */}
+      {showBudgetCalculator && campaign && (
+        <BudgetCalculator
+          kols={kols}
+          campaignName={campaign.name}
+          onClose={() => setShowBudgetCalculator(false)}
+        />
+      )}
     </div>
   )
 } 

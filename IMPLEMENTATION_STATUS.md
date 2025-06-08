@@ -71,6 +71,27 @@
 - Export analytics data to JSON
 - Integration with campaign pages
 
+### 10. Brief Composer ✅
+- Rich text editor component (`components/BriefComposer.tsx`)
+- Pre-built templates: Product Launch, Brand Awareness, Event Promotion
+- Live preview mode
+- Formatting tools: Bold, Italic, Underline, Headers, Lists, Links
+- Copy to clipboard functionality
+- API endpoint for saving briefs (`/api/campaigns/[id]/brief`)
+- Read-only brief display (`components/CampaignBrief.tsx`)
+- Integration with campaign pages and KOL management
+
+### 11. Budget Calculator ✅
+- Interactive budget calculator (`components/BudgetCalculator.tsx`)
+- Real-time calculation of KOL payments and device costs
+- Device type selection with customizable costs
+- Shipping cost calculation
+- Device status tracking (preparing, on way, received, sent before)
+- Payment status breakdown with visual indicators
+- Budget allocation by tier with percentages
+- Efficiency metrics: Cost per View, Cost per Engagement
+- Integration with KOL management and analytics pages
+
 ## 📋 Next Steps to Complete
 
 ### 1. Frontend Components (Priority: HIGH)
@@ -81,8 +102,8 @@
 
 ### 2. Campaign Updates (Priority: HIGH)
 - [ ] **Campaign Edit Modal** - Update campaign details
-- [ ] **Brief Composer** - Rich text editor for briefs
-- [ ] **Device/Budget Calculator** - Calculate total costs
+- [x] **Brief Composer** - ✅ Rich text editor for briefs with templates
+- [x] **Device/Budget Calculator** - ✅ Calculate total costs with insights
 
 ### 3. Analytics Dashboard (Priority: MEDIUM)
 - [x] **Tier Distribution** - ✅ Complete with views and budget breakdown

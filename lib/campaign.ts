@@ -34,6 +34,9 @@ export interface Campaign {
   createdAt: string
   updatedAt: string
   status: 'draft' | 'active' | 'completed' | 'cancelled'
+  brief?: string // Rich text campaign brief
+  briefUpdatedAt?: string
+  briefUpdatedBy?: string
 }
 
 // Generate URL-friendly slug from campaign name
@@ -257,6 +260,29 @@ export async function removeKOLFromCampaign(
   }
   
   campaign.kols = campaign.kols.filter(k => k.id !== kolId)
+  campaign.updatedAt = new Date().toISOString()
+  
+  await redis.json.set(campaignId, '$', campaign as any)
+  return campaign
+}
+
+// Update campaign brief
+export async function updateCampaignBrief(
+  campaignId: string,
+  brief: string,
+  userHandle: string
+): Promise<Campaign | null> {
+  const campaign = await getCampaign(campaignId)
+  if (!campaign) return null
+  
+  // Check permissions
+  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+    throw new Error('Unauthorized')
+  }
+  
+  campaign.brief = brief
+  campaign.briefUpdatedAt = new Date().toISOString()
+  campaign.briefUpdatedBy = userHandle
   campaign.updatedAt = new Date().toISOString()
   
   await redis.json.set(campaignId, '$', campaign as any)

@@ -9,6 +9,7 @@ import type { Project } from '@/lib/project'
 import KOLTable from '@/components/KOLTable'
 import AddKOLModal from '@/components/AddKOLModal'
 import CampaignCharts from '@/components/CampaignCharts'
+import CampaignBrief from '@/components/CampaignBrief'
 
 // Cache for projects to avoid repeated fetches
 let projectsCache: Project[] | null = null
@@ -252,6 +253,15 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
             </div>
           </div>
         )}
+
+        {/* Campaign Brief */}
+        <div className="mb-6 md:mb-8">
+          <CampaignBrief
+            brief={campaign.brief}
+            briefUpdatedAt={campaign.briefUpdatedAt}
+            briefUpdatedBy={campaign.briefUpdatedBy}
+          />
+        </div>
 
         {/* KOL Table */}
         <div className="overflow-x-auto">
