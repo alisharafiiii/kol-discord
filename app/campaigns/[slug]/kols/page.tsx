@@ -7,6 +7,7 @@ import AddKOLModal from '@/components/AddKOLModal'
 import EditKOLModal from '@/components/EditKOLModal'
 import BriefComposer from '@/components/BriefComposer'
 import BudgetCalculator from '@/components/BudgetCalculator'
+import { PDFExporter } from '@/lib/pdf-export'
 import type { CampaignKOL, KOLTier, CampaignStage, PaymentStatus } from '@/lib/types/profile'
 
 export default function CampaignKOLsPage({ params }: { params: { slug: string } }) {
@@ -338,13 +339,42 @@ export default function CampaignKOLsPage({ params }: { params: { slug: string } 
               <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
               {syncing ? 'Syncing...' : 'Sync Tweets'}
             </button>
-            <button
-              onClick={exportData}
-              className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Export CSV
-            </button>
+            <div className="relative group">
+              <button
+                className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Export
+                <ChevronDown className="w-3 h-3" />
+              </button>
+              <div className="absolute top-full left-0 mt-1 hidden group-hover:block bg-black border border-green-500 rounded shadow-lg z-10">
+                <button
+                  onClick={exportData}
+                  className="block w-full px-4 py-2 text-left text-green-300 hover:bg-green-900/30 transition-colors"
+                >
+                  Export as CSV
+                </button>
+                <button
+                  onClick={async () => {
+                    if (!campaign) return
+                    try {
+                      const exporter = new PDFExporter()
+                      const pdfBlob = await exporter.exportKOLList(campaign, filteredKols)
+                      PDFExporter.download(
+                        pdfBlob,
+                        `${campaign.slug}-kols-${new Date().toISOString().split('T')[0]}.pdf`
+                      )
+                    } catch (error) {
+                      console.error('Error exporting PDF:', error)
+                      alert('Failed to export PDF')
+                    }
+                  }}
+                  className="block w-full px-4 py-2 text-left text-green-300 hover:bg-green-900/30 transition-colors"
+                >
+                  Export as PDF
+                </button>
+              </div>
+            </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="px-4 py-2 border border-green-500 text-green-300 rounded hover:bg-green-900/30 transition-colors flex items-center gap-2"
