@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { KOL } from '@/lib/campaign'
+import KOLProfileModal from './KOLProfileModal'
 
 interface KOLTableProps {
   kols: KOL[]
@@ -14,6 +15,7 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editingField, setEditingField] = useState<string | null>(null)
   const [editValue, setEditValue] = useState('')
+  const [selectedKOL, setSelectedKOL] = useState<{ handle: string; name: string } | null>(null)
 
   const stages: KOL['stage'][] = ['cancelled', 'reached-out', 'waiting-for-device', 'waiting-for-brief', 'posted', 'preparing', 'done']
   const devices: KOL['device'][] = ['preparing', 'received', 'N/A', 'on-the-way', 'sent-before']
@@ -122,308 +124,325 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border border-green-300">
-        <thead>
-          <tr className="border-b border-green-300 bg-green-950">
-            <th className="p-2 text-left text-xs uppercase">KOL</th>
-            <th className="p-2 text-left text-xs uppercase">Tier</th>
-            <th className="p-2 text-left text-xs uppercase">Stage</th>
-            <th className="p-2 text-left text-xs uppercase">Device</th>
-            <th className="p-2 text-left text-xs uppercase">Budget</th>
-            <th className="p-2 text-left text-xs uppercase">Payment</th>
-            <th className="p-2 text-left text-xs uppercase">Views</th>
-            <th className="p-2 text-left text-xs uppercase">Contact</th>
-            <th className="p-2 text-left text-xs uppercase">Links</th>
-            <th className="p-2 text-left text-xs uppercase">Platform</th>
-            {canEdit && <th className="p-2 text-left text-xs uppercase">Actions</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {kols.map(kol => (
-            <tr key={kol.id} className="border-b border-green-300 hover:bg-green-950/30">
-              <td className="p-2">
-                <div className="flex items-center gap-2">
-                  {kol.pfp ? (
-                    <img src={kol.pfp} alt={kol.handle} className="w-8 h-8 rounded-full" />
-                  ) : (
-                    <img src={`https://unavatar.io/twitter/${kol.handle}`} alt={kol.handle} className="w-8 h-8 rounded-full" />
-                  )}
-                  <div>
-                    <div className="font-medium">{kol.name}</div>
-                    <div className="text-xs text-gray-500">@{kol.handle}</div>
-                  </div>
-                </div>
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'tier' ? (
-                  <select
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'tier')}
-                    className="bg-black border border-green-300 text-xs p-1"
-                    autoFocus
-                  >
-                    <option value="">None</option>
-                    {tiers.map(t => (
-                      <option key={t} value={t}>{t ? t.toUpperCase() : ''}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <div 
-                    className="cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'tier', kol.tier || '')}
-                  >
-                    {kol.tier && getTierBadge(kol.tier) ? (
-                      <span className={`text-xs px-2 py-1 rounded font-bold ${getTierBadge(kol.tier)!.color}`}>
-                        {getTierBadge(kol.tier)!.text}
-                      </span>
-                    ) : (
-                      <span className="text-xs text-gray-500">-</span>
-                    )}
-                  </div>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'stage' ? (
-                  <select
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'stage')}
-                    className="bg-black border border-green-300 text-xs p-1"
-                    autoFocus
-                  >
-                    {stages.map(s => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <span 
-                    className={`text-xs cursor-pointer ${getStageColor(kol.stage)}`}
-                    onClick={() => canEdit && startEdit(kol.id, 'stage', kol.stage)}
-                  >
-                    {kol.stage}
-                  </span>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'device' ? (
-                  <select
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'device')}
-                    className="bg-black border border-green-300 text-xs p-1"
-                    autoFocus
-                  >
-                    {devices.map(d => (
-                      <option key={d} value={d}>{d}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <span 
-                    className="text-xs cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'device', kol.device)}
-                  >
-                    {kol.device}
-                  </span>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'budget' ? (
-                  <input
-                    type="text"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'budget')}
-                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'budget')}
-                    className="bg-black border border-green-300 text-xs p-1 w-24"
-                    autoFocus
-                  />
-                ) : (
-                  <span 
-                    className="text-xs cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'budget', kol.budget)}
-                  >
-                    {kol.budget}
-                  </span>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'payment' ? (
-                  <select
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'payment')}
-                    className="bg-black border border-green-300 text-xs p-1"
-                    autoFocus
-                  >
-                    {payments.map(p => (
-                      <option key={p} value={p}>{p}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <span 
-                    className={`text-xs cursor-pointer ${getPaymentColor(kol.payment)}`}
-                    onClick={() => canEdit && startEdit(kol.id, 'payment', kol.payment)}
-                  >
-                    {kol.payment}
-                  </span>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'views' ? (
-                  <input
-                    type="number"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'views')}
-                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'views')}
-                    className="bg-black border border-green-300 text-xs p-1 w-20"
-                    autoFocus
-                  />
-                ) : (
-                  <span 
-                    className="text-xs cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'views', kol.views)}
-                  >
-                    {kol.views.toLocaleString()}
-                  </span>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'contact' ? (
-                  <input
-                    type="text"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'contact')}
-                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'contact')}
-                    className="bg-black border border-green-300 text-xs p-1 w-32"
-                    placeholder="Email, Telegram, etc"
-                    autoFocus
-                  />
-                ) : (
-                  <div 
-                    className="text-xs cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'contact', kol.contact || '')}
-                  >
-                    {kol.contact ? (
-                      kol.contact.startsWith('@') ? (
-                        <a 
-                          href={`https://t.me/${kol.contact.substring(1)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-green-400 hover:underline"
-                        >
-                          {kol.contact}
-                        </a>
-                      ) : kol.contact.includes('@') ? (
-                        <a 
-                          href={`mailto:${kol.contact}`}
-                          className="text-green-400 hover:underline"
-                        >
-                          {kol.contact}
-                        </a>
-                      ) : (
-                        kol.contact
-                      )
-                    ) : (
-                      <span className="text-gray-500">No contact</span>
-                    )}
-                  </div>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'links' ? (
-                  <input
-                    type="text"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'links')}
-                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'links')}
-                    className="bg-black border border-green-300 text-xs p-1 w-32"
-                    placeholder="Comma separated"
-                    autoFocus
-                  />
-                ) : (
-                  <div 
-                    className="text-xs cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'links', kol.links)}
-                  >
-                    {kol.links.length > 0 ? (
-                      <div className="space-y-1">
-                        {kol.links.map((link, i) => (
-                          <a 
-                            key={i} 
-                            href={link} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="block text-blue-400 hover:underline truncate max-w-xs"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {link}
-                          </a>
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-gray-500">No links</span>
-                    )}
-                  </div>
-                )}
-              </td>
-              
-              <td className="p-2">
-                {editingId === kol.id && editingField === 'platform' ? (
-                  <input
-                    type="text"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(kol.id, 'platform')}
-                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'platform')}
-                    className="bg-black border border-green-300 text-xs p-1 w-24"
-                    placeholder="Comma separated"
-                    autoFocus
-                  />
-                ) : (
-                  <div 
-                    className="flex gap-1 cursor-pointer"
-                    onClick={() => canEdit && startEdit(kol.id, 'platform', kol.platform)}
-                  >
-                    {kol.platform.length > 0 ? (
-                      kol.platform.map(p => (
-                        <span key={p} className="text-lg" title={p}>
-                          {getPlatformIcon(p)}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-xs text-gray-500">None</span>
-                    )}
-                  </div>
-                )}
-              </td>
-              
-              {canEdit && (
-                <td className="p-2">
-                  <button
-                    onClick={() => onDelete(kol.id)}
-                    className="text-red-500 hover:text-red-400 text-xs"
-                  >
-                    Remove
-                  </button>
-                </td>
-              )}
+    <>
+      <div className="overflow-x-auto">
+        <table className="w-full border border-green-300">
+          <thead>
+            <tr className="border-b border-green-300 bg-green-950">
+              <th className="p-2 text-left text-xs uppercase">KOL</th>
+              <th className="p-2 text-left text-xs uppercase">Tier</th>
+              <th className="p-2 text-left text-xs uppercase">Stage</th>
+              <th className="p-2 text-left text-xs uppercase">Device</th>
+              <th className="p-2 text-left text-xs uppercase">Budget</th>
+              <th className="p-2 text-left text-xs uppercase">Payment</th>
+              <th className="p-2 text-left text-xs uppercase">Views</th>
+              <th className="p-2 text-left text-xs uppercase">Contact</th>
+              <th className="p-2 text-left text-xs uppercase">Links</th>
+              <th className="p-2 text-left text-xs uppercase">Platform</th>
+              {canEdit && <th className="p-2 text-left text-xs uppercase">Actions</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {kols.map(kol => (
+              <tr key={kol.id} className="border-b border-green-300 hover:bg-green-950/30">
+                <td className="p-2">
+                  <div className="flex items-center gap-2">
+                    {kol.pfp ? (
+                      <img src={kol.pfp} alt={kol.handle} className="w-8 h-8 rounded-full" />
+                    ) : (
+                      <img src={`https://unavatar.io/twitter/${kol.handle}`} alt={kol.handle} className="w-8 h-8 rounded-full" />
+                    )}
+                    <div>
+                      <div 
+                        className="font-medium cursor-pointer hover:text-green-400 transition-colors"
+                        onClick={() => setSelectedKOL({ handle: kol.handle, name: kol.name })}
+                      >
+                        {kol.name}
+                      </div>
+                      <div className="text-xs text-gray-500">@{kol.handle}</div>
+                    </div>
+                  </div>
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'tier' ? (
+                    <select
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'tier')}
+                      className="bg-black border border-green-300 text-xs p-1"
+                      autoFocus
+                    >
+                      <option value="">None</option>
+                      {tiers.map(t => (
+                        <option key={t} value={t}>{t ? t.toUpperCase() : ''}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div 
+                      className="cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'tier', kol.tier || '')}
+                    >
+                      {kol.tier && getTierBadge(kol.tier) ? (
+                        <span className={`text-xs px-2 py-1 rounded font-bold ${getTierBadge(kol.tier)!.color}`}>
+                          {getTierBadge(kol.tier)!.text}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-500">-</span>
+                      )}
+                    </div>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'stage' ? (
+                    <select
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'stage')}
+                      className="bg-black border border-green-300 text-xs p-1"
+                      autoFocus
+                    >
+                      {stages.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span 
+                      className={`text-xs cursor-pointer ${getStageColor(kol.stage)}`}
+                      onClick={() => canEdit && startEdit(kol.id, 'stage', kol.stage)}
+                    >
+                      {kol.stage}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'device' ? (
+                    <select
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'device')}
+                      className="bg-black border border-green-300 text-xs p-1"
+                      autoFocus
+                    >
+                      {devices.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'device', kol.device)}
+                    >
+                      {kol.device}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'budget' ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'budget')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'budget')}
+                      className="bg-black border border-green-300 text-xs p-1 w-24"
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'budget', kol.budget)}
+                    >
+                      {kol.budget}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'payment' ? (
+                    <select
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'payment')}
+                      className="bg-black border border-green-300 text-xs p-1"
+                      autoFocus
+                    >
+                      {payments.map(p => (
+                        <option key={p} value={p}>{p}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span 
+                      className={`text-xs cursor-pointer ${getPaymentColor(kol.payment)}`}
+                      onClick={() => canEdit && startEdit(kol.id, 'payment', kol.payment)}
+                    >
+                      {kol.payment}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'views' ? (
+                    <input
+                      type="number"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'views')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'views')}
+                      className="bg-black border border-green-300 text-xs p-1 w-20"
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'views', kol.views)}
+                    >
+                      {kol.views.toLocaleString()}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'contact' ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'contact')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'contact')}
+                      className="bg-black border border-green-300 text-xs p-1 w-32"
+                      placeholder="Email, Telegram, etc"
+                      autoFocus
+                    />
+                  ) : (
+                    <div 
+                      className="text-xs cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'contact', kol.contact || '')}
+                    >
+                      {kol.contact ? (
+                        kol.contact.startsWith('@') ? (
+                          <a 
+                            href={`https://t.me/${kol.contact.substring(1)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-400 hover:underline"
+                          >
+                            {kol.contact}
+                          </a>
+                        ) : kol.contact.includes('@') ? (
+                          <a 
+                            href={`mailto:${kol.contact}`}
+                            className="text-green-400 hover:underline"
+                          >
+                            {kol.contact}
+                          </a>
+                        ) : (
+                          kol.contact
+                        )
+                      ) : (
+                        <span className="text-gray-500">No contact</span>
+                      )}
+                    </div>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'links' ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'links')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'links')}
+                      className="bg-black border border-green-300 text-xs p-1 w-32"
+                      placeholder="Comma separated"
+                      autoFocus
+                    />
+                  ) : (
+                    <div 
+                      className="text-xs cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'links', kol.links)}
+                    >
+                      {kol.links.length > 0 ? (
+                        <div className="space-y-1">
+                          {kol.links.map((link, i) => (
+                            <a 
+                              key={i} 
+                              href={link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="block text-blue-400 hover:underline truncate max-w-xs"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {link}
+                            </a>
+                          ))}
+                        </div>
+                      ) : (
+                        <span className="text-gray-500">No links</span>
+                      )}
+                    </div>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'platform' ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'platform')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'platform')}
+                      className="bg-black border border-green-300 text-xs p-1 w-24"
+                      placeholder="Comma separated"
+                      autoFocus
+                    />
+                  ) : (
+                    <div 
+                      className="flex gap-1 cursor-pointer"
+                      onClick={() => canEdit && startEdit(kol.id, 'platform', kol.platform)}
+                    >
+                      {kol.platform.length > 0 ? (
+                        kol.platform.map(p => (
+                          <span key={p} className="text-lg" title={p}>
+                            {getPlatformIcon(p)}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-xs text-gray-500">None</span>
+                      )}
+                    </div>
+                  )}
+                </td>
+                
+                {canEdit && (
+                  <td className="p-2">
+                    <button
+                      onClick={() => onDelete(kol.id)}
+                      className="text-red-500 hover:text-red-400 text-xs"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      {/* KOL Profile Modal */}
+      {selectedKOL && (
+        <KOLProfileModal
+          kolHandle={selectedKOL.handle}
+          kolName={selectedKOL.name}
+          isOpen={!!selectedKOL}
+          onClose={() => setSelectedKOL(null)}
+        />
+      )}
+    </>
   )
 } 

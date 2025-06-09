@@ -107,7 +107,10 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
   const isOwner = session?.user?.name === campaign?.createdBy
   const isTeamMember = campaign?.teamMembers.includes(session?.user?.name || '')
-  const canEdit = !!(isOwner || isTeamMember)
+  const userRole = (session as any)?.role || (session as any)?.user?.role || 'user'
+  const canEditByRole = ['admin', 'core', 'team'].includes(userRole)
+  const canEdit = !!(isOwner || isTeamMember || canEditByRole)
+  const canManage = ['admin', 'core'].includes(userRole)
 
   const handleKOLUpdate = async (kolId: string, updates: Partial<KOL>) => {
     if (!campaign || !canEdit) return
@@ -256,12 +259,14 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                   >
                     + Add KOL
                   </button>
-                  <button
-                    onClick={() => setShowEditModal(true)}
-                    className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
-                  >
-                    Edit Campaign
-                  </button>
+                  {canManage && (
+                    <button
+                      onClick={() => setShowEditModal(true)}
+                      className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
+                    >
+                      Edit Campaign
+                    </button>
+                  )}
                 </div>
               )}
             </div>
