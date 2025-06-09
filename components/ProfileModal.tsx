@@ -18,9 +18,13 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     name: '',
     bio: '',
     email: '',
+    phone: '',
     telegram: '',
     country: '',
     city: '',
+    addressLine1: '',
+    addressLine2: '',
+    postalCode: '',
     languages: [] as string[],
     instagram: '',
     youtube: '',
@@ -30,6 +34,9 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     chains: [] as string[],
     primaryLanguage: '',
   })
+  
+  const [addressSuggestions, setAddressSuggestions] = useState<string[]>([])
+  const [showAddressSuggestions, setShowAddressSuggestions] = useState(false)
 
   useEffect(() => {
     if (isOpen && session) {
@@ -50,22 +57,26 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         setProfileData(fullProfile)
         
         // Initialize form with existing data
-        setFormData({
-          name: fullProfile.name || '',
-          bio: fullProfile.bio || '',
-          email: fullProfile.email || '',
-          telegram: fullProfile.socialAccounts?.telegram?.handle || '',
-          country: fullProfile.country || '',
-          city: fullProfile.city || '',
-          languages: fullProfile.languages || [],
-          instagram: fullProfile.socialAccounts?.instagram?.handle || '',
-          youtube: fullProfile.socialAccounts?.youtube?.handle || '',
-          tiktok: fullProfile.socialAccounts?.tiktok?.handle || '',
-          website: fullProfile.website || '',
-          audienceTypes: fullProfile.audienceTypes || [],
-          chains: fullProfile.chains || [],
-          primaryLanguage: fullProfile.primaryLanguage || '',
-        })
+                  setFormData({
+            name: fullProfile.name || '',
+            bio: fullProfile.bio || '',
+            email: fullProfile.email || '',
+            phone: fullProfile.phone || '',
+            telegram: fullProfile.socialAccounts?.telegram?.handle || '',
+            country: fullProfile.country || '',
+            city: fullProfile.city || '',
+            addressLine1: fullProfile.shippingAddress?.addressLine1 || '',
+            addressLine2: fullProfile.shippingAddress?.addressLine2 || '',
+            postalCode: fullProfile.shippingAddress?.postalCode || '',
+            languages: fullProfile.languages || [],
+            instagram: fullProfile.socialAccounts?.instagram?.handle || '',
+            youtube: fullProfile.socialAccounts?.youtube?.handle || '',
+            tiktok: fullProfile.socialAccounts?.tiktok?.handle || '',
+            website: fullProfile.website || '',
+            audienceTypes: fullProfile.audienceTypes || [],
+            chains: fullProfile.chains || [],
+            primaryLanguage: fullProfile.primaryLanguage || '',
+          })
       } else {
         // Fallback to basic profile
         const userRes = await fetch(`/api/user/profile?handle=${encodeURIComponent(handle)}`)
@@ -77,9 +88,13 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             name: userData.user.name || '',
             bio: '',
             email: '',
+            phone: '',
             telegram: '',
             country: '',
             city: '',
+            addressLine1: '',
+            addressLine2: '',
+            postalCode: '',
             languages: [],
             instagram: '',
             youtube: '',
@@ -107,8 +122,16 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         name: formData.name,
         bio: formData.bio,
         email: formData.email,
+        phone: formData.phone,
         country: formData.country,
         city: formData.city,
+        shippingAddress: {
+          addressLine1: formData.addressLine1,
+          addressLine2: formData.addressLine2,
+          city: formData.city,
+          postalCode: formData.postalCode,
+          country: formData.country,
+        },
         languages: formData.languages.filter(Boolean),
         primaryLanguage: formData.primaryLanguage,
         audienceTypes: formData.audienceTypes.filter(Boolean),
@@ -159,6 +182,38 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
       ...prev,
       languages: prev.languages.filter((_, i) => i !== index)
     }))
+  }
+
+  // Address autocomplete functionality
+  const handleAddressChange = (value: string) => {
+    setFormData(prev => ({ ...prev, addressLine1: value }))
+    
+    // Simulate address suggestions (in production, use a real geocoding API)
+    if (value.length > 2) {
+      const mockSuggestions = [
+        `${value} Street, New York, NY 10001`,
+        `${value} Avenue, Los Angeles, CA 90001`,
+        `${value} Road, Chicago, IL 60601`,
+        `${value} Boulevard, Houston, TX 77001`,
+        `${value} Lane, Phoenix, AZ 85001`,
+      ].filter(s => s.toLowerCase().includes(value.toLowerCase()))
+      
+      setAddressSuggestions(mockSuggestions)
+      setShowAddressSuggestions(true)
+    } else {
+      setShowAddressSuggestions(false)
+    }
+  }
+  
+  const selectAddressSuggestion = (suggestion: string) => {
+    const parts = suggestion.split(', ')
+    setFormData(prev => ({
+      ...prev,
+      addressLine1: parts[0] || '',
+      city: parts[1] || prev.city,
+      postalCode: parts[2]?.split(' ')[1] || prev.postalCode,
+    }))
+    setShowAddressSuggestions(false)
   }
 
   if (!isOpen) return null
@@ -261,13 +316,23 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                   {/* Contact Info */}
                   <div>
                     <h4 className="text-sm font-bold uppercase mb-3">Contact Information</h4>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-3 gap-3">
                       <div>
                         <label className="block text-xs mb-1">Email</label>
                         <input
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                          className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs mb-1">Phone</label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                          placeholder="+1 234 567 8900"
                           className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
                         />
                       </div>
@@ -284,27 +349,73 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                     </div>
                   </div>
 
-                  {/* Location */}
+                  {/* Address & Location */}
                   <div>
-                    <h4 className="text-sm font-bold uppercase mb-3">Location</h4>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-xs mb-1">Country</label>
+                    <h4 className="text-sm font-bold uppercase mb-3">Address & Location</h4>
+                    <div className="space-y-3">
+                      <div className="relative address-autocomplete">
+                        <label className="block text-xs mb-1">Address Line 1</label>
                         <input
                           type="text"
-                          value={formData.country}
-                          onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                          value={formData.addressLine1}
+                          onChange={(e) => handleAddressChange(e.target.value)}
+                          onFocus={() => formData.addressLine1.length > 2 && setShowAddressSuggestions(true)}
+                          placeholder="123 Main Street"
+                          className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
+                        />
+                        {showAddressSuggestions && addressSuggestions.length > 0 && (
+                          <div className="absolute z-20 w-full mt-1 bg-black border border-green-500 max-h-40 overflow-y-auto">
+                            {addressSuggestions.map((suggestion, index) => (
+                              <button
+                                key={index}
+                                type="button"
+                                onClick={() => selectAddressSuggestion(suggestion)}
+                                className="w-full px-3 py-2 text-left text-green-300 hover:bg-green-900 hover:text-green-100 text-sm border-b border-green-800 last:border-b-0"
+                              >
+                                {suggestion}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-xs mb-1">Address Line 2</label>
+                        <input
+                          type="text"
+                          value={formData.addressLine2}
+                          onChange={(e) => setFormData(prev => ({ ...prev, addressLine2: e.target.value }))}
+                          placeholder="Apt, Suite, Floor (optional)"
                           className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
                         />
                       </div>
-                      <div>
-                        <label className="block text-xs mb-1">City</label>
-                        <input
-                          type="text"
-                          value={formData.city}
-                          onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
-                          className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
-                        />
+                      <div className="grid grid-cols-3 gap-3">
+                        <div>
+                          <label className="block text-xs mb-1">City</label>
+                          <input
+                            type="text"
+                            value={formData.city}
+                            onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                            className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs mb-1">Postal Code</label>
+                          <input
+                            type="text"
+                            value={formData.postalCode}
+                            onChange={(e) => setFormData(prev => ({ ...prev, postalCode: e.target.value }))}
+                            className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs mb-1">Country</label>
+                          <input
+                            type="text"
+                            value={formData.country}
+                            onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                            className="w-full px-3 py-2 bg-black border border-green-500 text-green-300 focus:outline-none focus:border-green-400"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -527,11 +638,36 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                       {profileData?.email && (
                         <div><span className="text-green-500">Email:</span> {profileData.email}</div>
                       )}
+                      {profileData?.phone && (
+                        <div><span className="text-green-500">Phone:</span> {profileData.phone}</div>
+                      )}
                       {profileData?.socialAccounts?.telegram?.handle && (
                         <div><span className="text-green-500">Telegram:</span> @{profileData.socialAccounts.telegram.handle}</div>
                       )}
                     </div>
                   </div>
+
+                  {/* Address */}
+                  {(profileData?.shippingAddress?.addressLine1 || profileData?.shippingAddress?.addressLine2 || profileData?.shippingAddress?.postalCode) && (
+                    <div>
+                      <h4 className="text-sm font-bold uppercase mb-2">Address</h4>
+                      <div className="text-sm">
+                        {profileData.shippingAddress.addressLine1 && (
+                          <div>{profileData.shippingAddress.addressLine1}</div>
+                        )}
+                        {profileData.shippingAddress.addressLine2 && (
+                          <div>{profileData.shippingAddress.addressLine2}</div>
+                        )}
+                        {(profileData.shippingAddress.city || profileData.shippingAddress.postalCode || profileData.shippingAddress.country) && (
+                          <div>
+                            {profileData.shippingAddress.city && `${profileData.shippingAddress.city}, `}
+                            {profileData.shippingAddress.postalCode && `${profileData.shippingAddress.postalCode} `}
+                            {profileData.shippingAddress.country}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Location */}
                   {(profileData?.country || profileData?.city) && (
