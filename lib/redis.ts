@@ -1,10 +1,13 @@
 import { Redis } from '@upstash/redis';
 
-// Parse REDIS_URL if available
+// Check if we're on the server
+const isServer = typeof window === 'undefined';
+
+// Parse REDIS_URL if available (only on server)
 let upstashUrl: string | undefined;
 let upstashToken: string | undefined;
 
-if (process.env.REDIS_URL) {
+if (isServer && process.env.REDIS_URL) {
   try {
     // Parse redis://default:TOKEN@HOST:PORT format
     const url = new URL(process.env.REDIS_URL);
@@ -15,19 +18,53 @@ if (process.env.REDIS_URL) {
     upstashUrl = `https://${host}`;
     upstashToken = token;
   } catch (error) {
-    console.error('Failed to parse REDIS_URL:', error);
+    console.error('[Server] Failed to parse REDIS_URL:', error);
   }
 }
 
-// Use parsed values or fall back to individual env vars
-const UPSTASH_REDIS_REST_URL = upstashUrl || process.env.UPSTASH_REDIS_REST_URL;
-const UPSTASH_REDIS_REST_TOKEN = upstashToken || process.env.UPSTASH_REDIS_REST_TOKEN;
+// Use parsed values or fall back to individual env vars (only on server)
+const UPSTASH_REDIS_REST_URL = isServer ? (upstashUrl || process.env.UPSTASH_REDIS_REST_URL) : undefined;
+const UPSTASH_REDIS_REST_TOKEN = isServer ? (upstashToken || process.env.UPSTASH_REDIS_REST_TOKEN) : undefined;
 
-// Create Redis client - simple and direct
-export const redis = new Redis({
-  url: UPSTASH_REDIS_REST_URL!,
-  token: UPSTASH_REDIS_REST_TOKEN!,
-});
+// Create a dummy Redis client for client-side that throws helpful errors
+class DummyRedis {
+  constructor() {
+    console.warn('[Client] Redis operations are not available on the client side');
+  }
+  
+  async json() {
+    throw new Error('Redis operations must be performed on the server side');
+  }
+  
+  async sadd() {
+    throw new Error('Redis operations must be performed on the server side');
+  }
+  
+  async smembers() {
+    throw new Error('Redis operations must be performed on the server side');
+  }
+  
+  async zadd() {
+    throw new Error('Redis operations must be performed on the server side');
+  }
+  
+  async keys() {
+    throw new Error('Redis operations must be performed on the server side');
+  }
+}
+
+// Create Redis client only on server, dummy client on browser
+export const redis = isServer && UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN
+  ? new Redis({
+      url: UPSTASH_REDIS_REST_URL,
+      token: UPSTASH_REDIS_REST_TOKEN,
+    })
+  : new DummyRedis() as any;
+
+// Log initialization status (only once)
+if (isServer) {
+  console.log('[Server] Redis client initialized:', !!UPSTASH_REDIS_REST_URL);
+}
 
 export interface InfluencerProfile {
   id: string

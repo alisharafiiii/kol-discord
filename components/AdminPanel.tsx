@@ -139,7 +139,7 @@ type BarChartOptions = ChartOptions<'bar'>;
 type PieChartOptions = ChartOptions<'pie'>;
 type DoughnutChartOptions = ChartOptions<'doughnut'>;
 
-type Tab = 'dashboard' | 'search' | 'leaderboard'
+type Tab = 'dashboard' | 'search' | 'leaderboard' | 'roles' | 'twitter-roles'
 
 // Helper function to safely get follower count from social accounts
 const getFollowerCount = (data: unknown): number => {
@@ -279,12 +279,14 @@ function ProfileModal({
   user, 
   onClose, 
   onStatusChange,
-  onDelete 
+  onDelete,
+  onRoleChange
 }: { 
   user: KOLProfile; 
   onClose: () => void; 
   onStatusChange: (userId: string, newStatus: 'approved' | 'pending' | 'rejected') => void;
   onDelete: (userId: string) => void;
+  onRoleChange: (userId: string, newRole: string) => void;
 }) {
   if (!user) return null;
   
@@ -366,9 +368,23 @@ function ProfileModal({
               </span>
               
               {user.role && (
-                <span className="px-2 py-0.5 bg-purple-900 text-purple-300 rounded text-sm uppercase">
-                  {user.role}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 bg-purple-900 text-purple-300 rounded text-sm uppercase">
+                    {user.role}
+                  </span>
+                  <select
+                    className="bg-black border border-purple-500 text-purple-300 px-2 py-0.5 text-sm rounded"
+                    value={user.role}
+                    onChange={(e) => onRoleChange(user.id, e.target.value)}
+                  >
+                    <option value="user">User</option>
+                    <option value="viewer">Viewer</option>
+                    <option value="scout">Scout</option>
+                    <option value="intern">Intern</option>
+                    <option value="core">Core</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
               )}
               
               {user.country && (
@@ -1394,22 +1410,10 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
   // Function to update user status
   const updateUserStatus = async (userId: string, newStatus: 'approved' | 'pending' | 'rejected') => {
     try {
-      // Ensure we have a valid wallet cookie
-      const walletCookie = getCookie('walletAddress');
-      if (!walletCookie) {
-        console.error('No wallet cookie found');
-        alert('Unable to update user status. Please ensure you are connected with your wallet.');
-        return;
-      }
-
-      // Make sure wallet is set as cookie for the request
-      setCookie('walletAddress', walletCookie, 1);
-      
       const response = await fetch('/api/admin/update-status', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Wallet-Address': walletCookie // Also send as header
         },
         body: JSON.stringify({ userId, status: newStatus }),
       })
@@ -1447,22 +1451,12 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      const walletCookie = getCookie('walletAddress');
-      if (!walletCookie) {
-        console.error('No wallet cookie found');
-        alert('Unable to delete user. Please ensure you are connected with your wallet.');
-        return;
-      }
-
-      setCookie('walletAddress', walletCookie, 1);
-      
       console.log(`Attempting to delete user: ${userId}`);
       
       const response = await fetch('/api/admin/delete-user', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'X-Wallet-Address': walletCookie
         },
         body: JSON.stringify({ userId }),
       })
@@ -1550,6 +1544,44 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     } catch (error) {
       console.error('Error deleting user:', error)
       alert(`Failed to delete user: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  }
+  
+  const handleRoleChange = async (userId: string, newRole: string) => {
+    try {
+      // Find the user's twitter handle
+      const user = users.find(u => u.id === userId)
+      if (!user || !user.twitterHandle) {
+        alert('User not found or missing Twitter handle')
+        return
+      }
+      
+      const response = await fetch(`/api/user/full-profile?handle=${encodeURIComponent(user.twitterHandle)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ role: newRole }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update role')
+      }
+
+      // Update local state
+      setUsers(prev => prev.map(u => 
+        u.id === userId ? { ...u, role: newRole } : u
+      ))
+      
+      // Update selected user if this is the one being viewed
+      if (selectedUser?.id === userId) {
+        setSelectedUser(prev => prev ? { ...prev, role: newRole } : null)
+      }
+      
+      alert('Role updated successfully')
+    } catch (error) {
+      console.error('Error updating role:', error)
+      alert(`Failed to update role: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }
   
@@ -2662,6 +2694,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           onClose={() => setShowProfileModal(false)}
           onStatusChange={updateUserStatus}
           onDelete={handleDeleteUser}
+          onRoleChange={handleRoleChange}
         />
       )}
     </div>

@@ -6,6 +6,7 @@ import { getNames, getCode } from 'country-list'
 import { useRouter } from 'next/navigation'
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom'
 import { identifyUser } from "@/lib/user-identity"
+import ProfileModal from '@/components/ProfileModal'
 
 // Define custom types for wallet interfaces
 interface PhantomProvider {
@@ -88,7 +89,7 @@ const ADMIN_WALLET_SOLANA_3 = '6tcxFg4RGVmfuy7MgeUQ5qbFsLPF18PnGMsQnvwG4Xif'
 const getCountryCode = (country: string) => getCode(country)?.toLowerCase() || ''
 
 export default function LoginModal() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
@@ -102,11 +103,8 @@ export default function LoginModal() {
   const [errorMessage, setErrorMessage] = useState('')
   
   // User profile state for cybernetic access permit
-  const [userProfile, setUserProfile] = useState<{
-    approvalStatus: 'pending' | 'approved' | 'rejected';
-    twitterHandle: string;
-    role?: string;
-  } | null>(null)
+  const [userProfile, setUserProfile] = useState<any>(null)
+  const [hasProfile, setHasProfile] = useState(false)
   
   // Connected wallets state
   const [connectedWallets, setConnectedWallets] = useState<{
@@ -120,6 +118,8 @@ export default function LoginModal() {
     metamask: false,
     addresses: {}
   })
+
+  const [showProfileModal, setShowProfileModal] = useState(false)
 
   // Fetch user profile when session changes
   useEffect(() => {
@@ -1056,6 +1056,84 @@ export default function LoginModal() {
     }
   }, [connectedWallets])
 
+  // Add function to check if user has complete profile
+  const checkUserProfile = async () => {
+    if (!session?.user?.name) return
+    
+    try {
+      const handle = (session as any)?.twitterHandle || session.user.name
+      console.log('[Profile Check] Checking profile for:', handle)
+      
+      // First check if user exists in the system
+      const res = await fetch(`/api/user/profile?handle=${encodeURIComponent(handle)}`)
+      if (res.ok) {
+        const data = await res.json()
+        console.log('[Profile Check] User profile response:', data)
+        if (data.user) {
+          setUserProfile(data.user)
+          
+          // Special handling for admin users - they always have a "profile"
+          if (data.user.role === 'admin' || data.user.role === 'core') {
+            console.log('[Profile Check] Admin/Core user detected, setting hasProfile=true')
+            setHasProfile(true)
+            return
+          }
+          
+          // For approved users, consider them as having a profile
+          if (data.user.approvalStatus === 'approved') {
+            console.log('[Profile Check] Approved user detected, setting hasProfile=true')
+            setHasProfile(true)
+            return
+          }
+        }
+      }
+      
+      // Then check for full profile data for non-admin users
+      try {
+        const profileRes = await fetch(`/api/profile/${encodeURIComponent(handle)}`)
+        if (profileRes.ok) {
+          const profileData = await profileRes.json()
+          console.log('[Profile Check] Full profile data:', profileData)
+          
+          // Check multiple ways a profile might indicate completion
+          if (profileData && (
+            profileData.audiences || 
+            profileData.audienceTypes ||
+            profileData.chains || 
+            profileData.contentTypes || 
+            profileData.socialAccounts ||
+            profileData.country ||
+            profileData.bestCollabUrls ||
+            profileData.isKOL
+          )) {
+            console.log('[Profile Check] User has profile data, setting hasProfile=true')
+            setHasProfile(true)
+          } else {
+            console.log('[Profile Check] No substantial profile data found')
+          }
+        } else if (profileRes.status === 404) {
+          console.log('[Profile Check] Profile not found (404)')
+          // For users with no full profile, check if they're approved in the basic profile
+          if (userProfile?.approvalStatus === 'approved') {
+            console.log('[Profile Check] No full profile but user is approved, setting hasProfile=true')
+            setHasProfile(true)
+          }
+        }
+      } catch (profileError) {
+        console.log('[Profile Check] Error fetching full profile:', profileError)
+      }
+    } catch (error) {
+      console.error('[Profile Check] Error checking profile:', error)
+    }
+  }
+
+  // Update useEffect to check profile on session change
+  useEffect(() => {
+    if (session) {
+      checkUserProfile()
+    }
+  }, [session])
+
   if (stage === 'hidden') return null
 
   return (
@@ -1188,7 +1266,21 @@ export default function LoginModal() {
             )}
             
             <button onClick={() => setStage('enter')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">enter</button>
-            <button onClick={() => setStage('apply')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">apply</button>
+            
+            {/* Show Profile button if user has profile, Apply button otherwise */}
+            {hasProfile ? (
+              <button 
+                onClick={() => {
+                  setShowProfileModal(true)
+                }} 
+                className="border border-green-300 px-4 py-2 hover:bg-gray-900 bg-green-900/50"
+              >
+                profile
+              </button>
+            ) : (
+              <button onClick={() => setStage('apply')} className="border border-green-300 px-4 py-2 hover:bg-gray-900">apply</button>
+            )}
+            
             <button onClick={handleClose} className="border border-green-300 px-4 py-2 text-xs hover:bg-gray-900">close</button>
           </div>
         )}
@@ -1229,7 +1321,16 @@ export default function LoginModal() {
                       if (typeof window !== 'undefined') {
                         localStorage.setItem('loginStage', 'social')
                       }
-                      signIn('twitter')
+                      console.log('[LOGIN MODAL] Initiating Twitter sign-in from login step...');
+                      console.log('[LOGIN MODAL] Current URL:', window.location.href);
+                      console.log('[LOGIN MODAL] NextAuth URL:', process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'Not set');
+                      
+                      signIn('twitter').then(() => {
+                        console.log('[LOGIN MODAL] Sign-in initiated successfully');
+                      }).catch((error) => {
+                        console.error('[LOGIN MODAL] Sign-in error:', error);
+                        alert('Failed to initiate Twitter sign-in. Check console for details.');
+                      })
                     }}
                   >
                     Login with 𝕏
@@ -1520,7 +1621,16 @@ export default function LoginModal() {
                       if (typeof window !== 'undefined') {
                         localStorage.setItem('loginStage', 'social')
                       }
-                      signIn('twitter')
+                      console.log('[LOGIN MODAL] Initiating Twitter sign-in from social step...');
+                      console.log('[LOGIN MODAL] Current URL:', window.location.href);
+                      console.log('[LOGIN MODAL] NextAuth URL:', process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'Not set');
+                      
+                      signIn('twitter').then(() => {
+                        console.log('[LOGIN MODAL] Sign-in initiated successfully');
+                      }).catch((error) => {
+                        console.error('[LOGIN MODAL] Sign-in error:', error);
+                        alert('Failed to initiate Twitter sign-in. Check console for details.');
+                      })
                     }}
                   >
                     Login with 𝕏
@@ -1830,6 +1940,12 @@ export default function LoginModal() {
           </div>
         )}
       </div>
+      
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={showProfileModal} 
+        onClose={() => setShowProfileModal(false)} 
+      />
     </div>
   )
 } 

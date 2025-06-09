@@ -20,6 +20,7 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
   const router = useRouter()
   const [firstProject, setFirstProject] = useState<Project | null>(null)
   const [totalBudget, setTotalBudget] = useState<number>(0)
+  const [isNavigating, setIsNavigating] = useState(false)
   
   const isOwner = currentUser === campaign.createdBy
   const isTeamMember = campaign.teamMembers.includes(currentUser || '')
@@ -40,6 +41,12 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
       case 'cancelled': return 'text-red-400'
       default: return 'text-gray-400'
     }
+  }
+  
+  const handleNavigation = (path: string) => {
+    if (isNavigating) return
+    setIsNavigating(true)
+    router.push(path)
   }
   
   useEffect(() => {
@@ -88,7 +95,7 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
       <div className="flex justify-between items-start mb-3">
         <h3 
           className="text-lg font-bold cursor-pointer hover:text-green-400"
-          onClick={() => router.push(`/campaigns/${campaign.slug}`)}
+          onClick={() => handleNavigation(`/campaigns/${campaign.slug}`)}
         >
           {campaign.name}
         </h3>
@@ -156,28 +163,40 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
       
       <div className="mt-4 flex gap-2">
         <button
-          onClick={() => router.push(`/campaigns/${campaign.slug}`)}
-          className="flex-1 px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
+          onClick={() => handleNavigation(`/campaigns/${campaign.slug}`)}
+          disabled={isNavigating}
+          className={`flex-1 px-3 py-1 border border-green-300 hover:bg-green-900 text-xs transition-all ${
+            isNavigating ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          View Details
+          {isNavigating ? 'Loading...' : 'View Details'}
         </button>
         {canEdit && (
           <>
             <button
-              onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
-              className="px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
+              onClick={() => handleNavigation(`/campaigns/${campaign.slug}/kols`)}
+              disabled={isNavigating}
+              className={`px-3 py-1 border border-green-300 hover:bg-green-900 text-xs ${
+                isNavigating ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
               KOLs
             </button>
             <button
-              onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
-              className="px-3 py-1 border border-purple-300 text-purple-300 hover:bg-purple-900 text-xs"
+              onClick={() => handleNavigation(`/campaigns/${campaign.slug}/analytics`)}
+              disabled={isNavigating}
+              className={`px-3 py-1 border border-purple-300 text-purple-300 hover:bg-purple-900 text-xs ${
+                isNavigating ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
               Analytics
             </button>
             <button
-              onClick={() => router.push(`/campaigns/${campaign.slug}/edit`)}
-              className="px-3 py-1 border border-green-300 hover:bg-green-900 text-xs"
+              onClick={() => handleNavigation(`/campaigns/${campaign.slug}/edit`)}
+              disabled={isNavigating}
+              className={`px-3 py-1 border border-green-300 hover:bg-green-900 text-xs ${
+                isNavigating ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
               Edit
             </button>
@@ -186,7 +205,10 @@ export default function CampaignCard({ campaign, onDelete, currentUser }: Campai
         {isOwner && (
           <button
             onClick={() => onDelete(campaign.id)}
-            className="px-3 py-1 border border-red-500 text-red-500 hover:bg-red-900 text-xs"
+            disabled={isNavigating}
+            className={`px-3 py-1 border border-red-500 text-red-500 hover:bg-red-900 text-xs ${
+              isNavigating ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
             Delete
           </button>

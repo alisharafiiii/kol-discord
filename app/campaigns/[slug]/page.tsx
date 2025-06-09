@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { getCampaignBySlug } from '@/lib/campaign'
@@ -17,11 +17,28 @@ let projectsCache: Project[] | null = null
 let projectsCacheTime = 0
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 
+// Loading skeleton component
+function LoadingSkeleton() {
+  return (
+    <div className="min-h-screen bg-black text-green-300 font-sans p-4 md:p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-green-900 rounded w-1/4"></div>
+          <div className="h-20 bg-green-900 rounded"></div>
+          <div className="h-40 bg-green-900 rounded"></div>
+          <div className="h-60 bg-green-900 rounded"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function CampaignPage({ params }: { params: { slug: string } }) {
   const { data: session } = useSession()
   const router = useRouter()
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [showAddKOL, setShowAddKOL] = useState(false)
   const [showCharts, setShowCharts] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -30,15 +47,20 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
   const fetchCampaign = async () => {
     try {
+      setError(null)
       const res = await fetch(`/api/campaigns/slug/${params.slug}`)
       if (res.ok) {
         const data = await res.json()
         setCampaign(data)
       } else if (res.status === 404) {
-        router.push('/campaigns')
+        setError('Campaign not found')
+        setTimeout(() => router.push('/campaigns'), 2000)
+      } else {
+        setError('Failed to load campaign')
       }
     } catch (error) {
       console.error('Error fetching campaign:', error)
+      setError('Failed to load campaign')
     } finally {
       setLoading(false)
     }
@@ -170,11 +192,18 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     }
   }
 
+  // Show loading skeleton while data is being fetched
   if (loading) {
+    return <LoadingSkeleton />
+  }
+
+  // Show error state
+  if (error) {
     return (
       <div className="min-h-screen bg-black text-green-300 font-sans p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="animate-pulse">Loading campaign...</div>
+        <div className="max-w-7xl mx-auto text-center py-20">
+          <h2 className="text-xl mb-4">{error}</h2>
+          <p className="text-gray-400">Redirecting to campaigns page...</p>
         </div>
       </div>
     )
@@ -185,154 +214,156 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-black text-green-300 font-sans p-4 md:p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <button
-            onClick={() => router.push('/campaigns')}
-            className="text-xs mb-4 hover:text-green-400"
-          >
-            ← Back to campaigns
-          </button>
-          
-          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold mb-2">{campaign.name}</h1>
-              <div className="text-xs md:text-sm space-y-1">
-                <div>Status: <span className="text-green-400">{campaign.status}</span></div>
-                <div>Period: {new Date(campaign.startDate).toLocaleDateString()} - {new Date(campaign.endDate).toLocaleDateString()}</div>
-                <div>Created by: {campaign.createdBy.startsWith('@') ? campaign.createdBy : `@${campaign.createdBy}`}</div>
-              </div>
-            </div>
+    <Suspense fallback={<LoadingSkeleton />}>
+      <div className="min-h-screen bg-black text-green-300 font-sans p-4 md:p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-6 md:mb-8">
+            <button
+              onClick={() => router.push('/campaigns')}
+              className="text-xs mb-4 hover:text-green-400"
+            >
+              ← Back to campaigns
+            </button>
             
-            {canEdit && (
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
-                  className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
-                >
-                  📊 Analytics
-                </button>
-                <button
-                  onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
-                  className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base"
-                >
-                  👥 KOL Manager
-                </button>
-                <button
-                  onClick={() => setShowAddKOL(true)}
-                  className="px-3 py-1.5 md:px-4 md:py-2 bg-green-900 border border-green-300 hover:bg-green-800 text-sm md:text-base"
-                >
-                  + Add KOL
-                </button>
-                <button
-                  onClick={() => setShowEditModal(true)}
-                  className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
-                >
-                  Edit Campaign
-                </button>
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+              <div>
+                <h1 className="text-xl md:text-2xl font-bold mb-2">{campaign.name}</h1>
+                <div className="text-xs md:text-sm space-y-1">
+                  <div>Status: <span className="text-green-400">{campaign.status}</span></div>
+                  <div>Period: {new Date(campaign.startDate).toLocaleDateString()} - {new Date(campaign.endDate).toLocaleDateString()}</div>
+                  <div>Created by: {campaign.createdBy.startsWith('@') ? campaign.createdBy : `@${campaign.createdBy}`}</div>
+                </div>
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Team Members */}
-        {campaign.teamMembers.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-xs md:text-sm uppercase mb-2">Team Members</h3>
-            <div className="flex flex-wrap gap-2 md:gap-4">
-              {campaign.teamMembers.map(member => (
-                <div key={member} className="flex items-center gap-2 px-2 py-1 bg-green-900 border border-green-300 text-xs rounded">
-                  <img
-                    src={`https://unavatar.io/twitter/${member}`}
-                    alt={member}
-                    className="w-5 h-5 md:w-6 md:h-6 rounded-full"
-                    loading="lazy"
-                  />
-                  <span>@{member}</span>
+              
+              {canEdit && (
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
+                  >
+                    📊 Analytics
+                  </button>
+                  <button
+                    onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base"
+                  >
+                    👥 KOL Manager
+                  </button>
+                  <button
+                    onClick={() => setShowAddKOL(true)}
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-green-900 border border-green-300 hover:bg-green-800 text-sm md:text-base"
+                  >
+                    + Add KOL
+                  </button>
+                  <button
+                    onClick={() => setShowEditModal(true)}
+                    className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
+                  >
+                    Edit Campaign
+                  </button>
                 </div>
-              ))}
+              )}
             </div>
           </div>
-        )}
 
-        {/* Projects */}
-        {projectDetails.length > 0 && (
-          <div className="mb-6 md:mb-8 font-sans">
-            <h3 className="text-xs uppercase mb-4 text-gray-400">Project Assigned ({projectDetails.length})</h3>
-            <div className="flex flex-wrap gap-4 md:gap-6">
-              {projectDetails.map(project => (
-                <div key={project.id} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gray-900 border border-gray-600 rounded-lg">
-                  <img
-                    src={project.profileImageUrl || `https://unavatar.io/twitter/${project.twitterHandle}`}
-                    alt={project.twitterHandle}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
-                    loading="lazy"
-                  />
-                  <div>
-                    <div className="text-base md:text-lg font-bold">@{project.twitterHandle.replace('@', '')}</div>
-                    {project.notes && (
-                      <div className="text-xs md:text-sm text-gray-400 mt-1">{project.notes}</div>
-                    )}
+          {/* Team Members */}
+          {campaign.teamMembers.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-xs md:text-sm uppercase mb-2">Team Members</h3>
+              <div className="flex flex-wrap gap-2 md:gap-4">
+                {campaign.teamMembers.map(member => (
+                  <div key={member} className="flex items-center gap-2 px-2 py-1 bg-green-900 border border-green-300 text-xs rounded">
+                    <img
+                      src={`https://unavatar.io/twitter/${member}`}
+                      alt={member}
+                      className="w-5 h-5 md:w-6 md:h-6 rounded-full"
+                      loading="lazy"
+                    />
+                    <span>@{member}</span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+          )}
+
+          {/* Projects */}
+          {projectDetails.length > 0 && (
+            <div className="mb-6 md:mb-8 font-sans">
+              <h3 className="text-xs uppercase mb-4 text-gray-400">Project Assigned ({projectDetails.length})</h3>
+              <div className="flex flex-wrap gap-4 md:gap-6">
+                {projectDetails.map(project => (
+                  <div key={project.id} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gray-900 border border-gray-600 rounded-lg">
+                    <img
+                      src={project.profileImageUrl || `https://unavatar.io/twitter/${project.twitterHandle}`}
+                      alt={project.twitterHandle}
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
+                      loading="lazy"
+                    />
+                    <div>
+                      <div className="text-base md:text-lg font-bold">@{project.twitterHandle.replace('@', '')}</div>
+                      {project.notes && (
+                        <div className="text-xs md:text-sm text-gray-400 mt-1">{project.notes}</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Campaign Brief */}
+          <div className="mb-6 md:mb-8">
+            <CampaignBrief
+              brief={campaign.brief}
+              briefUpdatedAt={campaign.briefUpdatedAt}
+              briefUpdatedBy={campaign.briefUpdatedBy}
+            />
           </div>
-        )}
 
-        {/* Campaign Brief */}
-        <div className="mb-6 md:mb-8">
-          <CampaignBrief
-            brief={campaign.brief}
-            briefUpdatedAt={campaign.briefUpdatedAt}
-            briefUpdatedBy={campaign.briefUpdatedBy}
-          />
+          {/* KOL Table */}
+          <div className="overflow-x-auto">
+            <h3 className="text-xs md:text-sm uppercase mb-4">KOLs ({campaign.kols.length})</h3>
+            <KOLTable
+              kols={campaign.kols}
+              onUpdate={handleKOLUpdate}
+              onDelete={handleKOLDelete}
+              canEdit={canEdit}
+            />
+          </div>
+
+          {/* Add KOL Modal */}
+          {showAddKOL && (
+            <AddKOLModal
+              campaignId={campaign.id}
+              campaignName={campaign.name}
+              onClose={() => setShowAddKOL(false)}
+              onKOLAdded={() => {
+                setShowAddKOL(false)
+                fetchCampaign() // Refresh campaign data
+              }}
+            />
+          )}
+
+          {/* Campaign Charts Modal */}
+          {showCharts && campaign.kols.length > 0 && (
+            <CampaignCharts
+              kols={campaign.kols}
+              onClose={() => setShowCharts(false)}
+            />
+          )}
+
+          {/* Edit Campaign Modal */}
+          {showEditModal && (
+            <EditCampaignModal
+              campaign={campaign}
+              projects={allProjects}
+              onClose={() => setShowEditModal(false)}
+              onSave={handleCampaignUpdate}
+            />
+          )}
         </div>
-
-        {/* KOL Table */}
-        <div className="overflow-x-auto">
-          <h3 className="text-xs md:text-sm uppercase mb-4">KOLs ({campaign.kols.length})</h3>
-          <KOLTable
-            kols={campaign.kols}
-            onUpdate={handleKOLUpdate}
-            onDelete={handleKOLDelete}
-            canEdit={canEdit}
-          />
-        </div>
-
-        {/* Add KOL Modal */}
-        {showAddKOL && (
-          <AddKOLModal
-            campaignId={campaign.id}
-            campaignName={campaign.name}
-            onClose={() => setShowAddKOL(false)}
-            onKOLAdded={() => {
-              setShowAddKOL(false)
-              fetchCampaign() // Refresh campaign data
-            }}
-          />
-        )}
-
-        {/* Campaign Charts Modal */}
-        {showCharts && campaign.kols.length > 0 && (
-          <CampaignCharts
-            kols={campaign.kols}
-            onClose={() => setShowCharts(false)}
-          />
-        )}
-
-        {/* Edit Campaign Modal */}
-        {showEditModal && (
-          <EditCampaignModal
-            campaign={campaign}
-            projects={allProjects}
-            onClose={() => setShowEditModal(false)}
-            onSave={handleCampaignUpdate}
-          />
-        )}
       </div>
-    </div>
+    </Suspense>
   )
 } 

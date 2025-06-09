@@ -26,7 +26,16 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }: any) {
-      if (account.provider !== "twitter") return true;
+      log("=== SIGN IN CALLBACK TRIGGERED ===");
+      log("Provider:", account?.provider);
+      log("User data:", user);
+      log("Account data:", account);
+      log("Profile data:", profile);
+      
+      if (account.provider !== "twitter") {
+        log("Non-Twitter provider, allowing sign in");
+        return true;
+      }
       
       try {
         // Get follower count from Twitter API
@@ -40,6 +49,8 @@ export const authOptions: NextAuthOptions = {
           try {
             // Fetch user data including public metrics
             const userId = profile?.data?.id;
+            log("Fetching Twitter user data for ID:", userId);
+            
             const response = await fetch(
               `https://api.twitter.com/2/users/${userId}?user.fields=public_metrics,profile_image_url`,
               {
@@ -51,16 +62,21 @@ export const authOptions: NextAuthOptions = {
             
             if (response.ok) {
               const userData = await response.json();
-              console.log("Twitter user data:", JSON.stringify(userData, null, 2));
+              log("Twitter API response:", userData);
               
               if (userData.data?.public_metrics?.followers_count) {
                 followerCount = userData.data.public_metrics.followers_count;
               }
             } else {
-              console.error("Twitter API response error:", response.status, await response.text());
+              const errorText = await response.text();
+              log("Twitter API error response:", {
+                status: response.status,
+                statusText: response.statusText,
+                body: errorText
+              });
             }
           } catch (error) {
-            console.error("Error fetching Twitter follower count:", error);
+            log("Error fetching Twitter follower count:", error);
           }
         }
         
@@ -89,18 +105,23 @@ export const authOptions: NextAuthOptions = {
           chains: Array.isArray(user.chains) ? user.chains : ["Ethereum", "Base"]
         };
         
-        console.log("Saving user profile with correct handle:", JSON.stringify(userData, null, 2));
+        log("Saving user profile:", userData);
         
         // Save or update user profile
         await saveProfileWithDuplicateCheck(userData as any);
         
+        log("Sign in successful");
         return true;
       } catch (error) {
-        console.error("Error in Twitter auth callback:", error);
+        log("ERROR in Twitter auth callback:", error);
         return true; // Still allow sign in even if there's an error saving profile
       }
     },
     async session({ session, token, user }: any) {
+      log("=== SESSION CALLBACK ===");
+      log("Session before modification:", session);
+      log("Token:", token);
+      
       // Add user info to session
       if (session.user) {
         session.user.id = token.sub;
@@ -132,12 +153,20 @@ export const authOptions: NextAuthOptions = {
         session.role = token.role;
       }
       
+      log("Session after modification:", session);
       return session;
     },
     async jwt({ token, user, account, profile }: any) {
+      log("=== JWT CALLBACK ===");
+      log("Token:", token);
+      log("User:", user);
+      log("Account:", account);
+      log("Profile:", profile);
+      
       // Add Twitter handle to token if available (without @ prefix)
       if (profile?.data?.username) {
         token.twitterHandle = profile.data.username; // Store without @ prefix
+        log("Stored Twitter handle in token:", token.twitterHandle);
       }
       
       // Store follower count if it's a new sign in
@@ -159,36 +188,49 @@ export const authOptions: NextAuthOptions = {
               const userData = await response.json();
               if (userData.data?.public_metrics?.followers_count) {
                 token.followerCount = userData.data.public_metrics.followers_count;
+                log("Stored follower count:", token.followerCount);
               }
             }
           } catch (error) {
-            console.error("Error fetching follower count in JWT:", error);
+            log("Error fetching follower count in JWT:", error);
           }
         }
       }
       
       // Fetch user role and approval status
       if (token.twitterHandle) {
-        try {
-          // Use absolute URL for API calls
-          const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-          const profileRes = await fetch(`${baseUrl}/api/user/profile?handle=${token.twitterHandle}`);
-          
-          if (profileRes.ok) {
-            const profileData = await profileRes.json();
-            if (profileData.user) {
-              token.role = profileData.user.role || 'user';
-              token.approvalStatus = profileData.user.approvalStatus || 'pending';
-              
-              // Log for debugging
-              console.log(`[NextAuth] User ${token.twitterHandle} - Role: ${token.role}, Status: ${token.approvalStatus}`);
+        // HARDCODED CHECK FOR SHARAFI_ETH
+        const normalizedHandle = token.twitterHandle.toLowerCase().replace('@', '');
+        if (normalizedHandle === 'sharafi_eth') {
+          log("JWT: Master admin sharafi_eth detected - setting admin role");
+          token.role = 'admin';
+          token.approvalStatus = 'approved';
+        } else {
+          // For other users, try to fetch from API
+          try {
+            // Use absolute URL for API calls
+            const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+            const profileRes = await fetch(`${baseUrl}/api/user/profile?handle=${token.twitterHandle}`);
+            
+            if (profileRes.ok) {
+              const profileData = await profileRes.json();
+              if (profileData.user) {
+                token.role = profileData.user.role || 'user';
+                token.approvalStatus = profileData.user.approvalStatus || 'pending';
+                
+                log(`User ${token.twitterHandle} - Role: ${token.role}, Status: ${token.approvalStatus}`);
+              }
             }
+          } catch (error) {
+            log("Error fetching user profile in JWT:", error);
+            // Default to scout role for other users when API fails
+            token.role = 'scout';
+            token.approvalStatus = 'pending';
           }
-        } catch (error) {
-          console.error("Error fetching user profile in JWT:", error);
         }
       }
       
+      log("Final token:", token);
       return token;
     },
   },
@@ -198,6 +240,26 @@ export const authOptions: NextAuthOptions = {
     signOut: "/",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  events: {
+    async signIn(message: any) {
+      log("=== SIGN IN EVENT ===", message);
+    },
+    async signOut(message: any) {
+      log("=== SIGN OUT EVENT ===", message);
+    },
+    async createUser(message: any) {
+      log("=== CREATE USER EVENT ===", message);
+    },
+    async updateUser(message: any) {
+      log("=== UPDATE USER EVENT ===", message);
+    },
+    async linkAccount(message: any) {
+      log("=== LINK ACCOUNT EVENT ===", message);
+    },
+    async session(message: any) {
+      log("=== SESSION EVENT ===", message);
+    },
+  },
 };
 
 // Log configuration on load
