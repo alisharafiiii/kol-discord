@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         user: {
           id: 'sharafi_eth_admin',
           name: 'sharafi_eth',
-          profileImageUrl: 'https://pbs.twimg.com/profile_images/1234567890/sharafi_eth.jpg',
+          profileImageUrl: 'https://pbs.twimg.com/profile_images/1911790623893422080/vxsHVWbL_400x400.jpg',
           twitterHandle: 'sharafi_eth',
           approvalStatus: 'approved',
           role: 'admin'
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
       user: {
         id: user.id,
         name: user.name,
-        profileImageUrl: user.profileImageUrl,
+        profileImageUrl: user.profileImageUrl?.replace('_normal', '_400x400'),
         twitterHandle: user.twitterHandle,
         approvalStatus: user.approvalStatus || 'pending',
         role: user.role || 'user'

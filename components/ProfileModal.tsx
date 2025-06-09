@@ -193,7 +193,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             {/* Profile Header */}
             <div className="flex items-start gap-4 pb-6 border-b border-green-800">
               <img
-                src={profileData?.profileImageUrl || session?.user?.image || `https://unavatar.io/twitter/${session?.user?.name}`}
+                src={profileData?.profileImageUrl?.replace('_normal', '_400x400') || session?.user?.image?.replace('_normal', '_400x400') || `https://unavatar.io/twitter/${session?.user?.name}`}
                 alt="Profile"
                 className="w-20 h-20 rounded-full border-2 border-green-500"
               />

@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
           id: profileId, // Use consistent ID based on Twitter username
           twitterHandle: twitterHandle,
           name: profile?.data?.name || user.name,
-          profileImageUrl: profile?.data?.profile_image_url || user.image,
+          profileImageUrl: profile?.data?.profile_image_url?.replace('_normal', '_400x400') || user.image?.replace('_normal', '_400x400'),
           createdAt: new Date().toISOString(),
           followerCount: followerCount, // Store follower count at top level
           socialAccounts: {

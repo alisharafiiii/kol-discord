@@ -306,11 +306,11 @@ function ProfileModal({
   // Get display follower count, prefer totalFollowers then followers
   const displayFollowers = user.totalFollowers || user.followers || 0;
   
-  // Get profile image - check multiple sources for the image
-  const profileImageUrl = user.profileImageUrl || 
+  // Get profile image - check multiple sources for the image and use high quality
+  const profileImageUrl = (user.profileImageUrl || 
     (user.socialAccounts?.twitter && typeof user.socialAccounts.twitter === 'object' && 'imageUrl' in user.socialAccounts.twitter 
       ? user.socialAccounts.twitter.imageUrl as string 
-      : null);
+      : null))?.replace('_normal', '_400x400');
   
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80">
@@ -367,25 +367,26 @@ function ProfileModal({
                 {user.approvalStatus || 'pending'}
               </span>
               
-              {user.role && (
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-purple-900 text-purple-300 rounded text-sm uppercase">
-                    {user.role}
-                  </span>
-                  <select
-                    className="bg-black border border-purple-500 text-purple-300 px-2 py-0.5 text-sm rounded"
-                    value={user.role}
-                    onChange={(e) => onRoleChange(user.id, e.target.value)}
-                  >
-                    <option value="user">User</option>
-                    <option value="viewer">Viewer</option>
-                    <option value="scout">Scout</option>
-                    <option value="intern">Intern</option>
-                    <option value="core">Core</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-              )}
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-green-400/70">Role:</span>
+                <span className="px-2 py-0.5 bg-purple-900 text-purple-300 rounded text-sm uppercase">
+                  {user.role || 'user'}
+                </span>
+                <select
+                  className="bg-black border-2 border-purple-500 text-purple-300 px-3 py-1 text-sm rounded hover:border-purple-400 cursor-pointer"
+                  value={user.role || 'user'}
+                  onChange={(e) => onRoleChange(user.id, e.target.value)}
+                  title="Change user role"
+                >
+                  <option value="user">User</option>
+                  <option value="viewer">Viewer</option>
+                  <option value="scout">Scout</option>
+                  <option value="intern">Intern</option>
+                  <option value="core">Core</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <span className="text-xs text-purple-400 animate-pulse">← Edit Role</span>
+              </div>
               
               {user.country && (
                 <span className="px-2 py-0.5 bg-blue-900 text-blue-300 rounded text-sm">
@@ -2364,7 +2365,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                     >
                       {user.profileImageUrl ? (
                         <img 
-                          src={user.profileImageUrl} 
+                          src={user.profileImageUrl?.replace('_normal', '_400x400')} 
                           alt={user.name || 'Profile'} 
                           className="w-full h-full object-cover" 
                         />
@@ -2573,7 +2574,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                         <div className="flex items-center">
                           {user.profileImageUrl ? (
                             <img
-                              src={user.profileImageUrl}
+                              src={user.profileImageUrl?.replace('_normal', '_400x400')}
                               alt={user.name}
                               className="w-6 h-6 rounded-full mr-2 object-cover"
                               onError={(e) => (e.currentTarget.style.display = 'none')}
