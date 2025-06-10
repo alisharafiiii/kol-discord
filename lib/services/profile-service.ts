@@ -233,7 +233,8 @@ export class ProfileService {
     authorId: string,
     authorName: string,
     content: string,
-    campaignId?: string
+    campaignId?: string,
+    authorImage?: string
   ): Promise<Note> {
     try {
       const profile = await this.getProfileById(profileId)
@@ -243,6 +244,7 @@ export class ProfileService {
         id: uuidv4(),
         authorId,
         authorName,
+        authorImage,
         content,
         createdAt: new Date(),
         campaignId

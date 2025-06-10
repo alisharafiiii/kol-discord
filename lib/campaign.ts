@@ -1,23 +1,30 @@
 import { redis } from './redis'
 import { nanoid } from 'nanoid'
+import { CampaignKOLService } from './services/campaign-kol-service'
 
 export interface KOL {
   id: string
   handle: string
   name: string
-  stage: 'cancelled' | 'reached-out' | 'waiting-for-device' | 'waiting-for-brief' | 'posted' | 'preparing' | 'done'
-  device: 'preparing' | 'received' | 'N/A' | 'on-the-way' | 'sent-before'
-  budget: string // "free", "with device", or actual amount
-  /** Optional profile picture URL (e.g. from Twitter) */
-  pfp?: string
-  payment: 'approved' | 'paid' | 'pending' | 'rejected'
+  pfp?: string // Profile picture URL
+  tier?: 'hero' | 'legend' | 'star' | 'rising' | 'micro' // KOL tier/badge
+  stage: 'reached out' | 'posted' | 'done' | 'preparing' | 'cancelled'
+  device: 'mobile' | 'laptop' | 'desktop' | 'tablet' | 'owned' | 'na'
+  budget: string
+  payment: 'pending' | 'paid' | 'approved' | 'rejected'
   views: number
+  likes?: number
+  retweets?: number
+  comments?: number
+  contact?: string
   links: string[]
-  platform: string[] // array of platform names
-  contact?: string // contact link (email, telegram, etc)
-  tier?: 'hero' | 'star' | 'rising' | 'micro' // KOL tier/badge
-  addedBy?: string // handle of team member who added this KOL
-  lastUpdated?: string
+  platform: string[]
+  lastUpdated: Date
+  
+  // Product assignment fields
+  productId?: string // ID of the assigned product
+  productAssignmentId?: string // ID of the product assignment record
+  productCost?: number // Cost of the product (auto-filled from product price)
 }
 
 export interface Campaign {
@@ -104,8 +111,44 @@ export async function createCampaign(data: {
 export async function getCampaign(id: string): Promise<Campaign | null> {
   try {
     const campaign = await redis.json.get(id, '$') as any
-    return campaign?.[0] || null
-  } catch {
+    const campaignData = campaign?.[0] || null
+    
+    if (campaignData) {
+      // First, try to load KOLs from CampaignKOLService (new format)
+      const serviceKols = await CampaignKOLService.getCampaignKOLs(id)
+      
+      if (serviceKols.length > 0) {
+        // Use KOLs from service (new format)
+        campaignData.kols = serviceKols.map(kol => ({
+          id: kol.id,
+          handle: kol.kolHandle,
+          name: kol.kolName,
+          pfp: kol.kolImage,
+          tier: kol.tier,
+          stage: kol.stage,
+          device: kol.deviceStatus as any,
+          budget: kol.budget.toString(),
+          payment: kol.paymentStatus as any,
+          views: kol.totalViews || 0,
+          likes: 0, // Not stored in CampaignKOL
+          retweets: 0, // Not stored in CampaignKOL
+          comments: 0, // Not stored in CampaignKOL
+          contact: '', // Not stored in CampaignKOL
+          links: kol.links || [],
+          platform: Array.isArray(kol.platform) ? kol.platform : [kol.platform],
+          lastUpdated: kol.addedAt,
+          // Product fields not in CampaignKOL yet
+          productId: undefined,
+          productAssignmentId: undefined,
+          productCost: undefined
+        }))
+      }
+      // If no KOLs in service, campaignData.kols will use the existing data (old format)
+    }
+    
+    return campaignData
+  } catch (error) {
+    console.error('Error getting campaign:', error)
     return null
   }
 }
@@ -204,8 +247,10 @@ export async function addKOLToCampaign(
   const newKOL: KOL = {
     ...kol,
     id: nanoid(),
-    addedBy: userHandle,
-    lastUpdated: new Date().toISOString()
+    lastUpdated: new Date(),
+    productId: kol.productId,
+    productAssignmentId: kol.productAssignmentId,
+    productCost: kol.productCost
   }
   
   campaign.kols.push(newKOL)
@@ -236,7 +281,7 @@ export async function updateKOLInCampaign(
   campaign.kols[kolIndex] = {
     ...campaign.kols[kolIndex],
     ...updates,
-    lastUpdated: new Date().toISOString()
+    lastUpdated: new Date()
   }
   
   campaign.updatedAt = new Date().toISOString()

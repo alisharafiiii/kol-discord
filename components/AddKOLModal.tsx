@@ -2,34 +2,44 @@
 
 import { useState, useEffect } from 'react'
 import { X, Search, Upload, Check } from './icons'
-import type { KOLTier, CampaignStage, DeviceStatus, PaymentStatus, SocialPlatform } from '@/lib/types/profile'
+import { KOL } from '@/lib/campaign'
+import { Product } from '@/lib/types/product'
 
 interface AddKOLModalProps {
   campaignId: string
   campaignName: string
   onClose: () => void
-  onKOLAdded: (kol: any) => void
+  onKOLAdded: (kol: KOL) => void
 }
 
 export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAdded }: AddKOLModalProps) {
-  // Form state
+  // Search state
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [isSearching, setIsSearching] = useState(false)
-  const [selectedKOL, setSelectedKOL] = useState<any>(null)
   
-  // KOL details
-  const [kolHandle, setKolHandle] = useState('')
-  const [kolName, setKolName] = useState('')
-  const [kolImage, setKolImage] = useState('')
-  const [tier, setTier] = useState<KOLTier>('star')
-  const [contact, setContact] = useState('')
-  const [stage, setStage] = useState<CampaignStage>('reached_out')
-  const [deviceStatus, setDeviceStatus] = useState<DeviceStatus>('na')
-  const [budget, setBudget] = useState('')
-  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('pending')
-  const [links, setLinks] = useState('')
-  const [platform, setPlatform] = useState<SocialPlatform>('twitter')
+  // Product state
+  const [products, setProducts] = useState<Product[]>([])
+  const [loadingProducts, setLoadingProducts] = useState(true)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  
+  // KOL form data
+  const [kolData, setKolData] = useState({
+    handle: '',
+    name: '',
+    pfp: '',
+    tier: 'micro' as KOL['tier'],
+    stage: 'reached out' as KOL['stage'],
+    device: 'na' as KOL['device'],
+    budget: '',
+    payment: 'pending' as KOL['payment'],
+    views: 0,
+    contact: '',
+    links: '',
+    platform: ['twitter'] as string[],
+    productId: '',
+    productCost: 0
+  })
   
   // UI state
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -61,13 +71,34 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
     return () => clearTimeout(debounce)
   }, [searchTerm])
   
+  // Fetch products on mount
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch('/api/products?active=true')
+        if (res.ok) {
+          const data = await res.json()
+          setProducts(data)
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err)
+      } finally {
+        setLoadingProducts(false)
+      }
+    }
+    
+    fetchProducts()
+  }, [])
+  
   // Handle KOL selection from search
   const selectKOL = (kol: any) => {
-    setSelectedKOL(kol)
-    setKolHandle(kol.handle || kol.twitterHandle || '')
-    setKolName(kol.name || '')
-    setKolImage(kol.image || kol.profileImageUrl || '')
-    if (kol.tier) setTier(kol.tier)
+    setKolData({
+      ...kolData,
+      handle: kol.handle || kol.twitterHandle || '',
+      name: kol.name || '',
+      pfp: kol.image || kol.profileImageUrl || '',
+      tier: kol.tier || 'micro'
+    })
     setSearchTerm('')
     setSearchResults([])
   }
@@ -80,18 +111,22 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
     // For now, convert to base64 - in production, upload to a service
     const reader = new FileReader()
     reader.onload = (e) => {
-      setKolImage(e.target?.result as string)
+      setKolData({ ...kolData, pfp: e.target?.result as string })
     }
     reader.readAsDataURL(file)
   }
   
-  // Format contact field
-  const formatContact = (value: string): string => {
-    // Show formatted version in UI
-    if (value.startsWith('@')) {
-      return `Telegram: ${value}`
-    }
-    return value
+  // Handle product selection
+  const handleProductSelect = (productId: string) => {
+    const product = products.find(p => p.id === productId)
+    setSelectedProduct(product || null)
+    setKolData({
+      ...kolData,
+      productId,
+      productCost: product?.price || 0,
+      budget: product ? `$${product.price}` : kolData.budget,
+      device: product ? 'owned' : 'na'
+    })
   }
   
   // Submit form
@@ -99,8 +134,7 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
     e.preventDefault()
     setError('')
     
-    // Validate required fields
-    if (!kolHandle || !kolName || !budget) {
+    if (!kolData.handle || !kolData.name) {
       setError('Please fill in all required fields')
       return
     }
@@ -112,31 +146,24 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          campaignName,
-          kolHandle,
-          kolName,
-          kolImage,
-          tier,
-          contact,
-          stage,
-          deviceStatus,
-          budget: parseFloat(budget),
-          paymentStatus,
-          links: links.split(',').map(l => l.trim()).filter(Boolean),
-          platform,
+          ...kolData,
+          handle: kolData.handle.replace('@', ''),
+          links: kolData.links.split(',').map(l => l.trim()).filter(Boolean),
+          views: parseInt(kolData.views.toString()) || 0,
+          productId: selectedProduct?.id,
+          productCost: selectedProduct?.price || 0
         })
       })
       
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Failed to add KOL')
+        throw new Error('Failed to add KOL')
       }
       
       const newKOL = await res.json()
       onKOLAdded(newKOL)
       onClose()
-    } catch (err: any) {
-      setError(err.message || 'Failed to add KOL')
+    } catch (err) {
+      setError('Failed to add KOL. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -214,8 +241,8 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                   </label>
                   <input
                     type="text"
-                    value={kolHandle}
-                    onChange={(e) => setKolHandle(e.target.value)}
+                    value={kolData.handle}
+                    onChange={(e) => setKolData({...kolData, handle: e.target.value})}
                     placeholder="@username"
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
                     required
@@ -229,8 +256,8 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                   </label>
                   <input
                     type="text"
-                    value={kolName}
-                    onChange={(e) => setKolName(e.target.value)}
+                    value={kolData.name}
+                    onChange={(e) => setKolData({...kolData, name: e.target.value})}
                     placeholder="Display name"
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
                     required
@@ -255,9 +282,9 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                         <span className="text-green-300">Upload</span>
                       </div>
                     </label>
-                    {kolImage && (
+                    {kolData.pfp && (
                       <img
-                        src={kolImage}
+                        src={kolData.pfp}
                         alt="Preview"
                         className="w-10 h-10 rounded-full object-cover"
                       />
@@ -268,11 +295,11 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                 {/* Tier */}
                 <div>
                   <label className="block text-sm font-medium text-green-300 mb-1">
-                    Tier *
+                    Tier
                   </label>
                   <select
-                    value={tier}
-                    onChange={(e) => setTier(e.target.value as KOLTier)}
+                    value={kolData.tier}
+                    onChange={(e) => setKolData({...kolData, tier: e.target.value as NonNullable<KOL['tier']>})}
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
                   >
                     <option value="hero">Hero</option>
@@ -290,14 +317,11 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                   </label>
                   <input
                     type="text"
-                    value={contact}
-                    onChange={(e) => setContact(e.target.value)}
+                    value={kolData.contact}
+                    onChange={(e) => setKolData({...kolData, contact: e.target.value})}
                     placeholder="@telegram or email"
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
                   />
-                  {contact && (
-                    <p className="text-xs text-green-400 mt-1">{formatContact(contact)}</p>
-                  )}
                 </div>
                 
                 {/* Stage */}
@@ -306,53 +330,65 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                     Stage
                   </label>
                   <select
-                    value={stage}
-                    onChange={(e) => setStage(e.target.value as CampaignStage)}
+                    value={kolData.stage}
+                    onChange={(e) => setKolData({...kolData, stage: e.target.value as KOL['stage']})}
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
                   >
-                    <option value="reached_out">Reached Out</option>
-                    <option value="waiting_device">Waiting for Device</option>
-                    <option value="waiting_brief">Waiting for Brief</option>
-                    <option value="posted">Posted</option>
+                    <option value="reached out">Reached Out</option>
                     <option value="preparing">Preparing</option>
+                    <option value="posted">Posted</option>
                     <option value="done">Done</option>
+                    <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
                 
-                {/* Device Status */}
+                {/* Product/Device */}
                 <div>
                   <label className="block text-sm font-medium text-green-300 mb-1">
-                    Device
+                    Product/Device
                   </label>
-                  <select
-                    value={deviceStatus}
-                    onChange={(e) => setDeviceStatus(e.target.value as DeviceStatus)}
-                    className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
-                  >
-                    <option value="na">N/A</option>
-                    <option value="preparing">Preparing</option>
-                    <option value="on_way">On the Way</option>
-                    <option value="received">Received</option>
-                    <option value="issue">Issue</option>
-                    <option value="sent_before">Sent Before</option>
-                  </select>
+                  {loadingProducts ? (
+                    <div className="w-full bg-black border border-green-500 rounded px-3 py-2 text-gray-500">
+                      Loading products...
+                    </div>
+                  ) : (
+                    <select
+                      value={selectedProduct?.id || ''}
+                      onChange={(e) => handleProductSelect(e.target.value)}
+                      className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
+                    >
+                      <option value="">No product assigned</option>
+                      {products.map(product => (
+                        <option key={product.id} value={product.id}>
+                          {product.name} - ${product.price} {product.stock !== undefined && product.stock > 0 ? `(${product.stock} available)` : ''}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  {selectedProduct && (
+                    <p className="text-xs text-green-400 mt-1">
+                      Product cost will be added to budget: ${selectedProduct.price}
+                    </p>
+                  )}
                 </div>
                 
                 {/* Budget */}
                 <div>
                   <label className="block text-sm font-medium text-green-300 mb-1">
-                    Budget *
+                    Budget
                   </label>
                   <input
-                    type="number"
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    placeholder="0"
-                    min="0"
-                    step="0.01"
+                    type="text"
+                    value={kolData.budget}
+                    onChange={(e) => setKolData({...kolData, budget: e.target.value})}
+                    placeholder="e.g. $500 or free"
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
-                    required
                   />
+                  {selectedProduct && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Includes product cost
+                    </p>
+                  )}
                 </div>
                 
                 {/* Payment Status */}
@@ -361,26 +397,25 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                     Payment
                   </label>
                   <select
-                    value={paymentStatus}
-                    onChange={(e) => setPaymentStatus(e.target.value as PaymentStatus)}
+                    value={kolData.payment}
+                    onChange={(e) => setKolData({...kolData, payment: e.target.value as KOL['payment']})}
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
                   >
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
                     <option value="rejected">Rejected</option>
                     <option value="paid">Paid</option>
-                    <option value="revision">Revision</option>
                   </select>
                 </div>
                 
                 {/* Platform */}
                 <div>
                   <label className="block text-sm font-medium text-green-300 mb-1">
-                    Platform *
+                    Platform
                   </label>
                   <select
-                    value={platform}
-                    onChange={(e) => setPlatform(e.target.value as SocialPlatform)}
+                    value={kolData.platform[0]}
+                    onChange={(e) => setKolData({...kolData, platform: [e.target.value]})}
                     className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400"
                   >
                     <option value="twitter">Twitter</option>
@@ -391,6 +426,20 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                     <option value="linkedin">LinkedIn</option>
                   </select>
                 </div>
+                
+                {/* Initial Views */}
+                <div>
+                  <label className="block text-sm font-medium text-green-300 mb-1">
+                    Initial Views
+                  </label>
+                  <input
+                    type="number"
+                    value={kolData.views}
+                    onChange={(e) => setKolData({...kolData, views: parseInt(e.target.value) || 0})}
+                    placeholder="0"
+                    className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
+                  />
+                </div>
               </div>
               
               {/* Links - full width */}
@@ -399,8 +448,8 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
                   Links
                 </label>
                 <textarea
-                  value={links}
-                  onChange={(e) => setLinks(e.target.value)}
+                  value={kolData.links}
+                  onChange={(e) => setKolData({...kolData, links: e.target.value})}
                   placeholder="Enter links separated by commas"
                   rows={2}
                   className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 placeholder-green-700 focus:outline-none focus:border-green-400"
@@ -413,39 +462,29 @@ export default function AddKOLModal({ campaignId, campaignName, onClose, onKOLAd
             
             {/* Error message */}
             {error && (
-              <div className="p-3 bg-red-900/20 border border-red-500 rounded">
-                <p className="text-red-400 text-sm">{error}</p>
+              <div className="bg-red-900/20 border border-red-500 p-3 rounded text-sm text-red-400">
+                {error}
               </div>
             )}
+            
+            {/* Submit buttons */}
+            <div className="flex justify-end gap-3 pt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-green-300 hover:text-green-100 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Adding...' : 'Add KOL'}
+              </button>
+            </div>
           </form>
-        </div>
-        
-        {/* Footer */}
-        <div className="p-4 border-t border-green-500 flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 text-green-300 hover:text-green-100 transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
-            {isSubmitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-green-100 border-t-transparent rounded-full animate-spin" />
-                Adding...
-              </>
-            ) : (
-              <>
-                <Check className="w-4 h-4" />
-                Add KOL
-              </>
-            )}
-          </button>
         </div>
       </div>
     </div>

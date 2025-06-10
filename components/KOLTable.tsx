@@ -17,10 +17,10 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
   const [editValue, setEditValue] = useState('')
   const [selectedKOL, setSelectedKOL] = useState<{ handle: string; name: string } | null>(null)
 
-  const stages: KOL['stage'][] = ['cancelled', 'reached-out', 'waiting-for-device', 'waiting-for-brief', 'posted', 'preparing', 'done']
-  const devices: KOL['device'][] = ['preparing', 'received', 'N/A', 'on-the-way', 'sent-before']
-  const payments: KOL['payment'][] = ['approved', 'paid', 'pending', 'rejected']
-  const tiers: KOL['tier'][] = ['hero', 'star', 'rising', 'micro']
+  const stages: KOL['stage'][] = ['reached out', 'preparing', 'posted', 'done', 'cancelled']
+  const devices: KOL['device'][] = ['mobile', 'laptop', 'desktop', 'tablet', 'owned', 'na']
+  const payments: KOL['payment'][] = ['pending', 'approved', 'paid', 'rejected']
+  const tiers: KOL['tier'][] = ['hero', 'legend', 'star', 'rising', 'micro']
 
   const startEdit = (kolId: string, field: string, value: any) => {
     setEditingId(kolId)
@@ -31,7 +31,7 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
   const saveEdit = (kolId: string, field: string) => {
     let value: any = editValue
     
-    if (field === 'views') {
+    if (field === 'views' || field === 'likes' || field === 'retweets' || field === 'comments') {
       value = parseInt(editValue) || 0
     } else if (field === 'links' || field === 'platform') {
       value = editValue.split(',').map(v => v.trim()).filter(Boolean)
@@ -70,6 +70,7 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
   const getTierBadge = (tier?: KOL['tier']) => {
     switch (tier) {
       case 'hero': return { text: 'HERO', color: 'bg-purple-600 text-white' }
+      case 'legend': return { text: 'LEGEND', color: 'bg-orange-600 text-white' }
       case 'star': return { text: 'STAR', color: 'bg-yellow-500 text-black' }
       case 'rising': return { text: 'RISING', color: 'bg-blue-500 text-white' }
       case 'micro': return { text: 'MICRO', color: 'bg-gray-600 text-white' }
@@ -115,6 +116,31 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
     }
   }
 
+  const shortenUrl = (url: string, maxLength: number = 25) => {
+    try {
+      const urlObj = new URL(url)
+      const domain = urlObj.hostname.replace('www.', '')
+      const path = urlObj.pathname
+      
+      // For Twitter/X links, show the username
+      if (domain.includes('twitter.com') || domain.includes('x.com')) {
+        const match = path.match(/\/([^\/]+)\/status/)
+        if (match) return `x.com/${match[1]}/...`
+      }
+      
+      // For other links, show domain + shortened path
+      if (path.length > 1) {
+        const shortPath = path.length > 15 ? path.substring(0, 12) + '...' : path
+        return domain + shortPath
+      }
+      
+      return domain
+    } catch {
+      // If URL parsing fails, just truncate
+      return url.length > maxLength ? url.substring(0, maxLength) + '...' : url
+    }
+  }
+
   if (kols.length === 0) {
     return (
       <div className="border border-green-300 p-8 text-center">
@@ -136,6 +162,9 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
               <th className="p-2 text-left text-xs uppercase">Budget</th>
               <th className="p-2 text-left text-xs uppercase">Payment</th>
               <th className="p-2 text-left text-xs uppercase">Views</th>
+              <th className="p-2 text-left text-xs uppercase">Likes</th>
+              <th className="p-2 text-left text-xs uppercase">RTs</th>
+              <th className="p-2 text-left text-xs uppercase">Comments</th>
               <th className="p-2 text-left text-xs uppercase">Contact</th>
               <th className="p-2 text-left text-xs uppercase">Links</th>
               <th className="p-2 text-left text-xs uppercase">Platform</th>
@@ -217,24 +246,23 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                   )}
                 </td>
                 
-                <td className="p-2">
-                  {editingId === kol.id && editingField === 'device' ? (
-                    <select
-                      value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
-                      onBlur={() => saveEdit(kol.id, 'device')}
-                      className="bg-black border border-green-300 text-xs p-1"
-                      autoFocus
-                    >
-                      {devices.map(d => (
-                        <option key={d} value={d}>{d}</option>
-                      ))}
-                    </select>
+                <td className="p-3 text-center">
+                  {kol.productId ? (
+                    <div className="text-xs">
+                      <span className="text-green-400">Product Assigned</span>
+                      {kol.productCost && (
+                        <div className="text-green-300">${kol.productCost}</div>
+                      )}
+                    </div>
                   ) : (
-                    <span 
-                      className="text-xs cursor-pointer"
-                      onClick={() => canEdit && startEdit(kol.id, 'device', kol.device)}
-                    >
+                    <span className={`text-xs ${
+                      kol.device === 'mobile' ? 'text-blue-400' :
+                      kol.device === 'laptop' ? 'text-purple-400' :
+                      kol.device === 'desktop' ? 'text-indigo-400' :
+                      kol.device === 'tablet' ? 'text-cyan-400' :
+                      kol.device === 'owned' ? 'text-green-400' :
+                      'text-gray-400'
+                    }`}>
                       {kol.device}
                     </span>
                   )}
@@ -297,10 +325,77 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                     />
                   ) : (
                     <span 
-                      className="text-xs cursor-pointer"
+                      className="text-xs cursor-pointer flex items-center gap-1"
                       onClick={() => canEdit && startEdit(kol.id, 'views', kol.views)}
                     >
+                      <span className="opacity-50">👁️</span>
                       {kol.views.toLocaleString()}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'likes' ? (
+                    <input
+                      type="number"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'likes')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'likes')}
+                      className="bg-black border border-green-300 text-xs p-1 w-20"
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer flex items-center gap-1"
+                      onClick={() => canEdit && startEdit(kol.id, 'likes', kol.likes || 0)}
+                    >
+                      <span className="opacity-50">❤️</span>
+                      {(kol.likes || 0).toLocaleString()}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'retweets' ? (
+                    <input
+                      type="number"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'retweets')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'retweets')}
+                      className="bg-black border border-green-300 text-xs p-1 w-20"
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer flex items-center gap-1"
+                      onClick={() => canEdit && startEdit(kol.id, 'retweets', kol.retweets || 0)}
+                    >
+                      <span className="opacity-50">🔁</span>
+                      {(kol.retweets || 0).toLocaleString()}
+                    </span>
+                  )}
+                </td>
+                
+                <td className="p-2">
+                  {editingId === kol.id && editingField === 'comments' ? (
+                    <input
+                      type="number"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(kol.id, 'comments')}
+                      onKeyDown={(e) => e.key === 'Enter' && saveEdit(kol.id, 'comments')}
+                      className="bg-black border border-green-300 text-xs p-1 w-20"
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="text-xs cursor-pointer flex items-center gap-1"
+                      onClick={() => canEdit && startEdit(kol.id, 'comments', kol.comments || 0)}
+                    >
+                      <span className="opacity-50">💬</span>
+                      {(kol.comments || 0).toLocaleString()}
                     </span>
                   )}
                 </td>
@@ -377,7 +472,7 @@ export default function KOLTable({ kols, onUpdate, onDelete, canEdit }: KOLTable
                               className="block text-blue-400 hover:underline truncate max-w-xs"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              {link}
+                              {shortenUrl(link)}
                             </a>
                           ))}
                         </div>

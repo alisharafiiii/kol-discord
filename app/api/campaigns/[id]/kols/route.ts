@@ -61,7 +61,36 @@ export async function POST(
       data.contact = CampaignKOLService.parseContact(data.contact)
     }
     
-    // Add KOL to campaign
+    // Prepare KOL data for campaign library
+    const kolData = {
+      handle: data.kolHandle.replace('@', ''),
+      name: data.kolName,
+      pfp: data.kolImage,
+      tier: data.tier,
+      budget: data.budget,
+      platform: Array.isArray(data.platform) ? data.platform : [data.platform],
+      stage: 'reached-out' as const,
+      device: 'N/A' as const,
+      payment: 'pending' as const,
+      views: 0,
+      links: [],
+      contact: data.contact,
+    }
+    
+    // Use the campaign library's function which properly updates the embedded KOL array
+    const { addKOLToCampaign } = await import('@/lib/campaign')
+    const userHandle = auth.user?.twitterHandle || auth.user?.name || 'unknown'
+    
+    const updatedCampaign = await addKOLToCampaign(campaignId, kolData, userHandle)
+    
+    if (!updatedCampaign) {
+      return NextResponse.json(
+        { error: 'Campaign not found' },
+        { status: 404 }
+      )
+    }
+    
+    // Also add to the service's data structure to keep profile sync
     const kol = await CampaignKOLService.addKOLToCampaign({
       campaignId,
       campaignName: data.campaignName || campaignId,
@@ -69,12 +98,14 @@ export async function POST(
       kolName: data.kolName,
       kolImage: data.kolImage,
       tier: data.tier,
-      budget: data.budget,
+      budget: parseFloat(data.budget) || 0,
       platform: data.platform,
-      addedBy: auth.user?.twitterHandle || auth.user?.name || 'unknown',
+      addedBy: userHandle,
     })
     
-    return NextResponse.json(kol)
+    // Return the newly added KOL from the campaign
+    const newKOL = updatedCampaign.kols[updatedCampaign.kols.length - 1]
+    return NextResponse.json(newKOL)
   } catch (error) {
     console.error('Error adding KOL to campaign:', error)
     return NextResponse.json(
@@ -105,6 +136,7 @@ export async function PUT(
       )
     }
     
+    const campaignId = params.id
     const { kolId, ...updates } = await request.json()
     
     if (!kolId) {
@@ -119,10 +151,25 @@ export async function PUT(
       updates.contact = CampaignKOLService.parseContact(updates.contact)
     }
     
-    // Update KOL
-    const updated = await CampaignKOLService.updateCampaignKOL(kolId, updates)
+    // Use the campaign library's function which properly updates the embedded KOL array
+    const { updateKOLInCampaign } = await import('@/lib/campaign')
+    const userHandle = auth.user?.twitterHandle || auth.user?.name || 'unknown'
     
-    return NextResponse.json(updated)
+    const updatedCampaign = await updateKOLInCampaign(campaignId, kolId, updates, userHandle)
+    
+    if (!updatedCampaign) {
+      return NextResponse.json(
+        { error: 'Campaign or KOL not found' },
+        { status: 404 }
+      )
+    }
+    
+    // Also update in the service's data structure to keep them in sync
+    await CampaignKOLService.updateCampaignKOL(kolId, updates)
+    
+    // Return the updated KOL
+    const updatedKOL = updatedCampaign.kols.find(k => k.id === kolId)
+    return NextResponse.json(updatedKOL)
   } catch (error) {
     console.error('Error updating KOL:', error)
     return NextResponse.json(
@@ -163,6 +210,42 @@ export async function DELETE(
       )
     }
     
+    const userHandle = auth.user?.twitterHandle || auth.user?.name || 'unknown'
+    const userRole = auth.role || 'user'
+    const isAdmin = ['admin', 'core'].includes(userRole)
+    
+    // Get the campaign first
+    const { getCampaign } = await import('@/lib/campaign')
+    const campaign = await getCampaign(campaignId)
+    
+    if (!campaign) {
+      return NextResponse.json(
+        { error: 'Campaign not found' },
+        { status: 404 }
+      )
+    }
+    
+    // For admins, bypass the permission check by updating the campaign directly
+    if (isAdmin) {
+      campaign.kols = campaign.kols.filter(k => k.id !== kolId)
+      campaign.updatedAt = new Date().toISOString()
+      
+      const { redis } = await import('@/lib/redis')
+      await redis.json.set(campaignId, '$', campaign as any)
+    } else {
+      // For non-admins, use the regular function with permission checks
+      const { removeKOLFromCampaign } = await import('@/lib/campaign')
+      const updatedCampaign = await removeKOLFromCampaign(campaignId, kolId, userHandle)
+      
+      if (!updatedCampaign) {
+        return NextResponse.json(
+          { error: 'Failed to remove KOL' },
+          { status: 400 }
+        )
+      }
+    }
+    
+    // Also remove from the service's data structure to keep them in sync
     await CampaignKOLService.removeKOLFromCampaign(campaignId, kolId)
     
     return NextResponse.json({ success: true })

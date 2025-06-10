@@ -31,6 +31,7 @@ const COLORS = {
   linkedin: '#8b5cf6',
   telegram: '#7c3aed',
   hero: '#9333ea',
+  legend: '#ea580c',
   star: '#fbbf24',
   rising: '#a78bfa',
   micro: '#c4b5fd'
@@ -63,7 +64,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
     }, {} as Record<string, { tier: string; totalViews: number; kols: KOL[] }>)
 
     // Convert to array and sort by tier order
-    const tierOrder = ['hero', 'star', 'rising', 'micro', 'none']
+    const tierOrder = ['hero', 'legend', 'star', 'rising', 'micro', 'none']
     const stackedData = tierOrder
       .filter(tier => tierData[tier])
       .map(tier => {
@@ -130,6 +131,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
   function getTierSize(tier?: KOL['tier']) {
     switch (tier) {
       case 'hero': return 100
+      case 'legend': return 85
       case 'star': return 75
       case 'rising': return 50
       case 'micro': return 25
@@ -140,6 +142,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
   function getTierColor(tier?: KOL['tier'] | 'none') {
     switch (tier) {
       case 'hero': return '#9333ea'
+      case 'legend': return '#ea580c'
       case 'star': return '#fbbf24'
       case 'rising': return '#a78bfa'
       case 'micro': return '#c4b5fd'
@@ -166,7 +169,7 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
 
   // Create heatmap grid
   const heatmapGrid = useMemo(() => {
-    const tiers = ['hero', 'star', 'rising', 'micro', 'none']
+    const tiers = ['hero', 'legend', 'star', 'rising', 'micro', 'none']
     const grid = tiers.map(tier => {
       const tierKols = chartData.heatmapData.filter(kol => kol.tier === tier)
       return {
@@ -260,6 +263,10 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
               <span className="flex items-center gap-1">
                 <span className="w-3 h-3 rounded-full" style={{ backgroundColor: getTierColor('hero') }}></span>
                 Hero
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: getTierColor('legend') }}></span>
+                Legend
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-3 h-3 rounded-full" style={{ backgroundColor: getTierColor('star') }}></span>

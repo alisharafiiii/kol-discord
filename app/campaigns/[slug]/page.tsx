@@ -3,7 +3,6 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { getCampaignBySlug } from '@/lib/campaign'
 import type { Campaign, KOL } from '@/lib/campaign'
 import type { Project } from '@/lib/project'
 import KOLTable from '@/components/KOLTable'
@@ -44,6 +43,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   const [showEditModal, setShowEditModal] = useState(false)
   const [projectDetails, setProjectDetails] = useState<Project[]>([])
   const [allProjects, setAllProjects] = useState<Project[]>([])
+  const [syncing, setSyncing] = useState(false)
 
   const fetchCampaign = async () => {
     try {
@@ -73,7 +73,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   // Fetch project details with caching
   useEffect(() => {
     const getProjects = async () => {
-      if (!campaign || campaign.projects.length === 0) {
+      if (!campaign || !campaign.projects || campaign.projects.length === 0) {
         setProjectDetails([])
         return
       }
@@ -96,7 +96,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
         }
         
         setAllProjects(list)
-        const filtered = list.filter((p: Project) => campaign.projects.includes(p.id))
+        const filtered = list.filter((p: Project) => campaign.projects?.includes(p.id))
         setProjectDetails(filtered)
       } catch (err) {
         console.error('Error fetching projects for campaign page:', err)
@@ -106,7 +106,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   }, [campaign])
 
   const isOwner = session?.user?.name === campaign?.createdBy
-  const isTeamMember = campaign?.teamMembers.includes(session?.user?.name || '')
+  const isTeamMember = campaign?.teamMembers?.includes(session?.user?.name || '') || false
   const userRole = (session as any)?.role || (session as any)?.user?.role || 'user'
   const canEditByRole = ['admin', 'core', 'team'].includes(userRole)
   const canEdit = !!(isOwner || isTeamMember || canEditByRole)
@@ -123,8 +123,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
       })
 
       if (res.ok) {
-        const updatedCampaign = await res.json()
-        setCampaign(updatedCampaign)
+        await fetchCampaign()
       }
     } catch (error) {
       console.error('Error updating KOL:', error)
@@ -143,8 +142,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
       })
 
       if (res.ok) {
-        const updatedCampaign = await res.json()
-        setCampaign(updatedCampaign)
+        await fetchCampaign()
       }
     } catch (error) {
       console.error('Error removing KOL:', error)
@@ -162,8 +160,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
       })
 
       if (res.ok) {
-        const updatedCampaign = await res.json()
-        setCampaign(updatedCampaign)
+        await fetchCampaign()
         setShowAddKOL(false)
       }
     } catch (error) {
@@ -192,6 +189,39 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     if (updates.projects) {
       const filtered = allProjects.filter((p: Project) => updates.projects!.includes(p.id))
       setProjectDetails(filtered)
+    }
+  }
+
+  const syncTweets = async () => {
+    if (!campaign) return
+    
+    setSyncing(true)
+    try {
+      const res = await fetch(`/api/campaigns/${campaign.id}/sync-tweets`, {
+        method: 'POST'
+      })
+      
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Failed to sync tweets')
+      }
+      
+      const data = await res.json()
+      const result = data.result || data // Handle both nested and direct result
+      
+      // Reload campaign to show updated metrics
+      await fetchCampaign()
+      
+      // Show appropriate message based on result
+      if (result.synced === 0 && !result.rateLimited) {
+        alert('No tweets with links found to sync')
+      } else {
+        alert(`Synced ${result.synced || 0} tweets, ${result.failed || 0} failed${result.rateLimited ? ' (rate limited)' : ''}`)
+      }
+    } catch (err: any) {
+      alert(err.message || 'Failed to sync tweets')
+    } finally {
+      setSyncing(false)
     }
   }
 
@@ -235,7 +265,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                 <div className="text-xs md:text-sm space-y-1">
                   <div>Status: <span className="text-green-400">{campaign.status}</span></div>
                   <div>Period: {new Date(campaign.startDate).toLocaleDateString()} - {new Date(campaign.endDate).toLocaleDateString()}</div>
-                  <div>Created by: {campaign.createdBy.startsWith('@') ? campaign.createdBy : `@${campaign.createdBy}`}</div>
+                  <div>Created by: {campaign.createdBy}</div>
                 </div>
               </div>
               
@@ -247,11 +277,20 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                   >
                     📊 Analytics
                   </button>
+                  {campaign.kols && campaign.kols.length > 0 && (
+                    <button
+                      onClick={() => setShowCharts(true)}
+                      className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
+                    >
+                      📈 View Charts
+                    </button>
+                  )}
                   <button
-                    onClick={() => router.push(`/campaigns/${campaign.slug}/kols`)}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base"
+                    onClick={syncTweets}
+                    disabled={syncing}
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    👥 KOL Manager
+                    {syncing ? '🔄 Syncing...' : '🔄 Sync Tweets'}
                   </button>
                   <button
                     onClick={() => setShowAddKOL(true)}
@@ -273,7 +312,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
           </div>
 
           {/* Team Members */}
-          {campaign.teamMembers.length > 0 && (
+          {campaign.teamMembers && campaign.teamMembers.length > 0 && (
             <div className="mb-6">
               <h3 className="text-xs md:text-sm uppercase mb-2">Team Members</h3>
               <div className="flex flex-wrap gap-2 md:gap-4">
@@ -326,11 +365,50 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
             />
           </div>
 
+          {/* Campaign Stats */}
+          {campaign.kols && campaign.kols.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
+                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Total Budget</h3>
+                <p className="text-xl md:text-2xl font-bold text-green-300">
+                  ${campaign.kols.reduce((sum, kol) => {
+                    const budgetNum = typeof kol.budget === 'number' 
+                      ? kol.budget 
+                      : parseFloat(kol.budget.replace(/[^0-9.-]+/g, '')) || 0
+                    return sum + budgetNum
+                  }, 0).toLocaleString()}
+                </p>
+              </div>
+              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
+                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Total Views</h3>
+                <p className="text-xl md:text-2xl font-bold text-green-300">
+                  {campaign.kols.reduce((sum, kol) => sum + (kol.views || 0), 0).toLocaleString()}
+                </p>
+              </div>
+              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
+                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Engagement</h3>
+                <p className="text-xl md:text-2xl font-bold text-green-300">
+                  {campaign.kols.reduce((sum, kol) => sum + ((kol.likes || 0) + (kol.retweets || 0) + (kol.comments || 0)), 0).toLocaleString()}
+                </p>
+              </div>
+              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
+                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Avg Eng. Rate</h3>
+                <p className="text-xl md:text-2xl font-bold text-green-300">
+                  {(() => {
+                    const totalViews = campaign.kols.reduce((sum, kol) => sum + (kol.views || 0), 0)
+                    const totalEngagement = campaign.kols.reduce((sum, kol) => sum + ((kol.likes || 0) + (kol.retweets || 0) + (kol.comments || 0)), 0)
+                    return totalViews > 0 ? ((totalEngagement / totalViews) * 100).toFixed(2) : '0'
+                  })()}%
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* KOL Table */}
           <div className="overflow-x-auto">
-            <h3 className="text-xs md:text-sm uppercase mb-4">KOLs ({campaign.kols.length})</h3>
+            <h3 className="text-xs md:text-sm uppercase mb-4">KOLs ({campaign.kols?.length || 0})</h3>
             <KOLTable
-              kols={campaign.kols}
+              kols={campaign.kols || []}
               onUpdate={handleKOLUpdate}
               onDelete={handleKOLDelete}
               canEdit={canEdit}
@@ -351,7 +429,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
           )}
 
           {/* Campaign Charts Modal */}
-          {showCharts && campaign.kols.length > 0 && (
+          {showCharts && campaign.kols && campaign.kols.length > 0 && (
             <CampaignCharts
               kols={campaign.kols}
               onClose={() => setShowCharts(false)}
