@@ -1,6 +1,7 @@
 import { redis } from './redis'
 import { nanoid } from 'nanoid'
 import { CampaignKOLService } from './services/campaign-kol-service'
+import { ProfileService } from './services/profile-service'
 
 export interface KOL {
   id: string
@@ -8,23 +9,22 @@ export interface KOL {
   name: string
   pfp?: string // Profile picture URL
   tier?: 'hero' | 'legend' | 'star' | 'rising' | 'micro' // KOL tier/badge
-  stage: 'reached out' | 'posted' | 'done' | 'preparing' | 'cancelled'
-  device: 'mobile' | 'laptop' | 'desktop' | 'tablet' | 'owned' | 'na'
-  budget: string
-  payment: 'pending' | 'paid' | 'approved' | 'rejected'
-  views: number
+  budget?: string
+  platform?: string[]
+  stage?: 'reached out' | 'preparing' | 'posted' | 'done' | 'cancelled'
+  device?: 'na' | 'on the way' | 'received' | 'owns' | 'sent before' | 'problem'
+  payment?: 'pending' | 'approved' | 'rejected' | 'paid'
+  lastUpdated?: Date
+  views?: number
   likes?: number
   retweets?: number
   comments?: number
   contact?: string
-  links: string[]
-  platform: string[]
-  lastUpdated: Date
-  
-  // Product assignment fields
+  links?: string[]
   productId?: string // ID of the assigned product
-  productAssignmentId?: string // ID of the product assignment record
   productCost?: number // Cost of the product (auto-filled from product price)
+  productAssignmentId?: string // ID of the product assignment record
+  productQuantity?: number // Quantity of the product (default 1)
 }
 
 export interface Campaign {
@@ -33,6 +33,7 @@ export interface Campaign {
   slug: string // URL-friendly version of name
   startDate: string
   endDate: string
+  chains?: string[] // blockchain chains for the campaign (multi-select)
   projects: string[] // project IDs from scout
   projectBudgets?: Record<string, { usd: string; devices: string }> // budgets per project
   teamMembers: string[] // twitter handles with edit access
@@ -60,6 +61,7 @@ export async function createCampaign(data: {
   name: string
   startDate: string
   endDate: string
+  chains?: string[]
   projects: string[]
   projectBudgets?: Record<string, { usd: string; devices: string }>
   teamMembers: string[]
@@ -82,6 +84,7 @@ export async function createCampaign(data: {
     slug: finalSlug,
     startDate: data.startDate,
     endDate: data.endDate,
+    chains: data.chains,
     projects: data.projects,
     projectBudgets: data.projectBudgets || {},
     teamMembers: data.teamMembers,
@@ -195,8 +198,12 @@ export async function updateCampaign(
   const campaign = await getCampaign(id)
   if (!campaign) return null
   
+  // Check if user is admin
+  const profile = await ProfileService.getProfileByHandle(userHandle)
+  const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
+  
   // Check if user has permission to edit
-  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
     throw new Error('Unauthorized')
   }
   
@@ -239,8 +246,12 @@ export async function addKOLToCampaign(
   const campaign = await getCampaign(campaignId)
   if (!campaign) return null
   
+  // Check if user is admin
+  const profile = await ProfileService.getProfileByHandle(userHandle)
+  const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
+  
   // Check permissions
-  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
     throw new Error('Unauthorized')
   }
   
@@ -270,8 +281,12 @@ export async function updateKOLInCampaign(
   const campaign = await getCampaign(campaignId)
   if (!campaign) return null
   
+  // Check if user is admin
+  const profile = await ProfileService.getProfileByHandle(userHandle)
+  const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
+  
   // Check permissions
-  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
     throw new Error('Unauthorized')
   }
   
@@ -299,8 +314,12 @@ export async function removeKOLFromCampaign(
   const campaign = await getCampaign(campaignId)
   if (!campaign) return null
   
+  // Check if user is admin
+  const profile = await ProfileService.getProfileByHandle(userHandle)
+  const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
+  
   // Check permissions
-  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
     throw new Error('Unauthorized')
   }
   
@@ -320,8 +339,12 @@ export async function updateCampaignBrief(
   const campaign = await getCampaign(campaignId)
   if (!campaign) return null
   
-  // Check permissions
-  if (campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  // Check if user is admin
+  const profile = await ProfileService.getProfileByHandle(userHandle)
+  const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
+  
+  // Check permissions - allow admin, creator, or team member
+  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
     throw new Error('Unauthorized')
   }
   

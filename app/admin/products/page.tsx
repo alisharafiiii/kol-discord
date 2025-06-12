@@ -43,6 +43,19 @@ export default function AdminProductsPage() {
     loadData()
   }, [session, status])
   
+  const loadCategories = async () => {
+    try {
+      const categoriesRes = await fetch('/api/products/categories')
+      if (!categoriesRes.ok) {
+        throw new Error('Failed to load categories')
+      }
+      const categoriesData = await categoriesRes.json()
+      setCategories(categoriesData)
+    } catch (err: any) {
+      console.error('Failed to load categories:', err)
+    }
+  }
+  
   const loadData = async () => {
     try {
       setLoading(true)
@@ -437,7 +450,7 @@ export default function AdminProductsPage() {
         <CategoryModal
           categories={categories}
           onClose={() => setShowCategoryModal(false)}
-          onUpdate={() => loadData()}
+          onUpdate={() => loadCategories()}
         />
       )}
     </div>
@@ -471,6 +484,23 @@ function ProductModal({
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [imagePreview, setImagePreview] = useState(product?.image || '')
+  
+  // Update formData when product changes (for editing)
+  useEffect(() => {
+    if (product) {
+      setFormData({
+        name: product.name,
+        price: product.price,
+        image: product.image || '',
+        description: product.description || '',
+        projectId: product.projectId || '',
+        category: product.category || (categories.length > 0 ? categories[0].name : 'other'),
+        stock: product.stock ?? 0,
+        active: product.active ?? true
+      })
+      setImagePreview(product.image || '')
+    }
+  }, [product, categories])
   
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

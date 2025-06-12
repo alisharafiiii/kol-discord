@@ -10,6 +10,8 @@ import AddKOLModal from '@/components/AddKOLModal'
 import CampaignCharts from '@/components/CampaignCharts'
 import CampaignBrief from '@/components/CampaignBrief'
 import EditCampaignModal from '@/components/EditCampaignModal'
+import { ArrowLeft, Users, Calendar, DollarSign, Briefcase, TrendingUp } from '@/components/icons'
+import { getAllProjects } from '@/lib/project'
 
 // Cache for projects to avoid repeated fetches
 let projectsCache: Project[] | null = null
@@ -68,6 +70,13 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     fetchCampaign()
+    // Make refresh function available globally for child components
+    ;(window as any).refreshCampaignData = fetchCampaign
+    
+    return () => {
+      // Clean up when component unmounts
+      delete (window as any).refreshCampaignData
+    }
   }, [params.slug])
 
   // Fetch project details with caching
@@ -124,9 +133,13 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
       if (res.ok) {
         await fetchCampaign()
+        return true // Return success
+      } else {
+        throw new Error('Failed to update KOL')
       }
     } catch (error) {
       console.error('Error updating KOL:', error)
+      throw error // Re-throw to let KOLTable handle it
     }
   }
 
@@ -152,20 +165,9 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
   const handleKOLAdd = async (kol: Omit<KOL, 'id' | 'lastUpdated'>) => {
     if (!campaign) return
 
-    try {
-      const res = await fetch(`/api/campaigns/${campaign.id}/kols`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(kol)
-      })
-
-      if (res.ok) {
-        await fetchCampaign()
-        setShowAddKOL(false)
-      }
-    } catch (error) {
-      console.error('Error adding KOL:', error)
-    }
+    // Just refresh the campaign data - AddKOLModal already handled the POST request
+    await fetchCampaign()
+    setShowAddKOL(false)
   }
 
   const handleCampaignUpdate = async (updates: Partial<Campaign>) => {
@@ -263,49 +265,92 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
               <div>
                 <h1 className="text-xl md:text-2xl font-bold mb-2">{campaign.name}</h1>
                 <div className="text-xs md:text-sm space-y-1">
-                  <div>Status: <span className="text-green-400">{campaign.status}</span></div>
-                  <div>Period: {new Date(campaign.startDate).toLocaleDateString()} - {new Date(campaign.endDate).toLocaleDateString()}</div>
-                  <div>Created by: {campaign.createdBy}</div>
+                  <div className="flex items-center gap-4 text-gray-400">
+                    <span>Status: <span className="text-green-400 font-medium">{campaign.status}</span></span>
+                    <span>•</span>
+                    <span>{new Date(campaign.startDate).toLocaleDateString()} - {new Date(campaign.endDate).toLocaleDateString()}</span>
+                    <span>•</span>
+                    <span>by @{campaign.createdBy}</span>
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <span className="px-2 py-0.5 bg-yellow-900/50 text-yellow-300 text-xs rounded">
+                      {campaign.projects.length} PROJECT{campaign.projects.length !== 1 ? 'S' : ''}
+                    </span>
+                    {campaign.chains && campaign.chains.length > 0 && campaign.chains.map(chain => (
+                      <span key={chain} className="px-2 py-0.5 bg-blue-900/50 text-blue-300 text-xs rounded">
+                        {chain}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
               
               {canEdit && (
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
-                  >
-                    📊 Analytics
-                  </button>
-                  {campaign.kols && campaign.kols.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  {/* Primary Actions */}
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      onClick={() => setShowCharts(true)}
-                      className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-900 border border-purple-300 hover:bg-purple-800 text-purple-300 text-sm md:text-base"
+                      onClick={() => setShowAddKOL(true)}
+                      className="px-3 py-1 bg-green-900/50 border border-green-500 hover:bg-green-800/50 text-green-300 text-xs font-medium rounded flex items-center gap-1"
                     >
-                      📈 View Charts
+                      <span className="text-base">+</span> Add KOL
                     </button>
-                  )}
-                  <button
-                    onClick={syncTweets}
-                    disabled={syncing}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-blue-900 border border-blue-300 hover:bg-blue-800 text-blue-300 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {syncing ? '🔄 Syncing...' : '🔄 Sync Tweets'}
-                  </button>
-                  <button
-                    onClick={() => setShowAddKOL(true)}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-green-900 border border-green-300 hover:bg-green-800 text-sm md:text-base"
-                  >
-                    + Add KOL
-                  </button>
-                  {canManage && (
                     <button
-                      onClick={() => setShowEditModal(true)}
-                      className="px-3 py-1.5 md:px-4 md:py-2 border border-green-300 hover:bg-green-900 text-sm md:text-base"
+                      onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
+                      className="px-3 py-1 bg-purple-900/50 border border-purple-500 hover:bg-purple-800/50 text-purple-300 text-xs font-medium rounded flex items-center gap-1"
                     >
-                      Edit Campaign
+                      <span>📊</span> Analytics
                     </button>
-                  )}
+                    {campaign.kols && campaign.kols.length > 0 && (
+                      <button
+                        onClick={() => setShowCharts(true)}
+                        className="px-3 py-1 bg-purple-900/50 border border-purple-500 hover:bg-purple-800/50 text-purple-300 text-xs font-medium rounded flex items-center gap-1"
+                      >
+                        <span>📈</span> Charts
+                      </button>
+                    )}
+                    <button
+                      onClick={syncTweets}
+                      disabled={syncing}
+                      className="px-3 py-1 bg-blue-900/50 border border-blue-500 hover:bg-blue-800/50 text-blue-300 text-xs font-medium rounded flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className={syncing ? 'animate-spin' : ''}>🔄</span> {syncing ? 'Syncing' : 'Sync'}
+                    </button>
+                  </div>
+                  
+                  {/* Secondary Actions */}
+                  <div className="flex flex-wrap gap-2">
+                    {canManage && (
+                      <button
+                        onClick={() => setShowEditModal(true)}
+                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                      >
+                        <span>⚙️</span> Settings
+                      </button>
+                    )}
+                    {canEdit && (
+                      <button
+                        onClick={() => router.push(`/campaigns/${campaign.slug}/brief/edit`)}
+                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                      >
+                        <span>✏️</span> Brief
+                      </button>
+                    )}
+                    {campaign.brief && (
+                      <button
+                        onClick={() => {
+                          const briefUrl = `${window.location.origin}/brief/${campaign.id}`
+                          navigator.clipboard.writeText(briefUrl).then(() => {
+                            alert('Brief link copied to clipboard!')
+                          })
+                        }}
+                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                        title="Copy brief link"
+                      >
+                        <span>🔗</span> Share
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -313,18 +358,18 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
           {/* Team Members */}
           {campaign.teamMembers && campaign.teamMembers.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-xs md:text-sm uppercase mb-2">Team Members</h3>
-              <div className="flex flex-wrap gap-2 md:gap-4">
+            <div className="mb-4">
+              <h3 className="text-xs uppercase mb-2 text-gray-400">Team Members</h3>
+              <div className="flex flex-wrap gap-2">
                 {campaign.teamMembers.map(member => (
-                  <div key={member} className="flex items-center gap-2 px-2 py-1 bg-green-900 border border-green-300 text-xs rounded">
+                  <div key={member} className="flex items-center gap-1.5 px-2 py-1 bg-green-900/20 border border-green-500/50 text-xs rounded-full">
                     <img
                       src={`https://unavatar.io/twitter/${member}`}
                       alt={member}
-                      className="w-5 h-5 md:w-6 md:h-6 rounded-full"
+                      className="w-4 h-4 rounded-full"
                       loading="lazy"
                     />
-                    <span>@{member}</span>
+                    <span className="text-green-300">@{member}</span>
                   </div>
                 ))}
               </div>
@@ -333,25 +378,36 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
           {/* Projects */}
           {projectDetails.length > 0 && (
-            <div className="mb-6 md:mb-8 font-sans">
-              <h3 className="text-xs uppercase mb-4 text-gray-400">Project Assigned ({projectDetails.length})</h3>
-              <div className="flex flex-wrap gap-4 md:gap-6">
-                {projectDetails.map(project => (
-                  <div key={project.id} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gray-900 border border-gray-600 rounded-lg">
-                    <img
-                      src={project.profileImageUrl || `https://unavatar.io/twitter/${project.twitterHandle}`}
-                      alt={project.twitterHandle}
-                      className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
-                      loading="lazy"
-                    />
-                    <div>
-                      <div className="text-base md:text-lg font-bold">@{project.twitterHandle.replace('@', '')}</div>
-                      {project.notes && (
-                        <div className="text-xs md:text-sm text-gray-400 mt-1">{project.notes}</div>
-                      )}
+            <div className="mb-6 font-sans">
+              <h3 className="text-xs uppercase mb-3 text-gray-400">Project{projectDetails.length > 1 ? 's' : ''} ({projectDetails.length})</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {projectDetails.map(project => {
+                  const budget = campaign.projectBudgets?.[project.id]
+                  return (
+                    <div key={project.id} className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors">
+                      <img
+                        src={project.profileImageUrl || `https://unavatar.io/twitter/${project.twitterHandle}`}
+                        alt={project.twitterHandle}
+                        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = `https://unavatar.io/twitter/${project.twitterHandle}`
+                        }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-semibold text-green-300 truncate">@{project.twitterHandle.replace('@', '')}</div>
+                        {budget && (
+                          <div className="text-xs text-gray-400">
+                            ${budget.usd} • {budget.devices} devices
+                          </div>
+                        )}
+                        {project.notes && (
+                          <div className="text-xs text-gray-500 truncate" title={project.notes}>{project.notes}</div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           )}
@@ -367,10 +423,10 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
           {/* Campaign Stats */}
           {campaign.kols && campaign.kols.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
-                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Total Budget</h3>
-                <p className="text-xl md:text-2xl font-bold text-green-300">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+              <div className="bg-gradient-to-br from-green-900/20 to-green-900/10 border border-green-500/50 rounded-lg p-3">
+                <h3 className="text-xs font-medium text-green-400/80 uppercase">Cash Budget</h3>
+                <p className="text-lg font-bold text-green-300 mt-1">
                   ${campaign.kols.reduce((sum, kol) => {
                     const budgetNum = typeof kol.budget === 'number' 
                       ? kol.budget 
@@ -378,22 +434,27 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                     return sum + budgetNum
                   }, 0).toLocaleString()}
                 </p>
+                {campaign.kols.some(kol => kol.productCost && kol.productCost > 0) && (
+                  <p className="text-xs text-purple-400 mt-1">
+                    + ${campaign.kols.reduce((sum, kol) => sum + ((kol.productCost || 0) * (kol.productQuantity || 1)), 0).toLocaleString()} in products
+                  </p>
+                )}
               </div>
-              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
-                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Total Views</h3>
-                <p className="text-xl md:text-2xl font-bold text-green-300">
+              <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 border border-blue-500/50 rounded-lg p-3">
+                <h3 className="text-xs font-medium text-blue-400/80 uppercase">Total Views</h3>
+                <p className="text-lg font-bold text-blue-300 mt-1">
                   {campaign.kols.reduce((sum, kol) => sum + (kol.views || 0), 0).toLocaleString()}
                 </p>
               </div>
-              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
-                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Engagement</h3>
-                <p className="text-xl md:text-2xl font-bold text-green-300">
+              <div className="bg-gradient-to-br from-purple-900/20 to-purple-900/10 border border-purple-500/50 rounded-lg p-3">
+                <h3 className="text-xs font-medium text-purple-400/80 uppercase">Engagement</h3>
+                <p className="text-lg font-bold text-purple-300 mt-1">
                   {campaign.kols.reduce((sum, kol) => sum + ((kol.likes || 0) + (kol.retweets || 0) + (kol.comments || 0)), 0).toLocaleString()}
                 </p>
               </div>
-              <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
-                <h3 className="text-xs font-medium text-green-400 mb-1 uppercase">Avg Eng. Rate</h3>
-                <p className="text-xl md:text-2xl font-bold text-green-300">
+              <div className="bg-gradient-to-br from-orange-900/20 to-orange-900/10 border border-orange-500/50 rounded-lg p-3">
+                <h3 className="text-xs font-medium text-orange-400/80 uppercase">Avg Eng. Rate</h3>
+                <p className="text-lg font-bold text-orange-300 mt-1">
                   {(() => {
                     const totalViews = campaign.kols.reduce((sum, kol) => sum + (kol.views || 0), 0)
                     const totalEngagement = campaign.kols.reduce((sum, kol) => sum + ((kol.likes || 0) + (kol.retweets || 0) + (kol.comments || 0)), 0)
@@ -406,9 +467,10 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
 
           {/* KOL Table */}
           <div className="overflow-x-auto">
-            <h3 className="text-xs md:text-sm uppercase mb-4">KOLs ({campaign.kols?.length || 0})</h3>
+            <h3 className="text-xs uppercase mb-3 text-gray-400">KOLs ({campaign.kols?.length || 0})</h3>
             <KOLTable
               kols={campaign.kols || []}
+              campaignId={campaign.id}
               onUpdate={handleKOLUpdate}
               onDelete={handleKOLDelete}
               canEdit={canEdit}
@@ -418,13 +480,9 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
           {/* Add KOL Modal */}
           {showAddKOL && (
             <AddKOLModal
-              campaignId={campaign.id}
-              campaignName={campaign.name}
+              campaign={campaign}
               onClose={() => setShowAddKOL(false)}
-              onKOLAdded={() => {
-                setShowAddKOL(false)
-                fetchCampaign() // Refresh campaign data
-              }}
+              onAdd={handleKOLAdd}
             />
           )}
 

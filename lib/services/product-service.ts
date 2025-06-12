@@ -303,6 +303,9 @@ export class ProductService {
    */
   static async getAnalytics(): Promise<ProductAnalytics> {
     try {
+      // Always recalculate analytics when requested
+      await this.updateAnalytics()
+      
       const data = await redis.get(this.ANALYTICS_KEY)
       if (!data) {
         // Initialize analytics if not exists
@@ -319,6 +322,12 @@ export class ProductService {
         return defaultAnalytics
       }
       
+      // Upstash Redis auto-parses JSON, so check if data is already an object
+      if (typeof data === 'object' && data !== null) {
+        return data as ProductAnalytics
+      }
+      
+      // Otherwise parse it
       return JSON.parse(data as string)
     } catch (error) {
       console.error('Error getting analytics:', error)

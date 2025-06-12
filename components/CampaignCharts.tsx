@@ -93,14 +93,21 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
         budgetValue = parseFloat(kol.budget.replace(/[^0-9.-]+/g, '')) || 0
       }
       
+      // Add product cost
+      const productCost = kol.productCost || 0
+      const totalCost = budgetValue + productCost
+      
       return {
         name: kol.name,
         handle: kol.handle,
-        x: budgetValue,
+        x: totalCost,
         y: kol.views,
         z: getTierSize(kol.tier),
         tier: kol.tier || 'none',
-        budget: kol.budget
+        budget: kol.budget,
+        budgetValue,
+        productCost,
+        totalCost
       }
     })
 
@@ -111,14 +118,18 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
         budgetValue = parseFloat(kol.budget.replace(/[^0-9.-]+/g, '')) || 0
       }
       
-      const costPerView = kol.views > 0 ? budgetValue / kol.views : 0
+      const productCost = kol.productCost || 0
+      const totalCost = budgetValue + productCost
+      const costPerView = kol.views > 0 ? totalCost / kol.views : 0
       
       return {
         name: kol.name,
         tier: kol.tier || 'none',
         costPerView,
         views: kol.views,
-        budget: budgetValue
+        budget: budgetValue,
+        productCost,
+        totalCost
       }
     })
 
@@ -159,6 +170,12 @@ export default function CampaignCharts({ kols, onClose }: CampaignChartsProps) {
           <p className="font-bold">{data.name}</p>
           <p>@{data.handle}</p>
           <p>Budget: {data.budget}</p>
+          {data.productCost > 0 && (
+            <>
+              <p className="text-purple-400">Product: ${data.productCost}</p>
+              <p className="text-green-400">Total Cost: ${data.totalCost}</p>
+            </>
+          )}
           <p>Views: {data.y.toLocaleString()}</p>
           <p>Tier: {data.tier}</p>
         </div>

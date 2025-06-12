@@ -40,21 +40,50 @@ export class CategoryService {
         return defaultCategories
       }
       
-      const categories = JSON.parse(data as string) as Category[]
+      // Handle different data formats from Upstash Redis
+      let categories: Category[]
+      
+      if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
+        // If data is already parsed as an object, it might be stored incorrectly
+        // Try to extract the actual data
+        console.log('CategoryService: Received object data:', data)
+        categories = this.getDefaultCategories()
+      } else if (typeof data === 'object' && Array.isArray(data)) {
+        // Data is already an array
+        categories = data as Category[]
+      } else if (typeof data === 'string') {
+        // Try to parse string data
+        try {
+          categories = JSON.parse(data)
+        } catch (parseError) {
+          console.error('Error parsing categories JSON:', parseError)
+          categories = this.getDefaultCategories()
+        }
+      } else {
+        console.error('Unexpected data type for categories:', typeof data)
+        categories = this.getDefaultCategories()
+      }
+      
       return categories.map(cat => ({
         ...cat,
         createdAt: new Date(cat.createdAt)
       }))
     } catch (error) {
       console.error('Error getting categories:', error)
-      // Return defaults on error
-      return this.DEFAULT_CATEGORIES.map((cat, index) => ({
-        ...cat,
-        id: `cat_${index}`,
-        createdAt: new Date(),
-        createdBy: 'system'
-      }))
+      return this.getDefaultCategories()
     }
+  }
+  
+  /**
+   * Get default categories
+   */
+  private static getDefaultCategories(): Category[] {
+    return this.DEFAULT_CATEGORIES.map((cat, index) => ({
+      ...cat,
+      id: `cat_${index}`,
+      createdAt: new Date(),
+      createdBy: 'system'
+    }))
   }
   
   /**

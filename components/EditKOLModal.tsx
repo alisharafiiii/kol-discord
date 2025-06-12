@@ -41,7 +41,7 @@ export default function EditKOLModal({ kol, campaignId, onClose, onUpdate }: Edi
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('/api/products?active=true')
+        const res = await fetch('/api/products/active')
         if (res.ok) {
           const data = await res.json()
           setProducts(data)
@@ -51,6 +51,8 @@ export default function EditKOLModal({ kol, campaignId, onClose, onUpdate }: Edi
             const product = data.find((p: Product) => p.id === kol.productId)
             setSelectedProduct(product || null)
           }
+        } else {
+          console.error('Failed to fetch products:', res.status)
         }
       } catch (err) {
         console.error('Error fetching products:', err)
@@ -70,7 +72,6 @@ export default function EditKOLModal({ kol, campaignId, onClose, onUpdate }: Edi
       ...kolData,
       productId,
       productCost: product?.price || 0,
-      budget: product ? `$${product.price}` : kolData.budget,
       device: product ? 'owned' : 'na'
     })
   }
@@ -210,16 +211,27 @@ export default function EditKOLModal({ kol, campaignId, onClose, onUpdate }: Edi
             </div>
             
             <div>
-              <label className="block text-sm mb-1">Product/Device</label>
+              <label className="block text-sm font-medium text-green-300 mb-1">
+                Product/Device
+              </label>
               {loadingProducts ? (
-                <div className="w-full bg-black border border-green-300 p-2 text-sm text-gray-500">
+                <div className="w-full bg-black border border-green-500 rounded px-3 py-2 text-gray-500">
                   Loading products...
                 </div>
               ) : (
-                <select 
+                <select
                   value={selectedProduct?.id || ''}
-                  onChange={e => handleProductSelect(e.target.value)}
-                  className="w-full bg-black border border-green-300 p-2 text-sm"
+                  onChange={(e) => {
+                    const product = products.find(p => p.id === e.target.value)
+                    setSelectedProduct(product || null)
+                    setKolData({
+                      ...kolData,
+                      productId: e.target.value,
+                      productCost: product?.price || 0,
+                      device: product ? 'owned' : 'na'
+                    })
+                  }}
+                  className="w-full px-3 py-2 bg-black border border-green-500 rounded text-green-300 focus:outline-none focus:border-green-400 cursor-pointer"
                 >
                   <option value="">No product assigned</option>
                   {products.map(product => (
@@ -231,30 +243,20 @@ export default function EditKOLModal({ kol, campaignId, onClose, onUpdate }: Edi
               )}
               {selectedProduct && (
                 <p className="text-xs text-green-400 mt-1">
-                  Product cost: ${selectedProduct.price}
-                </p>
-              )}
-              {kol.productId && !selectedProduct && (
-                <p className="text-xs text-yellow-400 mt-1">
-                  Previously assigned product not found
+                  Product value: ${selectedProduct.price} (tracked separately from cash budget)
                 </p>
               )}
             </div>
             
             <div>
-              <label className="block text-sm mb-1">Budget</label>
+              <label className="block text-sm mb-1">Cash Budget</label>
               <input
                 type="text"
                 value={kolData.budget}
                 onChange={e => setKolData({...kolData, budget: e.target.value})}
-                placeholder="e.g. $500 or free"
+                placeholder="e.g. $500 or $0 for product-only"
                 className="w-full bg-black border border-green-300 p-2 text-sm"
               />
-              {selectedProduct && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Includes product cost
-                </p>
-              )}
             </div>
             
             <div>
