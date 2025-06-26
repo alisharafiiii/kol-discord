@@ -249,3 +249,86 @@ button, input, select, textarea { font-size: 0.8em; }
     font-size: 1rem !important;
   }
 }
+
+/* Scroll Reveal Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Stagger animation delays for child elements */
+/* TEMPORARILY DISABLED - causing posts to be invisible
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+} */
+
+.reveal-stagger.animate-fadeInUp > * {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.reveal-stagger.animate-fadeInUp > *:nth-child(1) { animation-delay: 0.1s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(2) { animation-delay: 0.2s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(3) { animation-delay: 0.3s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(4) { animation-delay: 0.4s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(5) { animation-delay: 0.5s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(6) { animation-delay: 0.6s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(7) { animation-delay: 0.7s; }
+.reveal-stagger.animate-fadeInUp > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* Gradient text animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Terminal-style blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.2em;
+  background-color: currentColor;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+/* Impression box shine animation */
+@keyframes impressionShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}

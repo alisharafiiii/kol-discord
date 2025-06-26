@@ -29,7 +29,8 @@
     "test:kol-links": "node scripts/test-kol-links.mjs",
     "fix:jwt-session": "node scripts/fix-jwt-session.mjs",
     "test:core-access": "node scripts/test-core-role-access.mjs",
-    "check:team-membership": "node scripts/check-team-membership.mjs"
+    "check:team-membership": "node scripts/check-team-membership.mjs",
+    "check:user-access": "node scripts/check-user-access.mjs"
   },
   "dependencies": {
     "@coinbase/onchainkit": "latest",
@@ -64,7 +65,7 @@
     "react": "^18",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18",
-    "recharts": "^2.15.3",
+    "recharts": "^2.15.4",
     "twitter-api-v2": "^1.23.2",
     "uuid": "^11.1.0",
     "vercel": "^41.7.0",

@@ -112,12 +112,13 @@ export function getTwitterHandleFromSession(session: any): string | null {
   if (!session) return null;
   
   // Try all possible locations where the handle might be
+  // IMPORTANT: Check twitterHandle fields before name field
   const handle = session?.twitterHandle || 
                  session?.user?.twitterHandle ||
-                 session?.user?.name ||
                  (session as any)?.twitterHandle ||
                  (session as any)?.user?.username ||
-                 (session?.user as any)?.handle;
+                 (session?.user as any)?.handle ||
+                 session?.user?.name; // Check name last as it might be ENS or display name
                  
   // Log for debugging
   if (!handle) {
@@ -130,7 +131,8 @@ export function getTwitterHandleFromSession(session: any): string | null {
     });
   }
   
-  return handle || null;
+  // Normalize handle by removing @ symbol if present
+  return handle ? handle.replace('@', '') : null;
 }
 
 /**

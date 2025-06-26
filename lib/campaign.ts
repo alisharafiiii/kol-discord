@@ -206,11 +206,12 @@ export async function getAllCampaigns(): Promise<Campaign[]> {
 // Get campaigns for a specific user
 export async function getUserCampaigns(userHandle: string): Promise<Campaign[]> {
   const allCampaigns = await getAllCampaigns()
+  const userHandleLower = userHandle.toLowerCase()
   
-  // Return campaigns where user is creator or team member
+  // Return campaigns where user is creator or team member (case-insensitive)
   return allCampaigns.filter(campaign => 
-    campaign.createdBy === userHandle || 
-    campaign.teamMembers.includes(userHandle)
+    campaign.createdBy?.toLowerCase() === userHandleLower || 
+    campaign.teamMembers?.some(member => member.toLowerCase() === userHandleLower)
   )
 }
 
@@ -255,8 +256,8 @@ export async function updateCampaign(
   })
   
   const isAdmin = isSessionAdmin || profile?.role === 'admin' || profile?.role === 'core'
-  const isCreator = campaign.createdBy === userHandle || campaign.createdBy === normalizedHandle
-  const isTeamMember = campaign.teamMembers.includes(userHandle) || campaign.teamMembers.includes(normalizedHandle)
+  const isCreator = campaign.createdBy?.toLowerCase() === normalizedHandle
+  const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === normalizedHandle)
   
   console.log('Authorization check:', {
     isAdmin,
@@ -333,9 +334,9 @@ export async function addKOLToCampaign(
   const profile = await ProfileService.getProfileByHandle(normalizedHandle)
   const isAdmin = isSessionAdmin || profile?.role === 'admin' || profile?.role === 'core'
   
-  // Check permissions
-  const isCreator = campaign.createdBy === userHandle || campaign.createdBy === normalizedHandle
-  const isTeamMember = campaign.teamMembers.includes(userHandle) || campaign.teamMembers.includes(normalizedHandle)
+  // Check permissions (case-insensitive)
+  const isCreator = campaign.createdBy?.toLowerCase() === normalizedHandle
+  const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === normalizedHandle)
   
   if (!isAdmin && !isCreator && !isTeamMember) {
     throw new Error('Unauthorized')
@@ -376,9 +377,9 @@ export async function updateKOLInCampaign(
   const profile = await ProfileService.getProfileByHandle(normalizedHandle)
   const isAdmin = isSessionAdmin || profile?.role === 'admin' || profile?.role === 'core'
   
-  // Check permissions
-  const isCreator = campaign.createdBy === userHandle || campaign.createdBy === normalizedHandle
-  const isTeamMember = campaign.teamMembers.includes(userHandle) || campaign.teamMembers.includes(normalizedHandle)
+  // Check permissions (case-insensitive)
+  const isCreator = campaign.createdBy?.toLowerCase() === normalizedHandle
+  const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === normalizedHandle)
   
   if (!isAdmin && !isCreator && !isTeamMember) {
     throw new Error('Unauthorized')
@@ -417,9 +418,9 @@ export async function removeKOLFromCampaign(
   const profile = await ProfileService.getProfileByHandle(normalizedHandle)
   const isAdmin = isSessionAdmin || profile?.role === 'admin' || profile?.role === 'core'
   
-  // Check permissions
-  const isCreator = campaign.createdBy === userHandle || campaign.createdBy === normalizedHandle
-  const isTeamMember = campaign.teamMembers.includes(userHandle) || campaign.teamMembers.includes(normalizedHandle)
+  // Check permissions (case-insensitive)
+  const isCreator = campaign.createdBy?.toLowerCase() === normalizedHandle
+  const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === normalizedHandle)
   
   if (!isAdmin && !isCreator && !isTeamMember) {
     throw new Error('Unauthorized')
@@ -446,8 +447,11 @@ export async function updateCampaignBrief(
   const profile = await ProfileService.getProfileByHandle(normalizedHandle)
   const isAdmin = profile?.role === 'admin' || profile?.role === 'core'
   
-  // Check permissions - allow admin, creator, or team member
-  if (!isAdmin && campaign.createdBy !== userHandle && !campaign.teamMembers.includes(userHandle)) {
+  // Check permissions - allow admin, creator, or team member (case-insensitive)
+  const isCreator = campaign.createdBy?.toLowerCase() === normalizedHandle
+  const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === normalizedHandle)
+  
+  if (!isAdmin && !isCreator && !isTeamMember) {
     throw new Error('Unauthorized')
   }
   

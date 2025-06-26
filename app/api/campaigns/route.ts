@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth-config'
 import { createCampaign, getAllCampaigns, getUserCampaigns } from '@/lib/campaign'
 import { redis } from '@/lib/redis'
+import { getTwitterHandleFromSession } from '@/lib/auth-utils'
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,10 +11,15 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
     const userOnly = searchParams.get('user') === 'true'
     
-    if (userOnly && session?.user?.name) {
+    if (userOnly && session) {
       // Get campaigns for logged in user
       try {
-        const campaigns = await getUserCampaigns(session.user.name)
+        const handle = getTwitterHandleFromSession(session)
+        if (!handle) {
+          console.error('No handle found in session for user campaigns')
+          return NextResponse.json([])
+        }
+        const campaigns = await getUserCampaigns(handle)
         return NextResponse.json(campaigns)
       } catch (redisError) {
         console.error('Redis error fetching user campaigns:', redisError)
@@ -99,7 +105,7 @@ export async function POST(request: NextRequest) {
       projects: data.projects || [],
       projectBudgets: data.projectBudgets || {},
       teamMembers: data.teamMembers || [],
-      createdBy: (session.user as any).username || session.user.name
+      createdBy: getTwitterHandleFromSession(session) || 'unknown'
     })
     
     console.log(`[Campaign API] Campaign created successfully (request ${requestId}):`, {

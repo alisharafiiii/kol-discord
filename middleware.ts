@@ -55,6 +55,9 @@ const publicPaths = [
   '/api/contracts/*/sign',
   '/api/contracts/*', // Allow public access to individual contracts for signing page
   '/test-contract-sign', // Test page for debugging
+  '/metrics/share', // Public metrics share pages
+  '/api/metrics/shared', // Public metrics share API endpoint
+  '/api/upload/campaign-image', // TEMPORARILY PUBLIC FOR TESTING - REMOVE IN PRODUCTION
 ]
 
 export async function middleware(request: NextRequest) {

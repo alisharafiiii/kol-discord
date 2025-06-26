@@ -13,6 +13,7 @@ import LoginModal from '@/components/LoginModal'
 import AuthLoginModal from '@/components/AuthLoginModal'
 import { ArrowLeft, Users, Calendar, DollarSign, Briefcase, TrendingUp } from '@/components/icons'
 import { getAllProjects } from '@/lib/project'
+import { getTwitterHandleFromSession } from '@/lib/auth-utils'
 
 // Cache for projects to avoid repeated fetches
 let projectsCache: Project[] | null = null
@@ -98,8 +99,9 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     const isAdmin = userRole === 'admin'
     const isCore = userRole === 'core'
     
-    // Check if user is a team member of this specific campaign
-    const isTeamMember = campaign.teamMembers?.includes(twitterHandle) || false
+    // Check if user is a team member of this specific campaign (case-insensitive)
+    const twitterHandleLower = twitterHandle?.toLowerCase() || ''
+    const isTeamMember = campaign.teamMembers?.some(member => member.toLowerCase() === twitterHandleLower) || false
 
     console.log('Campaign page access check:', {
       userRole,
@@ -115,18 +117,25 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     // Additional debug for team member matching
     if (campaign.teamMembers && campaign.teamMembers.length > 0 && !isTeamMember) {
       console.log('Team member check failed. Checking for match:')
-      console.log('Looking for:', twitterHandle)
+      console.log('Looking for:', twitterHandle, '(lowercase:', twitterHandleLower, ')')
       console.log('In team members:', campaign.teamMembers)
-      console.log('Exact matches:', campaign.teamMembers.map(m => m === twitterHandle))
+      console.log('Case-insensitive matches:', campaign.teamMembers.map(m => m.toLowerCase() === twitterHandleLower))
     }
 
-    // Grant access if admin, core, OR team member
-    if (isAdmin || isCore || isTeamMember) {
+    // Grant access based on new rules:
+    // - Admin: Always has access
+    // - Core: Only if they're a team member
+    // - Team role: Only if they're a team member
+    // - Viewer role: Always has access (read-only)
+    // - Others: Only if they're a team member
+    const isViewer = userRole === 'viewer'
+    
+    if (isAdmin || isViewer || (isCore && isTeamMember) || (userRole === 'team' && isTeamMember) || isTeamMember) {
       setHasAccess(true)
       setShowLoginModal(false)
     } else {
       // No access - redirect to access denied
-      console.log('Campaign page access denied. Not admin, core, or team member.')
+      console.log('Campaign page access denied. Role:', userRole, 'Team member:', isTeamMember)
       router.push('/access-denied')
     }
     
@@ -195,13 +204,31 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     getProjects()
   }, [campaign, session])
 
-  const isOwner = session?.user?.name === campaign?.createdBy
-  const isTeamMember = campaign?.teamMembers?.includes(session?.user?.name || '') || false
+  // Get proper handle from session for comparison
+  const userHandle = getTwitterHandleFromSession(session) || ''
+  const userHandleLower = userHandle.toLowerCase()
+  const isOwner = userHandleLower === campaign?.createdBy?.toLowerCase()
+  const isTeamMember = campaign?.teamMembers?.some(member => member.toLowerCase() === userHandleLower) || false
   const userRole = (session as any)?.role || (session as any)?.user?.role || 'user'
-  // Core role users can edit campaigns (including sync tweets and view analytics)
-  const canEditByRole = ['admin', 'core', 'team'].includes(userRole)
-  const canEdit = !!(isOwner || isTeamMember || canEditByRole)
-  const canManage = !!(isOwner || isTeamMember || ['admin', 'core'].includes(userRole))
+  
+  // Updated permission logic based on new requirements:
+  // Admin: Full access to everything
+  // Core: Admin access except deleting, but only for campaigns they're team members of
+  // Team member role: Can add/edit KOLs but no settings/brief
+  // Viewer: Read-only access
+  const isAdmin = userRole === 'admin'
+  const isCore = userRole === 'core'
+  const isTeamRole = userRole === 'team'
+  const isViewer = userRole === 'viewer'
+  
+  // Can edit KOL data (add/edit/delete KOLs, sync tweets)
+  const canEdit = !!(isAdmin || (isCore && isTeamMember) || (isTeamRole && isTeamMember) || (isOwner && !isViewer))
+  
+  // Can manage campaign settings and brief
+  const canManage = !!(isAdmin || (isCore && isTeamMember) || (isOwner && !isViewer && !isTeamRole))
+  
+  // Can view analytics
+  const canViewAnalytics = !!(isAdmin || (isCore && isTeamMember) || (isTeamRole && isTeamMember) || isViewer || isOwner)
 
   const handleKOLUpdate = async (kolId: string, updates: Partial<KOL>) => {
     if (!campaign || !canEdit) return
@@ -292,7 +319,7 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
     console.log('Campaign:', campaign?.id, campaign?.slug)
     console.log('Session:', session)
     console.log('User role:', userRole)
-    console.log('Can edit:', canEdit, '(owner:', isOwner, ', team:', isTeamMember, ', role:', canEditByRole, ')')
+    console.log('Can edit:', canEdit, '(owner:', isOwner, ', team:', isTeamMember, ', role:', userRole, ')')
     
     if (!campaign) {
       console.error('No campaign loaded')
@@ -433,17 +460,19 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                 </div>
               </div>
               
-              {canEdit && (
+              {(canEdit || canViewAnalytics) && (
                 <div className="flex flex-col gap-2">
                   {/* Primary Actions */}
                   <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={() => setShowAddKOL(true)}
-                      className="px-3 py-1 bg-green-900/50 border border-green-500 hover:bg-green-800/50 text-green-300 text-xs font-medium rounded flex items-center gap-1"
-                    >
-                      <span className="text-base">+</span> Add KOL
-                    </button>
-                    {campaign.status !== 'draft' && (
+                    {canEdit && (
+                      <button
+                        onClick={() => setShowAddKOL(true)}
+                        className="px-3 py-1 bg-green-900/50 border border-green-500 hover:bg-green-800/50 text-green-300 text-xs font-medium rounded flex items-center gap-1"
+                      >
+                        <span className="text-base">+</span> Add KOL
+                      </button>
+                    )}
+                    {canViewAnalytics && (
                       <button
                         onClick={() => router.push(`/campaigns/${campaign.slug}/analytics`)}
                         className="px-3 py-1 bg-purple-900/50 border border-purple-500 hover:bg-purple-800/50 text-purple-300 text-xs font-medium rounded flex items-center gap-1"
@@ -451,48 +480,52 @@ export default function CampaignPage({ params }: { params: { slug: string } }) {
                         <span>📊</span> Analytics
                       </button>
                     )}
-                    <button
-                      onClick={syncTweets}
-                      disabled={syncing}
-                      className="px-3 py-1 bg-blue-900/50 border border-blue-500 hover:bg-blue-800/50 text-blue-300 text-xs font-medium rounded flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <span className={syncing ? 'animate-spin' : ''}>🔄</span> {syncing ? 'Syncing' : 'Sync'}
-                    </button>
+                    {canEdit && (
+                      <button
+                        onClick={syncTweets}
+                        disabled={syncing}
+                        className="px-3 py-1 bg-blue-900/50 border border-blue-500 hover:bg-blue-800/50 text-blue-300 text-xs font-medium rounded flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <span className={syncing ? 'animate-spin' : ''}>🔄</span> {syncing ? 'Syncing' : 'Sync'}
+                      </button>
+                    )}
                   </div>
                   
                   {/* Secondary Actions */}
-                  <div className="flex flex-wrap gap-2">
-                    {canManage && (
-                      <button
-                        onClick={() => setShowEditModal(true)}
-                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
-                      >
-                        <span>⚙️</span> Settings
-                      </button>
-                    )}
-                    {canEdit && (
-                      <button
-                        onClick={() => router.push(`/campaigns/${campaign.slug}/brief/edit`)}
-                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
-                      >
-                        <span>✏️</span> Brief
-                      </button>
-                    )}
-                    {campaign.brief && (
-                      <button
-                        onClick={() => {
-                          const briefUrl = `${window.location.origin}/brief/${campaign.id}`
-                          navigator.clipboard.writeText(briefUrl).then(() => {
-                            alert('Brief link copied to clipboard!')
-                          })
-                        }}
-                        className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
-                        title="Copy brief link"
-                      >
-                        <span>🔗</span> Share
-                      </button>
-                    )}
-                  </div>
+                  {(canManage || campaign.brief) && (
+                    <div className="flex flex-wrap gap-2">
+                      {canManage && (
+                        <>
+                          <button
+                            onClick={() => setShowEditModal(true)}
+                            className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                          >
+                            <span>⚙️</span> Settings
+                          </button>
+                          <button
+                            onClick={() => router.push(`/campaigns/${campaign.slug}/brief/edit`)}
+                            className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                          >
+                            <span>✏️</span> Brief
+                          </button>
+                        </>
+                      )}
+                      {campaign.brief && (
+                        <button
+                          onClick={() => {
+                            const briefUrl = `${window.location.origin}/brief/${campaign.id}`
+                            navigator.clipboard.writeText(briefUrl).then(() => {
+                              alert('Brief link copied to clipboard!')
+                            })
+                          }}
+                          className="px-3 py-1 bg-gray-800 border border-gray-600 hover:bg-gray-700 text-gray-300 text-xs rounded flex items-center gap-1"
+                          title="Copy brief link"
+                        >
+                          <span>🔗</span> Share
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

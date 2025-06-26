@@ -3150,7 +3150,10 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                               src={user.profileImageUrl?.replace('_normal', '_400x400')}
                               alt={user.name}
                               className="w-6 h-6 rounded-full mr-2 object-cover"
-                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                e.currentTarget.src = `https://api.dicebear.com/8.x/identicon/png?seed=${user.twitterHandle}`;
+                              }}
                             />
                           ) : (
                             <div className="w-6 h-6 bg-green-800 rounded-full mr-2" />
@@ -3233,7 +3236,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
                             alt={handle}
                             className="w-8 h-8 rounded-full"
                             onError={(e) => {
-                              e.currentTarget.src = `https://api.dicebear.com/8.x/identicon/svg?seed=${handle}`;
+                              e.currentTarget.src = `https://api.dicebear.com/8.x/identicon/png?seed=${handle}`;
                             }}
                           />
                         </td>

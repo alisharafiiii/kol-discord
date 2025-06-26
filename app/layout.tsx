@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'NABULINES',
-  description: 'A retro cyberpunk KOL connector application',
+  description: 'building influence with Real Ones.',
   icons: {
     icon: [
       { url: '/logo.png', sizes: '32x32', type: 'image/png' },

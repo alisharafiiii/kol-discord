@@ -92,7 +92,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator
   
   // Memoize the creator identicon to prevent flickering
   const creatorIdenticon = useMemo(() => 
-    `https://api.dicebear.com/8.x/identicon/svg?seed=${project.createdBy || 'unknown'}`,
+    `https://api.dicebear.com/8.x/identicon/png?seed=${project.createdBy || 'unknown'}`,
     [project.createdBy]
   );
   
@@ -192,7 +192,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, showCreator
               alt={project.twitterHandle} 
               className="w-full h-full object-cover transition-transform hover:scale-105"
               onError={(e) => {
-                e.currentTarget.src = 'https://via.placeholder.com/100?text=Invalid';
+                e.currentTarget.src = 
+                  user?.profileImageUrl || 
+                  `https://api.dicebear.com/8.x/identicon/png?seed=${project.createdBy || 'unknown'}`;
               }}
             />
           ) : (
