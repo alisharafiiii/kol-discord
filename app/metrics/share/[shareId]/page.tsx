@@ -206,6 +206,7 @@ export default function SharedMetricsPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [syncing, setSyncing] = useState(false)
+  const [syncProgress, setSyncProgress] = useState({ current: 0, total: 0 })
 
   // Add scroll reveal effect
   useEffect(() => {
@@ -438,6 +439,7 @@ export default function SharedMetricsPage() {
     if (twitterPosts.length === 0) return
 
     setSyncing(true)
+    setSyncProgress({ current: 0, total: twitterPosts.length })
     
     try {
       let successCount = 0
@@ -447,6 +449,9 @@ export default function SharedMetricsPage() {
       // Process each Twitter post with rate limiting
       for (let i = 0; i < twitterPosts.length; i++) {
         const post = twitterPosts[i]
+        
+        // Update progress
+        setSyncProgress({ current: i + 1, total: twitterPosts.length })
         
         // Add delay between requests (except for the first one)
         if (i > 0) {
@@ -526,6 +531,7 @@ export default function SharedMetricsPage() {
       alert('Failed to sync posts. Please try again.')
     } finally {
       setSyncing(false)
+      setSyncProgress({ current: 0, total: 0 })
     }
   }
 
@@ -1006,7 +1012,9 @@ export default function SharedMetricsPage() {
                 {syncing ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    Syncing...
+                    <span>
+                      Syncing{syncProgress.total > 0 && ` (${syncProgress.current}/${syncProgress.total})`}...
+                    </span>
                   </>
                 ) : (
                   <>
