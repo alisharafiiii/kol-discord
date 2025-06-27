@@ -444,8 +444,8 @@ export default function SharedMetricsPage() {
     )
   }
 
-  const totals = calculateTotals()
-  const chartData = getChartData()
+  const totals = calculateTotals();
+  const chartData = getChartData();
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -649,233 +649,51 @@ export default function SharedMetricsPage() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Performers by Views</h3>
                 <p className="text-sm text-gray-600 mb-4">Bubble size represents total impressions per post</p>
-                <div className="relative" style={{ minHeight: '400px' }}>
-                  {(() => {
-                    // Prepare data for bubble chart
-                    const bubbleData = data.entries
-                      .filter(entry => entry.impressions > 0)
-                      .map(entry => ({
-                        id: entry.id,
-                        name: entry.authorName,
-                        pfp: entry.authorPfp,
-                        views: entry.impressions,
-                        url: entry.url,
-                        platform: entry.platform
-                      }))
-                      .sort((a, b) => b.views - a.views)
-                      .slice(0, 15) // Limit to top 15 to prevent overcrowding
-
-                    // Calculate bubble sizes
-                    const maxViews = Math.max(...bubbleData.map(d => d.views))
-                    const minViews = Math.min(...bubbleData.map(d => d.views))
-                    const sizeScale = (views: number) => {
-                      const normalized = (views - minViews) / (maxViews - minViews || 1)
-                      return 40 + (normalized * 80) // Bubble diameter from 40px to 120px
-                    }
-
-                    // Simple force-directed layout to prevent overlaps
-                    const layoutBubbles = () => {
-                      const positions: { x: number; y: number; size: number }[] = []
-                      const containerWidth = 800
-                      const containerHeight = 400
-                      const padding = 10
-
-                      bubbleData.forEach((bubble, index) => {
-                        const size = sizeScale(bubble.views)
-                        let placed = false
-                        let attempts = 0
-                        let x = 0
-                        let y = 0
-
-                        // Try to place bubble without overlap
-                        while (!placed && attempts < 100) {
-                          x = padding + size/2 + Math.random() * (containerWidth - size - padding*2)
-                          y = padding + size/2 + Math.random() * (containerHeight - size - padding*2)
-                          
-                          let overlaps = false
-                          for (const pos of positions) {
-                            const distance = Math.sqrt(Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2))
-                            if (distance < (size/2 + pos.size/2 + padding)) {
-                              overlaps = true
-                              break
-                            }
-                          }
-                          
-                          if (!overlaps) {
-                            placed = true
-                            positions.push({ x, y, size })
-                          }
-                          attempts++
-                        }
-
-                        // Fallback to grid layout if random placement fails
-                        if (!placed) {
-                          const cols = 5
-                          const row = Math.floor(index / cols)
-                          const col = index % cols
-                          x = (col + 0.5) * (containerWidth / cols)
-                          y = (row + 0.5) * (containerHeight / Math.ceil(bubbleData.length / cols))
-                          positions.push({ x, y, size })
-                        }
-                      })
-
-                      return positions
-                    }
-
-                    const positions = layoutBubbles()
-
-                    return (
-                      <div className="relative w-full overflow-x-auto">
-                        <div className="relative mx-auto" style={{ width: '800px', height: '400px' }}>
-                          {bubbleData.map((bubble, index) => {
-                            const size = sizeScale(bubble.views)
-                            const position = positions[index]
+                <div className="relative h-96 bg-gray-50 rounded-lg overflow-x-auto overflow-y-hidden p-4">
+                  <div className="flex flex-wrap gap-4 justify-center items-center min-w-max">
+                    {data.entries
+                      .filter(entry => entry.impressions > 0 && entry.authorPfp)
+                      .sort((a, b) => b.impressions - a.impressions)
+                      .slice(0, 10)
+                      .map((entry, index) => {
+                        const maxImpressions = Math.max(...data.entries.map(e => e.impressions));
+                        const minSize = 60;
+                        const maxSize = 120;
+                        const size = minSize + ((entry.impressions / maxImpressions) * (maxSize - minSize));
+                        
+                        return (
+                          <div
+                            key={entry.id}
+                            className="relative group cursor-pointer"
+                            onClick={() => window.open(entry.url, '_blank')}
+                            style={{ width: size, height: size }}
+                          >
+                            <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-white shadow-lg hover:shadow-xl transition-all hover:scale-110">
+                              <Image
+                                src={entry.authorPfp}
+                                alt={entry.authorName}
+                                fill
+                                sizes={`${size}px`}
+                                className="object-cover"
+                              />
+                            </div>
                             
-                            return (
-                              <div
-                                key={bubble.id}
-                                className="absolute group cursor-pointer transition-all duration-300 hover:z-10"
-                                style={{
-                                  left: `${position.x}px`,
-                                  top: `${position.y}px`,
-                                  transform: 'translate(-50%, -50%)'
-                                }}
-                                onClick={() => window.open(bubble.url, '_blank')}
-                              >
-                                {/* Bubble with shadow */}
-                                <div 
-                                  className="relative rounded-full shadow-lg hover:shadow-xl transition-shadow"
-                                  style={{ 
-                                    width: `${size}px`, 
-                                    height: `${size}px`,
-                                    background: 'linear-gradient(145deg, #ffffff, #f3f4f6)'
-                                  }}
-                                >
-                                  {/* Profile picture */}
-                                  <div 
-                                    className="absolute inset-1 rounded-full overflow-hidden"
-                                    style={{
-                                      border: '2px solid white',
-                                      boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.1)'
-                                    }}
-                                  >
-                                    <Image
-                                      src={bubble.pfp}
-                                      alt={bubble.name}
-                                      fill
-                                      sizes={`${size}px`}
-                                      className="object-cover"
-                                    />
-                                  </div>
-                                  
-                                  {/* Platform indicator */}
-                                  <div className="absolute -top-1 -right-1 bg-white rounded-full p-1 shadow-md">
-                                    <span className="text-xs">
-                                      {PLATFORM_INFO[bubble.platform]?.emoji || '🌐'}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                {/* Label below bubble */}
-                                <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ top: `${size + 5}px` }}>
-                                  <p className="text-xs font-medium text-gray-800 whitespace-nowrap">
-                                    {bubble.name.length > 15 ? bubble.name.substring(0, 15) + '...' : bubble.name}
-                                  </p>
-                                  <p className="text-xs text-gray-600">
-                                    {formatNumber(bubble.views)} views
-                                  </p>
-                                </div>
-
-                                {/* Hover tooltip */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                  <div className="bg-gray-800 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap">
-                                    <p className="font-medium">{bubble.name}</p>
-                                    <p>{formatNumber(bubble.views)} impressions</p>
-                                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
-                                      <div className="border-4 border-transparent border-t-gray-800"></div>
-                                    </div>
-                                  </div>
-                                </div>
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                              <div className="bg-gray-800 text-white text-xs rounded-lg px-3 py-2">
+                                <p className="font-medium">{entry.authorName}</p>
+                                <p>{formatNumber(entry.impressions)} impressions</p>
                               </div>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )
-                  })()}
+                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+                                <div className="border-4 border-transparent border-t-gray-800"></div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-
-              {/* Cumulative Engagement Area Chart */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Cumulative Engagement Over Time</h3>
-                <p className="text-sm text-gray-600 mb-4">Visualize the growing impact of your campaign</p>
-                <ResponsiveContainer width="100%" height={350}>
-                  <AreaChart data={chartData.cumulativeData}>
-                    <defs>
-                      <linearGradient id="colorLikes" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0.1}/>
-                      </linearGradient>
-                      <linearGradient id="colorShares" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                      </linearGradient>
-                      <linearGradient id="colorComments" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis 
-                      dataKey="date" 
-                      fontSize={12} 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={80}
-                      stroke="#6b7280"
-                    />
-                    <YAxis fontSize={12} stroke="#6b7280" />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px'
-                      }}
-                      formatter={(value: number) => formatNumber(value)}
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="comments" 
-                      stackId="1" 
-                      stroke="#8b5cf6" 
-                      fillOpacity={1} 
-                      fill="url(#colorComments)"
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="shares" 
-                      stackId="1" 
-                      stroke="#3b82f6" 
-                      fillOpacity={1} 
-                      fill="url(#colorShares)"
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="likes" 
-                      stackId="1" 
-                      stroke="#ef4444" 
-                      fillOpacity={1} 
-                      fill="url(#colorLikes)"
-                    />
-                    <Legend 
-                      wrapperStyle={{ paddingTop: '20px' }}
-                      iconType="rect"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-
+            </div>
           </div>
         )}
 

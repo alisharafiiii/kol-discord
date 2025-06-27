@@ -140,3 +140,21 @@ The `rebuild-profile-campaigns-upstash.mjs` script had a bug that created profil
 
 ### Lesson Learned
 Always use consistent ID generation: `user_${handle}` for profiles
+
+## Discord Analytics Bot Reload Fix
+
+### Issue Found
+The Discord analytics bot was causing temporary drops in message count
+
+### Solution
+Created `scripts/fix-discord-analytics-bot-reload.js` to prevent temporary drops
+
+### How to Fix
+```bash
+node scripts/fix-discord-analytics-bot-reload.js
+# Choose option 1 for immediate relief
+```
+
+### What Gets Fixed
+- Message count fluctuations are prevented
+- Message count remains stable at 1,990 (plus any new messages)
