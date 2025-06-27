@@ -364,8 +364,9 @@ export default function CampaignDetailPage() {
         body: JSON.stringify({ url: formData.url })
       })
 
+      const data = await res.json()
+      
       if (res.ok) {
-        const data = await res.json()
         setFormData(prev => ({
           ...prev,
           authorName: data.authorName || prev.authorName,
@@ -377,13 +378,27 @@ export default function CampaignDetailPage() {
         }))
         alert('Twitter data fetched successfully!')
       } else {
-        const errorData = await res.json()
-        console.error('Fetch error:', errorData)
-        alert('Failed to fetch Twitter data. You can still enter manually.')
+        console.error('Fetch error:', data)
+        // Show the specific error message
+        alert(data.error || 'Failed to fetch Twitter data. You can still enter manually.')
+        
+        // Don't populate with mock data - let user enter manually
+        if (data.error && data.error.includes('not found')) {
+          // Clear any auto-populated mock data
+          setFormData(prev => ({
+            ...prev,
+            authorName: '',
+            authorPfp: '',
+            likes: 0,
+            shares: 0,
+            comments: 0,
+            impressions: 0
+          }))
+        }
       }
     } catch (error) {
       console.error('Error fetching Twitter data:', error)
-      alert('Failed to fetch Twitter data. You can still enter manually.')
+      alert('Failed to fetch Twitter data. Please check your internet connection.')
     } finally {
       setAutoFetching(false)
     }

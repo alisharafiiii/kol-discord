@@ -28,16 +28,10 @@ export async function POST(request: NextRequest) {
     // Fetch tweet data using Twitter API
     const twitterBearerToken = process.env.TWITTER_BEARER_TOKEN
     if (!twitterBearerToken) {
-      // Return mock data if Twitter API is not configured
-      console.log('Twitter API not configured, returning mock data')
-      return NextResponse.json({
-        likes: Math.floor(Math.random() * 1000),
-        retweets: Math.floor(Math.random() * 100),
-        replies: Math.floor(Math.random() * 50),
-        impressions: Math.floor(Math.random() * 10000),
-        authorName: 'Mock Author',
-        authorPfp: 'https://api.dicebear.com/7.x/avataaars/png?seed=mock'
-      })
+      console.log('Twitter API not configured - no bearer token found')
+      return NextResponse.json({ 
+        error: 'Twitter API not configured. Please add TWITTER_BEARER_TOKEN to your environment variables.' 
+      }, { status: 500 })
     }
 
     const response = await fetch(
@@ -49,24 +43,38 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    if (!response.ok) {
-      console.error('Twitter API error:', await response.text())
-      // Return mock data on API error
-      return NextResponse.json({
-        likes: Math.floor(Math.random() * 1000),
-        retweets: Math.floor(Math.random() * 100),
-        replies: Math.floor(Math.random() * 50),
-        impressions: Math.floor(Math.random() * 10000),
-        authorName: 'Mock Author',
-        authorPfp: 'https://api.dicebear.com/7.x/avataaars/png?seed=error'
-      })
+    const responseData = await response.json()
+    
+    // Check for Twitter API errors
+    if (responseData.errors) {
+      const error = responseData.errors[0]
+      console.error('Twitter API error:', error)
+      
+      if (error.type === 'https://api.twitter.com/2/problems/resource-not-found') {
+        return NextResponse.json({ 
+          error: `Tweet not found. The tweet may have been deleted or the URL is incorrect. (ID: ${tweetId})` 
+        }, { status: 404 })
+      } else if (error.title === 'Forbidden') {
+        return NextResponse.json({ 
+          error: 'This tweet is from a protected account and cannot be accessed.' 
+        }, { status: 403 })
+      } else {
+        return NextResponse.json({ 
+          error: `Twitter API error: ${error.detail || error.title || 'Unknown error'}` 
+        }, { status: 400 })
+      }
     }
 
-    const data = await response.json()
-    
+    if (!response.ok) {
+      console.error('Twitter API HTTP error:', response.status, response.statusText)
+      return NextResponse.json({ 
+        error: `Twitter API error: ${response.statusText} (${response.status})` 
+      }, { status: response.status })
+    }
+
     // Extract metrics and author info
-    const tweet = data.data
-    const author = data.includes?.users?.[0]
+    const tweet = responseData.data
+    const author = responseData.includes?.users?.[0]
     
     if (!tweet || !tweet.public_metrics) {
       return NextResponse.json({ error: 'Tweet metrics not available' }, { status: 404 })
@@ -82,6 +90,8 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error fetching Twitter data:', error)
-    return NextResponse.json({ error: 'Failed to fetch Twitter data' }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Failed to fetch Twitter data. Please check your internet connection and try again.' 
+    }, { status: 500 })
   }
 } 
