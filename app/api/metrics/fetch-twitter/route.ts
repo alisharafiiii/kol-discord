@@ -15,15 +15,31 @@ export async function POST(request: NextRequest) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     // }
 
-    const { url } = await request.json()
+    const body = await request.json()
     
-    // Extract tweet ID from URL
-    const tweetIdMatch = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/)
-    if (!tweetIdMatch) {
-      return NextResponse.json({ error: 'Invalid Twitter URL' }, { status: 400 })
+    // Support both single URL and batch of URLs
+    const urls = Array.isArray(body.urls) ? body.urls : (body.url ? [body.url] : [])
+    
+    if (urls.length === 0) {
+      return NextResponse.json({ error: 'No URLs provided' }, { status: 400 })
     }
     
-    const tweetId = tweetIdMatch[1]
+    // Extract tweet IDs from URLs
+    const tweetIds: string[] = []
+    const urlToIdMap: Record<string, string> = {}
+    
+    for (const url of urls) {
+      const tweetIdMatch = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/)
+      if (tweetIdMatch) {
+        const tweetId = tweetIdMatch[1]
+        tweetIds.push(tweetId)
+        urlToIdMap[tweetId] = url
+      }
+    }
+    
+    if (tweetIds.length === 0) {
+      return NextResponse.json({ error: 'No valid Twitter URLs found' }, { status: 400 })
+    }
     
     // Fetch tweet data using Twitter API
     const twitterBearerToken = process.env.TWITTER_BEARER_TOKEN
@@ -34,8 +50,9 @@ export async function POST(request: NextRequest) {
       }, { status: 500 })
     }
 
+    // Use batch endpoint - Twitter API v2 allows up to 100 tweets per request
     const response = await fetch(
-      `https://api.twitter.com/2/tweets/${tweetId}?tweet.fields=public_metrics,author_id&expansions=author_id&user.fields=name,profile_image_url`,
+      `https://api.twitter.com/2/tweets?ids=${tweetIds.join(',')}&tweet.fields=public_metrics,author_id&expansions=author_id&user.fields=name,profile_image_url`,
       {
         headers: {
           'Authorization': `Bearer ${twitterBearerToken}`,
@@ -69,28 +86,6 @@ export async function POST(request: NextRequest) {
       return errorResponse
     }
 
-    const responseData = await response.json()
-    
-    // Check for Twitter API errors
-    if (responseData.errors) {
-      const error = responseData.errors[0]
-      console.error('Twitter API error:', error)
-      
-      if (error.type === 'https://api.twitter.com/2/problems/resource-not-found') {
-        return NextResponse.json({ 
-          error: `Tweet not found. The tweet may have been deleted or the URL is incorrect. (ID: ${tweetId})` 
-        }, { status: 404 })
-      } else if (error.title === 'Forbidden') {
-        return NextResponse.json({ 
-          error: 'This tweet is from a protected account and cannot be accessed.' 
-        }, { status: 403 })
-      } else {
-        return NextResponse.json({ 
-          error: `Twitter API error: ${error.detail || error.title || 'Unknown error'}` 
-        }, { status: 400 })
-      }
-    }
-
     if (!response.ok) {
       console.error('Twitter API HTTP error:', response.status, response.statusText)
       return NextResponse.json({ 
@@ -98,36 +93,94 @@ export async function POST(request: NextRequest) {
       }, { status: response.status })
     }
 
-    // Extract metrics and author info
-    const tweet = responseData.data
-    const author = responseData.includes?.users?.[0]
+    const responseData = await response.json()
     
-    if (!tweet || !tweet.public_metrics) {
-      return NextResponse.json({ error: 'Tweet metrics not available' }, { status: 404 })
+    // Process batch response
+    const results: Record<string, any> = {}
+    const errors: Record<string, string> = {}
+    
+    // Process successful tweets
+    if (responseData.data && Array.isArray(responseData.data)) {
+      const authorMap: Record<string, any> = {}
+      
+      // Build author map
+      if (responseData.includes?.users) {
+        for (const user of responseData.includes.users) {
+          authorMap[user.id] = user
+        }
+      }
+      
+      // Process each tweet
+      for (const tweet of responseData.data) {
+        const author = authorMap[tweet.author_id]
+        const url = urlToIdMap[tweet.id]
+        
+        results[url] = {
+          likes: tweet.public_metrics?.like_count || 0,
+          retweets: tweet.public_metrics?.retweet_count || 0,
+          replies: tweet.public_metrics?.reply_count || 0,
+          impressions: tweet.public_metrics?.impression_count || 0,
+          authorName: author?.name || '',
+          authorPfp: author?.profile_image_url || ''
+        }
+      }
     }
-
-    // Success response with rate limit info
-    const successResponse = NextResponse.json({
-      likes: tweet.public_metrics.like_count || 0,
-      retweets: tweet.public_metrics.retweet_count || 0,
-      replies: tweet.public_metrics.reply_count || 0,
-      impressions: tweet.public_metrics.impression_count || 0,
-      authorName: author?.name || '',
-      authorPfp: author?.profile_image_url || ''
-    })
-
-    // Add rate limit headers from Twitter's response
+    
+    // Process errors (deleted tweets, etc.)
+    if (responseData.errors && Array.isArray(responseData.errors)) {
+      for (const error of responseData.errors) {
+        const url = urlToIdMap[error.resource_id]
+        if (url) {
+          if (error.type === 'https://api.twitter.com/2/problems/resource-not-found') {
+            errors[url] = 'Tweet not found (may have been deleted)'
+          } else if (error.title === 'Forbidden') {
+            errors[url] = 'Tweet is from a protected account'
+          } else {
+            errors[url] = error.detail || error.title || 'Unknown error'
+          }
+        }
+      }
+    }
+    
+    // For single URL requests, maintain backward compatibility
+    if (!Array.isArray(body.urls) && body.url) {
+      if (results[body.url]) {
+        // Add rate limit headers from Twitter's response
+        const successResponse = NextResponse.json(results[body.url])
+        
+        const rateLimitRemaining = response.headers.get('x-rate-limit-remaining')
+        const rateLimitReset = response.headers.get('x-rate-limit-reset')
+        
+        if (rateLimitRemaining) {
+          successResponse.headers.set('X-RateLimit-Remaining', rateLimitRemaining)
+        }
+        if (rateLimitReset) {
+          successResponse.headers.set('X-RateLimit-Reset', rateLimitReset)
+        }
+        
+        return successResponse
+      } else if (errors[body.url]) {
+        return NextResponse.json({ error: errors[body.url] }, { status: 404 })
+      } else {
+        return NextResponse.json({ error: 'Tweet data not available' }, { status: 404 })
+      }
+    }
+    
+    // Return batch results
+    const batchResponse = NextResponse.json({ results, errors })
+    
+    // Add rate limit headers
     const rateLimitRemaining = response.headers.get('x-rate-limit-remaining')
     const rateLimitReset = response.headers.get('x-rate-limit-reset')
     
     if (rateLimitRemaining) {
-      successResponse.headers.set('X-RateLimit-Remaining', rateLimitRemaining)
+      batchResponse.headers.set('X-RateLimit-Remaining', rateLimitRemaining)
     }
     if (rateLimitReset) {
-      successResponse.headers.set('X-RateLimit-Reset', rateLimitReset)
+      batchResponse.headers.set('X-RateLimit-Reset', rateLimitReset)
     }
-
-    return successResponse
+    
+    return batchResponse
   } catch (error) {
     console.error('Error fetching Twitter data:', error)
     return NextResponse.json({ 

@@ -442,71 +442,63 @@ export default function SharedMetricsPage() {
     setSyncProgress({ current: 0, total: twitterPosts.length })
     
     try {
+      // Collect all Twitter URLs
+      const urls = twitterPosts.map(post => post.url)
+      
+      // Make a single batch request
+      const fetchRes = await fetch(`${window.location.origin}/api/metrics/fetch-twitter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls })
+      })
+      
+      if (!fetchRes.ok) {
+        if (fetchRes.status === 429) {
+          const data = await fetchRes.json()
+          alert(`Twitter API rate limit reached. Please wait ${data.retryAfter || 60} seconds and try again.`)
+          return
+        }
+        throw new Error('Failed to fetch Twitter data')
+      }
+      
+      const { results, errors } = await fetchRes.json()
       let successCount = 0
       let failedCount = 0
-      const rateLimitDelay = 1000 // 1 second delay between requests
       
-      // Process each Twitter post with rate limiting
-      for (let i = 0; i < twitterPosts.length; i++) {
-        const post = twitterPosts[i]
+      // Update all posts with the batch results
+      for (const post of twitterPosts) {
+        setSyncProgress({ current: successCount + failedCount + 1, total: twitterPosts.length })
         
-        // Update progress
-        setSyncProgress({ current: i + 1, total: twitterPosts.length })
-        
-        // Add delay between requests (except for the first one)
-        if (i > 0) {
-          await new Promise(resolve => setTimeout(resolve, rateLimitDelay))
-        }
-        
-        try {
-          // Auto-fetch the updated metrics using the fetch-twitter endpoint
-          const fetchRes = await fetch(`${window.location.origin}/api/metrics/fetch-twitter`, {
-            method: 'POST',
+        if (results[post.url]) {
+          const tweetData = results[post.url]
+          
+          // Update the post in the metrics system
+          const updateRes = await fetch(`${window.location.origin}/api/metrics`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: post.url })
-          })
-          
-          const fetchData = await fetchRes.json()
-          
-          if (fetchRes.ok) {
-            // Update the post in the metrics system
-            const updateRes = await fetch(`${window.location.origin}/api/metrics`, {
-              method: 'PUT',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                campaignId: data.campaign.id,
-                entryId: post.id,
-                likes: fetchData.likes,
-                shares: fetchData.retweets,
-                comments: fetchData.replies,
-                impressions: fetchData.impressions,
-                authorName: fetchData.authorName || post.authorName,
-                authorPfp: fetchData.authorPfp || post.authorPfp
-              })
+            body: JSON.stringify({
+              campaignId: data.campaign.id,
+              entryId: post.id,
+              likes: tweetData.likes,
+              shares: tweetData.retweets,
+              comments: tweetData.replies,
+              impressions: tweetData.impressions,
+              authorName: tweetData.authorName || post.authorName,
+              authorPfp: tweetData.authorPfp || post.authorPfp
             })
+          })
 
-            if (updateRes.ok) {
-              successCount++
-            } else {
-              console.error('Failed to update post:', post.id)
-              failedCount++
-            }
+          if (updateRes.ok) {
+            successCount++
           } else {
-            // Handle specific errors
-            if (fetchRes.status === 429) {
-              console.error('Rate limit hit for post:', post.id)
-              alert(`Twitter API rate limit reached. Successfully synced ${successCount} posts. Please wait a few minutes and try again for the remaining posts.`)
-              break // Stop processing more posts
-            } else if (fetchRes.status === 404) {
-              console.log('Tweet not found:', post.url)
-              failedCount++
-            } else {
-              console.error('Fetch error:', fetchData.error)
-              failedCount++
-            }
+            console.error('Failed to update post:', post.id)
+            failedCount++
           }
-        } catch (error) {
-          console.error('Error syncing post:', post.id, error)
+        } else if (errors[post.url]) {
+          console.log(`Error for ${post.url}:`, errors[post.url])
+          failedCount++
+        } else {
+          console.error('No data returned for post:', post.url)
           failedCount++
         }
       }
