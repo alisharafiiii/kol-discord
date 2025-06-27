@@ -40,6 +40,97 @@ interface SharedMetricsData {
   entries: MetricEntry[]
 }
 
+// Safe image component with error handling
+interface SafeImageProps {
+  src: string
+  alt: string
+  className?: string
+  fill?: boolean
+  sizes?: string
+  width?: number
+  height?: number
+  onClick?: () => void
+}
+
+const SafeImage: React.FC<SafeImageProps> = ({ 
+  src, 
+  alt, 
+  className,
+  fill,
+  sizes,
+  width,
+  height,
+  onClick
+}) => {
+  const [imgSrc, setImgSrc] = useState(src)
+  const [hasError, setHasError] = useState(false)
+  
+  useEffect(() => {
+    setImgSrc(src)
+    setHasError(false)
+  }, [src])
+  
+  const handleError = () => {
+    if (!hasError) {
+      // Use a fallback avatar based on the alt text
+      const fallbackSrc = `https://api.dicebear.com/7.x/avataaars/png?seed=${encodeURIComponent(alt || 'default')}`
+      setImgSrc(fallbackSrc)
+      setHasError(true)
+    }
+  }
+  
+  // For external images, use regular img tag instead of Next.js Image
+  // This avoids configuration issues with external domains
+  if (!hasError && imgSrc && !imgSrc.startsWith('https://api.dicebear.com')) {
+    return (
+      <img
+        src={imgSrc}
+        alt={alt}
+        className={className}
+        onError={handleError}
+        onClick={onClick}
+        style={fill ? { 
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover'
+        } : {
+          width: width || 'auto',
+          height: height || 'auto'
+        }}
+      />
+    )
+  }
+  
+  // For DiceBear avatars, use Next.js Image (it's a known domain)
+  if (fill) {
+    return (
+      <Image
+        src={imgSrc}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className={className}
+        onError={handleError}
+        onClick={onClick}
+      />
+    )
+  }
+  
+  return (
+    <Image
+      src={imgSrc}
+      alt={alt}
+      width={width || 100}
+      height={height || 100}
+      className={className}
+      onError={handleError}
+      onClick={onClick}
+    />
+  )
+}
+
 const PLATFORM_INFO = {
   twitter: { 
     label: 'Twitter/X', 
@@ -669,7 +760,7 @@ export default function SharedMetricsPage() {
                             style={{ width: size, height: size }}
                           >
                             <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-white shadow-lg hover:shadow-xl transition-all hover:scale-110">
-                              <Image
+                              <SafeImage
                                 src={entry.authorPfp}
                                 alt={entry.authorName}
                                 fill
@@ -952,7 +1043,7 @@ export default function SharedMetricsPage() {
                         <div className="flex items-center gap-1.5 flex-1">
                           {entry.authorPfp && (
                             <div className="relative w-8 h-8 flex-shrink-0">
-                              <Image
+                              <SafeImage
                                 src={entry.authorPfp}
                                 alt={entry.authorName}
                                 fill
@@ -1008,7 +1099,7 @@ export default function SharedMetricsPage() {
                         <div className="flex gap-0.5 mt-1">
                           {entry.screenshots.slice(0, 2).map((url, idx) => (
                             <div key={idx} className="relative w-12 h-12">
-                              <Image
+                              <SafeImage
                                 src={url}
                                 alt={`Screenshot ${idx + 1}`}
                                 fill
