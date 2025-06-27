@@ -18,6 +18,7 @@ export async function GET(
     const { searchParams } = new URL(req.url)
     const isPublicRequest = searchParams.get('public') === 'true'
     const timeframe = searchParams.get('timeframe') as 'daily' | 'weekly' | 'monthly' | 'allTime' || 'weekly'
+    const forceRefresh = searchParams.get('forceRefresh') === 'true'
     
     // Convert back from URL-safe format
     const projectId = params.id.replace(/--/g, ':')
@@ -25,13 +26,14 @@ export async function GET(
     console.log('[Discord Analytics] Request for project:', projectId)
     console.log('[Discord Analytics] Is public request:', isPublicRequest)
     console.log('[Discord Analytics] Timeframe:', timeframe)
+    console.log('[Discord Analytics] Force refresh:', forceRefresh)
     
-    // Check cache first
+    // Check cache first (skip if force refresh is requested)
     const cacheKey = `${projectId}-${timeframe}`
     const cached = analyticsCache.get(cacheKey)
     const now = Date.now()
     
-    if (cached && now - cached.timestamp < CACHE_TTL) {
+    if (!forceRefresh && cached && now - cached.timestamp < CACHE_TTL) {
       const cacheAge = Math.round((now - cached.timestamp) / 1000)
       console.log(`[Discord Analytics] Returning cached data (age: ${cacheAge}s, TTL: ${CACHE_TTL/1000}s)`)
       console.log(`[Discord Analytics] Cached data has ${cached.data?.analytics?.metrics?.totalMessages} messages`)
@@ -43,6 +45,9 @@ export async function GET(
         }
       }
       return NextResponse.json(cached.data)
+    } else if (forceRefresh) {
+      console.log(`[Discord Analytics] Force refresh requested, clearing cache for key: ${cacheKey}`)
+      analyticsCache.delete(cacheKey)
     } else if (cached) {
       console.log(`[Discord Analytics] Cache expired (age: ${Math.round((now - cached.timestamp) / 1000)}s)`)
     } else {

@@ -160,7 +160,7 @@ export default function DiscordProjectPage() {
       // Clear cache to force fresh data
       setAnalyticsCache({})
       await fetchProjectData()
-      await fetchAnalytics()
+      await fetchAnalytics(true)
       await fetchChannels()
       console.log('✅ Refresh complete')
     } catch (error) {
@@ -170,12 +170,12 @@ export default function DiscordProjectPage() {
     }
   }
 
-  const fetchAnalytics = async () => {
-    console.log('🔍 Fetching analytics for:', projectId, 'timeframe:', timeframe)
+  const fetchAnalytics = async (forceRefresh = false) => {
+    console.log('🔍 Fetching analytics for:', projectId, 'timeframe:', timeframe, 'forceRefresh:', forceRefresh)
     
-    // Check cache first
+    // Check cache first (unless force refresh)
     const cacheKey = `${projectId}-${timeframe}`
-    if (analyticsCache[cacheKey]) {
+    if (!forceRefresh && analyticsCache[cacheKey]) {
       console.log('📊 Using cached analytics data')
       setAnalytics(analyticsCache[cacheKey])
       setAnalyticsLoading(false)
@@ -184,7 +184,8 @@ export default function DiscordProjectPage() {
     
     setAnalyticsLoading(true)
     try {
-      const res = await fetch(`/api/discord/projects/${projectId}/analytics?timeframe=${timeframe}`)
+      const url = `/api/discord/projects/${projectId}/analytics?timeframe=${timeframe}${forceRefresh ? '&forceRefresh=true' : ''}`
+      const res = await fetch(url)
       console.log('📊 Analytics response status:', res.status)
       if (res.ok) {
         const data = await res.json()
