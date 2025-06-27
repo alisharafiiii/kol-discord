@@ -16,6 +16,7 @@ interface SafeImageProps {
   sizes?: string
   width?: number
   height?: number
+  style?: React.CSSProperties
 }
 
 const SafeImage: React.FC<SafeImageProps> = ({ 
@@ -26,7 +27,8 @@ const SafeImage: React.FC<SafeImageProps> = ({
   fill,
   sizes,
   width,
-  height 
+  height,
+  style
 }) => {
   const [imgSrc, setImgSrc] = useState(src)
   const [hasError, setHasError] = useState(false)
@@ -37,12 +39,40 @@ const SafeImage: React.FC<SafeImageProps> = ({
   }, [src])
   
   const handleError = () => {
-    if (!hasError && fallbackSrc) {
-      setImgSrc(fallbackSrc)
+    if (!hasError) {
+      // Use fallback if provided, otherwise generate one
+      const fallback = fallbackSrc || `https://api.dicebear.com/7.x/avataaars/png?seed=${encodeURIComponent(alt || 'default')}`
+      setImgSrc(fallback)
       setHasError(true)
     }
   }
   
+  // For external images, use regular img tag instead of Next.js Image
+  // This avoids configuration issues with external domains
+  if (!hasError && imgSrc && !imgSrc.startsWith('https://api.dicebear.com') && !imgSrc.startsWith('/')) {
+    return (
+      <img
+        src={imgSrc}
+        alt={alt}
+        className={className}
+        onError={handleError}
+        style={fill ? { 
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          ...style
+        } : {
+          width: width || 'auto',
+          height: height || 'auto',
+          ...style
+        }}
+      />
+    )
+  }
+  
+  // For DiceBear avatars and local images, use Next.js Image
   if (fill) {
     return (
       <Image
@@ -52,6 +82,7 @@ const SafeImage: React.FC<SafeImageProps> = ({
         sizes={sizes}
         className={className}
         onError={handleError}
+        style={style}
       />
     )
   }
@@ -64,6 +95,7 @@ const SafeImage: React.FC<SafeImageProps> = ({
       height={height || 100}
       className={className}
       onError={handleError}
+      style={style}
     />
   )
 }
