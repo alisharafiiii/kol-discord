@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { redis } from '@/lib/redis';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { ProfileService } from '@/lib/services/profile-service';
 
 export async function DELETE(req: NextRequest) {
   try {
@@ -36,16 +37,83 @@ export async function DELETE(req: NextRequest) {
     console.log(`[ADMIN DELETE-USER] Attempting to delete user: ${userId}`);
     
     try {
-      // Handle userId that might already include 'user:' prefix
-      const redisKey = userId.startsWith('user:') ? userId : `user:${userId}`;
-      const cleanUserId = userId.startsWith('user:') ? userId.replace('user:', '') : userId;
+      // First, try ProfileService (new system)
+      let deletedFromProfileService = false;
       
-      // Get user data – if we can't find by ID, attempt by handle set
-      let user = await redis.json.get(redisKey) as any;
+      // Check if it's a UUID (ProfileService ID)
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId);
+      
+      if (isUUID) {
+        console.log(`[ADMIN DELETE-USER] Detected UUID, checking ProfileService`);
+        const profile = await ProfileService.getProfileById(userId);
+        if (profile) {
+          await ProfileService.deleteProfile(userId);
+          deletedFromProfileService = true;
+          console.log(`[ADMIN DELETE-USER] Deleted from ProfileService: ${userId}`);
+        }
+      }
+      
+      // If not found by ID, try by handle in ProfileService
+      if (!deletedFromProfileService) {
+        const normalizedUsername = userId.toLowerCase().replace('@', '');
+        console.log(`[ADMIN DELETE-USER] Checking ProfileService by handle: ${normalizedUsername}`);
+        
+        const profile = await ProfileService.getProfileByHandle(normalizedUsername);
+        if (profile) {
+          await ProfileService.deleteProfile(profile.id);
+          deletedFromProfileService = true;
+          console.log(`[ADMIN DELETE-USER] Deleted from ProfileService by handle: ${normalizedUsername}`);
+        }
+      }
+      
+      // If deleted from ProfileService, we're done
+      if (deletedFromProfileService) {
+        return NextResponse.json({ 
+          success: true, 
+          message: `User ${userId} deleted successfully from ProfileService`,
+          deletedBy: twitterHandle 
+        });
+      }
+      
+      // Otherwise, check old system
+      console.log(`[ADMIN DELETE-USER] Not found in ProfileService, checking old system`);
+      
+      // First, check if the userId is actually a username (handle)
+      // This handles cases where the frontend passes a username instead of an ID
+      let actualUserId = userId;
+      let user = null;
+      
+      // Try to get user directly by ID first
+      if (userId.startsWith('user:')) {
+        user = await redis.json.get(userId) as any;
+        actualUserId = userId;
+      } else if (userId.startsWith('user_')) {
+        user = await redis.json.get(`user:${userId}`) as any;
+        actualUserId = `user:${userId}`;
+      } else {
+        // If it's not a standard user ID format, try to look it up as a username
+        const normalizedUsername = userId.toLowerCase().replace('@', '');
+        console.log(`[ADMIN DELETE-USER] Looking up by username: ${normalizedUsername}`);
+        
+        // Try to find by username index
+        const userIds = await redis.smembers(`idx:username:${normalizedUsername}`);
+        if (userIds && userIds.length > 0) {
+          actualUserId = userIds[0];
+          const redisKey = actualUserId.startsWith('user:') ? actualUserId : `user:${actualUserId}`;
+          user = await redis.json.get(redisKey) as any;
+          console.log(`[ADMIN DELETE-USER] Found user by username lookup: ${actualUserId}`);
+        }
+      }
+      
+      // If still no user found, return error
       if (!user) {
+        console.log(`[ADMIN DELETE-USER] User not found for: ${userId}`);
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
-
+      
+      // Extract clean user ID for operations
+      const cleanUserId = actualUserId.startsWith('user:') ? actualUserId.replace('user:', '') : actualUserId;
+      
       // Build list of user IDs that share the same Twitter handle (duplicates)
       let duplicateIds: string[] = [];
       if (user.twitterHandle) {
@@ -78,7 +146,7 @@ export async function DELETE(req: NextRequest) {
 
       // Iterate over duplicates and clean each
       for (const dupId of duplicateIds) {
-        const dupProfile = dupId === userId ? user : await redis.json.get(`user:${dupId}`);
+        const dupProfile = dupId === cleanUserId ? user : await redis.json.get(`user:${dupId}`);
         if (dupProfile) await cleanupForProfile(dupId, dupProfile);
       }
       

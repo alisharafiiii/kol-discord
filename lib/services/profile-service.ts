@@ -452,6 +452,88 @@ export class ProfileService {
   }
   
   /**
+   * Delete a profile and clean up all indexes
+   */
+  static async deleteProfile(profileId: string): Promise<boolean> {
+    try {
+      console.log('[ProfileService.deleteProfile] Starting deletion for:', profileId)
+      
+      // Get the profile first to clean up indexes
+      const profile = await this.getProfileById(profileId)
+      if (!profile) {
+        console.log('[ProfileService.deleteProfile] Profile not found:', profileId)
+        return false
+      }
+      
+      console.log('[ProfileService.deleteProfile] Found profile:', {
+        id: profile.id,
+        handle: profile.twitterHandle,
+        name: profile.name
+      })
+      
+      // Clean up indexes
+      const cleanupPromises = []
+      
+      // Handle index
+      if (profile.twitterHandle) {
+        const handleKey = `${this.INDEX_PREFIX}handle:${profile.twitterHandle}`
+        console.log('[ProfileService.deleteProfile] Removing from handle index:', handleKey)
+        cleanupPromises.push(redis.srem(handleKey, profile.id))
+      }
+      
+      // Role index
+      const roleKey = `${this.INDEX_PREFIX}role:${profile.role}`
+      console.log('[ProfileService.deleteProfile] Removing from role index:', roleKey)
+      cleanupPromises.push(redis.srem(roleKey, profile.id))
+      
+      // Status index
+      const statusKey = `${this.INDEX_PREFIX}status:${profile.approvalStatus}`
+      console.log('[ProfileService.deleteProfile] Removing from status index:', statusKey)
+      cleanupPromises.push(redis.srem(statusKey, profile.id))
+      
+      // KOL index
+      if (profile.isKOL) {
+        const kolKey = `${this.INDEX_PREFIX}kol:true`
+        console.log('[ProfileService.deleteProfile] Removing from KOL index:', kolKey)
+        cleanupPromises.push(redis.srem(kolKey, profile.id))
+      }
+      
+      // Tier index
+      if (profile.tier) {
+        const tierKey = `${this.INDEX_PREFIX}tier:${profile.tier}`
+        console.log('[ProfileService.deleteProfile] Removing from tier index:', tierKey)
+        cleanupPromises.push(redis.srem(tierKey, profile.id))
+      } else if (profile.currentTier) {
+        const tierKey = `${this.INDEX_PREFIX}tier:${profile.currentTier}`
+        console.log('[ProfileService.deleteProfile] Removing from currentTier index:', tierKey)
+        cleanupPromises.push(redis.srem(tierKey, profile.id))
+      }
+      
+      // Country index
+      if (profile.country) {
+        const countryKey = `${this.INDEX_PREFIX}country:${profile.country}`
+        console.log('[ProfileService.deleteProfile] Removing from country index:', countryKey)
+        cleanupPromises.push(redis.srem(countryKey, profile.id))
+      }
+      
+      // Execute all cleanup operations
+      await Promise.all(cleanupPromises)
+      console.log('[ProfileService.deleteProfile] All indexes cleaned up')
+      
+      // Delete the profile
+      const key = `${this.PREFIX}${profile.id}`
+      console.log('[ProfileService.deleteProfile] Deleting profile key:', key)
+      await redis.del(key)
+      
+      console.log('[ProfileService.deleteProfile] Profile deleted successfully')
+      return true
+    } catch (error) {
+      console.error('[ProfileService.deleteProfile] Error deleting profile:', error)
+      throw error
+    }
+  }
+  
+  /**
    * Parse contact field (convert @ handles to Telegram links)
    */
   static parseContactField(input: string): string {

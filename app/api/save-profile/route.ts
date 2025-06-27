@@ -5,8 +5,13 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.json()
 
-    // Create profile object without specifying ID - let the system handle it
+    // Generate a proper user ID based on the Twitter handle
+    const twitterHandle = formData.twitterHandle?.replace('@', '').toLowerCase() || ''
+    const userId = twitterHandle ? `user_${twitterHandle}` : `user_${Date.now()}_${Math.random().toString(36).substring(7)}`
+
+    // Create profile object with a proper ID
     const profile: Partial<InfluencerProfile> = {
+      id: userId,  // Add the generated ID
       name: formData.name,
       twitterHandle: formData.twitterHandle,
       profileImageUrl: formData.profileImageUrl,
