@@ -929,6 +929,7 @@ export default function DiscordAdminPage() {
                       <span className="text-xs">Messages</span>
                     </div>
                     <p className="text-xl font-bold text-white">{stats.totalMessages.toLocaleString()}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">All-time</p>
                   </div>
                   <div className="bg-black/50 rounded p-3">
                     <div className="flex items-center gap-2 text-green-400 mb-1">
@@ -936,6 +937,7 @@ export default function DiscordAdminPage() {
                       <span className="text-xs">Users</span>
                     </div>
                     <p className="text-xl font-bold text-white">{stats.totalUsers.toLocaleString()}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">All-time</p>
                   </div>
                 </div>
 

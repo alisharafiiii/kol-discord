@@ -654,17 +654,6 @@ export default function DiscordProjectPage() {
             {refreshing ? 'Refreshing...' : 'Refresh'}
           </button>
           
-          <select
-            value={timeframe}
-            onChange={(e) => setTimeframe(e.target.value as any)}
-            className="px-3 py-2 bg-black border border-gray-600 rounded text-white"
-          >
-            <option value="daily">Last 24 Hours</option>
-            <option value="weekly">Last 7 Days</option>
-            <option value="monthly">Last 30 Days</option>
-            <option value="allTime">All Time</option>
-          </select>
-          
           <button
             onClick={generateShareableLink}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
@@ -1206,43 +1195,62 @@ export default function DiscordProjectPage() {
         </div>
       )}
 
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-          <div className="flex items-center gap-3 text-blue-400 mb-2">
-            <MessageSquare className="w-5 h-5" />
-            <span className="text-sm">Total Messages</span>
+      {/* Overall Stats Cards */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-green-300">Analytics Overview</h2>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-400">Showing stats for:</span>
+            <select
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value as any)}
+              className="px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-green-500"
+            >
+              <option value="daily">Last 24 Hours</option>
+              <option value="weekly">Last 7 Days</option>
+              <option value="monthly">Last 30 Days</option>
+              <option value="allTime">All Time</option>
+            </select>
           </div>
-          <p className="text-3xl font-bold text-white">{analytics?.metrics.totalMessages.toLocaleString() || 0}</p>
         </div>
         
-        <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-          <div className="flex items-center gap-3 text-green-400 mb-2">
-            <Users className="w-5 h-5" />
-            <span className="text-sm">Active Users</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+            <div className="flex items-center gap-3 text-blue-400 mb-2">
+              <MessageSquare className="w-5 h-5" />
+              <span className="text-sm">Total Messages</span>
+            </div>
+            <p className="text-3xl font-bold text-white">{analytics?.metrics.totalMessages.toLocaleString() || 0}</p>
           </div>
-          <p className="text-3xl font-bold text-white">{analytics?.metrics.uniqueUsers.toLocaleString() || 0}</p>
-        </div>
-        
-        <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-          <div className="flex items-center gap-3 text-purple-400 mb-2">
-            <TrendingUp className="w-5 h-5" />
-            <span className="text-sm">Avg Messages/User</span>
+          
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+            <div className="flex items-center gap-3 text-green-400 mb-2">
+              <Users className="w-5 h-5" />
+              <span className="text-sm">Active Users</span>
+            </div>
+            <p className="text-3xl font-bold text-white">{analytics?.metrics.uniqueUsers.toLocaleString() || 0}</p>
           </div>
-          <p className="text-3xl font-bold text-white">{analytics?.metrics.averageMessagesPerUser.toFixed(1) || 0}</p>
-        </div>
-        
-        <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-          <div className="flex items-center gap-3 text-orange-400 mb-2">
-            <TrendingUp className="w-5 h-5" />
-            <span className="text-sm">Sentiment Score</span>
+          
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+            <div className="flex items-center gap-3 text-purple-400 mb-2">
+              <TrendingUp className="w-5 h-5" />
+              <span className="text-sm">Avg Messages/User</span>
+            </div>
+            <p className="text-3xl font-bold text-white">{analytics?.metrics.averageMessagesPerUser.toFixed(1) || 0}</p>
           </div>
-          <p className="text-3xl font-bold text-white">
-            {analytics ? (
-              ((analytics.metrics.sentimentBreakdown.positive - analytics.metrics.sentimentBreakdown.negative) / 
-               analytics.metrics.totalMessages * 100).toFixed(1)
-            ) : 0}%
-          </p>
+          
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+            <div className="flex items-center gap-3 text-orange-400 mb-2">
+              <TrendingUp className="w-5 h-5" />
+              <span className="text-sm">Sentiment Score</span>
+            </div>
+            <p className="text-3xl font-bold text-white">
+              {analytics ? (
+                ((analytics.metrics.sentimentBreakdown.positive - analytics.metrics.sentimentBreakdown.negative) / 
+                 analytics.metrics.totalMessages * 100).toFixed(1)
+              ) : 0}%
+            </p>
+          </div>
         </div>
       </div>
 
