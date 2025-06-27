@@ -441,9 +441,18 @@ export default function SharedMetricsPage() {
     
     try {
       let successCount = 0
+      let failedCount = 0
+      const rateLimitDelay = 1000 // 1 second delay between requests
       
-      // Process each Twitter post
-      for (const post of twitterPosts) {
+      // Process each Twitter post with rate limiting
+      for (let i = 0; i < twitterPosts.length; i++) {
+        const post = twitterPosts[i]
+        
+        // Add delay between requests (except for the first one)
+        if (i > 0) {
+          await new Promise(resolve => setTimeout(resolve, rateLimitDelay))
+        }
+        
         try {
           // Auto-fetch the updated metrics using the fetch-twitter endpoint
           const fetchRes = await fetch(`${window.location.origin}/api/metrics/fetch-twitter`, {
@@ -452,9 +461,9 @@ export default function SharedMetricsPage() {
             body: JSON.stringify({ url: post.url })
           })
           
+          const fetchData = await fetchRes.json()
+          
           if (fetchRes.ok) {
-            const tweetData = await fetchRes.json()
-            
             // Update the post in the metrics system
             const updateRes = await fetch(`${window.location.origin}/api/metrics`, {
               method: 'PUT',
@@ -462,12 +471,12 @@ export default function SharedMetricsPage() {
               body: JSON.stringify({
                 campaignId: data.campaign.id,
                 entryId: post.id,
-                likes: tweetData.likes,
-                shares: tweetData.retweets,
-                comments: tweetData.replies,
-                impressions: tweetData.impressions,
-                authorName: tweetData.authorName || post.authorName,
-                authorPfp: tweetData.authorPfp || post.authorPfp
+                likes: fetchData.likes,
+                shares: fetchData.retweets,
+                comments: fetchData.replies,
+                impressions: fetchData.impressions,
+                authorName: fetchData.authorName || post.authorName,
+                authorPfp: fetchData.authorPfp || post.authorPfp
               })
             })
 
@@ -475,10 +484,25 @@ export default function SharedMetricsPage() {
               successCount++
             } else {
               console.error('Failed to update post:', post.id)
+              failedCount++
+            }
+          } else {
+            // Handle specific errors
+            if (fetchRes.status === 429) {
+              console.error('Rate limit hit for post:', post.id)
+              alert(`Twitter API rate limit reached. Successfully synced ${successCount} posts. Please wait a few minutes and try again for the remaining posts.`)
+              break // Stop processing more posts
+            } else if (fetchRes.status === 404) {
+              console.log('Tweet not found:', post.url)
+              failedCount++
+            } else {
+              console.error('Fetch error:', fetchData.error)
+              failedCount++
             }
           }
         } catch (error) {
           console.error('Error syncing post:', post.id, error)
+          failedCount++
         }
       }
 
@@ -489,10 +513,13 @@ export default function SharedMetricsPage() {
         setData(sharedData)
       }
 
-      if (successCount > 0) {
-        alert(`Successfully synced ${successCount} of ${twitterPosts.length} Twitter/X posts!`)
-      } else {
-        alert('Failed to sync posts. Please try again.')
+      // Show appropriate message based on results
+      if (successCount > 0 && failedCount === 0) {
+        alert(`Successfully synced all ${successCount} Twitter/X posts!`)
+      } else if (successCount > 0 && failedCount > 0) {
+        alert(`Successfully synced ${successCount} posts. ${failedCount} posts failed (may be deleted or protected).`)
+      } else if (failedCount > 0) {
+        alert(`Failed to sync ${failedCount} posts. They may have been deleted or are from protected accounts.`)
       }
     } catch (error) {
       console.error('Error syncing Twitter posts:', error)

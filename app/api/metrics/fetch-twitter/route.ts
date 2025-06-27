@@ -43,6 +43,32 @@ export async function POST(request: NextRequest) {
       }
     )
 
+    // Check for rate limit before processing response
+    if (response.status === 429) {
+      const rateLimitReset = response.headers.get('x-rate-limit-reset')
+      const rateLimitRemaining = response.headers.get('x-rate-limit-remaining')
+      const retryAfter = response.headers.get('retry-after')
+      
+      console.error('Twitter API rate limit exceeded')
+      
+      const errorResponse = NextResponse.json({ 
+        error: 'Twitter API rate limit exceeded. Please wait before trying again.',
+        rateLimitReset: rateLimitReset ? parseInt(rateLimitReset) : null,
+        rateLimitRemaining: rateLimitRemaining ? parseInt(rateLimitRemaining) : 0,
+        retryAfter: retryAfter ? parseInt(retryAfter) : 60
+      }, { status: 429 })
+      
+      // Add rate limit headers to our response
+      if (rateLimitReset) {
+        errorResponse.headers.set('X-RateLimit-Reset', rateLimitReset)
+      }
+      if (retryAfter) {
+        errorResponse.headers.set('Retry-After', retryAfter)
+      }
+      
+      return errorResponse
+    }
+
     const responseData = await response.json()
     
     // Check for Twitter API errors
@@ -80,7 +106,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Tweet metrics not available' }, { status: 404 })
     }
 
-    return NextResponse.json({
+    // Success response with rate limit info
+    const successResponse = NextResponse.json({
       likes: tweet.public_metrics.like_count || 0,
       retweets: tweet.public_metrics.retweet_count || 0,
       replies: tweet.public_metrics.reply_count || 0,
@@ -88,6 +115,19 @@ export async function POST(request: NextRequest) {
       authorName: author?.name || '',
       authorPfp: author?.profile_image_url || ''
     })
+
+    // Add rate limit headers from Twitter's response
+    const rateLimitRemaining = response.headers.get('x-rate-limit-remaining')
+    const rateLimitReset = response.headers.get('x-rate-limit-reset')
+    
+    if (rateLimitRemaining) {
+      successResponse.headers.set('X-RateLimit-Remaining', rateLimitRemaining)
+    }
+    if (rateLimitReset) {
+      successResponse.headers.set('X-RateLimit-Reset', rateLimitReset)
+    }
+
+    return successResponse
   } catch (error) {
     console.error('Error fetching Twitter data:', error)
     return NextResponse.json({ 
