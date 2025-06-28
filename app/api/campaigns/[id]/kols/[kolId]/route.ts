@@ -7,9 +7,20 @@ export async function PUT(
   { params }: { params: { id: string; kolId: string } }
 ) {
   try {
-    // Check auth
+    // Check auth with detailed logging
+    console.log('[KOL Update] Checking authentication...')
     const auth = await checkAuth(request, ['admin', 'core', 'team'])
+    
+    console.log('[KOL Update] Auth check result:', {
+      authenticated: auth.authenticated,
+      hasAccess: auth.hasAccess,
+      user: auth.user,
+      role: auth.role,
+      error: auth.error
+    })
+    
     if (!auth.authenticated) {
+      console.error('[KOL Update] Not authenticated:', auth.error)
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -17,8 +28,9 @@ export async function PUT(
     }
     
     if (!auth.hasAccess) {
+      console.error('[KOL Update] Access denied. User role:', auth.role, 'Required roles:', ['admin', 'core', 'team'])
       return NextResponse.json(
-        { error: 'Forbidden' },
+        { error: 'Forbidden - insufficient permissions' },
         { status: 403 }
       )
     }
@@ -27,14 +39,15 @@ export async function PUT(
     const kolId = params.kolId
     const updates = await request.json()
     
-    console.log('[KOL Update] Request:', {
+    console.log('[KOL Update] Request details:', {
       campaignId,
       kolId,
       updates,
       auth: {
         user: auth.user?.name,
         twitterHandle: auth.user?.twitterHandle,
-        role: auth.role
+        role: auth.role,
+        hasAccess: auth.hasAccess
       }
     })
     
