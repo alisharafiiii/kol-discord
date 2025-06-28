@@ -2282,3 +2282,206 @@ Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https
 📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
 📌 Tracking 4 channels for project: NABULINES
 ✅ Loaded 2 active projects
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"51s"}]
+😐 [Ledger] #☕┃general @apathywitch: Hey guys!
+😐 [Ledger] #☕┃general @classified_rs: Hey!
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"47s"}]
+😐 [Ledger] #☕┃general @huangalex168: Thank you
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+⏭️ Skipping ignored channel: #🚫┃scam-reports
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"21s"}]
+😐 [Ledger] #☕┃general @xilu__: I just did a swap from SOL to USDT BNB (BEP20) and...
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"39s"}]
+😐 [Ledger] #☕┃general @goldengrace888: Message me i'll show you a guide.
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"16s"}]
+😐 [Ledger] #☕┃general @tiko4779: Hello <@1118784776237764639>  sincere apologies, k...
+😞 [Ledger] #☕┃general @drippyy42: im sad to announce that you hav been scammed
+⏭️ Skipping ignored channel: #🚫┃scam-reports
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"21s"}]
+😐 [Ledger] #☕┃general @xilu__: no i think i got it its just that id ont have anyt...
+😞 [Ledger] #☕┃general @drippyy42: company changelly is known to be scam company. ple...
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"50s"}]
+😐 [Ledger] #☕┃general @xilu__: why is ledger adding this in the swap section then...
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"39s"}]
+😐 [Ledger] #☕┃general @drippyy42: this is a mystery
+Error analyzing sentiment: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"18s"}]
+😐 [Ledger] #☕┃general @drippyy42: please use trusted exchanges such as Coinbase, Bin...
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+⏭️ Skipping ignored channel: #🃏┃memes
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+⏭️ Skipping ignored channel: #🚫┃scam-reports
+⏭️ Skipping ignored channel: #🃏┃memes
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+⏭️ Skipping ignored channel: #🃏┃memes
+⏭️ Skipping ignored channel: #🃏┃memes
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+⏭️ Skipping ignored channel: #🃏┃memes
+😐 [Ledger] #☕┃general @avex_o2: Open your Ledger Live application.
+
+Go to the Hist...
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+😐 [Ledger] #☕┃general @alinabu: gm gm
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
+📊 Loading tracked channels...
+📌 Tracking 9 channels for project: Ledger
+📊 Loaded sentiment settings for project: project:discord:OVPuPOX3_zHBnLUscRbdM
+📌 Tracking 4 channels for project: NABULINES
+✅ Loaded 2 active projects
