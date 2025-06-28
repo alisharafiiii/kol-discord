@@ -390,6 +390,12 @@ function ProfileModal({
       if (editedUser.priceMonthly !== user.priceMonthly) updates.priceMonthly = editedUser.priceMonthly;
       if (editedUser.adminNotes !== user.adminNotes) updates.adminNotes = editedUser.adminNotes;
       
+      // IMPORTANT: Also include approval status, role, and tier if they've been changed
+      // These might have been changed via the status/role/tier buttons
+      if (editedUser.approvalStatus !== user.approvalStatus) updates.approvalStatus = editedUser.approvalStatus;
+      if (editedUser.role !== user.role) updates.role = editedUser.role;
+      if (editedUser.tier !== user.tier) updates.tier = editedUser.tier;
+      
       onSaveProfile(user.id, updates);
       setIsEditMode(false);
     }
@@ -463,8 +469,11 @@ function ProfileModal({
                 </span>
                 <select
                   className="bg-black border-2 border-purple-500 text-purple-300 px-3 py-1 text-sm rounded hover:border-purple-400 cursor-pointer"
-                  value={user.role || 'user'}
-                  onChange={(e) => onRoleChange(user.id, e.target.value)}
+                  value={editedUser.role || 'user'}
+                  onChange={(e) => {
+                    onRoleChange(user.id, e.target.value);
+                    setEditedUser({...editedUser, role: e.target.value});
+                  }}
                   title="Change user role"
                 >
                   <option value="user">User</option>
@@ -496,8 +505,11 @@ function ProfileModal({
                 </span>
                 <select
                   className="bg-black border-2 border-amber-500 text-amber-300 px-3 py-1 text-sm rounded hover:border-amber-400 cursor-pointer"
-                  value={user.tier || 'micro'}
-                  onChange={(e) => onTierChange(user.id, e.target.value)}
+                  value={editedUser.tier || 'micro'}
+                  onChange={(e) => {
+                    onTierChange(user.id, e.target.value);
+                    setEditedUser({...editedUser, tier: e.target.value as KOLProfile['tier']});
+                  }}
                   title="Change user tier"
                 >
                   <option value="hero">Hero</option>
@@ -522,19 +534,28 @@ function ProfileModal({
             <div className="flex gap-2">
               <button 
                 className="px-2 py-1 border border-green-500 text-green-400 hover:bg-green-900/30"
-                onClick={() => onStatusChange(user.id, 'approved')}
+                onClick={() => {
+                  onStatusChange(user.id, 'approved');
+                  setEditedUser({...editedUser, approvalStatus: 'approved'});
+                }}
               >
                 Approve
               </button>
               <button 
                 className="px-2 py-1 border border-yellow-500 text-yellow-400 hover:bg-yellow-900/30"
-                onClick={() => onStatusChange(user.id, 'pending')}
+                onClick={() => {
+                  onStatusChange(user.id, 'pending');
+                  setEditedUser({...editedUser, approvalStatus: 'pending'});
+                }}
               >
                 Pending
               </button>
               <button 
                 className="px-2 py-1 border border-red-500 text-red-400 hover:bg-red-900/30"
-                onClick={() => onStatusChange(user.id, 'rejected')}
+                onClick={() => {
+                  onStatusChange(user.id, 'rejected');
+                  setEditedUser({...editedUser, approvalStatus: 'rejected'});
+                }}
               >
                 Reject
               </button>
