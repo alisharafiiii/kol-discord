@@ -532,7 +532,12 @@ export class DiscordService {
     const uniqueUsers = new Set<string>()
     const channelStats: Record<string, { count: number; name: string }> = {}
     const hourlyActivity = new Array(24).fill(0)
-    const dailyData: Record<string, { messages: number; sentiment: number; sentimentCount: number }> = {}
+    const dailyData: Record<string, { 
+      messages: number; 
+      sentiment: number; 
+      sentimentCount: number;
+      sentimentBreakdown: { positive: number; neutral: number; negative: number }
+    }> = {}
     const userStats: Record<string, { messages: number; sentiment: number; sentimentCount: number }> = {}
     
     let processedCount = 0
@@ -579,7 +584,12 @@ export class DiscordService {
         // Update daily data
         const dateKey = msgDate.toISOString().slice(0, 10)
         if (!dailyData[dateKey]) {
-          dailyData[dateKey] = { messages: 0, sentiment: 0, sentimentCount: 0 }
+          dailyData[dateKey] = { 
+            messages: 0, 
+            sentiment: 0, 
+            sentimentCount: 0,
+            sentimentBreakdown: { positive: 0, neutral: 0, negative: 0 }
+          }
         }
         dailyData[dateKey].messages++
         
@@ -596,6 +606,7 @@ export class DiscordService {
           
           dailyData[dateKey].sentimentCount++
           dailyData[dateKey].sentiment += sentimentValue
+          dailyData[dateKey].sentimentBreakdown[message.sentiment.score]++
           
           userStats[message.userId].sentimentCount++
           userStats[message.userId].sentiment += sentimentValue
@@ -639,7 +650,12 @@ export class DiscordService {
       .map(([date, data]) => ({
         date,
         messages: data.messages,
-        sentiment: data.sentimentCount > 0 ? data.sentiment / data.sentimentCount : 0
+        sentiment: data.sentimentCount > 0 ? data.sentiment / data.sentimentCount : 0,
+        sentimentBreakdown: {
+          positive: data.messages > 0 ? (data.sentimentBreakdown.positive / data.messages * 100) : 0,
+          neutral: data.messages > 0 ? (data.sentimentBreakdown.neutral / data.messages * 100) : 0,
+          negative: data.messages > 0 ? (data.sentimentBreakdown.negative / data.messages * 100) : 0
+        }
       }))
       .sort((a, b) => a.date.localeCompare(b.date))
     

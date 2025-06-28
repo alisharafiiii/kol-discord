@@ -107,6 +107,11 @@ export interface DiscordAnalytics {
       date: string
       messages: number
       sentiment: number
+      sentimentBreakdown?: {
+        positive: number
+        neutral: number
+        negative: number
+      }
     }>
   }
 } 

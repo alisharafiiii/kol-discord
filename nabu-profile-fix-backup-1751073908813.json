@@ -1,0 +1,46 @@
+{
+  "timestamp": "2025-06-28T01:25:04.524Z",
+  "oldData": {
+    "sharafiProfile": {
+      "points": 0,
+      "socialLinks": {
+        "twitter": "https://twitter.com/sharafi_eth"
+      },
+      "tier": "legend",
+      "updatedAt": "2025-06-27T20:16:06.364Z",
+      "createdAt": "2025-06-21T23:57:02.149Z",
+      "lastLoginAt": "2025-06-23T00:43:47.884Z",
+      "id": "user_sharafi_eth",
+      "notes": [],
+      "profileImageUrl": "https://pbs.twimg.com/profile_images/1911790623893422080/vxsHVWbL_normal.jpg",
+      "role": "admin",
+      "socialAccounts": {
+        "twitter": {
+          "handle": "sharafi_eth",
+          "followers": 0
+        }
+      },
+      "twitterHandle": "sharafi_eth",
+      "campaigns": [],
+      "chains": [
+        "Ethereum",
+        "Base"
+      ],
+      "isKOL": false,
+      "name": "nabu.base.eth",
+      "approvalStatus": "approved",
+      "followerCount": 75825,
+      "tags": []
+    }
+  },
+  "actions": [
+    "Created new profile at: profile:7debe3e3-b412-4a31-9eb9-cd5d89b52c5f",
+    "Updated all indexes to use Twitter handle: sharafi_eth",
+    "Deleted: user:user_sharafi_eth",
+    "Deleted: profile:new:nabu.base.eth",
+    "Deleted: idx:username:nabu.base.eth",
+    "Deleted: idx:profile:handle:nabu.base.eth",
+    "Deleted remaining key: idx:displayname:nabu.base.eth",
+    "Deleted remaining key: twitter_nabu.base.eth"
+  ]
+}

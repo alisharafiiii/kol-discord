@@ -1,0 +1,499 @@
+{
+  "timestamp": "2025-06-28T01:11:51.111Z",
+  "dryRun": true,
+  "results": {
+    "success": [
+      {
+        "key": "profile:new:nabu.base.eth",
+        "id": "user_nabu.base.eth",
+        "handle": "nabu.base.eth",
+        "name": "nabu.base.eth",
+        "role": "admin",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "c437a403-735e-4c28-8d00-95d2d386675f"
+      },
+      {
+        "key": "profile:user_0xvffonso",
+        "id": "user_0xvffonso",
+        "handle": "0xvffonso",
+        "name": "VFFONSO",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "abeaa6ff-109e-4868-90f7-4ffbb08d93c9"
+      },
+      {
+        "key": "profile:user_adelina_galoyan",
+        "id": "user_adelina_galoyan",
+        "handle": "adelina_galoyan",
+        "name": "Adelina",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "2727708e-effc-4573-8bf8-e43d10e03f7e"
+      },
+      {
+        "key": "profile:user_akabull_",
+        "id": "user_akabull_",
+        "handle": "akabull_",
+        "name": "BitBull",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "fe1ada80-83c0-497b-90e3-b9a8a1e32a22"
+      },
+      {
+        "key": "profile:user_alyonitaa",
+        "id": "user_alyonitaa",
+        "handle": "alyonitaa",
+        "name": "Alyonita",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "4c6f0e74-84d9-4459-bdf0-7476d8da88c4"
+      },
+      {
+        "key": "profile:user_andrewaskshow",
+        "id": "user_andrewaskshow",
+        "handle": "andrewaskshow",
+        "name": "Andrew Forte",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "09516471-76e3-4872-a6b2-50e510a27498"
+      },
+      {
+        "key": "profile:user_apemp5",
+        "id": "user_apemp5",
+        "handle": "apemp5",
+        "name": "Ape ",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "29a18c0e-354e-4ed7-a9eb-557e12bb92fd"
+      },
+      {
+        "key": "profile:user_atitty_",
+        "id": "user_atitty_",
+        "handle": "atitty_",
+        "name": "Atitty",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "b927e013-7118-420e-82c5-f4f190c07750"
+      },
+      {
+        "key": "profile:user_azurite_nft",
+        "id": "user_azurite_nft",
+        "handle": "azurite_nft",
+        "name": "Azurite",
+        "role": "core",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "a529210a-8310-4ba9-9a46-5c9e2a6bd970"
+      },
+      {
+        "key": "profile:user_chillparia",
+        "id": "user_chillparia",
+        "handle": "chillparia",
+        "name": "pariaa.base.eth",
+        "role": "core",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "0f546160-0cc0-48fa-87f8-c5ce4ddb169a"
+      },
+      {
+        "key": "profile:user_darklifev48594",
+        "id": "user_darklifev48594",
+        "handle": "darklifev48594",
+        "name": "LetsGetNFTs 🦍",
+        "role": "user",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "92123390-827f-47d5-83c1-134bd996440a"
+      },
+      {
+        "key": "profile:user_darrensrs",
+        "id": "user_darrensrs",
+        "handle": "darrensrs",
+        "name": "DarrenSRS",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "fdeb9266-f716-4c7f-b2a8-9b31ab093b15"
+      },
+      {
+        "key": "profile:user_fabsversenft",
+        "id": "user_fabsversenft",
+        "handle": "fabsversenft",
+        "name": "Fabsverse",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "84db4113-18f2-4330-ae9d-7640eedabeb6"
+      },
+      {
+        "key": "profile:user_hunter_nft",
+        "id": "user_hunter_nft",
+        "handle": "hunter_nft",
+        "name": "hunter",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "d8fafd13-c126-40af-8a61-88b1d1715177"
+      },
+      {
+        "key": "profile:user_joeymooose",
+        "id": "user_joeymooose",
+        "handle": "joeymooose",
+        "name": "Moose",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "6f9dd0d8-2100-4e08-ba7a-103b78080fa3"
+      },
+      {
+        "key": "profile:user_kashvieth",
+        "id": "user_kashvieth",
+        "handle": "kashvieth",
+        "name": "kashvi",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "f76e5cff-9617-4fdd-9c2f-e152a4dac1a8"
+      },
+      {
+        "key": "profile:user_mutantapejack",
+        "id": "user_mutantapejack",
+        "handle": "mutantapejack",
+        "name": "Jack & Jackie",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "15ab9537-30b9-4c14-879a-05de7bf8777b"
+      },
+      {
+        "key": "profile:user_n1ssue",
+        "id": "user_n1ssue",
+        "handle": "n1ssue",
+        "name": "NISSUE",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "1b7ba021-ed4f-4578-891e-bbbaffac14ab"
+      },
+      {
+        "key": "profile:user_nabulines",
+        "id": "user_nabulines",
+        "handle": "nabulines",
+        "name": "NABULINES",
+        "role": "admin",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "2f821aba-964b-4703-a38f-34ec0657df89"
+      },
+      {
+        "key": "profile:user_nekoztek",
+        "id": "user_nekoztek",
+        "handle": "nekoztek",
+        "name": "NekoZ",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "8b340609-634f-45a0-ba79-5c75532a002d"
+      },
+      {
+        "key": "profile:user_nftmuse_",
+        "id": "user_nftmuse_",
+        "handle": "nftmuse_",
+        "name": "MUSE",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "4db2074a-c9cc-4ae1-b6f7-2dba7bc850a5"
+      },
+      {
+        "key": "profile:user_omololu_issy",
+        "id": "user_omololu_issy",
+        "handle": "omololu_issy",
+        "name": "0xIssy",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "c4ca4ab7-9a06-48bc-a832-7b41c014cfe0"
+      },
+      {
+        "key": "profile:user_op232323",
+        "id": "user_op232323",
+        "handle": "op232323",
+        "name": "op232323",
+        "role": "core",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "7fad7a91-e09e-4973-9b6b-178a1e270444"
+      },
+      {
+        "key": "profile:user_pattiruss_",
+        "id": "user_pattiruss_",
+        "handle": "pattiruss_",
+        "name": "Patti",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "f0e44c7d-7c99-4575-a470-0090ffa3e98f"
+      },
+      {
+        "key": "profile:user_pav_eth",
+        "id": "user_pav_eth",
+        "handle": "pav_eth",
+        "name": "pav",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "ade47c12-3c79-4e14-9673-ab0786df91c8"
+      },
+      {
+        "key": "profile:user_smokedyor",
+        "id": "user_smokedyor",
+        "handle": "smokedyor",
+        "name": "smoke",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "a7ff5a67-d397-45fc-af35-8936648a1b46"
+      },
+      {
+        "key": "profile:user_sollunix",
+        "id": "user_sollunix",
+        "handle": "sollunix",
+        "name": "Lunix",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "b626ef45-5463-4f86-baf2-352a0405120e"
+      },
+      {
+        "key": "profile:user_tedpillows",
+        "id": "user_tedpillows",
+        "handle": "tedpillows",
+        "name": "Ted",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "b3f0587a-1129-49db-b821-363af9069aca"
+      },
+      {
+        "key": "profile:user_vivek4real_",
+        "id": "user_vivek4real_",
+        "handle": "vivek4real_",
+        "name": "Vivek",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "bcfcdb85-72bc-4d10-9ed8-6a20671c5dba"
+      },
+      {
+        "key": "profile:user_web3alex_",
+        "id": "user_web3alex_",
+        "handle": "web3alex_",
+        "name": "0xAlex",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "1b817bd1-5a1c-4563-87dd-79a335fccba8"
+      },
+      {
+        "key": "profile:user_what3verman",
+        "id": "user_what3verman",
+        "handle": "what3verman",
+        "name": "whateverman",
+        "role": "kol",
+        "status": "approved",
+        "problems": [
+          "old_id_format",
+          "has_old_index",
+          "index_mismatch"
+        ],
+        "success": true,
+        "dryRun": true,
+        "newId": "f4e5bb12-9b14-4d3a-b572-7322ece6a208"
+      }
+    ],
+    "failed": []
+  },
+  "backups": {}
+}

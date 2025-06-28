@@ -573,17 +573,17 @@ export default function DiscordProjectPage() {
     labels: analytics?.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()) || [],
     datasets: [{
       label: 'Positive',
-      data: analytics?.metrics.dailyTrend.map(() => Math.random() * 50 + 30) || [], // TODO: Get real data
+      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.positive || 0) || [],
       backgroundColor: '#10b981',
       stack: 'Stack 0'
     }, {
       label: 'Neutral',
-      data: analytics?.metrics.dailyTrend.map(() => Math.random() * 30 + 20) || [], // TODO: Get real data
+      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.neutral || 0) || [],
       backgroundColor: '#6b7280',
       stack: 'Stack 0'
     }, {
       label: 'Negative',
-      data: analytics?.metrics.dailyTrend.map(() => Math.random() * 20 + 10) || [], // TODO: Get real data
+      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.negative || 0) || [],
       backgroundColor: '#ef4444',
       stack: 'Stack 0'
     }]
