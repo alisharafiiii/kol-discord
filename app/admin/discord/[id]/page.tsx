@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter, useParams } from 'next/navigation'
@@ -502,6 +503,56 @@ export default function DiscordProjectPage() {
     }
   }, [showAddModModal])
 
+  // Memoize sentiment evolution data to prevent recalculation
+  const sentimentTimeData = React.useMemo(() => {
+    if (!analytics?.metrics.dailyTrend) return null;
+    
+    // Validate data before processing
+    const validatedData = analytics.metrics.dailyTrend.map(d => {
+      const positive = d.sentimentBreakdown?.positive || 0;
+      const neutral = d.sentimentBreakdown?.neutral || 0;
+      const negative = d.sentimentBreakdown?.negative || 0;
+      
+      // Ensure percentages add up to 100 (handle rounding errors)
+      const total = positive + neutral + negative;
+      if (total > 0 && Math.abs(total - 100) > 0.1) {
+        // Normalize to exactly 100%
+        const factor = 100 / total;
+        return {
+          positive: positive * factor,
+          neutral: neutral * factor,
+          negative: negative * factor
+        };
+      }
+      
+      return {
+        positive,
+        neutral,
+        negative
+      };
+    });
+    
+    return {
+      labels: analytics.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()),
+      datasets: [{
+        label: 'Positive',
+        data: validatedData.map(d => d.positive),
+        backgroundColor: '#10b981',
+        stack: 'Stack 0'
+      }, {
+        label: 'Neutral',
+        data: validatedData.map(d => d.neutral),
+        backgroundColor: '#6b7280',
+        stack: 'Stack 0'
+      }, {
+        label: 'Negative',
+        data: validatedData.map(d => d.negative),
+        backgroundColor: '#ef4444',
+        stack: 'Stack 0'
+      }]
+    };
+  }, [analytics?.metrics.dailyTrend]);
+
   // Chart configurations
   const sentimentChartData = {
     labels: ['Positive', 'Neutral', 'Negative'],
@@ -565,27 +616,6 @@ export default function DiscordProjectPage() {
       label: 'Avg Sentiment',
       data: analytics?.metrics.topUsers.slice(0, 10).map(u => u.avgSentiment * 100) || [],
       backgroundColor: '#10b981'
-    }]
-  }
-
-  // Sentiment over time data
-  const sentimentTimeData = {
-    labels: analytics?.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()) || [],
-    datasets: [{
-      label: 'Positive',
-      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.positive || 0) || [],
-      backgroundColor: '#10b981',
-      stack: 'Stack 0'
-    }, {
-      label: 'Neutral',
-      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.neutral || 0) || [],
-      backgroundColor: '#6b7280',
-      stack: 'Stack 0'
-    }, {
-      label: 'Negative',
-      data: analytics?.metrics.dailyTrend.map(d => d.sentimentBreakdown?.negative || 0) || [],
-      backgroundColor: '#ef4444',
-      stack: 'Stack 0'
     }]
   }
 

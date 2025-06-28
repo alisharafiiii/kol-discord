@@ -454,6 +454,56 @@ function DiscordSharePageContent() {
     checkAccessAndFetchData()
   }, [session, status, projectId, timeframe])
 
+  // Memoize sentiment evolution data to prevent recalculation on every render
+  const sentimentEvolutionData = React.useMemo(() => {
+    if (!analytics?.metrics?.dailyTrend) return null;
+    
+    // Validate data before processing
+    const validatedData = analytics.metrics.dailyTrend.map(d => {
+      const positive = d.sentimentBreakdown?.positive || 0;
+      const neutral = d.sentimentBreakdown?.neutral || 0;
+      const negative = d.sentimentBreakdown?.negative || 0;
+      
+      // Ensure percentages add up to 100 (handle rounding errors)
+      const total = positive + neutral + negative;
+      if (total > 0 && Math.abs(total - 100) > 0.1) {
+        // Normalize to exactly 100%
+        const factor = 100 / total;
+        return {
+          positive: positive * factor,
+          neutral: neutral * factor,
+          negative: negative * factor
+        };
+      }
+      
+      return {
+        positive,
+        neutral,
+        negative
+      };
+    });
+    
+    return {
+      labels: analytics.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()),
+      datasets: [{
+        label: 'Positive',
+        data: validatedData.map(d => d.positive),
+        backgroundColor: '#10b981',
+        stack: 'Stack 0'
+      }, {
+        label: 'Neutral',
+        data: validatedData.map(d => d.neutral),
+        backgroundColor: '#6b7280',
+        stack: 'Stack 0'
+      }, {
+        label: 'Negative',
+        data: validatedData.map(d => d.negative),
+        backgroundColor: '#ef4444',
+        stack: 'Stack 0'
+      }]
+    };
+  }, [analytics?.metrics?.dailyTrend]);
+
   // Show loading while checking session or access
   if (status === 'loading' || checkingAccess) {
     console.log('Discord Share: RENDERING - Loading/Checking access screen')
@@ -928,27 +978,9 @@ function DiscordSharePageContent() {
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 sm:p-6">
             <h3 className="text-lg text-green-400 mb-4">Sentiment Evolution</h3>
             <div className="h-64">
-              {analytics && analytics.metrics?.dailyTrend && (
+              {analytics && sentimentEvolutionData && (
                 <Bar
-                  data={{
-                    labels: analytics.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()),
-                    datasets: [{
-                      label: 'Positive',
-                      data: analytics.metrics.dailyTrend.map(d => d.sentimentBreakdown?.positive || 0),
-                      backgroundColor: '#10b981',
-                      stack: 'Stack 0'
-                    }, {
-                      label: 'Neutral',
-                      data: analytics.metrics.dailyTrend.map(d => d.sentimentBreakdown?.neutral || 0),
-                      backgroundColor: '#6b7280',
-                      stack: 'Stack 0'
-                    }, {
-                      label: 'Negative',
-                      data: analytics.metrics.dailyTrend.map(d => d.sentimentBreakdown?.negative || 0),
-                      backgroundColor: '#ef4444',
-                      stack: 'Stack 0'
-                    }]
-                  }}
+                  data={sentimentEvolutionData}
                   options={{
                     responsive: true,
                     maintainAspectRatio: false,
