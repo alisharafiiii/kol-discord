@@ -1,5 +1,8 @@
 {
   "name": "discord-bots",
   "type": "commonjs",
-  "description": "Discord bots for KOL platform engagement tracking"
-} 
+  "description": "Discord bots for KOL platform engagement tracking",
+  "dependencies": {
+    "nodemailer": "^7.0.4"
+  }
+}
