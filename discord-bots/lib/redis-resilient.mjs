@@ -20,6 +20,35 @@ export class ResilientRedis {
     this.healthCheckInterval = null
     this.lastSuccessfulOperation = Date.now()
     
+    // Initialize json property as a getter
+    Object.defineProperty(this, 'json', {
+      get: () => {
+        return {
+          get: async (key, path = '$') => {
+            return this.executeWithRetry(async () => {
+              if (!this.redis || !this.redis.json) {
+                throw new Error('Redis not connected')
+              }
+              const result = await this.redis.json.get(key, path)
+              // Upstash returns array when using $ path, extract first element
+              if (Array.isArray(result) && result.length === 1 && path === '$') {
+                return result[0]
+              }
+              return result
+            }, `json.get(${key})`)
+          },
+          set: async (key, path, value) => {
+            return this.executeWithRetry(() => {
+              if (!this.redis || !this.redis.json) {
+                throw new Error('Redis not connected')
+              }
+              return this.redis.json.set(key, path, value)
+            }, `json.set(${key})`)
+          }
+        }
+      }
+    })
+    
     // Initialize connection
     this.connect()
     
@@ -176,17 +205,6 @@ export class ResilientRedis {
   
   async smembers(key) {
     return this.executeWithRetry(() => this.redis.smembers(key), `smembers(${key})`)
-  }
-  
-  async json() {
-    return {
-      get: async (key, path = '$') => {
-        return this.executeWithRetry(() => this.redis.json.get(key, path), `json.get(${key})`)
-      },
-      set: async (key, path, value) => {
-        return this.executeWithRetry(() => this.redis.json.set(key, path, value), `json.set(${key})`)
-      }
-    }
   }
   
   async ping() {

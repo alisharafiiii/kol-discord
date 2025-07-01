@@ -563,3 +563,725 @@
 2025-06-30T01:57:33: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
     at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:02:33: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:07:33: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:07:33: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:07:33: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T02:07:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T02:12:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:17:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:22:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:27:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:32:35: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:32:35: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:32:36: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T02:32:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T02:37:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:42:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:47:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:52:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:57:37: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:57:37: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T02:57:38: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T02:57:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T03:02:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:07:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:12:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:17:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:22:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:22:39: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:22:40: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T03:22:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T03:27:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:32:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:37:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:42:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:47:41: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:47:41: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:47:42: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T03:47:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T03:52:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T03:57:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:02:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:07:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:12:44: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:12:44: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:12:44: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T04:12:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T04:17:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:22:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:27:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:32:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:37:46: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:37:46: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:37:47: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T04:37:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T04:42:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:47:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:52:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T04:57:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:02:48: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:02:48: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:02:49: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T05:02:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T05:07:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:12:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:17:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:22:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:27:50: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:27:50: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:27:52: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T05:27:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T05:32:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:37:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:42:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:47:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:52:54: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:52:54: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T05:52:54: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T05:52:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T05:57:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:02:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:07:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:12:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:17:56: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:17:56: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:17:56: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T06:17:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T06:22:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:27:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:32:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:37:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:42:58: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:42:58: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:42:59: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T06:43:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T06:48:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:53:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T06:58:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:03:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:08:00: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:08:00: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:08:01: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T07:08:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T07:13:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:18:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:23:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:28:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:33:02: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:33:02: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:33:03: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T07:33:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T07:38:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:43:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:48:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:53:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:58:05: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:58:05: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T07:58:06: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T07:58:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T08:03:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:08:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:13:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:18:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:23:07: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:23:07: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:23:08: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T08:23:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T08:28:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:33:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:38:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:43:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:48:09: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:48:09: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:48:11: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T08:48:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T08:53:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T08:58:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:03:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:08:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:13:12: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:13:12: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:13:13: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T09:13:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T09:18:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:23:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:28:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:33:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:38:14: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:38:14: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:38:15: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T09:38:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T09:43:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:48:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:53:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T09:58:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:03:21: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:03:21: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:03:22: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T10:03:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T10:08:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:13:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:18:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:23:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:28:24: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:28:24: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:28:26: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T10:28:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T10:33:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:38:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:43:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:48:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:53:27: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:53:27: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T10:53:28: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T10:53:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T10:58:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:03:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:08:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:13:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:18:29: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:18:29: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:18:31: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T11:18:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T11:23:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:28:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:33:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:38:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:43:32: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:43:32: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:43:33: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T11:43:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T11:48:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:53:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T11:58:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:03:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:08:34: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:08:34: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:08:35: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T12:08:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T12:13:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:18:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:23:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:28:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:33:36: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:33:36: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:33:38: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T12:33:39: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T12:38:40: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:43:40: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:48:40: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:53:40: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:58:40: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:58:40: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T12:58:41: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T12:58:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T13:03:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:08:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:13:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:18:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:23:42: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:23:42: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:23:45: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T13:23:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T13:28:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:33:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:38:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:43:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:48:47: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:48:47: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:48:48: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T13:48:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T13:53:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T13:58:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:03:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:08:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:13:49: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:13:49: 💀 CRITICAL ERROR in Failed to load tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:13:51: ⚠️  Failed to send alert email: Can't send mail - all recipients were rejected: 550 5.7.1 <admin@nabulines.com>: Recipient address rejected: Mailbox is out of service
+2025-06-30T14:13:52: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at loadTrackedChannels (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:465:3)
+2025-06-30T14:18:52: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:23:52: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T14:28:52: ❌ Error loading tracked channels: TypeError: redis.json(...).get is not a function
+    at Timeout.loadTrackedChannels [as _onTimeout] (file:///Users/nabu/kol/discord-bots/analytics-bot-resilient.mjs:121:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-06-30T18:46:35: ⚠️  No messages processed in 361s
+2025-06-30T18:47:35: ⚠️  No messages processed in 421s
+2025-06-30T18:48:35: ⚠️  No messages processed in 481s
+2025-06-30T18:49:35: ⚠️  No messages processed in 541s
+2025-06-30T18:51:35: ⚠️  No messages processed in 661s
+2025-06-30T18:52:35: ⚠️  No messages processed in 721s
+2025-06-30T18:53:35: ⚠️  No messages processed in 781s
+2025-06-30T18:54:35: ⚠️  No messages processed in 841s
+2025-06-30T18:56:35: ⚠️  No messages processed in 961s
+2025-06-30T18:57:35: ⚠️  No messages processed in 1021s
+2025-06-30T18:58:35: ⚠️  No messages processed in 1081s
+2025-06-30T18:59:35: ⚠️  No messages processed in 1141s
+2025-06-30T19:01:35: ⚠️  No messages processed in 1261s
+2025-06-30T19:02:35: ⚠️  No messages processed in 1321s
+2025-06-30T19:03:35: ⚠️  No messages processed in 1381s
+2025-06-30T19:04:35: ⚠️  No messages processed in 1441s
+2025-06-30T19:06:35: ⚠️  No messages processed in 1561s
+2025-06-30T19:07:35: ⚠️  No messages processed in 1621s
+2025-06-30T19:08:35: ⚠️  No messages processed in 1681s
+2025-06-30T19:09:35: ⚠️  No messages processed in 1741s
+2025-06-30T19:11:35: ⚠️  No messages processed in 1861s
+2025-06-30T19:12:35: ⚠️  No messages processed in 1921s
+2025-06-30T19:13:35: ⚠️  No messages processed in 1981s
+2025-06-30T19:14:35: ⚠️  No messages processed in 2041s
+2025-06-30T19:16:35: ⚠️  No messages processed in 2161s
+2025-06-30T19:17:35: ⚠️  No messages processed in 2221s
+2025-06-30T19:18:35: ⚠️  No messages processed in 2281s
+2025-06-30T19:19:35: ⚠️  No messages processed in 2341s
+2025-06-30T19:21:35: ⚠️  No messages processed in 2461s
+2025-06-30T19:22:35: ⚠️  No messages processed in 2521s
+2025-06-30T19:23:35: ⚠️  No messages processed in 2581s
+2025-06-30T19:24:35: ⚠️  No messages processed in 2641s

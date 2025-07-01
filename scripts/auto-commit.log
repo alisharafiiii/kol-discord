@@ -729,3 +729,79 @@ After doing this, you may fix the identity used for this commit with:
 fatal: could not read Username for 'https://github.com': Device not configured
 Sun Jun 29 02:00:00 EDT 2025: Backup completed successfully
 Mon Jun 30 02:00:00 EDT 2025: Changes detected, creating backup commit...
+🔒 Checking for modifications to LOCKED SECTIONS...
+✅ Pre-commit check passed
+[main 52c0cb5] Auto-backup: 2025-06-30 02:00:00
+ Committer: nabu <nabu@nabus-MacBook-Pro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 59 files changed, 18718 insertions(+), 3437 deletions(-)
+ create mode 100644 discord-bots/RESILIENT_BOT_README.md
+ create mode 100644 discord-bots/analytics-bot-original-backup.mjs
+ create mode 100644 discord-bots/analytics-bot-resilient.mjs
+ create mode 100644 discord-bots/ecosystem.config.js
+ create mode 100644 discord-bots/lib/email-notifier.mjs
+ create mode 100644 discord-bots/lib/redis-resilient.mjs
+ create mode 100644 discord-bots/logs/analytics-combined.log
+ create mode 100644 discord-bots/logs/analytics-error.log
+ create mode 100644 discord-bots/logs/analytics-out.log
+ create mode 100755 discord-bots/manage-bots-pm2.sh
+ create mode 100644 discord-bots/node_modules/.package-lock.json
+ create mode 100644 discord-bots/node_modules/nodemailer/.gitattributes
+ create mode 100644 discord-bots/node_modules/nodemailer/.ncurc.js
+ create mode 100644 discord-bots/node_modules/nodemailer/.prettierrc.js
+ create mode 100644 discord-bots/node_modules/nodemailer/CHANGELOG.md
+ create mode 100644 discord-bots/node_modules/nodemailer/CODE_OF_CONDUCT.md
+ create mode 100644 discord-bots/node_modules/nodemailer/LICENSE
+ create mode 100644 discord-bots/node_modules/nodemailer/README.md
+ create mode 100644 discord-bots/node_modules/nodemailer/SECURITY.txt
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/addressparser/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/base64/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/dkim/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/dkim/message-parser.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/dkim/relaxed-body.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/dkim/sign.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/fetch/cookies.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/fetch/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/json-transport/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mail-composer/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mailer/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mailer/mail-message.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-funcs/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-funcs/mime-types.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-node/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-node/last-newline.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-node/le-unix.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/mime-node/le-windows.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/nodemailer.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/punycode/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/qp/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/sendmail-transport/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/ses-transport/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/shared/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-connection/data-stream.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-connection/http-proxy-client.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-connection/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-pool/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-pool/pool-resource.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/smtp-transport/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/stream-transport/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/well-known/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/well-known/services.json
+ create mode 100644 discord-bots/node_modules/nodemailer/lib/xoauth2/index.js
+ create mode 100644 discord-bots/node_modules/nodemailer/package.json
+ create mode 100644 discord-bots/package-lock.json
+ create mode 100644 discord-bots/test-email-notification.mjs
+fatal: could not read Username for 'https://github.com': Device not configured
+Mon Jun 30 02:00:01 EDT 2025: Backup completed successfully
+Tue Jul  1 02:00:00 EDT 2025: Changes detected, creating backup commit...

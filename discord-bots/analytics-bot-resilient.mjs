@@ -68,7 +68,7 @@ let errorCount = 0
 async function loadSentimentSettings(projectId) {
   try {
     const settingsKey = `discord:sentiment:${projectId}`
-    const settings = await redis.json().get(settingsKey)
+    const settings = await redis.json.get(settingsKey)
     
     if (settings) {
       sentimentSettingsCache.set(projectId, {
@@ -118,7 +118,7 @@ async function loadTrackedChannels() {
     const projectKeys = await redis.keys('project:discord:*')
     
     for (const key of projectKeys) {
-      const project = await redis.json().get(key)
+      const project = await redis.json.get(key)
       if (project && project.isActive && project.trackedChannels?.length > 0) {
         projectChannelsCache.set(project.id, {
           name: project.name,
@@ -292,7 +292,7 @@ async function saveMessage(message, projectId, projectData) {
     }
     
     // Save message
-    await redis.json().set(messageId, '$', messageData)
+    await redis.json.set(messageId, '$', messageData)
     
     // Add to indexes
     await redis.sadd(`discord:messages:project:${projectId}`, messageId)
@@ -341,7 +341,7 @@ async function saveMessage(message, projectId, projectData) {
 async function updateUserStats(userId, username, projectId, sentiment) {
   try {
     const userKey = `discord:user:${userId}`
-    let user = await redis.json().get(userKey)
+    let user = await redis.json.get(userKey)
     
     if (!user) {
       user = {
@@ -385,7 +385,7 @@ async function updateUserStats(userId, username, projectId, sentiment) {
       user.projects.push(projectId)
     }
     
-    await redis.json().set(userKey, '$', user)
+    await redis.json.set(userKey, '$', user)
     await redis.sadd(`discord:users:project:${projectId}`, userId)
   } catch (error) {
     console.error('Error updating user stats:', error)
@@ -396,7 +396,7 @@ async function updateUserStats(userId, username, projectId, sentiment) {
 // Update project statistics
 async function updateProjectStats(projectId) {
   try {
-    const project = await redis.json().get(projectId)
+    const project = await redis.json.get(projectId)
     if (!project) return
     
     const messageIds = await redis.smembers(`discord:messages:project:${projectId}`)
@@ -408,7 +408,7 @@ async function updateProjectStats(projectId) {
       lastActivity: new Date().toISOString()
     }
     
-    await redis.json().set(projectId, '$', project)
+    await redis.json.set(projectId, '$', project)
   } catch (error) {
     console.error('Error updating project stats:', error)
     errorCount++
