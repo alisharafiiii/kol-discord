@@ -4,7 +4,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter, useParams } from 'next/navigation'
-import { ArrowLeft, Settings, Download, Share2, Users, MessageSquare, TrendingUp, AlertCircle, Hash, RefreshCw, Clock } from 'lucide-react'
+import { ArrowLeft, Settings, Download, Share2, Users, MessageSquare, TrendingUp, AlertCircle, Hash, RefreshCw, Clock, Calendar } from 'lucide-react'
 import { Line, Doughnut, Bar } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -47,7 +47,7 @@ export default function DiscordProjectPage() {
   const [analytics, setAnalytics] = useState<DiscordAnalytics | null>(null)
   const [channels, setChannels] = useState<DiscordChannel[]>([])
   const [loading, setLoading] = useState(true)
-  const [timeframe, setTimeframe] = useState<'daily' | 'weekly' | 'monthly' | 'allTime'>('weekly')
+  const [timeframe] = useState<'custom'>('custom') // Always use custom timeframe
   const [showSettings, setShowSettings] = useState(false)
   const [teamMods, setTeamMods] = useState<string[]>([])
   const [shareableLink, setShareableLink] = useState('')
@@ -91,6 +91,21 @@ export default function DiscordProjectPage() {
   const [addingMod, setAddingMod] = useState(false)
   const [modSearchQuery, setModSearchQuery] = useState('')
 
+  // UTC date helper - creates date at UTC midnight
+  const getUTCMidnight = (daysAgo = 0) => {
+    const date = new Date()
+    date.setUTCDate(date.getUTCDate() - daysAgo)
+    date.setUTCHours(0, 0, 0, 0)
+    return date
+  }
+
+  // Custom date range state - Always use UTC
+  const [customDateRange, setCustomDateRange] = useState({
+    startDate: getUTCMidnight(7), // Default to 7 days ago at UTC midnight
+    endDate: getUTCMidnight(0)    // Today at UTC midnight  
+  })
+  const [showDatePicker] = useState(true) // Always show date picker
+
   // Check admin access
   useEffect(() => {
     // Only check role if session is loaded
@@ -109,7 +124,7 @@ export default function DiscordProjectPage() {
       fetchAnalytics()
       fetchChannels()
     }
-  }, [projectId, timeframe])
+  }, [projectId, customDateRange])
 
   // Load sentiment settings
   useEffect(() => {
@@ -175,7 +190,10 @@ export default function DiscordProjectPage() {
     console.log('🔍 Fetching analytics for:', projectId, 'timeframe:', timeframe, 'forceRefresh:', forceRefresh)
     
     // Check cache first (unless force refresh)
-    const cacheKey = `${projectId}-${timeframe}`
+    const cacheKey = timeframe === 'custom' 
+      ? `${projectId}-custom-${customDateRange.startDate.toISOString()}-${customDateRange.endDate.toISOString()}`
+      : `${projectId}-${timeframe}`
+    
     if (!forceRefresh && analyticsCache[cacheKey]) {
       console.log('📊 Using cached analytics data')
       setAnalytics(analyticsCache[cacheKey])
@@ -185,7 +203,13 @@ export default function DiscordProjectPage() {
     
     setAnalyticsLoading(true)
     try {
-      const url = `/api/discord/projects/${projectId}/analytics?timeframe=${timeframe}${forceRefresh ? '&forceRefresh=true' : ''}`
+      let url = `/api/discord/projects/${projectId}/analytics?timeframe=${timeframe}${forceRefresh ? '&forceRefresh=true' : ''}`
+      
+      // Add custom date range parameters if timeframe is custom
+      if (timeframe === 'custom') {
+        url += `&startDate=${customDateRange.startDate.toISOString()}&endDate=${customDateRange.endDate.toISOString()}`
+      }
+      
       const res = await fetch(url)
       console.log('📊 Analytics response status:', res.status)
       if (res.ok) {
@@ -317,7 +341,7 @@ export default function DiscordProjectPage() {
       const baseUrl = window.location.origin
       // Convert project ID to URL-safe format (replace : with --)
       const urlSafeId = projectId.replace(/:/g, '--')
-      const shareUrl = `${baseUrl}/discord/share/${urlSafeId}?timeframe=${timeframe}`
+      const shareUrl = `${baseUrl}/discord/share/${urlSafeId}?timeframe=custom&startDate=${customDateRange.startDate.toISOString()}&endDate=${customDateRange.endDate.toISOString()}`
       setShareableLink(shareUrl)
     } catch (error) {
       console.error('Error generating share link:', error)
@@ -505,7 +529,10 @@ export default function DiscordProjectPage() {
 
   // Memoize sentiment evolution data to prevent recalculation
   const sentimentTimeData = React.useMemo(() => {
-    if (!analytics?.metrics.dailyTrend) return null;
+    if (!analytics?.metrics.dailyTrend) return {
+      labels: [],
+      datasets: []
+    };
     
     // Validate data before processing
     const validatedData = analytics.metrics.dailyTrend.map(d => {
@@ -1231,17 +1258,55 @@ export default function DiscordProjectPage() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-green-300">Analytics Overview</h2>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-400">Showing stats for:</span>
-            <select
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value as any)}
-              className="px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-green-500"
-            >
-              <option value="daily">Last 24 Hours</option>
-              <option value="weekly">Last 7 Days</option>
-              <option value="monthly">Last 30 Days</option>
-              <option value="allTime">All Time</option>
-            </select>
+            <span className="text-sm text-gray-400">Select date range:</span>
+            <Calendar className="w-5 h-5 text-green-400" />
+          </div>
+        </div>
+        
+        {/* Custom Date Range Picker - Always visible */}
+        <div className="mb-4 p-4 bg-black/50 border border-gray-700 rounded-lg">
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <label className="block text-xs text-gray-400 mb-1">Start Date (UTC)</label>
+              <input
+                type="date"
+                value={customDateRange.startDate.toISOString().split('T')[0]}
+                max={customDateRange.endDate.toISOString().split('T')[0]}
+                onChange={(e) => {
+                  const newStartDate = new Date(e.target.value + 'T00:00:00.000Z') // Force UTC
+                  setCustomDateRange(prev => ({ ...prev, startDate: newStartDate }))
+                }}
+                className="w-full px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-xs text-gray-400 mb-1">End Date (UTC)</label>
+              <input
+                type="date"
+                value={customDateRange.endDate.toISOString().split('T')[0]}
+                min={customDateRange.startDate.toISOString().split('T')[0]}
+                max={new Date().toISOString().split('T')[0]}
+                onChange={(e) => {
+                  const newEndDate = new Date(e.target.value + 'T00:00:00.000Z') // Force UTC
+                  setCustomDateRange(prev => ({ ...prev, endDate: newEndDate }))
+                }}
+                className="w-full px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm"
+              />
+            </div>
+            <div className="flex items-end">
+              <button
+                onClick={() => {
+                  fetchAnalytics(true) // Force refresh with new date range
+                }}
+                className="px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+          <div className="mt-2 text-xs text-gray-500">
+            Selected range (UTC): {customDateRange.startDate.toISOString().split('T')[0]} to {customDateRange.endDate.toISOString().split('T')[0]}
+            ({Math.ceil((customDateRange.endDate.getTime() - customDateRange.startDate.getTime()) / (1000 * 60 * 60 * 24))} days)
           </div>
         </div>
         

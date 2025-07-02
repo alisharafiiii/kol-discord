@@ -1,0 +1,32 @@
+2025-07-02T00:16:07: 🔍 Loading environment from: /Users/nabu/kol/.env.local
+2025-07-02T00:16:07: ✅ AI model initialized for sentiment analysis
+2025-07-02T00:16:08: 🚀 Engagement bot starting...
+2025-07-02T00:16:08: [SHARD 0] Ready! 2025-07-02T04:16:08.130Z
+2025-07-02T00:16:08: ✅ Engagement bot logged in as nabulines_engagement#3015
+2025-07-02T00:16:08: 📋 Permissions in NABU LINES: 17 permissions
+2025-07-02T00:16:08: ⚠️  Missing permissions in NABU LINES:
+2025-07-02T00:16:08:    - ManageRoles
+2025-07-02T00:16:08:    Please grant these permissions to the bot for full functionality
+2025-07-02T00:16:08: ⚠️  Bot role position too low in NABU LINES
+2025-07-02T00:16:08:    Move bot role above 'kol' role to enable role assignment
+2025-07-02T00:16:08: 🔄 Refreshing application (/) commands...
+2025-07-02T00:16:08: ✅ Registered commands to guild: NABU LINES
+2025-07-02T00:16:08: ✅ Slash commands registered
+2025-07-02T00:56:24: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-02T00:56:24: 🎯 Processing command: submit
+2025-07-02T00:56:25: [SUBMIT] User alinabu submitting tweet: https://x.com/web3_Adri/status/1940266683597566161
+2025-07-02T00:56:25: [SUBMIT] Tweet ID extracted: 1940266683597566161
+2025-07-02T00:56:25: [SUBMIT] User connected as @sharafi_eth
+2025-07-02T00:56:25: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-02T00:56:25: [SUBMIT] Approval status: true
+2025-07-02T00:56:25: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-02T00:56:25: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-02T00:56:26: 📝 Fetched tweet content: Success
+2025-07-02T00:56:26: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-02T00:56:38: ✅ Posted tweet preview to #engagement-tracker

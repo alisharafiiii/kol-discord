@@ -17,8 +17,10 @@ export async function GET(
     // Get query parameters
     const { searchParams } = new URL(req.url)
     const isPublicRequest = searchParams.get('public') === 'true'
-    const timeframe = searchParams.get('timeframe') as 'daily' | 'weekly' | 'monthly' | 'allTime' || 'weekly'
+    const timeframe = searchParams.get('timeframe') as 'daily' | 'weekly' | 'monthly' | 'allTime' | 'custom' || 'weekly'
     const forceRefresh = searchParams.get('forceRefresh') === 'true'
+    const startDateParam = searchParams.get('startDate')
+    const endDateParam = searchParams.get('endDate')
     
     // Convert back from URL-safe format
     const projectId = params.id.replace(/--/g, ':')
@@ -28,8 +30,20 @@ export async function GET(
     console.log('[Discord Analytics] Timeframe:', timeframe)
     console.log('[Discord Analytics] Force refresh:', forceRefresh)
     
+    // Parse custom date range if provided
+    let customDateRange = null
+    if (timeframe === 'custom' && startDateParam && endDateParam) {
+      customDateRange = {
+        startDate: new Date(startDateParam),
+        endDate: new Date(endDateParam)
+      }
+      console.log('[Discord Analytics] Custom date range:', customDateRange)
+    }
+    
     // Check cache first (skip if force refresh is requested)
-    const cacheKey = `${projectId}-${timeframe}`
+    const cacheKey = timeframe === 'custom' && customDateRange
+      ? `${projectId}-custom-${customDateRange.startDate.toISOString()}-${customDateRange.endDate.toISOString()}`
+      : `${projectId}-${timeframe}`
     const cached = analyticsCache.get(cacheKey)
     const now = Date.now()
     
@@ -65,7 +79,12 @@ export async function GET(
       }
       
       // Get analytics
-      const analytics = await DiscordService.getProjectAnalytics(projectId, timeframe)
+      const analytics = await DiscordService.getProjectAnalytics(
+        projectId, 
+        timeframe,
+        customDateRange?.startDate,
+        customDateRange?.endDate
+      )
       
       console.log(`✅ Public analytics fetched: ${analytics.metrics.totalMessages} messages, ${analytics.metrics.uniqueUsers} users`)
       
@@ -180,7 +199,12 @@ export async function GET(
     }
     
     // Get analytics using the enhanced method
-    const analytics = await DiscordService.getProjectAnalytics(projectId, timeframe)
+    const analytics = await DiscordService.getProjectAnalytics(
+      projectId, 
+      timeframe,
+      customDateRange?.startDate,
+      customDateRange?.endDate
+    )
     
     console.log(`✅ Analytics fetched: ${analytics.metrics.totalMessages} messages, ${analytics.metrics.uniqueUsers} users`)
     console.log(`📊 Time range: ${analytics.startDate} to ${analytics.endDate}`)

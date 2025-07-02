@@ -4,7 +4,8 @@ const { TwitterApi } = require('twitter-api-v2')
 const { nanoid } = require('nanoid')
 
 // Load environment variables
-config({ path: '.env.local' })
+const path = require('path')
+config({ path: path.join(__dirname, '..', '.env.local') })
 
 // Initialize Redis
 const redis = new Redis({

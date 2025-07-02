@@ -1,0 +1,19 @@
+[Upstash Redis] The 'url' property is missing or undefined in your Redis config.
+[Upstash Redis] The 'token' property is missing or undefined in your Redis config.
+/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-maker.mixin.js:164
+            throw new Error('Invalid consumer tokens');
+            ^
+
+Error: Invalid consumer tokens
+    at ClientRequestMaker.buildOAuth (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-maker.mixin.js:164:19)
+    at ClientRequestMaker.initializeToken (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-maker.mixin.js:121:32)
+    at new TwitterApiBase (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client.base.js:18:32)
+    at new TwitterApi (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client/index.js:15:1)
+    at Object.<anonymous> (/Users/nabu/kol/discord-bots/engagement-batch-processor.js:16:23)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+
+Node.js v22.16.0

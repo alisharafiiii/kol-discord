@@ -1,0 +1,64 @@
+🤖 Starting Engagement Cron Job...
+🚀 Running initial batch processing...
+🔄 Starting batch processing...
+📋 Configuration:
+   - Redis configured: true
+   - Twitter API Key: RWBkMfjO...
+   - Twitter Access Token: 14588551...
+   - Twitter API Version: v2
+   - Authentication Type: OAuth 1.0a (User Context)
+
+🔍 DEBUG: Checking for pending batch jobs from API...
+⏳ Cron job scheduled - will run every 30 minutes
+   ⚠️  Found pending job: 6hu37pWYTi4YPR9of7z7F
+      Created: 6/24/2025, 8:12:13 PM
+      Status: pending
+      NOTE: This job was created by the API but not processed!
+   🔄 Updating pending job to 'running' status...
+   ✅ Using existing job 6hu37pWYTi4YPR9of7z7F for processing
+
+📊 Running METRICS ONLY update (next detailed check in 1.0 hours)
+
+🔍 DEBUG: Fetching tweets from Redis...
+   Current time: 7/2/2025, 12:39:11 AM (1751431151698)
+   Cutoff time: 7/1/2025, 12:39:11 AM (1751344751698)
+   Time window: Last 24 hours
+
+📊 Found 0 tweets from last 24 hours to process
+   ⚠️ No tweets found in the time window
+
+   🔍 DEBUG: Found 30 total tweets in Redis (showing latest 5):
+     - @0xdavid55: 6/24/2025, 9:46:04 PM (score: 1750815964173)
+     - @aisarcore: 6/24/2025, 9:43:12 PM (score: 1750815792535)
+     - @sharafi_eth: 6/24/2025, 8:06:49 PM (score: 1750810009127)
+     - @iamrexorex: 6/23/2025, 2:38:26 PM (score: 1750703906930)
+     - @MADMATT3M: 6/23/2025, 9:50:57 AM (score: 1750686657259)
+
+🔄 Starting to process 0 tweets...
+
+📊 Processing Complete:
+   - Total tweets found: 0
+   - Successfully processed: 0
+   - Failed/Skipped: 0
+
+🔄 DEBUG: Updating batch job status...
+   Batch ID: 6hu37pWYTi4YPR9of7z7F
+   New status: completed
+   ✅ Batch job updated successfully
+   Verified status: completed
+
+📊 Batch Processing Summary:
+   - Batch ID: 6hu37pWYTi4YPR9of7z7F
+   - Mode: METRICS ONLY
+   - Tweets processed: 0
+   - Metrics updated: 0
+   - Status: Completed successfully
+   - Job stored at: engagement:batch:6hu37pWYTi4YPR9of7z7F
+
+🔑 API Usage Note:
+   - Only tweet metrics were updated (likes, RTs, replies)
+   - No engagement points were processed in this run
+   - Next detailed check scheduled in 1.0 hours
+
+✅ Batch processing completed!
+✅ Initial batch completed

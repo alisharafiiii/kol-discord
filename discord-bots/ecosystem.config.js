@@ -44,7 +44,7 @@ module.exports = {
     },
     {
       name: 'discord-engagement',
-      script: './engagement-bot.mjs',
+      script: './engagement-bot.js',
       cwd: '/Users/nabu/kol/discord-bots',
       instances: 1,
       autorestart: true,
@@ -79,10 +79,10 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       
       // Auto restart on file changes (disabled in production)
-      ignore_watch: ['node_modules', 'logs', '*.log'],
+      ignore_watch: ['node_modules', 'logs', '*.log']
       
       // Environment variables will be loaded from .env.local
-      node_args: '--experimental-modules'
+      // node_args: '--experimental-modules' // Not needed for .js files
     }
   ],
   

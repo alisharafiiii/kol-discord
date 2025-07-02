@@ -21,20 +21,33 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url)
     const timeframe = searchParams.get('timeframe') || 'weekly'
+    const startDateParam = searchParams.get('startDate')
+    const endDateParam = searchParams.get('endDate')
 
     // Calculate date range
     const now = new Date()
-    const startDate = new Date()
-    switch (timeframe) {
-      case 'daily':
-        startDate.setHours(startDate.getHours() - 24)
-        break
-      case 'weekly':
-        startDate.setDate(startDate.getDate() - 7)
-        break
-      case 'monthly':
-        startDate.setDate(startDate.getDate() - 30)
-        break
+    let startDate: Date
+    let endDate: Date
+    
+    // Handle custom date range
+    if (timeframe === 'custom' && startDateParam && endDateParam) {
+      startDate = new Date(startDateParam)
+      endDate = new Date(endDateParam)
+    } else {
+      endDate = new Date()
+      startDate = new Date()
+      
+      switch (timeframe) {
+        case 'daily':
+          startDate.setHours(startDate.getHours() - 24)
+          break
+        case 'weekly':
+          startDate.setDate(startDate.getDate() - 7)
+          break
+        case 'monthly':
+          startDate.setDate(startDate.getDate() - 30)
+          break
+      }
     }
 
     // Get all Discord projects using the service

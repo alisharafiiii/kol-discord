@@ -396,8 +396,8 @@ export class DiscordService {
         sentimentCounts[msg.sentiment.score]++;
       }
       
-      // Hourly activity
-      const hour = new Date(msg.timestamp).getHours();
+      // Hourly activity (use UTC hours)
+      const hour = new Date(msg.timestamp).getUTCHours();
       hourlyActivity[hour]++;
       
       // Daily trend
@@ -493,14 +493,14 @@ export class DiscordService {
           start.setTime(start.getTime() - (24 * 60 * 60 * 1000))
           break
         case 'weekly':
-          // Go back 7 days and set to start of that day
-          start.setDate(start.getDate() - 7)
-          start.setHours(0, 0, 0, 0)
+          // Go back 7 days and set to start of that day (UTC)
+          start.setUTCDate(start.getUTCDate() - 7)
+          start.setUTCHours(0, 0, 0, 0)
           break
         case 'monthly':
-          // Go back 30 days and set to start of that day
-          start.setDate(start.getDate() - 30)
-          start.setHours(0, 0, 0, 0)
+          // Go back 30 days and set to start of that day (UTC)
+          start.setUTCDate(start.getUTCDate() - 30)
+          start.setUTCHours(0, 0, 0, 0)
           break
         case 'allTime':
           start = new Date('2020-01-01')
@@ -577,8 +577,8 @@ export class DiscordService {
         }
         channelStats[message.channelId].count++
         
-        // Update hourly activity
-        const hour = msgDate.getHours()
+        // Update hourly activity (use UTC hours)
+        const hour = msgDate.getUTCHours()
         hourlyActivity[hour]++
         
         // Update daily data
@@ -606,7 +606,8 @@ export class DiscordService {
           
           dailyData[dateKey].sentimentCount++
           dailyData[dateKey].sentiment += sentimentValue
-          dailyData[dateKey].sentimentBreakdown[message.sentiment.score]++
+          const sentimentScore = message.sentiment.score as 'positive' | 'neutral' | 'negative'
+          dailyData[dateKey].sentimentBreakdown[sentimentScore]++
           
           userStats[message.userId].sentimentCount++
           userStats[message.userId].sentiment += sentimentValue
@@ -762,9 +763,9 @@ export class DiscordService {
   ): Promise<Array<{ word: string; count: number; sentiment: number }>> {
     const start = new Date()
     if (timeframe === 'daily') {
-      start.setHours(start.getHours() - 24)
+      start.setUTCHours(start.getUTCHours() - 24)
     } else {
-      start.setDate(start.getDate() - 7)
+      start.setUTCDate(start.getUTCDate() - 7)
     }
     
     const messageKeys = await redis.keys(`message:discord:${projectId}:*`)

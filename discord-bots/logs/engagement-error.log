@@ -1,0 +1,5 @@
+2025-07-02T00:16:08: ⚠️  Missing permissions in NABU LINES:
+2025-07-02T00:16:08:    - ManageRoles
+2025-07-02T00:16:08:    Please grant these permissions to the bot for full functionality
+2025-07-02T00:16:08: ⚠️  Bot role position too low in NABU LINES
+2025-07-02T00:16:08:    Move bot role above 'kol' role to enable role assignment

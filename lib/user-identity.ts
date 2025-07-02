@@ -337,8 +337,8 @@ export async function getRoleFromTwitterSession(twitterHandle: string | undefine
   if (!twitterHandle) return null;
   
   try {
-    // Normalize the handle
-    const handle = twitterHandle.replace('@', '').toLowerCase();
+    // Normalize the handle - remove ALL @ symbols
+    const handle = twitterHandle.replace(/^@+/, '').toLowerCase();
     
     // Find user by Twitter handle
     const user = await findUserByUsername(handle);
@@ -348,6 +348,21 @@ export async function getRoleFromTwitterSession(twitterHandle: string | undefine
       return user.role || 'user'; // Default to 'user' role if not set
     }
     
+    // If not found, try with @ prefix (in case it's stored that way)
+    const userWithAt = await findUserByUsername(`@${handle}`);
+    if (userWithAt) {
+      console.log(`✅ Found Twitter user @${handle} with role: ${userWithAt.role}`);
+      return userWithAt.role || 'user';
+    }
+    
+    // Also try with double @ (in case it's stored that way)
+    const userWithDoubleAt = await findUserByUsername(`@@${handle}`);
+    if (userWithDoubleAt) {
+      console.log(`✅ Found Twitter user @@${handle} with role: ${userWithDoubleAt.role}`);
+      return userWithDoubleAt.role || 'user';
+    }
+    
+    console.log(`❌ User ${twitterHandle} not found in any format`);
     return null;
   } catch (error) {
     console.error('Error getting role from Twitter session:', error);

@@ -23,10 +23,42 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Check auth - only admin can trigger batch processing
-    const auth = await checkAuth(request, ['admin'])
-    if (!auth.authenticated || !auth.hasAccess) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    // Check auth - admin, core, or master can trigger batch processing
+    const auth = await checkAuth(request, ['admin', 'core', 'master'])
+    
+    // Log for debugging
+    console.log('[Engagement Batch] Auth check result:', {
+      authenticated: auth.authenticated,
+      hasAccess: auth.hasAccess,
+      user: auth.user,
+      role: auth.role,
+      error: auth.error
+    })
+    
+    if (!auth.authenticated) {
+      return NextResponse.json({ error: 'Unauthorized - Please log in' }, { status: 401 })
+    }
+    
+    if (!auth.hasAccess) {
+      console.error('[Engagement Batch] Access denied for user:', {
+        user: auth.user,
+        role: auth.role,
+        requiredRoles: ['admin', 'core', 'master'],
+        error: auth.error
+      })
+      
+      // Provide helpful information in the response
+      return NextResponse.json({ 
+        error: 'Forbidden - Admin, Core, or Master role required',
+        currentRole: auth.role || 'unknown',
+        requiredRoles: ['admin', 'core', 'master'],
+        user: auth.user?.twitterHandle,
+        debug: {
+          message: 'Check your role at /api/debug/check-my-role',
+          authenticated: auth.authenticated,
+          hasAccess: auth.hasAccess
+        }
+      }, { status: 403 })
     }
     
     // Check if there's already a running job
