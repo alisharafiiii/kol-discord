@@ -25,3 +25,141 @@
   useExternalEmojis: true
 }
 2025-07-02T00:56:38: ✅ Posted tweet preview to #engagement-tracker
+2025-07-02T02:54:49: [SHARD 0] Reconnecting... 2025-07-02T06:54:49.046Z
+2025-07-02T02:54:49: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T03:34:16: [SHARD 0] Reconnecting... 2025-07-02T07:34:16.406Z
+2025-07-02T03:34:17: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T06:56:39: [SHARD 0] Reconnecting... 2025-07-02T10:56:39.844Z
+2025-07-02T06:56:40: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T10:06:18: [SHARD 0] Reconnecting... 2025-07-02T14:06:18.991Z
+2025-07-02T10:06:19: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T12:22:33: [SHARD 0] Reconnecting... 2025-07-02T16:22:33.179Z
+2025-07-02T12:22:33: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T12:39:57: [SHARD 0] Reconnecting... 2025-07-02T16:39:57.163Z
+2025-07-02T12:39:57: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T13:21:28: [SHARD 0] Reconnecting... 2025-07-02T17:21:28.654Z
+2025-07-02T13:21:29: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T14:32:40: [SHARD 0] Reconnecting... 2025-07-02T18:32:40.444Z
+2025-07-02T14:32:41: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T17:47:36: [SHARD 0] Reconnecting... 2025-07-02T21:47:36.479Z
+2025-07-02T17:47:37: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T19:09:36: [SHARD 0] Reconnecting... 2025-07-02T23:09:36.457Z
+2025-07-02T19:09:37: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T20:38:56: [SHARD 0] Reconnecting... 2025-07-03T00:38:56.506Z
+2025-07-02T20:38:57: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T21:40:42: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-02T21:40:42: 🎯 Processing command: submit
+2025-07-02T21:40:42: [SUBMIT] User alinabu submitting tweet: https://x.com/Ledger/status/1940417005657395366
+2025-07-02T21:40:42: [SUBMIT] Tweet ID extracted: 1940417005657395366
+2025-07-02T21:40:42: [SUBMIT] User connected as @sharafi_eth
+2025-07-02T21:40:42: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-02T21:40:43: [SUBMIT] Approval status: true
+2025-07-02T21:40:43: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-02T21:40:43: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-02T21:40:43: 📝 Fetched tweet content: Success
+2025-07-02T21:40:44: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-02T21:40:46: ✅ Posted tweet preview to #engagement-tracker
+2025-07-02T21:47:26: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-02T21:47:26: 🎯 Processing command: leaderboard
+2025-07-02T22:10:59: 📥 Received interaction: 2 - Command: connect - User: alinabu
+2025-07-02T22:10:59: 🎯 Processing command: connect
+2025-07-02T22:13:30: 📥 Received interaction: 2 - Command: connect - User: zamonchain.
+2025-07-02T22:13:30: 🎯 Processing command: connect
+2025-07-02T22:20:16: 🔍 Loading environment from: /Users/nabu/kol/.env.local
+2025-07-02T22:20:16: ✅ AI model initialized for sentiment analysis
+2025-07-02T22:20:17: 🚀 Engagement bot starting...
+2025-07-02T22:20:17: [SHARD 0] Ready! 2025-07-02T18:20:17.148EDT
+2025-07-02T22:20:17: ✅ Engagement bot logged in as nabulines_engagement#3015
+2025-07-02T22:20:17: 📋 Permissions in NABU LINES: 17 permissions
+2025-07-02T22:20:17: 🔄 Refreshing application (/) commands...
+2025-07-02T22:20:17: ✅ Registered commands to guild: NABU LINES
+2025-07-02T22:20:17: ✅ Slash commands registered
+2025-07-02T22:26:58: 📥 Received interaction: 2 - Command: connect - User: zamonchain.
+2025-07-02T22:26:58: 🎯 Processing command: connect
+2025-07-02T22:30:33: 📥 Received interaction: 2 - Command: connect - User: zamonchain.
+2025-07-02T22:30:33: 🎯 Processing command: connect
+2025-07-02T22:36:37: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-02T22:36:37: 🎯 Processing command: leaderboard
+2025-07-02T22:38:52: 📥 Received interaction: 2 - Command: connect - User: alinabu
+2025-07-02T22:38:52: 🎯 Processing command: connect
+2025-07-02T22:44:01: 📥 Received interaction: 2 - Command: connect - User: aries_altan
+2025-07-02T22:44:01: 🎯 Processing command: connect
+2025-07-02T23:15:26: 📥 Received interaction: 2 - Command: submit - User: zamonchain.
+2025-07-02T23:15:26: 🎯 Processing command: submit
+2025-07-02T23:15:26: [SUBMIT] User zamonchain. submitting tweet: https://x.com/parsa_nftt/status/1940279802381967784?s=46&t=VASFuGjhdqTLUQ-nSfzpKw
+2025-07-02T23:15:26: [SUBMIT] Tweet ID extracted: 1940279802381967784
+2025-07-02T23:15:26: [SUBMIT] User connected as @alisharafiiii
+2025-07-02T23:15:26: [SUBMIT] Checking approval status for @alisharafiiii...
+2025-07-02T23:15:26: [SUBMIT] Approval status: true
+2025-07-02T23:15:26: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-02T23:15:27: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-02T23:16:53: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-02T23:16:53: 🎯 Processing command: submit
+2025-07-02T23:16:53: [SUBMIT] User alinabu submitting tweet: https://x.com/ledger/status/1940378522083836061?s=46&t=VASFuGjhdqTLUQ-nSfzpKw
+2025-07-02T23:16:53: [SUBMIT] Tweet ID extracted: 1940378522083836061
+2025-07-02T23:16:53: [SUBMIT] User connected as @sharafi_eth
+2025-07-02T23:16:53: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-02T23:16:53: [SUBMIT] Approval status: true
+2025-07-02T23:16:53: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-02T23:16:53: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-02T23:16:54: 📝 Fetched tweet content: Success
+2025-07-02T23:16:54: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-02T23:16:55: ✅ Posted tweet preview to #engagement-tracker
+2025-07-02T23:31:15: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-02T23:31:15: 🎯 Processing command: leaderboard
+2025-07-02T23:34:32: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-02T23:34:32: 🎯 Processing command: submit
+2025-07-02T23:34:32: [SUBMIT] User alinabu submitting tweet: https://x.com/Ledger/status/1940337104468553842
+2025-07-02T23:34:32: [SUBMIT] Tweet ID extracted: 1940337104468553842
+2025-07-02T23:34:32: [SUBMIT] User connected as @sharafi_eth
+2025-07-02T23:34:32: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-02T23:34:33: [SUBMIT] Approval status: true
+2025-07-02T23:34:33: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-02T23:34:33: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-02T23:34:33: 📝 Fetched tweet content: Success
+2025-07-02T23:34:34: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-02T23:34:34: ✅ Posted tweet preview to #engagement-tracker
+2025-07-02T23:35:12: [SHARD 0] Reconnecting... 2025-07-02T19:35:12.562EDT
+2025-07-02T23:35:13: [SHARD 0] Resumed, replayed 1 events
+2025-07-02T23:37:49: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-02T23:37:49: 🎯 Processing command: leaderboard
+2025-07-02T23:40:58: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-02T23:40:58: 🎯 Processing command: leaderboard
+2025-07-03T01:04:52: [SHARD 0] Reconnecting... 2025-07-02T21:04:52.220EDT
+2025-07-03T01:04:52: [SHARD 0] Resumed, replayed 1 events
+2025-07-03T01:59:07: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-03T01:59:07: 🎯 Processing command: submit
+2025-07-03T01:59:07: [SUBMIT] User alinabu submitting tweet: https://x.com/Ledger/status/1939707597931897026
+2025-07-03T01:59:07: [SUBMIT] Tweet ID extracted: 1939707597931897026
+2025-07-03T01:59:07: [SUBMIT] User connected as @sharafi_eth
+2025-07-03T01:59:07: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-03T01:59:07: [SUBMIT] Approval status: true
+2025-07-03T01:59:07: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-03T01:59:08: [SUBMIT] Tier scenarios loaded: daily limit = 5
+2025-07-03T01:59:08: 📝 Fetched tweet content: Success
+2025-07-03T01:59:08: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-03T01:59:09: ✅ Posted tweet preview to #engagement-tracker

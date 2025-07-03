@@ -57,6 +57,7 @@ export default function EngagementAdminPage() {
   const [batchJobs, setBatchJobs] = useState<BatchJob[]>([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false)
   
   // Add refs to track component state and prevent unnecessary refreshes
   const isComponentMounted = useRef(true)
@@ -113,12 +114,13 @@ export default function EngagementAdminPage() {
       
       if (!['admin', 'core'].includes(userRole)) {
         router.push('/')
-      } else {
+      } else if (!dataLoaded) {
+        // Only fetch data if it hasn't been loaded yet
         fetchData()
         startPeriodicUpdates()
       }
     }
-  }, [session, status, router])
+  }, [session, status, router, dataLoaded])
   
   const startPeriodicUpdates = useCallback(() => {
     // Clear any existing interval
@@ -195,6 +197,7 @@ export default function EngagementAdminPage() {
       console.error('[Engagement Admin] Error fetching data:', error)
     } finally {
       setLoading(false)
+      setDataLoaded(true)
     }
   }
   
@@ -598,12 +601,13 @@ function TierScenarios() {
                 </ol>
                 <div className="mt-3 p-2 bg-gray-900 rounded">
                   <p className="text-xs text-gray-400">
-                    <strong>Important:</strong> Points require:
+                    <strong>How Points Work:</strong>
                   </p>
                   <ul className="list-disc list-inside text-xs text-gray-500 mt-1">
                     <li>Users must connect both Discord & Twitter accounts</li>
-                    <li>Twitter API must have "Elevated" access (not just "Essential")</li>
-                    <li>The tweetLikedBy endpoint is needed to see who engaged</li>
+                    <li>Points for Likes are automatically awarded to users who Retweet OR Comment</li>
+                    <li>If a user both comments and retweets, they receive like points only once</li>
+                    <li>Twitter OAuth 1.0a credentials must be properly configured</li>
                   </ul>
                 </div>
               </div>

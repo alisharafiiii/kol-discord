@@ -830,3 +830,42 @@ After doing this, you may fix the identity used for this commit with:
 fatal: could not read Username for 'https://github.com': Device not configured
 Tue Jul  1 02:00:02 EDT 2025: Backup completed successfully
 Wed Jul  2 02:00:01 EDT 2025: Changes detected, creating backup commit...
+🔒 Checking for modifications to LOCKED SECTIONS...
+✅ Pre-commit check passed
+[main 88c9fc0] Auto-backup: 2025-07-02 02:00:02
+ Committer: nabu <nabu@nabus-MacBook-Pro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 33 files changed, 10339 insertions(+), 56 deletions(-)
+ create mode 100644 app/api/debug/check-auth-role/route.ts
+ create mode 100644 app/api/debug/check-my-role/route.ts
+ create mode 100644 app/api/debug/refresh-session-role/route.ts
+ create mode 100644 discord-bots/logs/batch-processor-fixed.log
+ create mode 100644 discord-bots/logs/batch-processor.log
+ create mode 100644 discord-bots/logs/engagement-combined.log
+ create mode 100644 discord-bots/logs/engagement-cron-fixed.log
+ create mode 100644 discord-bots/logs/engagement-cron.log
+ create mode 100644 discord-bots/logs/engagement-error.log
+ create mode 100644 discord-bots/logs/engagement-out.log
+ create mode 100644 scripts/check-sharafi-users.js
+ create mode 100644 scripts/discord-analytics-fix-summary.md
+ create mode 100644 scripts/fix-sharafi-admin.js
+ create mode 100644 scripts/investigate-discord-date-filtering.js
+ create mode 100644 scripts/investigate-discord-june-data.js
+ create mode 100644 scripts/test-discord-analytics-fix.js
+ create mode 100644 scripts/test-utc-only-analytics.js
+ create mode 100644 scripts/utc-only-analytics-summary.md
+ create mode 100644 scripts/verify-no-side-effects.js
+fatal: could not read Username for 'https://github.com': Device not configured
+Wed Jul  2 02:00:03 EDT 2025: Backup completed successfully
+Thu Jul  3 02:00:00 EDT 2025: Changes detected, creating backup commit...

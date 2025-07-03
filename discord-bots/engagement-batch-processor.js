@@ -2,6 +2,7 @@ const { config } = require('dotenv')
 const { Redis } = require('@upstash/redis')
 const { TwitterApi } = require('twitter-api-v2')
 const { nanoid } = require('nanoid')
+const { toEdtIsoString, getEdtDateString } = require('./lib/timezone')
 
 // Load environment variables
 const path = require('path')
@@ -24,7 +25,7 @@ const twitterClient = new TwitterApi({
 const readOnlyClient = twitterClient.readOnly
 
 // Process batch job
-async function processBatch(forceDetailedCheck = false) {
+async function processBatch(metricsOnlyMode = false) {
   console.log('🔄 Starting batch processing...')
   console.log('📋 Configuration:')
   console.log(`   - Redis configured: ${!!process.env.UPSTASH_REDIS_REST_URL}`)
@@ -32,6 +33,7 @@ async function processBatch(forceDetailedCheck = false) {
   console.log(`   - Twitter Access Token: ${process.env.TWITTER_ACCESS_TOKEN ? process.env.TWITTER_ACCESS_TOKEN.substring(0, 8) + '...' : 'NOT SET'}`)
   console.log(`   - Twitter API Version: v2`)
   console.log(`   - Authentication Type: OAuth 1.0a (User Context)`)
+  console.log(`   - Mode: ${metricsOnlyMode ? '📊 METRICS ONLY' : '🚀 FULL ENGAGEMENT MODE (DEFAULT)'}`)
   
   // DEBUG: Check for pending batch jobs created by the API
   console.log(`\n🔍 DEBUG: Checking for pending batch jobs from API...`)
@@ -57,7 +59,7 @@ async function processBatch(forceDetailedCheck = false) {
       console.log(`   ✅ Using existing job ${batchId} for processing`)
       
       // Continue processing with this batch ID
-      return processBatchWithId(batchId, batchJob, forceDetailedCheck)
+      return processBatchWithId(batchId, batchJob, metricsOnlyMode)
     }
   }
   
@@ -85,30 +87,31 @@ async function processBatch(forceDetailedCheck = false) {
   console.log(`   ⚠️  NOTE: This job is separate from any jobs created via the API!`)
   
   // Continue with the new batch job
-  return processBatchWithId(batchId, batchJob, forceDetailedCheck)
+  return processBatchWithId(batchId, batchJob, metricsOnlyMode)
 }
 
 // Separate function to process with a specific batch ID
-async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
-  // Declare variable in proper scope
-  let hoursSinceLastCheck = 0
-  
-  // Check if we should do detailed engagement processing
-  const lastDetailedCheck = await redis.get('engagement:lastDetailedCheck')
-  hoursSinceLastCheck = lastDetailedCheck ? 
-    (Date.now() - parseInt(lastDetailedCheck)) / (1000 * 60 * 60) : 
-    Infinity
-  
-  const shouldDoDetailedCheck = forceDetailedCheck || hoursSinceLastCheck >= 1 // Check every hour
+async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
+  // By default, always run in FULL ENGAGEMENT MODE unless explicitly set to metrics-only
+  const shouldDoDetailedCheck = !metricsOnlyMode
   
   if (shouldDoDetailedCheck) {
-    console.log(`\n🔍 Running DETAILED engagement check (last check: ${hoursSinceLastCheck.toFixed(1)} hours ago)`)
+    console.log(`\n🚀 Running FULL ENGAGEMENT MODE - checking all interactions and awarding points`)
+    console.log(`   - Will check retweets and award points`)
+    console.log(`   - Will check comments/replies and award points`)
+    console.log(`   - Will automatically award like points for users who RT/comment`)
     await redis.set('engagement:lastDetailedCheck', Date.now())
   } else {
-    console.log(`\n📊 Running METRICS ONLY update (next detailed check in ${(1 - hoursSinceLastCheck).toFixed(1)} hours)`)
+    console.log(`\n📊 Running METRICS ONLY mode - updating tweet statistics without awarding points`)
+    console.log(`   - Only updating like/RT/reply counts`)
+    console.log(`   - NOT checking user engagements`)
+    console.log(`   - NOT awarding any points`)
   }
   
   try {
+    // Track points awarded per user for summary
+    const userPointsSummary = new Map()
+    
     // Get recent tweets from last 24 hours (stored as sorted set)
     const cutoff = Date.now() - (24 * 60 * 60 * 1000)
     const currentTime = Date.now()
@@ -239,9 +242,11 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
         
         console.log(`   🎯 Proceeding with detailed engagement processing...`)
         
-        // Skip likes endpoint - Twitter no longer provides this data
-        console.log(`\n   ℹ️  Skipping likes endpoint (Twitter API no longer provides this data)`)
-        console.log(`   📌 Will award like points automatically with comments/retweets`)
+        // IMPORTANT: We do NOT use the tweetLikedBy endpoint
+        // Instead, we automatically award like points to users who retweet or comment
+        console.log(`\n   ℹ️  Automatic Like Points System:`)
+        console.log(`   📌 Like points are automatically awarded to users who Retweet OR Comment`)
+        console.log(`   📌 If a user both comments and retweets, they get like points only once`)
         
         // Track users who have been awarded like points to avoid duplicates
         const usersAwardedLikePoints = new Set()
@@ -356,7 +361,21 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
                   
                   engagementsFound++
                   tweetEngagements++
-                  console.log(`✅ Awarded ${retweetPoints} points to ${retweeter.username} for retweeting (x${bonusMultiplier} bonus)`)
+                  console.log(`✅ Awarded ${retweetPoints} points to @${retweeter.username} for retweeting (x${bonusMultiplier} bonus)`)
+                  
+                  // Track points in summary
+                  const userKey = `@${retweeter.username} (${connection})`
+                  if (!userPointsSummary.has(userKey)) {
+                    userPointsSummary.set(userKey, { 
+                      username: retweeter.username, 
+                      discordId: connection, 
+                      totalPoints: 0, 
+                      tier: userConnection.tier,
+                      actions: []
+                    })
+                  }
+                  userPointsSummary.get(userKey).totalPoints += retweetPoints
+                  userPointsSummary.get(userKey).actions.push(`RT: ${retweetPoints}pts`)
                   
                   // Also award like points (assuming they liked it if they retweeted)
                   if (!usersAwardedLikePoints.has(connection)) {
@@ -388,7 +407,11 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
                       engagementsFound++
                       tweetEngagements++
                       usersAwardedLikePoints.add(connection)
-                      console.log(`✅ Awarded ${likePoints} points to ${retweeter.username} for implied like (x${bonusMultiplier} bonus)`)
+                      console.log(`✅ Awarded ${likePoints} points to @${retweeter.username} for implied like (x${bonusMultiplier} bonus)`)
+                      
+                      // Track like points in summary
+                      userPointsSummary.get(userKey).totalPoints += likePoints
+                      userPointsSummary.get(userKey).actions.push(`Like: ${likePoints}pts`)
                     }
                   }
                 } else {
@@ -520,7 +543,21 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
                   
                   engagementsFound++
                   tweetEngagements++
-                  console.log(`✅ Awarded ${replyPoints} points to ${replierUsername} for replying (x${bonusMultiplier} bonus)`)
+                  console.log(`✅ Awarded ${replyPoints} points to @${replierUsername} for replying (x${bonusMultiplier} bonus)`)
+                  
+                  // Track points in summary
+                  const userKey = `@${replierUsername} (${connection})`
+                  if (!userPointsSummary.has(userKey)) {
+                    userPointsSummary.set(userKey, { 
+                      username: replierUsername, 
+                      discordId: connection, 
+                      totalPoints: 0, 
+                      tier: userConnection.tier,
+                      actions: []
+                    })
+                  }
+                  userPointsSummary.get(userKey).totalPoints += replyPoints
+                  userPointsSummary.get(userKey).actions.push(`Reply: ${replyPoints}pts`)
                   
                   // Also award like points (assuming they liked it if they replied)
                   if (!usersAwardedLikePoints.has(connection)) {
@@ -552,7 +589,11 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
                       engagementsFound++
                       tweetEngagements++
                       usersAwardedLikePoints.add(connection)
-                      console.log(`✅ Awarded ${likePoints} points to ${replierUsername} for implied like (x${bonusMultiplier} bonus)`)
+                      console.log(`✅ Awarded ${likePoints} points to @${replierUsername} for implied like (x${bonusMultiplier} bonus)`)
+                      
+                      // Track like points in summary
+                      userPointsSummary.get(userKey).totalPoints += likePoints
+                      userPointsSummary.get(userKey).actions.push(`Like: ${likePoints}pts`)
                     }
                   }
                 } else {
@@ -623,26 +664,52 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
     
     console.log(`\n📊 Batch Processing Summary:`)
     console.log(`   - Batch ID: ${batchId}`)
-    console.log(`   - Mode: ${shouldDoDetailedCheck ? 'DETAILED (metrics + engagement)' : 'METRICS ONLY'}`)
+    console.log(`   - Mode: ${shouldDoDetailedCheck ? 'FULL ENGAGEMENT MODE' : 'METRICS ONLY'}`)
     console.log(`   - Tweets processed: ${tweetsProcessed}`)
     console.log(`   - Metrics updated: ${metricsUpdated}`)
     if (shouldDoDetailedCheck) {
       console.log(`   - Total engagements awarded: ${engagementsFound}`)
+      
+      // Show detailed points awarded per user
+      if (userPointsSummary.size > 0) {
+        console.log(`\n💰 POINTS AWARDED SUMMARY:`)
+        console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+        
+        // Sort by total points descending
+        const sortedUsers = Array.from(userPointsSummary.entries())
+          .sort((a, b) => b[1].totalPoints - a[1].totalPoints)
+        
+        let grandTotalPoints = 0
+        sortedUsers.forEach(([key, userData]) => {
+          console.log(`\n👤 ${key}`)
+          console.log(`   Tier: ${userData.tier.toUpperCase()}`)
+          console.log(`   Actions: ${userData.actions.join(', ')}`)
+          console.log(`   Total Points: ${userData.totalPoints}`)
+          grandTotalPoints += userData.totalPoints
+        })
+        
+        console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+        console.log(`🎯 GRAND TOTAL: ${grandTotalPoints} points awarded to ${userPointsSummary.size} users`)
+        console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+      } else {
+        console.log(`\n   ⚠️  No points were awarded (no eligible engagements found)`)
+      }
     }
-    console.log(`   - Status: Completed successfully`)
+    console.log(`\n   - Status: Completed successfully`)
     console.log(`   - Job stored at: engagement:batch:${batchId}`)
     
     // Add rate limit summary
     console.log(`\n🔑 API Usage Note:`)
     if (shouldDoDetailedCheck) {
-      console.log(`   - Detailed checks run hourly to minimize API calls`)
-      console.log(`   - Twitter /liking_users endpoint removed (no longer available)`)
-      console.log(`   - Like points are now awarded with comments/retweets`)
-      console.log(`   - Force detailed check with: node discord-bots/engagement-batch-processor.js --force-detailed`)
+      console.log(`   - Running in FULL ENGAGEMENT MODE (default)`)
+      console.log(`   - Checking all retweets and comments`)
+      console.log(`   - Automatically awarding like points to users who RT/comment`)
+      console.log(`   - To run metrics-only: node discord-bots/engagement-batch-processor.js --metrics-only`)
     } else {
+      console.log(`   - Running in METRICS ONLY mode`)
       console.log(`   - Only tweet metrics were updated (likes, RTs, replies)`)
-      console.log(`   - No engagement points were processed in this run`)
-      console.log(`   - Next detailed check scheduled in ${(1 - hoursSinceLastCheck).toFixed(1)} hours`)
+      console.log(`   - No engagement points were processed`)
+      console.log(`   - To run full engagement: node discord-bots/engagement-batch-processor.js (default)`)
     }
     
     console.log(`\n✅ Batch processing completed!`)
@@ -675,10 +742,16 @@ async function processBatchWithId(batchId, batchJob, forceDetailedCheck) {
 
 // Run immediately if called directly
 if (require.main === module) {
-  // Check for --force-detailed flag
-  const forceDetailed = process.argv.includes('--force-detailed')
+  // Check for --metrics-only flag (default is full engagement mode)
+  const metricsOnly = process.argv.includes('--metrics-only')
   
-  processBatch(forceDetailed)
+  if (metricsOnly) {
+    console.log('📊 Starting in METRICS ONLY mode (--metrics-only flag detected)')
+  } else {
+    console.log('🚀 Starting in FULL ENGAGEMENT MODE (default)')
+  }
+  
+  processBatch(metricsOnly)
     .then(() => process.exit(0))
     .catch(error => {
       console.error(error)

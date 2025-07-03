@@ -9,6 +9,7 @@ require('dotenv').config({ path: envPath })
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, REST, Routes } = require('discord.js')
 const { Redis } = require('@upstash/redis')
 const { GoogleGenerativeAI } = require('@google/generative-ai')
+const { toEdtIsoString, getEdtDateString } = require('./lib/timezone')
 
 // Check required environment variables
 const requiredVars = ['UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN']
@@ -109,21 +110,21 @@ function extractTwitterHandle(url) {
 async function createUserProfile(twitterHandle, discordId, discordUsername = null) {
   try {
     const normalizedHandle = twitterHandle.toLowerCase().replace('@', '')
-    const userId = `user_${normalizedHandle}`
+    const userId = `profile:${normalizedHandle}`  // Use profile: prefix for ProfileService compatibility
     
     console.log(`[createUserProfile] Creating profile for @${normalizedHandle} with Discord: ${discordUsername || 'Unknown'}`)
     
     const newUser = {
       id: userId,
-      twitterHandle: `@${normalizedHandle}`,
+      twitterHandle: normalizedHandle,  // Remove @ from twitterHandle field
       name: normalizedHandle, // Use handle as name initially
       approvalStatus: 'pending', // Set to pending, requiring admin approval
       role: 'user', // Default to user role
       tier: 'micro', // Default tier
       discordId: discordId,
       discordUsername: discordUsername, // Add Discord username
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: toEdtIsoString(new Date()),
+      updatedAt: toEdtIsoString(new Date()),
       socialAccounts: {
         twitter: {
           handle: normalizedHandle,
@@ -137,15 +138,22 @@ async function createUserProfile(twitterHandle, discordId, discordUsername = nul
       newUser.socialAccounts.discord = {
         id: discordId,
         username: discordUsername,
+        tag: discordUsername,  // Add tag field for compatibility
         connected: true
       }
     }
     
-    // Save to Redis
+    // Save to Redis using ProfileService prefix
     await redis.json.set(userId, '$', newUser)
     
-    // Create username index
-    await redis.sadd(`idx:username:${normalizedHandle}`, userId)
+    // Create indexes for both ProfileService and legacy systems
+    await redis.sadd(`idx:profile:handle:${normalizedHandle}`, userId)  // ProfileService index
+    await redis.sadd(`idx:username:${normalizedHandle}`, userId)  // Legacy index
+    
+    // Add to profile indexes for searching
+    await redis.sadd(`idx:profile:role:user`, userId)
+    await redis.sadd(`idx:profile:status:pending`, userId)
+    await redis.sadd(`idx:profile:tier:micro`, userId)
     
     // Add to pending users set (not approved)
     await redis.sadd('users:pending', userId)
@@ -164,14 +172,26 @@ async function isUserApproved(twitterHandle) {
   try {
     const normalizedHandle = twitterHandle.toLowerCase().replace('@', '')
     
-    // Check if user exists via username index
-    const userIds = await redis.smembers(`idx:username:${normalizedHandle}`)
-    if (!userIds || userIds.length === 0) {
-      return { approved: false, userData: null, exists: false }
+    // Try ProfileService format first (profile:handle)
+    const profileId = `profile:${normalizedHandle}`
+    let userData = await redis.json.get(profileId)
+    
+    // If not found, try legacy format via username index
+    if (!userData) {
+      const userIds = await redis.smembers(`idx:username:${normalizedHandle}`)
+      if (userIds && userIds.length > 0) {
+        userData = await redis.json.get(userIds[0])
+      }
     }
     
-    // Get user data - use the ID directly without prefixing
-    const userData = await redis.json.get(userIds[0])
+    // If still not found, check ProfileService index
+    if (!userData) {
+      const profileIds = await redis.smembers(`idx:profile:handle:${normalizedHandle}`)
+      if (profileIds && profileIds.length > 0) {
+        userData = await redis.json.get(profileIds[0])
+      }
+    }
+    
     if (!userData) {
       return { approved: false, userData: null, exists: false }
     }
@@ -425,7 +445,7 @@ client.on('ready', async () => {
               name: channel.name,
               type: channel.type === 0 ? 'text' : 'voice',
               projectId: projectId || null,
-              updatedAt: new Date().toISOString()
+              updatedAt: toEdtIsoString(new Date())
             })
             
             console.log(`✅ Fetched channel info: #${channel.name} (${channelId})`)
@@ -680,7 +700,7 @@ client.on('interactionCreate', async (interaction) => {
       console.log(`[SUBMIT] Tier scenarios loaded: daily limit = ${scenarios.dailyTweetLimit}`)
       
       // Check daily limit
-      const today = new Date().toISOString().split('T')[0]
+      const today = getEdtDateString(new Date())
       const dailySubmissions = await redis.get(`engagement:daily:${interaction.user.id}:${today}`) || 0
       
       if (dailySubmissions >= scenarios.dailyTweetLimit) {
@@ -832,7 +852,7 @@ client.on('interactionCreate', async (interaction) => {
       const scenarios = await getTierScenarios(connection.tier)
       
       // Get today's submissions
-      const today = new Date().toISOString().split('T')[0]
+      const today = getEdtDateString(new Date())
       const dailySubmissions = await redis.get(`engagement:daily:${interaction.user.id}:${today}`) || 0
       
       // Get recent engagements (skip for now since we don't have logs yet)
@@ -1113,33 +1133,46 @@ client.on('interactionCreate', async (interaction) => {
       // IMPORTANT: Update main user profile with Discord info
       console.log(`[CONNECT] Updating user profile for @${cleanHandle} with Discord info...`)
       
-      // Get the user ID from the profile
-      const userIds = await redis.smembers(`idx:username:${cleanHandle}`)
-      if (userIds && userIds.length > 0) {
-        const userId = userIds[0]
-        const profile = await redis.json.get(userId)
-        
-        if (profile) {
-          console.log(`[CONNECT] Found profile ${userId}, adding Discord info...`)
-          
-          // Update profile with Discord info
-          await redis.json.set(userId, '$.discordId', interaction.user.id)
-          await redis.json.set(userId, '$.discordUsername', interaction.user.username)
-          
-          // Ensure socialAccounts exists and update Discord info
-          if (!profile.socialAccounts) {
-            await redis.json.set(userId, '$.socialAccounts', {})
-          }
-          
-          await redis.json.set(userId, '$.socialAccounts.discord', {
-            id: interaction.user.id,
-            username: interaction.user.username,
-            tag: interaction.user.tag || interaction.user.username,
-            connected: true
-          })
-          
-          console.log(`✅ Updated main profile with Discord: ${interaction.user.username}`)
+      // Try ProfileService format first (profile:handle)
+      const profileId = `profile:${cleanHandle}`
+      let profile = await redis.json.get(profileId)
+      let foundProfileId = profileId
+      
+      // If not found, try legacy format (user:user_handle)
+      if (!profile) {
+        const userIds = await redis.smembers(`idx:username:${cleanHandle}`)
+        if (userIds && userIds.length > 0) {
+          foundProfileId = userIds[0]
+          profile = await redis.json.get(foundProfileId)
         }
+      }
+      
+      if (profile) {
+        console.log(`[CONNECT] Found profile ${foundProfileId}, adding Discord info...`)
+        
+        // Update profile with Discord info
+        await redis.json.set(foundProfileId, '$.discordId', interaction.user.id)
+        await redis.json.set(foundProfileId, '$.discordUsername', interaction.user.username)
+        
+        // Ensure socialAccounts exists and update Discord info
+        if (!profile.socialAccounts) {
+          await redis.json.set(foundProfileId, '$.socialAccounts', {})
+        }
+        
+        await redis.json.set(foundProfileId, '$.socialAccounts.discord', {
+          id: interaction.user.id,
+          username: interaction.user.username,
+          tag: interaction.user.tag || interaction.user.username,
+          connected: true
+        })
+        
+        // Update profile index for ProfileService if needed
+        const indexKey = `idx:profile:handle:${cleanHandle}`
+        await redis.sadd(indexKey, foundProfileId)
+        
+        console.log(`✅ Updated main profile with Discord: ${interaction.user.username}`)
+      } else {
+        console.log(`⚠️ No profile found for @${cleanHandle} - Discord info will be stored in engagement connection only`)
       }
       
       // Create connection - get tier from user profile
@@ -1191,16 +1224,16 @@ client.on('interactionCreate', async (interaction) => {
 
 // Enhanced error handling and connection monitoring
 client.on('error', (error) => {
-  console.error('[CLIENT ERROR]', new Date().toISOString(), error)
+  console.error('[CLIENT ERROR]', toEdtIsoString(new Date()), error)
 })
 
 // Monitor connection status
 client.on('shardReconnecting', (id) => {
-  console.log(`[SHARD ${id}] Reconnecting...`, new Date().toISOString())
+  console.log(`[SHARD ${id}] Reconnecting...`, toEdtIsoString(new Date()))
 })
 
 client.on('shardReady', (id) => {
-  console.log(`[SHARD ${id}] Ready!`, new Date().toISOString())
+  console.log(`[SHARD ${id}] Ready!`, toEdtIsoString(new Date()))
 })
 
 client.on('shardDisconnect', (event, id) => {

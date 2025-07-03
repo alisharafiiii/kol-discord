@@ -1,6 +1,7 @@
 import { redis } from '@/lib/redis'
 import { ProfileService } from './profile-service'
 import { UnifiedProfile } from '@/lib/types/profile'
+import { toEdtIsoString, getEdtDateString } from '../utils/timezone'
 
 export type PointSource = 'discord' | 'contest' | 'scout' | 'campaign' | 'other'
 
@@ -280,7 +281,7 @@ export class PointsService {
         category,
         points: pointsAwarded,
         tierUsed: tier?.id || 'none',
-        timestamp: new Date().toISOString(),
+        timestamp: toEdtIsoString(new Date()),
         metadata
       }
       
@@ -291,7 +292,7 @@ export class PointsService {
       })
       
       // Also store in daily leaderboard
-      const today = new Date().toISOString().split('T')[0]
+      const today = getEdtDateString(new Date())
       await redis.zincrby(`points:leaderboard:${today}`, pointsAwarded, userId)
       
       // Update all-time leaderboard
@@ -368,7 +369,7 @@ export class PointsService {
   async getLeaderboard(type: 'daily' | 'alltime' = 'alltime', limit = 100): Promise<Array<{userId: string, points: number}>> {
     try {
       const key = type === 'daily' 
-        ? `points:leaderboard:${new Date().toISOString().split('T')[0]}`
+        ? `points:leaderboard:${getEdtDateString(new Date())}`
         : 'points:leaderboard:alltime'
       
       const leaderboard = await redis.zrange(key, 0, limit - 1, {

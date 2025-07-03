@@ -8,6 +8,15 @@ import {
   UserProjectStats 
 } from '@/lib/types/discord';
 import { geminiService } from './gemini-service';
+import { 
+  utcToEdt, 
+  edtToUtc, 
+  getCurrentEdt, 
+  getEdtMidnight, 
+  toEdtIsoString, 
+  getEdtDateString,
+  getEdtHour 
+} from '../utils/timezone';
 
 export class DiscordService {
   // Project Management
@@ -26,7 +35,7 @@ export class DiscordService {
       iconUrl: data.iconUrl,
       trackedChannels: [],
       teamMods: [],
-      createdAt: new Date().toISOString(),
+      createdAt: toEdtIsoString(new Date()),
       createdBy: data.createdBy,
       isActive: true,
       stats: {
@@ -61,7 +70,7 @@ export class DiscordService {
     const updated = {
       ...project,
       ...updates,
-      updatedAt: new Date().toISOString()
+      updatedAt: toEdtIsoString(new Date())
     };
     
     await redis.json.set(projectId, '$', updated as any);
@@ -84,7 +93,7 @@ export class DiscordService {
     if (!project) return
 
     project.trackedChannels = channelIds
-    project.updatedAt = new Date().toISOString()
+    project.updatedAt = toEdtIsoString(new Date())
 
     await redis.json.set(projectId, '$', project as any)
   }
@@ -96,7 +105,7 @@ export class DiscordService {
       channelId,
       projectId,
       name: metadata.name,
-      updatedAt: new Date().toISOString()
+      updatedAt: toEdtIsoString(new Date())
     } as any)
   }
 
@@ -233,8 +242,8 @@ export class DiscordService {
         stats: {
           [projectId]: {
             messageCount: 0,
-            firstSeen: new Date().toISOString(),
-            lastSeen: new Date().toISOString(),
+            firstSeen: toEdtIsoString(new Date()),
+            lastSeen: toEdtIsoString(new Date()),
             sentimentBreakdown: {
               positive: 0,
               neutral: 0,
@@ -249,8 +258,8 @@ export class DiscordService {
     if (!user.stats[projectId]) {
       user.stats[projectId] = {
         messageCount: 0,
-        firstSeen: new Date().toISOString(),
-        lastSeen: new Date().toISOString(),
+        firstSeen: toEdtIsoString(new Date()),
+        lastSeen: toEdtIsoString(new Date()),
         sentimentBreakdown: {
           positive: 0,
           neutral: 0,
@@ -260,7 +269,7 @@ export class DiscordService {
     }
     
     user.stats[projectId].messageCount++;
-    user.stats[projectId].lastSeen = new Date().toISOString();
+    user.stats[projectId].lastSeen = toEdtIsoString(new Date());
     user.stats[projectId].sentimentBreakdown[sentiment]++;
     
     if (!user.projects.includes(projectId)) {
@@ -281,7 +290,7 @@ export class DiscordService {
     project.stats = {
       totalMessages: messageIds.length,
       totalUsers: userIds.length,
-      lastActivity: new Date().toISOString()
+      lastActivity: toEdtIsoString(new Date())
     };
     
     await redis.json.set(projectId, '$', project as any);
@@ -296,7 +305,7 @@ export class DiscordService {
     const cacheKey = `discord:stats:cache:${projectId}`;
     await redis.json.set(cacheKey, '$', {
       ...stats,
-      updatedAt: new Date().toISOString()
+      updatedAt: toEdtIsoString(new Date())
     });
     
     // Set expiry to 5 minutes
@@ -396,12 +405,12 @@ export class DiscordService {
         sentimentCounts[msg.sentiment.score]++;
       }
       
-      // Hourly activity (use UTC hours)
-      const hour = new Date(msg.timestamp).getUTCHours();
+      // Hourly activity (use EDT hours)
+      const hour = getEdtHour(new Date(msg.timestamp));
       hourlyActivity[hour]++;
       
       // Daily trend
-      const day = new Date(msg.timestamp).toISOString().split('T')[0];
+      const day = getEdtDateString(new Date(msg.timestamp));
       const dayData = dailyData.get(day) || { messages: 0, sentimentSum: 0 };
       dayData.messages++;
       dayData.sentimentSum += msg.sentiment?.score === 'positive' ? 1 : 
@@ -493,14 +502,12 @@ export class DiscordService {
           start.setTime(start.getTime() - (24 * 60 * 60 * 1000))
           break
         case 'weekly':
-          // Go back 7 days and set to start of that day (UTC)
-          start.setUTCDate(start.getUTCDate() - 7)
-          start.setUTCHours(0, 0, 0, 0)
+          // Go back 7 days and set to start of that day (EDT)
+          start = getEdtMidnight(7)
           break
         case 'monthly':
-          // Go back 30 days and set to start of that day (UTC)
-          start.setUTCDate(start.getUTCDate() - 30)
-          start.setUTCHours(0, 0, 0, 0)
+          // Go back 30 days and set to start of that day (EDT)
+          start = getEdtMidnight(30)
           break
         case 'allTime':
           start = new Date('2020-01-01')
@@ -577,12 +584,12 @@ export class DiscordService {
         }
         channelStats[message.channelId].count++
         
-        // Update hourly activity (use UTC hours)
-        const hour = msgDate.getUTCHours()
+        // Update hourly activity (use EDT hours)
+        const hour = getEdtHour(msgDate)
         hourlyActivity[hour]++
         
         // Update daily data
-        const dateKey = msgDate.toISOString().slice(0, 10)
+        const dateKey = getEdtDateString(msgDate)
         if (!dailyData[dateKey]) {
           dailyData[dateKey] = { 
             messages: 0, 
@@ -646,8 +653,15 @@ export class DiscordService {
       }))
       .sort((a, b) => b.messageCount - a.messageCount)
     
-    // Convert daily data to trend array
+    // Convert daily data to trend array - filter to only include dates within the selected range
+    const startDateEdt = getEdtDateString(start)
+    const endDateEdt = getEdtDateString(end)
+    
     const dailyTrend = Object.entries(dailyData)
+      .filter(([date]) => {
+        // Only include dates that are within the selected range
+        return date >= startDateEdt && date <= endDateEdt
+      })
       .map(([date, data]) => ({
         date,
         messages: data.messages,
@@ -763,9 +777,12 @@ export class DiscordService {
   ): Promise<Array<{ word: string; count: number; sentiment: number }>> {
     const start = new Date()
     if (timeframe === 'daily') {
-      start.setUTCHours(start.getUTCHours() - 24)
+      // Go back 24 hours
+      start.setTime(start.getTime() - (24 * 60 * 60 * 1000))
     } else {
-      start.setUTCDate(start.getUTCDate() - 7)
+      // Go back 7 days to EDT midnight
+      const edtStart = getEdtMidnight(7)
+      start.setTime(edtStart.getTime())
     }
     
     const messageKeys = await redis.keys(`message:discord:${projectId}:*`)

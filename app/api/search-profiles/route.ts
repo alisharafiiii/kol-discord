@@ -20,7 +20,11 @@ export async function GET(request: NextRequest) {
       role: profile.role,
       approvalStatus: profile.approvalStatus,
       tier: profile.tier,
-      isKOL: profile.isKOL
+      isKOL: profile.isKOL,
+      // Include Discord information
+      discordId: profile.discordId,
+      discordUsername: profile.discordUsername,
+      socialAccounts: profile.socialAccounts
     }))
     
     return NextResponse.json({ profiles: results })

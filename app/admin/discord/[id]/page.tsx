@@ -91,18 +91,29 @@ export default function DiscordProjectPage() {
   const [addingMod, setAddingMod] = useState(false)
   const [modSearchQuery, setModSearchQuery] = useState('')
 
-  // UTC date helper - creates date at UTC midnight
-  const getUTCMidnight = (daysAgo = 0) => {
+  // EDT date helper - creates date at EDT midnight
+  const getEdtMidnight = (daysAgo = 0) => {
     const date = new Date()
-    date.setUTCDate(date.getUTCDate() - daysAgo)
-    date.setUTCHours(0, 0, 0, 0)
+    date.setDate(date.getDate() - daysAgo)
+    // Adjust for EDT (UTC-4)
+    date.setHours(20, 0, 0, 0) // 20:00 UTC = 00:00 EDT
+    return date
+  }
+  
+  // Get end of day in EDT (23:59:59 EDT)
+  const getEdtEndOfDay = (daysAgo = 0) => {
+    const date = new Date()
+    date.setDate(date.getDate() - daysAgo)
+    // Adjust for EDT (UTC-4) - 23:59:59 EDT = 03:59:59 UTC next day
+    date.setDate(date.getDate() + 1)
+    date.setHours(3, 59, 59, 999)
     return date
   }
 
-  // Custom date range state - Always use UTC
+  // Custom date range state - Always use EDT
   const [customDateRange, setCustomDateRange] = useState({
-    startDate: getUTCMidnight(7), // Default to 7 days ago at UTC midnight
-    endDate: getUTCMidnight(0)    // Today at UTC midnight  
+    startDate: getEdtMidnight(7), // Default to 7 days ago at EDT midnight
+    endDate: getEdtEndOfDay(0)    // Today at EDT end of day (23:59:59)
   })
   const [showDatePicker] = useState(true) // Always show date picker
 
@@ -595,7 +606,12 @@ export default function DiscordProjectPage() {
   }
 
   const activityChartData = {
-    labels: analytics?.metrics.dailyTrend.map(d => new Date(d.date).toLocaleDateString()) || [],
+    labels: analytics?.metrics.dailyTrend.map(d => {
+      // d.date is in YYYY-MM-DD format (EDT date string)
+      const [year, month, day] = d.date.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }) || [],
     datasets: [{
       label: 'Messages',
       data: analytics?.metrics.dailyTrend.map(d => d.messages) || [],
@@ -605,7 +621,7 @@ export default function DiscordProjectPage() {
       yAxisID: 'y'
     }, {
       label: 'Sentiment Score',
-      data: analytics?.metrics.dailyTrend.map(d => d.sentiment) || [],
+      data: analytics?.metrics.dailyTrend.map(d => d.sentiment * 100) || [], // Convert to percentage
       borderColor: '#8b5cf6',
       backgroundColor: 'rgba(139, 92, 246, 0.1)',
       fill: false,
@@ -623,9 +639,13 @@ export default function DiscordProjectPage() {
   }
 
   const hourlyActivityData = {
-    labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+    labels: Array.from({ length: 24 }, (_, i) => {
+      const hour = i === 0 ? 12 : (i > 12 ? i - 12 : i);
+      const ampm = i < 12 ? 'AM' : 'PM';
+      return `${hour}${ampm} EDT`;
+    }),
     datasets: [{
-      label: 'Messages by Hour',
+      label: 'Messages by Hour (EDT)',
       data: analytics?.metrics.hourlyActivity || [],
       backgroundColor: '#3b82f6',
       borderColor: '#3b82f6',
@@ -1267,27 +1287,53 @@ export default function DiscordProjectPage() {
         <div className="mb-4 p-4 bg-black/50 border border-gray-700 rounded-lg">
           <div className="flex items-center gap-4">
             <div className="flex-1">
-              <label className="block text-xs text-gray-400 mb-1">Start Date (UTC)</label>
+              <label className="block text-xs text-gray-400 mb-1">Start Date (EDT)</label>
               <input
                 type="date"
-                value={customDateRange.startDate.toISOString().split('T')[0]}
-                max={customDateRange.endDate.toISOString().split('T')[0]}
+                value={(() => {
+                  // Convert EDT time to EDT date string
+                  const edtOffset = -4 * 60; // EDT is UTC-4
+                  const edtTime = new Date(customDateRange.startDate.getTime() + edtOffset * 60 * 1000);
+                  return edtTime.toISOString().split('T')[0];
+                })()}
+                max={(() => {
+                  const edtOffset = -4 * 60;
+                  const edtTime = new Date(customDateRange.endDate.getTime() + edtOffset * 60 * 1000);
+                  return edtTime.toISOString().split('T')[0];
+                })()}
                 onChange={(e) => {
-                  const newStartDate = new Date(e.target.value + 'T00:00:00.000Z') // Force UTC
+                  // Convert selected EDT date to UTC with EDT midnight (20:00 UTC)
+                  const [year, month, day] = e.target.value.split('-').map(Number);
+                  const newStartDate = new Date(Date.UTC(year, month - 1, day, 20, 0, 0, 0)); // 20:00 UTC = 00:00 EDT
                   setCustomDateRange(prev => ({ ...prev, startDate: newStartDate }))
                 }}
                 className="w-full px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm"
               />
             </div>
             <div className="flex-1">
-              <label className="block text-xs text-gray-400 mb-1">End Date (UTC)</label>
+              <label className="block text-xs text-gray-400 mb-1">End Date (EDT)</label>
               <input
                 type="date"
-                value={customDateRange.endDate.toISOString().split('T')[0]}
-                min={customDateRange.startDate.toISOString().split('T')[0]}
-                max={new Date().toISOString().split('T')[0]}
+                value={(() => {
+                  // Convert EDT time to EDT date string
+                  const edtOffset = -4 * 60; // EDT is UTC-4
+                  const edtTime = new Date(customDateRange.endDate.getTime() + edtOffset * 60 * 1000);
+                  return edtTime.toISOString().split('T')[0];
+                })()}
+                min={(() => {
+                  const edtOffset = -4 * 60;
+                  const edtTime = new Date(customDateRange.startDate.getTime() + edtOffset * 60 * 1000);
+                  return edtTime.toISOString().split('T')[0];
+                })()}
+                max={(() => {
+                  const edtOffset = -4 * 60;
+                  const edtTime = new Date(new Date().getTime() + edtOffset * 60 * 1000);
+                  return edtTime.toISOString().split('T')[0];
+                })()}
                 onChange={(e) => {
-                  const newEndDate = new Date(e.target.value + 'T00:00:00.000Z') // Force UTC
+                  // Convert selected EDT date to UTC with EDT end of day (03:59:59 UTC next day)
+                  const [year, month, day] = e.target.value.split('-').map(Number);
+                  const newEndDate = new Date(Date.UTC(year, month - 1, day + 1, 3, 59, 59, 999)); // 03:59:59 UTC next day = 23:59:59 EDT
                   setCustomDateRange(prev => ({ ...prev, endDate: newEndDate }))
                 }}
                 className="w-full px-3 py-1 bg-black border border-gray-600 rounded text-white text-sm"
@@ -1305,8 +1351,13 @@ export default function DiscordProjectPage() {
             </div>
           </div>
           <div className="mt-2 text-xs text-gray-500">
-            Selected range (UTC): {customDateRange.startDate.toISOString().split('T')[0]} to {customDateRange.endDate.toISOString().split('T')[0]}
-            ({Math.ceil((customDateRange.endDate.getTime() - customDateRange.startDate.getTime()) / (1000 * 60 * 60 * 24))} days)
+            Selected range (EDT): {(() => {
+              const edtOffset = -4 * 60;
+              const startEdt = new Date(customDateRange.startDate.getTime() + edtOffset * 60 * 1000);
+              const endEdt = new Date(customDateRange.endDate.getTime() + edtOffset * 60 * 1000);
+              const days = Math.ceil((customDateRange.endDate.getTime() - customDateRange.startDate.getTime()) / (1000 * 60 * 60 * 24));
+              return `${startEdt.toISOString().split('T')[0]} to ${endEdt.toISOString().split('T')[0]} (${days} days)`;
+            })()}
           </div>
         </div>
         
@@ -1342,9 +1393,22 @@ export default function DiscordProjectPage() {
             </div>
             <p className="text-3xl font-bold text-white">
               {analytics ? (
-                ((analytics.metrics.sentimentBreakdown.positive - analytics.metrics.sentimentBreakdown.negative) / 
-                 analytics.metrics.totalMessages * 100).toFixed(1)
+                (() => {
+                  const totalSentimentMessages = analytics.metrics.sentimentBreakdown.positive + 
+                                               analytics.metrics.sentimentBreakdown.neutral + 
+                                               analytics.metrics.sentimentBreakdown.negative;
+                  if (totalSentimentMessages === 0) return "0";
+                  // Calculate sentiment score as (positive - negative) / (total messages with sentiment)
+                  const sentimentScore = ((analytics.metrics.sentimentBreakdown.positive - analytics.metrics.sentimentBreakdown.negative) / 
+                                         totalSentimentMessages * 100);
+                  return sentimentScore.toFixed(1);
+                })()
               ) : 0}%
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              {analytics && (
+                `${analytics.metrics.sentimentBreakdown.positive} pos, ${analytics.metrics.sentimentBreakdown.neutral} neu, ${analytics.metrics.sentimentBreakdown.negative} neg`
+              )}
             </p>
           </div>
         </div>

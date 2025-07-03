@@ -145,19 +145,17 @@ const handleVisibilityChange = () => {
 3. **Twitter API Check**: The processor calls Twitter API to get likes/retweets
 4. **Award Points**: Points are given to connected users based on engagement
 
-### Why No Points Were Awarded
-- The batch processor found tweets with engagement (181 likes, 99 likes)
-- But 0 points were awarded because:
-  - **Twitter API Access Level Issue**: The current API credentials only have "Essential" access
-  - The `tweetLikedBy` endpoint requires "Elevated" or "Academic" access
-  - Without this endpoint, the system cannot see WHO liked/retweeted the tweets
-  - Even if users have connected accounts, the API can't retrieve their engagement
+### Why No Points Were Awarded (Historical Issue - Now Fixed)
+- The batch processor initially couldn't award points because:
+  - **Twitter API Limitation**: Twitter removed the `tweetLikedBy` endpoint
+  - The system couldn't see WHO liked tweets
+  - OAuth 1.0a credentials were not properly configured
 
-### Solution
-1. **Upgrade Twitter API Access**:
-   - Go to https://developer.twitter.com/en/portal/dashboard
-   - Apply for "Elevated" access (free but requires approval)
-   - This will enable the `tweetLikedBy` and `tweetRetweetedBy` endpoints
+### Solution (Already Implemented)
+1. **Automatic Like Points System**:
+   - Like points are automatically awarded to users who Retweet OR Comment
+   - If a user both comments and retweets, they receive like points only once
+   - This bypasses the need for the unavailable `tweetLikedBy` endpoint
 
 2. **Run the batch processor** (after API upgrade):
    ```bash
@@ -175,24 +173,26 @@ const handleVisibilityChange = () => {
 - ✅ Tweets are being tracked with metrics
 - ✅ Users have connected Discord & Twitter accounts
 - ✅ Point rules are configured
-- ❌ Twitter API cannot retrieve who liked/retweeted (needs Elevated access)
-- ❌ Therefore, no points can be awarded until API access is upgraded
+- ✅ OAuth 1.0a authentication properly configured
+- ✅ Points are being awarded using automatic like points system
+
+### How Points Work Now
+- **NO "Elevated" API access required** - Standard OAuth 1.0a is sufficient
+- **NO tweetLikedBy endpoint used** - We don't try to fetch who liked tweets
+- **Automatic Like Points**: Awarded to users who Retweet OR Comment
+- **No Duplicates**: If a user both comments and retweets, they get like points only once
+
+### Points System Implementation:
+- **Reply Only**: Awards reply points + automatic like points
+- **Retweet Only**: Awards retweet points + automatic like points  
+- **Both Actions**: Awards reply + retweet + single set of like points (no duplicates)
 
 ### Optimization Implemented
 To minimize API rate limit issues:
 - **Metrics-only mode**: Updates tweet metrics (likes, RTs, replies) every run
-- **Detailed mode**: Checks who liked/retweeted (runs hourly or on-demand)
+- **Detailed mode**: Checks who retweeted/replied (runs hourly or on-demand)
 - **Force flag**: Use `--force-detailed` to run detailed check immediately
 - **Result**: ~95% reduction in API calls while keeping metrics current
-
-### Twitter API Update (Latest)
-Due to Twitter API changes:
-- **Removed**: `/liking_users` endpoint calls (Twitter no longer provides this data)
-- **New Logic**: Users who comment or retweet automatically get like points too
-- **Points System**:
-  - Reply: Awards reply points + like points
-  - Retweet: Awards retweet points + like points
-  - Both: Awards reply + retweet + single set of like points (no duplicates)
 
 ## Future Considerations
 
