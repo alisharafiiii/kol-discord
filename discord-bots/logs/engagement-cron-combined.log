@@ -1,0 +1,1158 @@
+2025-07-03T12:19:04: 🤖 Starting Engagement Cron Job v2...
+2025-07-03T12:19:04: ⏰ Current time: 2025-07-03T16:19:04.768Z
+2025-07-03T12:19:04: 📅 Schedule: Every hour at :00
+2025-07-03T12:19:04: 🎯 Manual trigger: pm2 trigger engagement-cron-v2 manual-run
+2025-07-03T12:19:04: 🔍 IPC Channel Available: true
+2025-07-03T12:19:04: 🔍 Process PID: 19468
+2025-07-03T12:19:04: 🔍 PM2 Environment: true
+2025-07-03T12:19:04: 📤 Sent ready message to PM2
+2025-07-03T12:19:04: 
+2025-07-03T12:19:04: ⏳ Cron job scheduled - will run every hour at :00
+2025-07-03T12:19:04: 📝 Logs are written to: logs/batch_processor_logs/
+2025-07-03T12:19:04: ⚠️  Note: No immediate batch run on startup to preserve API rate limits
+2025-07-03T12:19:04: ⏭️  Next batch will run in 41 minutes at 2025-07-03T17:00:00.000Z
+2025-07-03T12:19:05: 📊 Current rate limit: 8/120 (7% used)
+2025-07-03T12:21:39: 
+2025-07-03T12:21:39: 👋 Received SIGINT, shutting down gracefully...
+2025-07-03T12:21:39: 🤖 Starting Engagement Cron Job v2...
+2025-07-03T12:21:39: ⏰ Current time: 2025-07-03T16:21:39.352Z
+2025-07-03T12:21:39: 📅 Schedule: Every hour at :00
+2025-07-03T12:21:39: 🎯 Manual trigger: pm2 trigger engagement-cron-v2 manual-run
+2025-07-03T12:21:39: 🔍 IPC Channel Available: true
+2025-07-03T12:21:39: 🔍 Process PID: 19756
+2025-07-03T12:21:39: 🔍 PM2 Environment: true
+2025-07-03T12:21:39: 📤 Sent ready message to PM2
+2025-07-03T12:21:39: 
+2025-07-03T12:21:39: ⏳ Cron job scheduled - will run every hour at :00
+2025-07-03T12:21:39: 📝 Logs are written to: logs/batch_processor_logs/
+2025-07-03T12:21:39: ⚠️  Note: No immediate batch run on startup to preserve API rate limits
+2025-07-03T12:21:39: ⏭️  Next batch will run in 38 minutes at 2025-07-03T17:00:00.000Z
+2025-07-03T12:21:39: 📊 Current rate limit: 8/120 (7% used)
+2025-07-03T12:21:45: 📨 Received manual-run action from PM2
+2025-07-03T12:21:45: 
+2025-07-03T12:21:45: ================================================================================
+2025-07-03T12:21:45: 🎯 Manual batch processing triggered at 2025-07-03T16:21:45.074Z
+2025-07-03T12:21:45: ================================================================================
+2025-07-03T12:21:45: 🔍 PM2 Message Received: { type: 'string', packet: 'manual-run', stringified: '"manual-run"' }
+2025-07-03T12:21:45: 📨 Received manual-run trigger from PM2
+2025-07-03T12:21:45: 
+2025-07-03T12:21:45: ================================================================================
+2025-07-03T12:21:45: 🎯 Manual batch processing triggered at 2025-07-03T16:21:45.075Z
+2025-07-03T12:21:45: ================================================================================
+2025-07-03T12:21:45: 📬 Simple message handler received: manual-run
+2025-07-03T12:21:45: 📊 Rate limit check: 8/120 used, 112 remaining
+2025-07-03T12:21:45: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.331EDT] 🚀 Starting batch processing {
+2025-07-03T12:21:45:   batchId: '8LKmJGFrb1RPuDNJKpRXb',
+2025-07-03T12:21:45:   startTime: '2025-07-03T08:21:45.331EDT'
+2025-07-03T12:21:45: }
+2025-07-03T12:21:45: 📊 Rate limit check: 8/120 used, 112 remaining
+2025-07-03T12:21:45: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.331EDT] 🚀 Starting batch processing {
+2025-07-03T12:21:45:   batchId: 'ISHQ4Dhmt7iK9hhxm_i-J',
+2025-07-03T12:21:45:   startTime: '2025-07-03T08:21:45.331EDT'
+2025-07-03T12:21:45: }
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.527EDT] 📊 Initial rate limit check { current: 8, remaining: 112, allowed: true }
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.560EDT] 📊 Initial rate limit check { current: 8, remaining: 112, allowed: true }
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.903EDT] 📊 Found 9 tweets from last 24 hours { batchId: '8LKmJGFrb1RPuDNJKpRXb', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:21:45: ℹ️ [2025-07-03T08:21:45.992EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'ISHQ4Dhmt7iK9hhxm_i-J', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.091EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.092EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.182EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.184EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.557EDT] Found 29 retweets for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.559EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.703EDT] Found 29 retweets for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.710EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: 🔍 [2025-07-03T08:21:47.849EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:21:47: ✅ [2025-07-03T08:21:47.852EDT] Processed tweet 1940417005657395366 { engagementsFound: 29, apiCallsUsed: 2, retweets: 29, replies: 0 }
+2025-07-03T12:21:48: 🔍 [2025-07-03T08:21:48.069EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:21:48: ✅ [2025-07-03T08:21:48.073EDT] Processed tweet 1940417005657395366 { engagementsFound: 29, apiCallsUsed: 2, retweets: 29, replies: 0 }
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.140EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.141EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.336EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.337EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.514EDT] Found 38 retweets for tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.517EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.670EDT] Found 38 retweets for tweet 1940378522083836061 {}
+2025-07-03T12:21:51: 🔍 [2025-07-03T08:21:51.673EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:21:52: 🔍 [2025-07-03T08:21:52.019EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:21:52: ✅ [2025-07-03T08:21:52.021EDT] Processed tweet 1940378522083836061 { engagementsFound: 38, apiCallsUsed: 2, retweets: 38, replies: 0 }
+2025-07-03T12:21:52: 🔍 [2025-07-03T08:21:52.311EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:21:52: ✅ [2025-07-03T08:21:52.312EDT] Processed tweet 1940378522083836061 { engagementsFound: 38, apiCallsUsed: 2, retweets: 38, replies: 0 }
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.290EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.293EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.546EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.547EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:21:56: ⚠️ [2025-07-03T08:21:56.611EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:21:56: ⚠️ [2025-07-03T08:21:56.614EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.780EDT] Found 18 retweets for tweet 1940337104468553842 {}
+2025-07-03T12:21:56: 🔍 [2025-07-03T08:21:56.782EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:21:57: 🔍 [2025-07-03T08:21:57.436EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:21:57: ✅ [2025-07-03T08:21:57.438EDT] Processed tweet 1940337104468553842 { engagementsFound: 18, apiCallsUsed: 2, retweets: 18, replies: 0 }
+2025-07-03T12:21:58: ⚠️ [2025-07-03T08:21:58.681EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:21:58: ⚠️ [2025-07-03T08:21:58.683EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:21:59: 🔍 [2025-07-03T08:21:59.665EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:21:59: 🔍 [2025-07-03T08:21:59.667EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:21:59: ⚠️ [2025-07-03T08:21:59.742EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:21:59: ⚠️ [2025-07-03T08:21:59.743EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:01: ⚠️ [2025-07-03T08:22:01.821EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:01: ⚠️ [2025-07-03T08:22:01.824EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:02: ⚠️ [2025-07-03T08:22:02.754EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:02: ⚠️ [2025-07-03T08:22:02.755EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:05: ⚠️ [2025-07-03T08:22:05.892EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:05: ⚠️ [2025-07-03T08:22:05.895EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:10: ⚠️ [2025-07-03T08:22:10.755EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T12:22:10: 🔍 [2025-07-03T08:22:10.757EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:22:11: 🔍 [2025-07-03T08:22:11.520EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:22:11: ✅ [2025-07-03T08:22:11.522EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:12: 🔍 [2025-07-03T08:22:12.127EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:22:12: 🔍 [2025-07-03T08:22:12.128EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:22:12: ⚠️ [2025-07-03T08:22:12.193EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:12: ⚠️ [2025-07-03T08:22:12.195EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:13: ⚠️ [2025-07-03T08:22:13.898EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:22:13: 🔍 [2025-07-03T08:22:13.900EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:22:14: 🔍 [2025-07-03T08:22:14.172EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:22:14: ✅ [2025-07-03T08:22:14.174EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:14: ⚠️ [2025-07-03T08:22:14.275EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:14: ⚠️ [2025-07-03T08:22:14.277EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:14: 🔍 [2025-07-03T08:22:14.749EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:22:14: 🔍 [2025-07-03T08:22:14.750EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:22:14: ⚠️ [2025-07-03T08:22:14.818EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:14: ⚠️ [2025-07-03T08:22:14.820EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:16: ⚠️ [2025-07-03T08:22:16.906EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:16: ⚠️ [2025-07-03T08:22:16.907EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:18: ⚠️ [2025-07-03T08:22:18.344EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:18: ⚠️ [2025-07-03T08:22:18.347EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:20: ⚠️ [2025-07-03T08:22:20.981EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:20: ⚠️ [2025-07-03T08:22:20.982EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:26: ⚠️ [2025-07-03T08:22:26.350EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:22:26: 🔍 [2025-07-03T08:22:26.354EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:22:26: 🔍 [2025-07-03T08:22:26.678EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:22:26: ✅ [2025-07-03T08:22:26.681EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:27: 🔍 [2025-07-03T08:22:27.301EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:22:27: 🔍 [2025-07-03T08:22:27.303EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:22:27: ⚠️ [2025-07-03T08:22:27.368EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:27: ⚠️ [2025-07-03T08:22:27.370EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:28: ⚠️ [2025-07-03T08:22:28.985EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:22:28: 🔍 [2025-07-03T08:22:28.986EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:22:29: ⚠️ [2025-07-03T08:22:29.467EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:29: ⚠️ [2025-07-03T08:22:29.470EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:29: 🔍 [2025-07-03T08:22:29.575EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:22:29: ✅ [2025-07-03T08:22:29.578EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:30: 🔍 [2025-07-03T08:22:30.166EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:22:30: 🔍 [2025-07-03T08:22:30.167EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:22:30: ⚠️ [2025-07-03T08:22:30.234EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:30: ⚠️ [2025-07-03T08:22:30.235EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:32: ⚠️ [2025-07-03T08:22:32.303EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:32: ⚠️ [2025-07-03T08:22:32.305EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:33: ⚠️ [2025-07-03T08:22:33.537EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:33: ⚠️ [2025-07-03T08:22:33.541EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:36: ⚠️ [2025-07-03T08:22:36.375EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:36: ⚠️ [2025-07-03T08:22:36.378EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:41: ⚠️ [2025-07-03T08:22:41.544EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:22:41: 🔍 [2025-07-03T08:22:41.546EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:22:42: 🔍 [2025-07-03T08:22:42.336EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:22:42: ✅ [2025-07-03T08:22:42.338EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:43: 🔍 [2025-07-03T08:22:43.084EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:22:43: 🔍 [2025-07-03T08:22:43.085EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:22:43: ⚠️ [2025-07-03T08:22:43.161EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:43: ⚠️ [2025-07-03T08:22:43.163EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:44: ⚠️ [2025-07-03T08:22:44.381EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:22:44: 🔍 [2025-07-03T08:22:44.383EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:22:44: 🔍 [2025-07-03T08:22:44.783EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:22:44: ✅ [2025-07-03T08:22:44.785EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:45: ⚠️ [2025-07-03T08:22:45.223EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:45: ⚠️ [2025-07-03T08:22:45.224EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:45: 🔍 [2025-07-03T08:22:45.494EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:22:45: 🔍 [2025-07-03T08:22:45.498EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:22:45: ⚠️ [2025-07-03T08:22:45.568EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:45: ⚠️ [2025-07-03T08:22:45.570EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:47: ⚠️ [2025-07-03T08:22:47.637EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:47: ⚠️ [2025-07-03T08:22:47.639EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:22:49: ⚠️ [2025-07-03T08:22:49.287EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:49: ⚠️ [2025-07-03T08:22:49.289EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:51: ⚠️ [2025-07-03T08:22:51.711EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:51: ⚠️ [2025-07-03T08:22:51.713EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:22:57: ⚠️ [2025-07-03T08:22:57.291EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:22:57: 🔍 [2025-07-03T08:22:57.293EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:22:57: 🔍 [2025-07-03T08:22:57.572EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:22:57: ✅ [2025-07-03T08:22:57.573EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:22:58: 🔍 [2025-07-03T08:22:58.166EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:22:58: 🔍 [2025-07-03T08:22:58.168EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:22:58: ⚠️ [2025-07-03T08:22:58.230EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:22:58: ⚠️ [2025-07-03T08:22:58.232EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:22:59: ⚠️ [2025-07-03T08:22:59.715EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T12:22:59: 🔍 [2025-07-03T08:22:59.717EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T12:23:00: 🔍 [2025-07-03T08:23:00.254EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T12:23:00: ✅ [2025-07-03T08:23:00.255EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:23:00: ⚠️ [2025-07-03T08:23:00.305EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:23:00: ⚠️ [2025-07-03T08:23:00.306EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:23:00: 🔍 [2025-07-03T08:23:00.812EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T12:23:00: 🔍 [2025-07-03T08:23:00.815EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T12:23:00: ⚠️ [2025-07-03T08:23:00.876EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:23:00: ⚠️ [2025-07-03T08:23:00.878EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:23:02: ⚠️ [2025-07-03T08:23:02.949EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:23:02: ⚠️ [2025-07-03T08:23:02.950EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:23:04: ⚠️ [2025-07-03T08:23:04.371EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:23:04: ⚠️ [2025-07-03T08:23:04.372EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:23:07: ⚠️ [2025-07-03T08:23:07.019EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:23:07: ⚠️ [2025-07-03T08:23:07.019EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:23:07: 
+2025-07-03T12:23:07: 👋 Received SIGINT, shutting down gracefully...
+2025-07-03T12:26:54: 🤖 Starting Engagement Cron Job v2...
+2025-07-03T12:26:54: ⏰ Current time: 2025-07-03T16:26:54.337Z
+2025-07-03T12:26:54: 📅 Schedule: Every hour at :00
+2025-07-03T12:26:54: 🎯 Manual trigger: pm2 trigger engagement-cron-v2 manual-run
+2025-07-03T12:26:54: 🔍 IPC Channel Available: true
+2025-07-03T12:26:54: 🔍 Process PID: 20421
+2025-07-03T12:26:54: 🔍 PM2 Environment: true
+2025-07-03T12:26:54: 📤 Sent ready message to PM2
+2025-07-03T12:26:54: 
+2025-07-03T12:26:54: ⏳ Cron job scheduled - will run every hour at :00
+2025-07-03T12:26:54: 📝 Logs are written to: logs/batch_processor_logs/
+2025-07-03T12:26:54: ⚠️  Note: No immediate batch run on startup to preserve API rate limits
+2025-07-03T12:26:54: ⏭️  Next batch will run in 33 minutes at 2025-07-03T17:00:00.000Z
+2025-07-03T12:26:54: 📊 Current rate limit: 26/120 (22% used)
+2025-07-03T12:27:30: 📨 Received manual-run action from PM2
+2025-07-03T12:27:30: 
+2025-07-03T12:27:30: ================================================================================
+2025-07-03T12:27:30: 🎯 Manual batch processing triggered at 2025-07-03T16:27:30.220Z
+2025-07-03T12:27:30: ================================================================================
+2025-07-03T12:27:30: 🔍 PM2 Message Received: { type: 'string', packet: 'manual-run', stringified: '"manual-run"' }
+2025-07-03T12:27:30: 📨 Received manual-run trigger from PM2
+2025-07-03T12:27:30: 
+2025-07-03T12:27:30: ================================================================================
+2025-07-03T12:27:30: 🎯 Manual batch processing triggered at 2025-07-03T16:27:30.220Z
+2025-07-03T12:27:30: ================================================================================
+2025-07-03T12:27:30: 📬 Simple message handler received: manual-run
+2025-07-03T12:27:30: 📊 Rate limit check: 26/120 used, 94 remaining
+2025-07-03T12:27:30: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:27:30: ℹ️ [2025-07-03T08:27:30.484EDT] 🚀 Starting batch processing {
+2025-07-03T12:27:30:   batchId: 'vDHnmzIvpDAjVi1_s2F54',
+2025-07-03T12:27:30:   startTime: '2025-07-03T08:27:30.484EDT'
+2025-07-03T12:27:30: }
+2025-07-03T12:27:30: 📊 Rate limit check: 26/120 used, 94 remaining
+2025-07-03T12:27:30: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:27:30: ℹ️ [2025-07-03T08:27:30.484EDT] 🚀 Starting batch processing {
+2025-07-03T12:27:30:   batchId: 'WaP_x8cFvnyRlJX6qTWyR',
+2025-07-03T12:27:30:   startTime: '2025-07-03T08:27:30.484EDT'
+2025-07-03T12:27:30: }
+2025-07-03T12:27:30: ℹ️ [2025-07-03T08:27:30.685EDT] 📊 Initial rate limit check { current: 26, remaining: 94, allowed: true }
+2025-07-03T12:27:30: ℹ️ [2025-07-03T08:27:30.798EDT] 📊 Initial rate limit check { current: 26, remaining: 94, allowed: true }
+2025-07-03T12:27:31: ℹ️ [2025-07-03T08:27:31.087EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'WaP_x8cFvnyRlJX6qTWyR', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:27:31: ℹ️ [2025-07-03T08:27:31.267EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'vDHnmzIvpDAjVi1_s2F54', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:27:32: 🔍 [2025-07-03T08:27:32.425EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:27:32: 🔍 [2025-07-03T08:27:32.429EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:27:32: 🔍 [2025-07-03T08:27:32.458EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:27:32: 🔍 [2025-07-03T08:27:32.460EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:27:32: ⚠️ [2025-07-03T08:27:32.550EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:32: ⚠️ [2025-07-03T08:27:32.551EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:32: ⚠️ [2025-07-03T08:27:32.552EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:27:32: ⚠️ [2025-07-03T08:27:32.552EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:27:34: ⚠️ [2025-07-03T08:27:34.619EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:34: ⚠️ [2025-07-03T08:27:34.619EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:34: ⚠️ [2025-07-03T08:27:34.620EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:27:34: ⚠️ [2025-07-03T08:27:34.620EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:27:38: ⚠️ [2025-07-03T08:27:38.689EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:38: ⚠️ [2025-07-03T08:27:38.689EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:38: ⚠️ [2025-07-03T08:27:38.692EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:27:38: ⚠️ [2025-07-03T08:27:38.693EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:27:46: ⚠️ [2025-07-03T08:27:46.694EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T12:27:46: ⚠️ [2025-07-03T08:27:46.695EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T12:27:46: 🔍 [2025-07-03T08:27:46.696EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:27:46: 🔍 [2025-07-03T08:27:46.696EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:27:47: 🔍 [2025-07-03T08:27:47.226EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:27:47: ✅ [2025-07-03T08:27:47.228EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:27:47: 🔍 [2025-07-03T08:27:47.237EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:27:47: ✅ [2025-07-03T08:27:47.238EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:27:47: 🔍 [2025-07-03T08:27:47.969EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:27:47: 🔍 [2025-07-03T08:27:47.971EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:27:48: 🔍 [2025-07-03T08:27:48.030EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:27:48: 🔍 [2025-07-03T08:27:48.032EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:27:48: ⚠️ [2025-07-03T08:27:48.060EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:48: ⚠️ [2025-07-03T08:27:48.062EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:27:48: ⚠️ [2025-07-03T08:27:48.096EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:48: ⚠️ [2025-07-03T08:27:48.097EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:27:50: ⚠️ [2025-07-03T08:27:50.159EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:50: ⚠️ [2025-07-03T08:27:50.161EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:27:50: ⚠️ [2025-07-03T08:27:50.181EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:50: ⚠️ [2025-07-03T08:27:50.182EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:27:54: ⚠️ [2025-07-03T08:27:54.226EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:54: ⚠️ [2025-07-03T08:27:54.228EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:27:54: ⚠️ [2025-07-03T08:27:54.250EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:27:54: ⚠️ [2025-07-03T08:27:54.252EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:02: ⚠️ [2025-07-03T08:28:02.230EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T12:28:02: 🔍 [2025-07-03T08:28:02.233EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:28:02: ⚠️ [2025-07-03T08:28:02.253EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T12:28:02: 🔍 [2025-07-03T08:28:02.254EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:28:02: 🔍 [2025-07-03T08:28:02.966EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:28:02: ✅ [2025-07-03T08:28:02.967EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:03: 🔍 [2025-07-03T08:28:03.028EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:28:03: ✅ [2025-07-03T08:28:03.030EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:03: 🔍 [2025-07-03T08:28:03.567EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:28:03: 🔍 [2025-07-03T08:28:03.568EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:28:03: ⚠️ [2025-07-03T08:28:03.636EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:03: ⚠️ [2025-07-03T08:28:03.638EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:03: 🔍 [2025-07-03T08:28:03.746EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:28:03: 🔍 [2025-07-03T08:28:03.749EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:28:03: ⚠️ [2025-07-03T08:28:03.820EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:03: ⚠️ [2025-07-03T08:28:03.822EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:05: ⚠️ [2025-07-03T08:28:05.725EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:05: ⚠️ [2025-07-03T08:28:05.729EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:05: ⚠️ [2025-07-03T08:28:05.890EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:05: ⚠️ [2025-07-03T08:28:05.893EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:09: ⚠️ [2025-07-03T08:28:09.794EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:09: ⚠️ [2025-07-03T08:28:09.795EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:09: ⚠️ [2025-07-03T08:28:09.966EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:09: ⚠️ [2025-07-03T08:28:09.968EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:17: ⚠️ [2025-07-03T08:28:17.796EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T12:28:17: 🔍 [2025-07-03T08:28:17.800EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:28:17: ⚠️ [2025-07-03T08:28:17.970EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T12:28:17: 🔍 [2025-07-03T08:28:17.972EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:28:18: 🔍 [2025-07-03T08:28:18.495EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:28:18: ✅ [2025-07-03T08:28:18.497EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:18: 🔍 [2025-07-03T08:28:18.545EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:28:18: ✅ [2025-07-03T08:28:18.546EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:19: 🔍 [2025-07-03T08:28:19.138EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:28:19: 🔍 [2025-07-03T08:28:19.140EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:28:19: ⚠️ [2025-07-03T08:28:19.223EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:19: ⚠️ [2025-07-03T08:28:19.225EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:19: 🔍 [2025-07-03T08:28:19.334EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:28:19: 🔍 [2025-07-03T08:28:19.336EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:28:19: ⚠️ [2025-07-03T08:28:19.396EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:19: ⚠️ [2025-07-03T08:28:19.397EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:21: ⚠️ [2025-07-03T08:28:21.287EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:21: ⚠️ [2025-07-03T08:28:21.288EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:21: ⚠️ [2025-07-03T08:28:21.456EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:21: ⚠️ [2025-07-03T08:28:21.459EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:25: ⚠️ [2025-07-03T08:28:25.349EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:25: ⚠️ [2025-07-03T08:28:25.350EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:25: ⚠️ [2025-07-03T08:28:25.524EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:25: ⚠️ [2025-07-03T08:28:25.525EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:33: ⚠️ [2025-07-03T08:28:33.351EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:28:33: 🔍 [2025-07-03T08:28:33.353EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:28:33: ⚠️ [2025-07-03T08:28:33.527EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:28:33: 🔍 [2025-07-03T08:28:33.538EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:28:33: 🔍 [2025-07-03T08:28:33.831EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:28:33: ✅ [2025-07-03T08:28:33.835EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:33: 🔍 [2025-07-03T08:28:33.988EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:28:33: ✅ [2025-07-03T08:28:33.988EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:34: 🔍 [2025-07-03T08:28:34.587EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:28:34: 🔍 [2025-07-03T08:28:34.588EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:28:34: ⚠️ [2025-07-03T08:28:34.662EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:34: ⚠️ [2025-07-03T08:28:34.663EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:34: 🔍 [2025-07-03T08:28:34.694EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:28:34: 🔍 [2025-07-03T08:28:34.695EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:28:34: ⚠️ [2025-07-03T08:28:34.755EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:34: ⚠️ [2025-07-03T08:28:34.757EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:36: ⚠️ [2025-07-03T08:28:36.735EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:36: ⚠️ [2025-07-03T08:28:36.737EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:36: ⚠️ [2025-07-03T08:28:36.818EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:36: ⚠️ [2025-07-03T08:28:36.820EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:40: ⚠️ [2025-07-03T08:28:40.808EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:40: ⚠️ [2025-07-03T08:28:40.809EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:40: ⚠️ [2025-07-03T08:28:40.894EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:40: ⚠️ [2025-07-03T08:28:40.895EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:48: ⚠️ [2025-07-03T08:28:48.812EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:28:48: 🔍 [2025-07-03T08:28:48.814EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:28:48: ⚠️ [2025-07-03T08:28:48.897EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:28:48: 🔍 [2025-07-03T08:28:48.898EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:28:49: 🔍 [2025-07-03T08:28:49.681EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:28:49: ✅ [2025-07-03T08:28:49.683EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:49: 🔍 [2025-07-03T08:28:49.726EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:28:49: ✅ [2025-07-03T08:28:49.728EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:28:50: 🔍 [2025-07-03T08:28:50.428EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:28:50: 🔍 [2025-07-03T08:28:50.430EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:28:50: ⚠️ [2025-07-03T08:28:50.497EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:50: ⚠️ [2025-07-03T08:28:50.498EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:50: 🔍 [2025-07-03T08:28:50.521EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:28:50: 🔍 [2025-07-03T08:28:50.523EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:28:50: ⚠️ [2025-07-03T08:28:50.598EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:50: ⚠️ [2025-07-03T08:28:50.600EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:28:52: ⚠️ [2025-07-03T08:28:52.596EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:52: ⚠️ [2025-07-03T08:28:52.599EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:52: ⚠️ [2025-07-03T08:28:52.663EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:52: ⚠️ [2025-07-03T08:28:52.664EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:28:56: ⚠️ [2025-07-03T08:28:56.682EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:56: ⚠️ [2025-07-03T08:28:56.684EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:28:56: ⚠️ [2025-07-03T08:28:56.755EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:28:56: ⚠️ [2025-07-03T08:28:56.756EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:04: ⚠️ [2025-07-03T08:29:04.686EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:29:04: 🔍 [2025-07-03T08:29:04.693EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:29:04: ⚠️ [2025-07-03T08:29:04.757EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:29:04: 🔍 [2025-07-03T08:29:04.759EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.169EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:29:05: ✅ [2025-07-03T08:29:05.172EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.210EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:29:05: ✅ [2025-07-03T08:29:05.221EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.923EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.924EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.940EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:29:05: 🔍 [2025-07-03T08:29:05.941EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:29:05: ⚠️ [2025-07-03T08:29:05.993EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:05: ⚠️ [2025-07-03T08:29:05.995EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:06: ⚠️ [2025-07-03T08:29:06.015EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:06: ⚠️ [2025-07-03T08:29:06.018EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:08: ⚠️ [2025-07-03T08:29:08.054EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:08: ⚠️ [2025-07-03T08:29:08.055EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:08: ⚠️ [2025-07-03T08:29:08.083EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:08: ⚠️ [2025-07-03T08:29:08.084EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:11: 📨 Received manual-run action from PM2
+2025-07-03T12:29:11: 
+2025-07-03T12:29:11: ================================================================================
+2025-07-03T12:29:11: 🎯 Manual batch processing triggered at 2025-07-03T16:29:11.966Z
+2025-07-03T12:29:11: ================================================================================
+2025-07-03T12:29:11: 🔍 PM2 Message Received: { type: 'string', packet: 'manual-run', stringified: '"manual-run"' }
+2025-07-03T12:29:11: 📨 Received manual-run trigger from PM2
+2025-07-03T12:29:11: 
+2025-07-03T12:29:11: ================================================================================
+2025-07-03T12:29:11: 🎯 Manual batch processing triggered at 2025-07-03T16:29:11.967Z
+2025-07-03T12:29:11: ================================================================================
+2025-07-03T12:29:11: 📬 Simple message handler received: manual-run
+2025-07-03T12:29:12: ⚠️ [2025-07-03T08:29:12.121EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:12: ⚠️ [2025-07-03T08:29:12.123EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:12: ⚠️ [2025-07-03T08:29:12.147EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:12: ⚠️ [2025-07-03T08:29:12.148EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:12: 📊 Rate limit check: 38/120 used, 82 remaining
+2025-07-03T12:29:12: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:29:12: ℹ️ [2025-07-03T08:29:12.219EDT] 🚀 Starting batch processing {
+2025-07-03T12:29:12:   batchId: 'Qbh7Uj6gJT2MB2lSTC1Lv',
+2025-07-03T12:29:12:   startTime: '2025-07-03T08:29:12.219EDT'
+2025-07-03T12:29:12: }
+2025-07-03T12:29:12: 📊 Rate limit check: 38/120 used, 82 remaining
+2025-07-03T12:29:12: ✅ Rate limit check passed, starting batch...
+2025-07-03T12:29:12: ℹ️ [2025-07-03T08:29:12.219EDT] 🚀 Starting batch processing {
+2025-07-03T12:29:12:   batchId: 'XsFSHRK08kfNN9W_EM0wY',
+2025-07-03T12:29:12:   startTime: '2025-07-03T08:29:12.219EDT'
+2025-07-03T12:29:12: }
+2025-07-03T12:29:12: ℹ️ [2025-07-03T08:29:12.413EDT] 📊 Initial rate limit check { current: 38, remaining: 82, allowed: true }
+2025-07-03T12:29:12: ℹ️ [2025-07-03T08:29:12.446EDT] 📊 Initial rate limit check { current: 38, remaining: 82, allowed: true }
+2025-07-03T12:29:12: ℹ️ [2025-07-03T08:29:12.987EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'Qbh7Uj6gJT2MB2lSTC1Lv', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:29:13: ℹ️ [2025-07-03T08:29:13.020EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'XsFSHRK08kfNN9W_EM0wY', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T12:29:14: 🔍 [2025-07-03T08:29:14.309EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:29:14: 🔍 [2025-07-03T08:29:14.313EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:29:14: 🔍 [2025-07-03T08:29:14.350EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T12:29:14: 🔍 [2025-07-03T08:29:14.352EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T12:29:14: ⚠️ [2025-07-03T08:29:14.384EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:14: ⚠️ [2025-07-03T08:29:14.385EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:14: ⚠️ [2025-07-03T08:29:14.416EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:14: ⚠️ [2025-07-03T08:29:14.418EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:16: ⚠️ [2025-07-03T08:29:16.454EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:16: ⚠️ [2025-07-03T08:29:16.456EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:16: ⚠️ [2025-07-03T08:29:16.489EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:16: ⚠️ [2025-07-03T08:29:16.490EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.125EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T12:29:20: 🔍 [2025-07-03T08:29:20.127EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.151EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T12:29:20: 🔍 [2025-07-03T08:29:20.152EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.569EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.571EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.661EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:20: ⚠️ [2025-07-03T08:29:20.662EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:20: 🔍 [2025-07-03T08:29:20.832EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T12:29:20: ✅ [2025-07-03T08:29:20.833EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:20: 🔍 [2025-07-03T08:29:20.850EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T12:29:20: ✅ [2025-07-03T08:29:20.851EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:21: 🔍 [2025-07-03T08:29:21.659EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T12:29:21: 🔍 [2025-07-03T08:29:21.661EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T12:29:21: 🔍 [2025-07-03T08:29:21.665EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T12:29:21: 🔍 [2025-07-03T08:29:21.665EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T12:29:21: ⚠️ [2025-07-03T08:29:21.748EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:21: ⚠️ [2025-07-03T08:29:21.750EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:21: ⚠️ [2025-07-03T08:29:21.759EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:21: ⚠️ [2025-07-03T08:29:21.761EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:23: ⚠️ [2025-07-03T08:29:23.815EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:23: ⚠️ [2025-07-03T08:29:23.816EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:23: ⚠️ [2025-07-03T08:29:23.822EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:23: ⚠️ [2025-07-03T08:29:23.824EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:27: ⚠️ [2025-07-03T08:29:27.883EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:27: ⚠️ [2025-07-03T08:29:27.884EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:27: ⚠️ [2025-07-03T08:29:27.893EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:27: ⚠️ [2025-07-03T08:29:27.894EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:28: ⚠️ [2025-07-03T08:29:28.574EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T12:29:28: 🔍 [2025-07-03T08:29:28.576EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:29:28: ⚠️ [2025-07-03T08:29:28.665EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T12:29:28: 🔍 [2025-07-03T08:29:28.668EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.085EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:29:29: ✅ [2025-07-03T08:29:29.087EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.152EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T12:29:29: ✅ [2025-07-03T08:29:29.153EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.684EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.686EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:29:29: ⚠️ [2025-07-03T08:29:29.754EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:29: ⚠️ [2025-07-03T08:29:29.756EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.862EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T12:29:29: 🔍 [2025-07-03T08:29:29.866EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T12:29:29: ⚠️ [2025-07-03T08:29:29.930EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:29: ⚠️ [2025-07-03T08:29:29.931EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:31: ⚠️ [2025-07-03T08:29:31.829EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:31: ⚠️ [2025-07-03T08:29:31.831EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:31: ⚠️ [2025-07-03T08:29:31.996EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:31: ⚠️ [2025-07-03T08:29:31.996EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:35: ⚠️ [2025-07-03T08:29:35.886EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T12:29:35: 🔍 [2025-07-03T08:29:35.888EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T12:29:35: ⚠️ [2025-07-03T08:29:35.895EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T12:29:35: 🔍 [2025-07-03T08:29:35.896EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T12:29:35: ⚠️ [2025-07-03T08:29:35.907EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:35: ⚠️ [2025-07-03T08:29:35.908EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:36: ⚠️ [2025-07-03T08:29:36.066EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:36: ⚠️ [2025-07-03T08:29:36.069EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:36: 🔍 [2025-07-03T08:29:36.662EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T12:29:36: ✅ [2025-07-03T08:29:36.664EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:36: 🔍 [2025-07-03T08:29:36.754EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T12:29:36: ✅ [2025-07-03T08:29:36.759EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:37: 🔍 [2025-07-03T08:29:37.325EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T12:29:37: 🔍 [2025-07-03T08:29:37.326EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T12:29:37: ⚠️ [2025-07-03T08:29:37.389EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:37: ⚠️ [2025-07-03T08:29:37.394EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:37: 🔍 [2025-07-03T08:29:37.416EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T12:29:37: 🔍 [2025-07-03T08:29:37.418EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T12:29:37: ⚠️ [2025-07-03T08:29:37.481EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:37: ⚠️ [2025-07-03T08:29:37.482EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:39: ⚠️ [2025-07-03T08:29:39.465EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:39: ⚠️ [2025-07-03T08:29:39.467EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:39: ⚠️ [2025-07-03T08:29:39.555EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:39: ⚠️ [2025-07-03T08:29:39.556EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:43: ⚠️ [2025-07-03T08:29:43.530EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:43: ⚠️ [2025-07-03T08:29:43.532EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:43: ⚠️ [2025-07-03T08:29:43.624EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:43: ⚠️ [2025-07-03T08:29:43.626EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:43: ⚠️ [2025-07-03T08:29:43.909EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T12:29:43: 🔍 [2025-07-03T08:29:43.910EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:29:44: ⚠️ [2025-07-03T08:29:44.072EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T12:29:44: 🔍 [2025-07-03T08:29:44.074EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T12:29:44: 🔍 [2025-07-03T08:29:44.428EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:29:44: ✅ [2025-07-03T08:29:44.430EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:44: 🔍 [2025-07-03T08:29:44.729EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T12:29:44: ✅ [2025-07-03T08:29:44.731EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:45: 🔍 [2025-07-03T08:29:45.038EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:29:45: 🔍 [2025-07-03T08:29:45.041EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:29:45: ⚠️ [2025-07-03T08:29:45.140EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:45: ⚠️ [2025-07-03T08:29:45.141EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:45: 🔍 [2025-07-03T08:29:45.444EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T12:29:45: 🔍 [2025-07-03T08:29:45.445EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T12:29:45: ⚠️ [2025-07-03T08:29:45.511EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:45: ⚠️ [2025-07-03T08:29:45.513EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:29:47: ⚠️ [2025-07-03T08:29:47.208EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:47: ⚠️ [2025-07-03T08:29:47.210EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:47: ⚠️ [2025-07-03T08:29:47.577EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:47: ⚠️ [2025-07-03T08:29:47.578EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.280EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.282EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.533EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T12:29:51: 🔍 [2025-07-03T08:29:51.536EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.628EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T12:29:51: 🔍 [2025-07-03T08:29:51.628EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.667EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:29:51: ⚠️ [2025-07-03T08:29:51.667EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:29:52: 🔍 [2025-07-03T08:29:52.185EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T12:29:52: ✅ [2025-07-03T08:29:52.186EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:52: 🔍 [2025-07-03T08:29:52.243EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T12:29:52: ✅ [2025-07-03T08:29:52.246EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:29:52: ✅ [2025-07-03T08:29:52.887EDT] ✅ Batch processing completed {
+2025-07-03T12:29:52:   batchId: 'vDHnmzIvpDAjVi1_s2F54',
+2025-07-03T12:29:52:   duration: '2 minutes',
+2025-07-03T12:29:52:   summary: {
+2025-07-03T12:29:52:     tweetsProcessed: 9,
+2025-07-03T12:29:52:     engagementsFound: 0,
+2025-07-03T12:29:52:     pointsAwarded: 0,
+2025-07-03T12:29:52:     apiCallsUsed: 9,
+2025-07-03T12:29:52:     retweets: 0,
+2025-07-03T12:29:52:     replies: 0,
+2025-07-03T12:29:52:     uniqueUsers: 0,
+2025-07-03T12:29:52:     errors: 0
+2025-07-03T12:29:52:   }
+2025-07-03T12:29:52: }
+2025-07-03T12:29:52: ✅ [2025-07-03T08:29:52.915EDT] ✅ Batch processing completed {
+2025-07-03T12:29:52:   batchId: 'WaP_x8cFvnyRlJX6qTWyR',
+2025-07-03T12:29:52:   duration: '2 minutes',
+2025-07-03T12:29:52:   summary: {
+2025-07-03T12:29:52:     tweetsProcessed: 9,
+2025-07-03T12:29:52:     engagementsFound: 0,
+2025-07-03T12:29:52:     pointsAwarded: 0,
+2025-07-03T12:29:52:     apiCallsUsed: 9,
+2025-07-03T12:29:52:     retweets: 0,
+2025-07-03T12:29:52:     replies: 0,
+2025-07-03T12:29:52:     uniqueUsers: 0,
+2025-07-03T12:29:52:     errors: 0
+2025-07-03T12:29:52:   }
+2025-07-03T12:29:52: }
+2025-07-03T12:29:53: ℹ️ [2025-07-03T08:29:53.077EDT] 📊 Rate limit status { used: 48, remaining: 72, limit: 120, percentUsed: 40 }
+2025-07-03T12:29:53: ℹ️ [2025-07-03T08:29:53.105EDT] 📊 Rate limit status { used: 48, remaining: 72, limit: 120, percentUsed: 40 }
+2025-07-03T12:29:53: 
+2025-07-03T12:29:53: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T12:29:53: 
+2025-07-03T12:29:53: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T12:29:59: ⚠️ [2025-07-03T08:29:59.284EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T12:29:59: 🔍 [2025-07-03T08:29:59.286EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:29:59: ⚠️ [2025-07-03T08:29:59.669EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T12:29:59: 🔍 [2025-07-03T08:29:59.670EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T12:30:00: 🔍 [2025-07-03T08:30:00.271EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:30:00: ✅ [2025-07-03T08:30:00.273EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:00: 🔍 [2025-07-03T08:30:00.390EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T12:30:00: ✅ [2025-07-03T08:30:00.391EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:01: 🔍 [2025-07-03T08:30:01.018EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:30:01: 🔍 [2025-07-03T08:30:01.020EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:30:01: ⚠️ [2025-07-03T08:30:01.092EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:01: ⚠️ [2025-07-03T08:30:01.093EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:01: 🔍 [2025-07-03T08:30:01.101EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T12:30:01: 🔍 [2025-07-03T08:30:01.102EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T12:30:01: ⚠️ [2025-07-03T08:30:01.167EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:01: ⚠️ [2025-07-03T08:30:01.168EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:03: ⚠️ [2025-07-03T08:30:03.165EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:03: ⚠️ [2025-07-03T08:30:03.166EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:03: ⚠️ [2025-07-03T08:30:03.236EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:03: ⚠️ [2025-07-03T08:30:03.237EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:07: ⚠️ [2025-07-03T08:30:07.236EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:07: ⚠️ [2025-07-03T08:30:07.239EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:07: ⚠️ [2025-07-03T08:30:07.298EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:07: ⚠️ [2025-07-03T08:30:07.299EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:15: ⚠️ [2025-07-03T08:30:15.240EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:30:15: 🔍 [2025-07-03T08:30:15.241EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:30:15: ⚠️ [2025-07-03T08:30:15.301EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T12:30:15: 🔍 [2025-07-03T08:30:15.303EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T12:30:15: 🔍 [2025-07-03T08:30:15.726EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:30:15: ✅ [2025-07-03T08:30:15.731EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:15: 🔍 [2025-07-03T08:30:15.904EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T12:30:15: ✅ [2025-07-03T08:30:15.906EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:16: 🔍 [2025-07-03T08:30:16.472EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:30:16: 🔍 [2025-07-03T08:30:16.473EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:30:16: ⚠️ [2025-07-03T08:30:16.546EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:16: ⚠️ [2025-07-03T08:30:16.547EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:16: 🔍 [2025-07-03T08:30:16.616EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T12:30:16: 🔍 [2025-07-03T08:30:16.617EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T12:30:16: ⚠️ [2025-07-03T08:30:16.676EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:16: ⚠️ [2025-07-03T08:30:16.677EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:18: ⚠️ [2025-07-03T08:30:18.613EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:18: ⚠️ [2025-07-03T08:30:18.616EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:18: ⚠️ [2025-07-03T08:30:18.742EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:18: ⚠️ [2025-07-03T08:30:18.744EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:22: ⚠️ [2025-07-03T08:30:22.685EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:22: ⚠️ [2025-07-03T08:30:22.688EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:22: ⚠️ [2025-07-03T08:30:22.811EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:22: ⚠️ [2025-07-03T08:30:22.812EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:30: ⚠️ [2025-07-03T08:30:30.690EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:30:30: 🔍 [2025-07-03T08:30:30.692EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:30:30: ⚠️ [2025-07-03T08:30:30.814EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T12:30:30: 🔍 [2025-07-03T08:30:30.817EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T12:30:31: 🔍 [2025-07-03T08:30:31.585EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:30:31: ✅ [2025-07-03T08:30:31.589EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:31: 🔍 [2025-07-03T08:30:31.629EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T12:30:31: ✅ [2025-07-03T08:30:31.632EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:32: 🔍 [2025-07-03T08:30:32.382EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:30:32: 🔍 [2025-07-03T08:30:32.384EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:30:32: 🔍 [2025-07-03T08:30:32.431EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T12:30:32: 🔍 [2025-07-03T08:30:32.433EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T12:30:32: ⚠️ [2025-07-03T08:30:32.448EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:32: ⚠️ [2025-07-03T08:30:32.449EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:32: ⚠️ [2025-07-03T08:30:32.505EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:32: ⚠️ [2025-07-03T08:30:32.506EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:34: ⚠️ [2025-07-03T08:30:34.515EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:34: ⚠️ [2025-07-03T08:30:34.517EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:34: ⚠️ [2025-07-03T08:30:34.572EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:34: ⚠️ [2025-07-03T08:30:34.573EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:38: ⚠️ [2025-07-03T08:30:38.594EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:38: ⚠️ [2025-07-03T08:30:38.595EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:38: ⚠️ [2025-07-03T08:30:38.648EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:38: ⚠️ [2025-07-03T08:30:38.649EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:46: ⚠️ [2025-07-03T08:30:46.596EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:30:46: 🔍 [2025-07-03T08:30:46.599EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:30:46: ⚠️ [2025-07-03T08:30:46.652EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T12:30:46: 🔍 [2025-07-03T08:30:46.654EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.025EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:30:47: ✅ [2025-07-03T08:30:47.029EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.074EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T12:30:47: ✅ [2025-07-03T08:30:47.077EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.782EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.783EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.786EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T12:30:47: 🔍 [2025-07-03T08:30:47.787EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T12:30:47: ⚠️ [2025-07-03T08:30:47.845EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:47: ⚠️ [2025-07-03T08:30:47.846EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:47: ⚠️ [2025-07-03T08:30:47.868EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:47: ⚠️ [2025-07-03T08:30:47.869EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:30:49: ⚠️ [2025-07-03T08:30:49.906EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:49: ⚠️ [2025-07-03T08:30:49.907EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:49: ⚠️ [2025-07-03T08:30:49.931EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:49: ⚠️ [2025-07-03T08:30:49.932EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:30:53: ⚠️ [2025-07-03T08:30:53.976EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:53: ⚠️ [2025-07-03T08:30:53.978EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:30:54: ⚠️ [2025-07-03T08:30:54.000EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:30:54: ⚠️ [2025-07-03T08:30:54.002EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:31:01: ⚠️ [2025-07-03T08:31:01.981EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T12:31:01: 🔍 [2025-07-03T08:31:01.985EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T12:31:02: ⚠️ [2025-07-03T08:31:02.006EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T12:31:02: 🔍 [2025-07-03T08:31:02.011EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T12:31:02: 🔍 [2025-07-03T08:31:02.744EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T12:31:02: ✅ [2025-07-03T08:31:02.747EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:02: 🔍 [2025-07-03T08:31:02.771EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T12:31:02: ✅ [2025-07-03T08:31:02.773EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:03: 🔍 [2025-07-03T08:31:03.480EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T12:31:03: 🔍 [2025-07-03T08:31:03.482EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T12:31:03: 🔍 [2025-07-03T08:31:03.498EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T12:31:03: 🔍 [2025-07-03T08:31:03.500EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T12:31:03: ⚠️ [2025-07-03T08:31:03.555EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:03: ⚠️ [2025-07-03T08:31:03.558EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:31:03: ⚠️ [2025-07-03T08:31:03.561EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:03: ⚠️ [2025-07-03T08:31:03.563EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:31:05: ⚠️ [2025-07-03T08:31:05.627EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:05: ⚠️ [2025-07-03T08:31:05.630EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:31:05: ⚠️ [2025-07-03T08:31:05.642EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:05: ⚠️ [2025-07-03T08:31:05.644EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:31:09: ⚠️ [2025-07-03T08:31:09.711EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:09: ⚠️ [2025-07-03T08:31:09.714EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:31:09: ⚠️ [2025-07-03T08:31:09.718EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:09: ⚠️ [2025-07-03T08:31:09.720EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:31:17: ⚠️ [2025-07-03T08:31:17.717EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T12:31:17: 🔍 [2025-07-03T08:31:17.721EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T12:31:17: ⚠️ [2025-07-03T08:31:17.723EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T12:31:17: 🔍 [2025-07-03T08:31:17.735EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T12:31:18: 🔍 [2025-07-03T08:31:18.563EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T12:31:18: ✅ [2025-07-03T08:31:18.565EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:18: 🔍 [2025-07-03T08:31:18.572EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T12:31:18: ✅ [2025-07-03T08:31:18.576EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:19: 🔍 [2025-07-03T08:31:19.289EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T12:31:19: 🔍 [2025-07-03T08:31:19.295EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T12:31:19: 🔍 [2025-07-03T08:31:19.318EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T12:31:19: 🔍 [2025-07-03T08:31:19.320EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T12:31:19: ⚠️ [2025-07-03T08:31:19.361EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:19: ⚠️ [2025-07-03T08:31:19.363EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:31:19: ⚠️ [2025-07-03T08:31:19.390EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:19: ⚠️ [2025-07-03T08:31:19.391EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T12:31:21: ⚠️ [2025-07-03T08:31:21.452EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:21: ⚠️ [2025-07-03T08:31:21.454EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:31:21: ⚠️ [2025-07-03T08:31:21.458EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:21: ⚠️ [2025-07-03T08:31:21.462EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T12:31:25: ⚠️ [2025-07-03T08:31:25.521EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:25: ⚠️ [2025-07-03T08:31:25.525EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:31:25: ⚠️ [2025-07-03T08:31:25.536EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T12:31:25: ⚠️ [2025-07-03T08:31:25.542EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T12:31:33: ⚠️ [2025-07-03T08:31:33.528EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T12:31:33: 🔍 [2025-07-03T08:31:33.530EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T12:31:33: ⚠️ [2025-07-03T08:31:33.545EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T12:31:33: 🔍 [2025-07-03T08:31:33.548EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T12:31:34: 🔍 [2025-07-03T08:31:34.268EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T12:31:34: 🔍 [2025-07-03T08:31:34.271EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T12:31:34: ✅ [2025-07-03T08:31:34.273EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:34: ✅ [2025-07-03T08:31:34.273EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T12:31:34: ✅ [2025-07-03T08:31:34.988EDT] ✅ Batch processing completed {
+2025-07-03T12:31:34:   batchId: 'Qbh7Uj6gJT2MB2lSTC1Lv',
+2025-07-03T12:31:34:   duration: '2 minutes',
+2025-07-03T12:31:34:   summary: {
+2025-07-03T12:31:34:     tweetsProcessed: 9,
+2025-07-03T12:31:34:     engagementsFound: 0,
+2025-07-03T12:31:34:     pointsAwarded: 0,
+2025-07-03T12:31:34:     apiCallsUsed: 9,
+2025-07-03T12:31:34:     retweets: 0,
+2025-07-03T12:31:34:     replies: 0,
+2025-07-03T12:31:34:     uniqueUsers: 0,
+2025-07-03T12:31:34:     errors: 0
+2025-07-03T12:31:34:   }
+2025-07-03T12:31:34: }
+2025-07-03T12:31:35: ✅ [2025-07-03T08:31:35.064EDT] ✅ Batch processing completed {
+2025-07-03T12:31:35:   batchId: 'XsFSHRK08kfNN9W_EM0wY',
+2025-07-03T12:31:35:   duration: '2 minutes',
+2025-07-03T12:31:35:   summary: {
+2025-07-03T12:31:35:     tweetsProcessed: 9,
+2025-07-03T12:31:35:     engagementsFound: 0,
+2025-07-03T12:31:35:     pointsAwarded: 0,
+2025-07-03T12:31:35:     apiCallsUsed: 9,
+2025-07-03T12:31:35:     retweets: 0,
+2025-07-03T12:31:35:     replies: 0,
+2025-07-03T12:31:35:     uniqueUsers: 0,
+2025-07-03T12:31:35:     errors: 0
+2025-07-03T12:31:35:   }
+2025-07-03T12:31:35: }
+2025-07-03T12:31:35: ℹ️ [2025-07-03T08:31:35.181EDT] 📊 Rate limit status { used: 62, remaining: 58, limit: 120, percentUsed: 52 }
+2025-07-03T12:31:35: ℹ️ [2025-07-03T08:31:35.317EDT] 📊 Rate limit status { used: 62, remaining: 58, limit: 120, percentUsed: 52 }
+2025-07-03T12:31:35: 
+2025-07-03T12:31:35: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T12:31:35: 
+2025-07-03T12:31:35: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T13:00:00: 
+2025-07-03T13:00:00: ================================================================================
+2025-07-03T13:00:00: ⏰ Running scheduled batch processing at 2025-07-03T17:00:00.093Z
+2025-07-03T13:00:00: ================================================================================
+2025-07-03T13:00:00: ℹ️ [2025-07-03T09:00:00.449EDT] 🚀 Starting batch processing {
+2025-07-03T13:00:00:   batchId: 'OWKllg-WRQv4DEWVi3xtF',
+2025-07-03T13:00:00:   startTime: '2025-07-03T09:00:00.449EDT'
+2025-07-03T13:00:00: }
+2025-07-03T13:00:00: ℹ️ [2025-07-03T09:00:00.649EDT] 📊 Initial rate limit check { current: 62, remaining: 58, allowed: true }
+2025-07-03T13:00:00: ℹ️ [2025-07-03T09:00:00.942EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'OWKllg-WRQv4DEWVi3xtF', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T13:00:02: 🔍 [2025-07-03T09:00:02.002EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T13:00:02: 🔍 [2025-07-03T09:00:02.006EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T13:00:02: 🔍 [2025-07-03T09:00:02.387EDT] Found 29 retweets for tweet 1940417005657395366 {}
+2025-07-03T13:00:02: 🔍 [2025-07-03T09:00:02.391EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T13:00:02: 🔍 [2025-07-03T09:00:02.680EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T13:00:02: ✅ [2025-07-03T09:00:02.685EDT] Processed tweet 1940417005657395366 { engagementsFound: 29, apiCallsUsed: 2, retweets: 29, replies: 0 }
+2025-07-03T13:00:06: 🔍 [2025-07-03T09:00:06.141EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T13:00:06: 🔍 [2025-07-03T09:00:06.142EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T13:00:06: 🔍 [2025-07-03T09:00:06.492EDT] Found 38 retweets for tweet 1940378522083836061 {}
+2025-07-03T13:00:06: 🔍 [2025-07-03T09:00:06.493EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T13:00:06: 🔍 [2025-07-03T09:00:06.950EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T13:00:06: ✅ [2025-07-03T09:00:06.953EDT] Processed tweet 1940378522083836061 { engagementsFound: 38, apiCallsUsed: 2, retweets: 38, replies: 0 }
+2025-07-03T13:00:11: 🔍 [2025-07-03T09:00:11.163EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T13:00:11: 🔍 [2025-07-03T09:00:11.164EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T13:00:11: 🔍 [2025-07-03T09:00:11.445EDT] Found 18 retweets for tweet 1940337104468553842 {}
+2025-07-03T13:00:11: 🔍 [2025-07-03T09:00:11.449EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T13:00:11: 🔍 [2025-07-03T09:00:11.964EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T13:00:11: ✅ [2025-07-03T09:00:11.967EDT] Processed tweet 1940337104468553842 { engagementsFound: 18, apiCallsUsed: 2, retweets: 18, replies: 0 }
+2025-07-03T13:00:14: 🔍 [2025-07-03T09:00:14.265EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T13:00:14: 🔍 [2025-07-03T09:00:14.269EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T13:00:14: 🔍 [2025-07-03T09:00:14.542EDT] Found 14 retweets for tweet 1939707597931897026 {}
+2025-07-03T13:00:14: 🔍 [2025-07-03T09:00:14.545EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T13:00:14: 🔍 [2025-07-03T09:00:14.816EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T13:00:14: ✅ [2025-07-03T09:00:14.818EDT] Processed tweet 1939707597931897026 { engagementsFound: 14, apiCallsUsed: 2, retweets: 14, replies: 0 }
+2025-07-03T13:00:17: 🔍 [2025-07-03T09:00:17.118EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T13:00:17: 🔍 [2025-07-03T09:00:17.121EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T13:00:17: 🔍 [2025-07-03T09:00:17.339EDT] Found 1 retweets for tweet 1939958549175468160 {}
+2025-07-03T13:00:17: 🔍 [2025-07-03T09:00:17.342EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T13:00:17: 🔍 [2025-07-03T09:00:17.953EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T13:00:17: ✅ [2025-07-03T09:00:17.956EDT] Processed tweet 1939958549175468160 { engagementsFound: 1, apiCallsUsed: 2, retweets: 1, replies: 0 }
+2025-07-03T13:00:19: 🔍 [2025-07-03T09:00:19.111EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T13:00:19: 🔍 [2025-07-03T09:00:19.114EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T13:00:19: ⚠️ [2025-07-03T09:00:19.182EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:19: ⚠️ [2025-07-03T09:00:19.186EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:00:21: ⚠️ [2025-07-03T09:00:21.280EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:21: ⚠️ [2025-07-03T09:00:21.282EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:00:25: ⚠️ [2025-07-03T09:00:25.366EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:25: ⚠️ [2025-07-03T09:00:25.369EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:00:33: ⚠️ [2025-07-03T09:00:33.372EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T13:00:33: 🔍 [2025-07-03T09:00:33.375EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T13:00:33: 🔍 [2025-07-03T09:00:33.822EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T13:00:33: ✅ [2025-07-03T09:00:33.825EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:00:34: 🔍 [2025-07-03T09:00:34.579EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T13:00:34: 🔍 [2025-07-03T09:00:34.583EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T13:00:34: ⚠️ [2025-07-03T09:00:34.656EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:34: ⚠️ [2025-07-03T09:00:34.659EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:00:36: ⚠️ [2025-07-03T09:00:36.725EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:36: ⚠️ [2025-07-03T09:00:36.729EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:00:40: ⚠️ [2025-07-03T09:00:40.795EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:40: ⚠️ [2025-07-03T09:00:40.798EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:00:48: ⚠️ [2025-07-03T09:00:48.802EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T13:00:48: 🔍 [2025-07-03T09:00:48.804EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T13:00:49: 🔍 [2025-07-03T09:00:49.475EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T13:00:49: ✅ [2025-07-03T09:00:49.478EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:00:50: 🔍 [2025-07-03T09:00:50.226EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T13:00:50: 🔍 [2025-07-03T09:00:50.230EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T13:00:50: ⚠️ [2025-07-03T09:00:50.312EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:50: ⚠️ [2025-07-03T09:00:50.314EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:00:52: ⚠️ [2025-07-03T09:00:52.386EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:52: ⚠️ [2025-07-03T09:00:52.388EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:00:56: ⚠️ [2025-07-03T09:00:56.460EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:00:56: ⚠️ [2025-07-03T09:00:56.463EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:01:04: ⚠️ [2025-07-03T09:01:04.466EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T13:01:04: 🔍 [2025-07-03T09:01:04.471EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T13:01:05: 🔍 [2025-07-03T09:01:05.282EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T13:01:05: ✅ [2025-07-03T09:01:05.284EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:01:06: 🔍 [2025-07-03T09:01:06.039EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T13:01:06: 🔍 [2025-07-03T09:01:06.042EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T13:01:06: ⚠️ [2025-07-03T09:01:06.137EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:01:06: ⚠️ [2025-07-03T09:01:06.139EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:01:08: ⚠️ [2025-07-03T09:01:08.208EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:01:08: ⚠️ [2025-07-03T09:01:08.211EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:01:12: ⚠️ [2025-07-03T09:01:12.286EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:01:12: ⚠️ [2025-07-03T09:01:12.289EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:01:20: ⚠️ [2025-07-03T09:01:20.292EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T13:01:20: 🔍 [2025-07-03T09:01:20.294EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T13:01:20: 🔍 [2025-07-03T09:01:20.893EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T13:01:20: ✅ [2025-07-03T09:01:20.896EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:01:21: ✅ [2025-07-03T09:01:21.600EDT] ✅ Batch processing completed {
+2025-07-03T13:01:21:   batchId: 'OWKllg-WRQv4DEWVi3xtF',
+2025-07-03T13:01:21:   duration: '1 minutes',
+2025-07-03T13:01:21:   summary: {
+2025-07-03T13:01:21:     tweetsProcessed: 9,
+2025-07-03T13:01:21:     engagementsFound: 100,
+2025-07-03T13:01:21:     pointsAwarded: 0,
+2025-07-03T13:01:21:     apiCallsUsed: 14,
+2025-07-03T13:01:21:     retweets: 100,
+2025-07-03T13:01:21:     replies: 0,
+2025-07-03T13:01:21:     uniqueUsers: 81,
+2025-07-03T13:01:21:     errors: 0
+2025-07-03T13:01:21:   }
+2025-07-03T13:01:21: }
+2025-07-03T13:01:21: ℹ️ [2025-07-03T09:01:21.791EDT] 📊 Rate limit status { used: 4, remaining: 116, limit: 120, percentUsed: 3 }
+2025-07-03T13:01:22: 
+2025-07-03T13:01:22: ✅ Batch processing completed successfully
+2025-07-03T13:01:22: 📊 Summary: 9 tweets, 100 engagements, 0 points awarded
+2025-07-03T13:02:22: 📨 Received manual-run action from PM2
+2025-07-03T13:02:22: 
+2025-07-03T13:02:22: ================================================================================
+2025-07-03T13:02:22: 🎯 Manual batch processing triggered at 2025-07-03T17:02:22.524Z
+2025-07-03T13:02:22: ================================================================================
+2025-07-03T13:02:22: 🔍 PM2 Message Received: { type: 'string', packet: 'manual-run', stringified: '"manual-run"' }
+2025-07-03T13:02:22: 📨 Received manual-run trigger from PM2
+2025-07-03T13:02:22: 
+2025-07-03T13:02:22: ================================================================================
+2025-07-03T13:02:22: 🎯 Manual batch processing triggered at 2025-07-03T17:02:22.525Z
+2025-07-03T13:02:22: ================================================================================
+2025-07-03T13:02:22: 📬 Simple message handler received: manual-run
+2025-07-03T13:02:22: 📊 Rate limit check: 4/120 used, 116 remaining
+2025-07-03T13:02:22: ✅ Rate limit check passed, starting batch...
+2025-07-03T13:02:22: ℹ️ [2025-07-03T09:02:22.872EDT] 🚀 Starting batch processing {
+2025-07-03T13:02:22:   batchId: 'hYih_ZFW0ruAo06BlHewk',
+2025-07-03T13:02:22:   startTime: '2025-07-03T09:02:22.872EDT'
+2025-07-03T13:02:22: }
+2025-07-03T13:02:22: 📊 Rate limit check: 4/120 used, 116 remaining
+2025-07-03T13:02:22: ✅ Rate limit check passed, starting batch...
+2025-07-03T13:02:22: ℹ️ [2025-07-03T09:02:22.873EDT] 🚀 Starting batch processing {
+2025-07-03T13:02:22:   batchId: 'vN_CfZTTWHd7ttQ4YQV7e',
+2025-07-03T13:02:22:   startTime: '2025-07-03T09:02:22.873EDT'
+2025-07-03T13:02:22: }
+2025-07-03T13:02:23: ℹ️ [2025-07-03T09:02:23.104EDT] 📊 Initial rate limit check { current: 4, remaining: 116, allowed: true }
+2025-07-03T13:02:23: ℹ️ [2025-07-03T09:02:23.148EDT] 📊 Initial rate limit check { current: 4, remaining: 116, allowed: true }
+2025-07-03T13:02:23: ℹ️ [2025-07-03T09:02:23.581EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'hYih_ZFW0ruAo06BlHewk', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T13:02:23: ℹ️ [2025-07-03T09:02:23.683EDT] 📊 Found 9 tweets from last 24 hours { batchId: 'vN_CfZTTWHd7ttQ4YQV7e', tweetCount: 9, maxAllowed: 60 }
+2025-07-03T13:02:24: 🔍 [2025-07-03T09:02:24.617EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T13:02:24: 🔍 [2025-07-03T09:02:24.620EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T13:02:24: ⚠️ [2025-07-03T09:02:24.734EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:24: ⚠️ [2025-07-03T09:02:24.737EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:25: 🔍 [2025-07-03T09:02:25.009EDT] Processing tweet 1940417005657395366 {}
+2025-07-03T13:02:25: 🔍 [2025-07-03T09:02:25.011EDT] Fetching retweets for tweet 1940417005657395366 {}
+2025-07-03T13:02:25: ⚠️ [2025-07-03T09:02:25.078EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:25: ⚠️ [2025-07-03T09:02:25.081EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:26: ⚠️ [2025-07-03T09:02:26.813EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:26: ⚠️ [2025-07-03T09:02:26.814EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:02:27: ⚠️ [2025-07-03T09:02:27.164EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:27: ⚠️ [2025-07-03T09:02:27.165EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:02:30: ⚠️ [2025-07-03T09:02:30.881EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:30: ⚠️ [2025-07-03T09:02:30.882EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:02:31: ⚠️ [2025-07-03T09:02:31.241EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:31: ⚠️ [2025-07-03T09:02:31.242EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:02:38: ⚠️ [2025-07-03T09:02:38.884EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T13:02:38: 🔍 [2025-07-03T09:02:38.886EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T13:02:39: ⚠️ [2025-07-03T09:02:39.244EDT] Failed to fetch retweets for 1940417005657395366 { error: 'Request failed with code 429' }
+2025-07-03T13:02:39: 🔍 [2025-07-03T09:02:39.245EDT] Fetching replies for tweet 1940417005657395366 {}
+2025-07-03T13:02:39: 🔍 [2025-07-03T09:02:39.262EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T13:02:39: ✅ [2025-07-03T09:02:39.264EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:02:39: 🔍 [2025-07-03T09:02:39.765EDT] No replies found for tweet 1940417005657395366 {}
+2025-07-03T13:02:39: ✅ [2025-07-03T09:02:39.766EDT] Processed tweet 1940417005657395366 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:02:39: 🔍 [2025-07-03T09:02:39.911EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T13:02:39: 🔍 [2025-07-03T09:02:39.912EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T13:02:39: ⚠️ [2025-07-03T09:02:39.972EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:39: ⚠️ [2025-07-03T09:02:39.973EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:40: 🔍 [2025-07-03T09:02:40.469EDT] Processing tweet 1940378522083836061 {}
+2025-07-03T13:02:40: 🔍 [2025-07-03T09:02:40.471EDT] Fetching retweets for tweet 1940378522083836061 {}
+2025-07-03T13:02:40: ⚠️ [2025-07-03T09:02:40.553EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:40: ⚠️ [2025-07-03T09:02:40.554EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:42: ⚠️ [2025-07-03T09:02:42.050EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:42: ⚠️ [2025-07-03T09:02:42.052EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:02:42: ⚠️ [2025-07-03T09:02:42.626EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:42: ⚠️ [2025-07-03T09:02:42.627EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:02:46: ⚠️ [2025-07-03T09:02:46.116EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:46: ⚠️ [2025-07-03T09:02:46.118EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:02:46: ⚠️ [2025-07-03T09:02:46.700EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:46: ⚠️ [2025-07-03T09:02:46.703EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:02:54: ⚠️ [2025-07-03T09:02:54.120EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T13:02:54: 🔍 [2025-07-03T09:02:54.123EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T13:02:54: ⚠️ [2025-07-03T09:02:54.707EDT] Failed to fetch retweets for 1940378522083836061 { error: 'Request failed with code 429' }
+2025-07-03T13:02:54: 🔍 [2025-07-03T09:02:54.708EDT] Fetching replies for tweet 1940378522083836061 {}
+2025-07-03T13:02:54: 🔍 [2025-07-03T09:02:54.778EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T13:02:54: ✅ [2025-07-03T09:02:54.780EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:02:55: 🔍 [2025-07-03T09:02:55.278EDT] No replies found for tweet 1940378522083836061 {}
+2025-07-03T13:02:55: ✅ [2025-07-03T09:02:55.286EDT] Processed tweet 1940378522083836061 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:02:55: 🔍 [2025-07-03T09:02:55.568EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T13:02:55: 🔍 [2025-07-03T09:02:55.574EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T13:02:55: ⚠️ [2025-07-03T09:02:55.661EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:55: ⚠️ [2025-07-03T09:02:55.664EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:56: 🔍 [2025-07-03T09:02:56.002EDT] Processing tweet 1940337104468553842 {}
+2025-07-03T13:02:56: 🔍 [2025-07-03T09:02:56.003EDT] Fetching retweets for tweet 1940337104468553842 {}
+2025-07-03T13:02:56: ⚠️ [2025-07-03T09:02:56.062EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:56: ⚠️ [2025-07-03T09:02:56.063EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:02:57: ⚠️ [2025-07-03T09:02:57.741EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:57: ⚠️ [2025-07-03T09:02:57.742EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:02:58: ⚠️ [2025-07-03T09:02:58.129EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:02:58: ⚠️ [2025-07-03T09:02:58.130EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:01: ⚠️ [2025-07-03T09:03:01.815EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:01: ⚠️ [2025-07-03T09:03:01.819EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:02: ⚠️ [2025-07-03T09:03:02.216EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:02: ⚠️ [2025-07-03T09:03:02.218EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:09: ⚠️ [2025-07-03T09:03:09.823EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T13:03:09: 🔍 [2025-07-03T09:03:09.833EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T13:03:10: ⚠️ [2025-07-03T09:03:10.222EDT] Failed to fetch retweets for 1940337104468553842 { error: 'Request failed with code 429' }
+2025-07-03T13:03:10: 🔍 [2025-07-03T09:03:10.224EDT] Fetching replies for tweet 1940337104468553842 {}
+2025-07-03T13:03:10: 🔍 [2025-07-03T09:03:10.387EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T13:03:10: ✅ [2025-07-03T09:03:10.389EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:10: 🔍 [2025-07-03T09:03:10.885EDT] No replies found for tweet 1940337104468553842 {}
+2025-07-03T13:03:10: ✅ [2025-07-03T09:03:10.886EDT] Processed tweet 1940337104468553842 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:11: 🔍 [2025-07-03T09:03:11.108EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T13:03:11: 🔍 [2025-07-03T09:03:11.110EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T13:03:11: ⚠️ [2025-07-03T09:03:11.177EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:11: ⚠️ [2025-07-03T09:03:11.179EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:11: 🔍 [2025-07-03T09:03:11.600EDT] Processing tweet 1939707597931897026 {}
+2025-07-03T13:03:11: 🔍 [2025-07-03T09:03:11.601EDT] Fetching retweets for tweet 1939707597931897026 {}
+2025-07-03T13:03:11: ⚠️ [2025-07-03T09:03:11.660EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:11: ⚠️ [2025-07-03T09:03:11.663EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:13: ⚠️ [2025-07-03T09:03:13.241EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:13: ⚠️ [2025-07-03T09:03:13.242EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:13: ⚠️ [2025-07-03T09:03:13.725EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:13: ⚠️ [2025-07-03T09:03:13.727EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:17: ⚠️ [2025-07-03T09:03:17.303EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:17: ⚠️ [2025-07-03T09:03:17.306EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:17: ⚠️ [2025-07-03T09:03:17.799EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:17: ⚠️ [2025-07-03T09:03:17.802EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:25: ⚠️ [2025-07-03T09:03:25.309EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T13:03:25: 🔍 [2025-07-03T09:03:25.311EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T13:03:25: 🔍 [2025-07-03T09:03:25.664EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T13:03:25: ✅ [2025-07-03T09:03:25.667EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:25: ⚠️ [2025-07-03T09:03:25.807EDT] Failed to fetch retweets for 1939707597931897026 { error: 'Request failed with code 429' }
+2025-07-03T13:03:25: 🔍 [2025-07-03T09:03:25.809EDT] Fetching replies for tweet 1939707597931897026 {}
+2025-07-03T13:03:26: 🔍 [2025-07-03T09:03:26.073EDT] No replies found for tweet 1939707597931897026 {}
+2025-07-03T13:03:26: ✅ [2025-07-03T09:03:26.079EDT] Processed tweet 1939707597931897026 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:26: 🔍 [2025-07-03T09:03:26.305EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T13:03:26: 🔍 [2025-07-03T09:03:26.310EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T13:03:26: ⚠️ [2025-07-03T09:03:26.376EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:26: ⚠️ [2025-07-03T09:03:26.376EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:26: 🔍 [2025-07-03T09:03:26.649EDT] Processing tweet 1939958549175468160 {}
+2025-07-03T13:03:26: 🔍 [2025-07-03T09:03:26.651EDT] Fetching retweets for tweet 1939958549175468160 {}
+2025-07-03T13:03:26: ⚠️ [2025-07-03T09:03:26.728EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:26: ⚠️ [2025-07-03T09:03:26.729EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:28: ⚠️ [2025-07-03T09:03:28.447EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:28: ⚠️ [2025-07-03T09:03:28.449EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:28: ⚠️ [2025-07-03T09:03:28.794EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:28: ⚠️ [2025-07-03T09:03:28.795EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:32: ⚠️ [2025-07-03T09:03:32.524EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:32: ⚠️ [2025-07-03T09:03:32.526EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:32: ⚠️ [2025-07-03T09:03:32.872EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:32: ⚠️ [2025-07-03T09:03:32.874EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:40: ⚠️ [2025-07-03T09:03:40.530EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T13:03:40: 🔍 [2025-07-03T09:03:40.534EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T13:03:40: ⚠️ [2025-07-03T09:03:40.877EDT] Failed to fetch retweets for 1939958549175468160 { error: 'Request failed with code 429' }
+2025-07-03T13:03:40: 🔍 [2025-07-03T09:03:40.879EDT] Fetching replies for tweet 1939958549175468160 {}
+2025-07-03T13:03:41: 🔍 [2025-07-03T09:03:41.403EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T13:03:41: ✅ [2025-07-03T09:03:41.405EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:41: 🔍 [2025-07-03T09:03:41.711EDT] No replies found for tweet 1939958549175468160 {}
+2025-07-03T13:03:41: ✅ [2025-07-03T09:03:41.714EDT] Processed tweet 1939958549175468160 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:42: 🔍 [2025-07-03T09:03:42.233EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T13:03:42: 🔍 [2025-07-03T09:03:42.237EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T13:03:42: ⚠️ [2025-07-03T09:03:42.310EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:42: ⚠️ [2025-07-03T09:03:42.313EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:42: 🔍 [2025-07-03T09:03:42.421EDT] Processing tweet 1931977076187308379 {}
+2025-07-03T13:03:42: 🔍 [2025-07-03T09:03:42.424EDT] Fetching retweets for tweet 1931977076187308379 {}
+2025-07-03T13:03:42: ⚠️ [2025-07-03T09:03:42.494EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:42: ⚠️ [2025-07-03T09:03:42.495EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:44: ⚠️ [2025-07-03T09:03:44.400EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:44: ⚠️ [2025-07-03T09:03:44.403EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:44: ⚠️ [2025-07-03T09:03:44.559EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:44: ⚠️ [2025-07-03T09:03:44.561EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:48: ⚠️ [2025-07-03T09:03:48.472EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:48: ⚠️ [2025-07-03T09:03:48.474EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:48: ⚠️ [2025-07-03T09:03:48.624EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:48: ⚠️ [2025-07-03T09:03:48.627EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:03:56: ⚠️ [2025-07-03T09:03:56.478EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T13:03:56: 🔍 [2025-07-03T09:03:56.481EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T13:03:56: ⚠️ [2025-07-03T09:03:56.630EDT] Failed to fetch retweets for 1931977076187308379 { error: 'Request failed with code 429' }
+2025-07-03T13:03:56: 🔍 [2025-07-03T09:03:56.633EDT] Fetching replies for tweet 1931977076187308379 {}
+2025-07-03T13:03:56: 🔍 [2025-07-03T09:03:56.903EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T13:03:56: ✅ [2025-07-03T09:03:56.907EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:57: 🔍 [2025-07-03T09:03:57.029EDT] No replies found for tweet 1931977076187308379 {}
+2025-07-03T13:03:57: ✅ [2025-07-03T09:03:57.032EDT] Processed tweet 1931977076187308379 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:03:57: 🔍 [2025-07-03T09:03:57.662EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T13:03:57: 🔍 [2025-07-03T09:03:57.663EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T13:03:57: ⚠️ [2025-07-03T09:03:57.727EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:57: ⚠️ [2025-07-03T09:03:57.728EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:57: 🔍 [2025-07-03T09:03:57.742EDT] Processing tweet 1940682628816162905 {}
+2025-07-03T13:03:57: 🔍 [2025-07-03T09:03:57.742EDT] Fetching retweets for tweet 1940682628816162905 {}
+2025-07-03T13:03:57: ⚠️ [2025-07-03T09:03:57.807EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:57: ⚠️ [2025-07-03T09:03:57.807EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:03:59: ⚠️ [2025-07-03T09:03:59.794EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:59: ⚠️ [2025-07-03T09:03:59.796EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:03:59: ⚠️ [2025-07-03T09:03:59.873EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:03:59: ⚠️ [2025-07-03T09:03:59.874EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:04:03: ⚠️ [2025-07-03T09:04:03.874EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:03: ⚠️ [2025-07-03T09:04:03.880EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:03: ⚠️ [2025-07-03T09:04:03.943EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:03: ⚠️ [2025-07-03T09:04:03.946EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:11: ⚠️ [2025-07-03T09:04:11.883EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T13:04:11: 🔍 [2025-07-03T09:04:11.887EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T13:04:11: ⚠️ [2025-07-03T09:04:11.948EDT] Failed to fetch retweets for 1940682628816162905 { error: 'Request failed with code 429' }
+2025-07-03T13:04:11: 🔍 [2025-07-03T09:04:11.951EDT] Fetching replies for tweet 1940682628816162905 {}
+2025-07-03T13:04:12: 🔍 [2025-07-03T09:04:12.486EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T13:04:12: ✅ [2025-07-03T09:04:12.489EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:12: 🔍 [2025-07-03T09:04:12.526EDT] No replies found for tweet 1940682628816162905 {}
+2025-07-03T13:04:12: ✅ [2025-07-03T09:04:12.528EDT] Processed tweet 1940682628816162905 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:13: 🔍 [2025-07-03T09:04:13.100EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T13:04:13: 🔍 [2025-07-03T09:04:13.102EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T13:04:13: ⚠️ [2025-07-03T09:04:13.180EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:13: ⚠️ [2025-07-03T09:04:13.181EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:04:13: 🔍 [2025-07-03T09:04:13.190EDT] Processing tweet 1940768996615508211 {}
+2025-07-03T13:04:13: 🔍 [2025-07-03T09:04:13.191EDT] Fetching retweets for tweet 1940768996615508211 {}
+2025-07-03T13:04:13: ⚠️ [2025-07-03T09:04:13.257EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:13: ⚠️ [2025-07-03T09:04:13.259EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:04:15: ⚠️ [2025-07-03T09:04:15.243EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:15: ⚠️ [2025-07-03T09:04:15.247EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:04:15: ⚠️ [2025-07-03T09:04:15.340EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:15: ⚠️ [2025-07-03T09:04:15.344EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:04:19: ⚠️ [2025-07-03T09:04:19.321EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:19: ⚠️ [2025-07-03T09:04:19.324EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:19: ⚠️ [2025-07-03T09:04:19.418EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:19: ⚠️ [2025-07-03T09:04:19.421EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:27: ⚠️ [2025-07-03T09:04:27.327EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T13:04:27: 🔍 [2025-07-03T09:04:27.330EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T13:04:27: ⚠️ [2025-07-03T09:04:27.425EDT] Failed to fetch retweets for 1940768996615508211 { error: 'Request failed with code 429' }
+2025-07-03T13:04:27: 🔍 [2025-07-03T09:04:27.427EDT] Fetching replies for tweet 1940768996615508211 {}
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.034EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T13:04:28: ✅ [2025-07-03T09:04:28.035EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.089EDT] No replies found for tweet 1940768996615508211 {}
+2025-07-03T13:04:28: ✅ [2025-07-03T09:04:28.090EDT] Processed tweet 1940768996615508211 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.636EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.638EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T13:04:28: ⚠️ [2025-07-03T09:04:28.711EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:28: ⚠️ [2025-07-03T09:04:28.713EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.798EDT] Processing tweet 1940778527986798828 {}
+2025-07-03T13:04:28: 🔍 [2025-07-03T09:04:28.801EDT] Fetching retweets for tweet 1940778527986798828 {}
+2025-07-03T13:04:28: ⚠️ [2025-07-03T09:04:28.882EDT] Retry attempt 1/3 after 1000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:28: ⚠️ [2025-07-03T09:04:28.885EDT] Rate limit hit, waiting longer { delay: 2000 }
+2025-07-03T13:04:30: ⚠️ [2025-07-03T09:04:30.779EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:30: ⚠️ [2025-07-03T09:04:30.781EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:04:30: ⚠️ [2025-07-03T09:04:30.954EDT] Retry attempt 2/3 after 2000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:30: ⚠️ [2025-07-03T09:04:30.955EDT] Rate limit hit, waiting longer { delay: 4000 }
+2025-07-03T13:04:34: ⚠️ [2025-07-03T09:04:34.844EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:34: ⚠️ [2025-07-03T09:04:34.845EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:35: ⚠️ [2025-07-03T09:04:35.023EDT] Retry attempt 3/3 after 4000ms { error: 'Request failed with code 429' }
+2025-07-03T13:04:35: ⚠️ [2025-07-03T09:04:35.024EDT] Rate limit hit, waiting longer { delay: 8000 }
+2025-07-03T13:04:42: ⚠️ [2025-07-03T09:04:42.847EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T13:04:42: 🔍 [2025-07-03T09:04:42.851EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T13:04:43: ⚠️ [2025-07-03T09:04:43.025EDT] Failed to fetch retweets for 1940778527986798828 { error: 'Request failed with code 429' }
+2025-07-03T13:04:43: 🔍 [2025-07-03T09:04:43.028EDT] Fetching replies for tweet 1940778527986798828 {}
+2025-07-03T13:04:43: 🔍 [2025-07-03T09:04:43.484EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T13:04:43: ✅ [2025-07-03T09:04:43.487EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:43: 🔍 [2025-07-03T09:04:43.632EDT] No replies found for tweet 1940778527986798828 {}
+2025-07-03T13:04:43: ✅ [2025-07-03T09:04:43.635EDT] Processed tweet 1940778527986798828 { engagementsFound: 0, apiCallsUsed: 1, retweets: 0, replies: 0 }
+2025-07-03T13:04:44: ✅ [2025-07-03T09:04:44.203EDT] ✅ Batch processing completed {
+2025-07-03T13:04:44:   batchId: 'hYih_ZFW0ruAo06BlHewk',
+2025-07-03T13:04:44:   duration: '2 minutes',
+2025-07-03T13:04:44:   summary: {
+2025-07-03T13:04:44:     tweetsProcessed: 9,
+2025-07-03T13:04:44:     engagementsFound: 0,
+2025-07-03T13:04:44:     pointsAwarded: 0,
+2025-07-03T13:04:44:     apiCallsUsed: 9,
+2025-07-03T13:04:44:     retweets: 0,
+2025-07-03T13:04:44:     replies: 0,
+2025-07-03T13:04:44:     uniqueUsers: 0,
+2025-07-03T13:04:44:     errors: 0
+2025-07-03T13:04:44:   }
+2025-07-03T13:04:44: }
+2025-07-03T13:04:44: ✅ [2025-07-03T09:04:44.311EDT] ✅ Batch processing completed {
+2025-07-03T13:04:44:   batchId: 'vN_CfZTTWHd7ttQ4YQV7e',
+2025-07-03T13:04:44:   duration: '2 minutes',
+2025-07-03T13:04:44:   summary: {
+2025-07-03T13:04:44:     tweetsProcessed: 9,
+2025-07-03T13:04:44:     engagementsFound: 0,
+2025-07-03T13:04:44:     pointsAwarded: 0,
+2025-07-03T13:04:44:     apiCallsUsed: 9,
+2025-07-03T13:04:44:     retweets: 0,
+2025-07-03T13:04:44:     replies: 0,
+2025-07-03T13:04:44:     uniqueUsers: 0,
+2025-07-03T13:04:44:     errors: 0
+2025-07-03T13:04:44:   }
+2025-07-03T13:04:44: }
+2025-07-03T13:04:44: ℹ️ [2025-07-03T09:04:44.395EDT] 📊 Rate limit status { used: 22, remaining: 98, limit: 120, percentUsed: 18 }
+2025-07-03T13:04:44: ℹ️ [2025-07-03T09:04:44.501EDT] 📊 Rate limit status { used: 22, remaining: 98, limit: 120, percentUsed: 18 }
+2025-07-03T13:04:44: 
+2025-07-03T13:04:44: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T13:04:44: 
+2025-07-03T13:04:44: ✅ Manual batch completed: 9 tweets, 0 engagements, 0 points
+2025-07-03T13:05:26: 
+2025-07-03T13:05:26: 👋 Received SIGINT, shutting down gracefully...

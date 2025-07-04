@@ -8079,3 +8079,297 @@
 {"timestamp":"2025-07-02T21:52:29.683EDT","level":"INFO","message":"📊 Rate limit status","used":70,"remaining":50,"limit":120,"percentUsed":58}
 {"timestamp":"2025-07-02T22:00:00.035EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"PShsFAwM1TFRc2CHbqKN4","startTime":"2025-07-02T22:00:00.035EDT"}
 {"timestamp":"2025-07-02T22:00:00.589EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"PShsFAwM1TFRc2CHbqKN4","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-02T22:00:01.397EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:00:01.398EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:00:01.494EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:01.494EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:00:03.556EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:03.558EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:00:07.623EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:07.625EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:00:15.626EDT","level":"WARN","message":"Failed to fetch retweets for 1940417005657395366","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:15.627EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:00:16.038EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:00:16.277EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":20,"reply_count":9,"like_count":97,"quote_count":4,"bookmark_count":8,"impression_count":11169},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:00:16.960EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:00:16.961EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:00:17.019EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:17.021EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:00:19.080EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:19.081EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:00:23.146EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:23.148EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:00:31.151EDT","level":"WARN","message":"Failed to fetch retweets for 1940378522083836061","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:31.153EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:00:31.796EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:00:31.966EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":37,"reply_count":38,"like_count":229,"quote_count":4,"bookmark_count":4,"impression_count":17195},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:00:32.569EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:00:32.570EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:00:32.629EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:32.631EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:00:34.693EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:34.694EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:00:38.758EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:38.760EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:00:46.763EDT","level":"WARN","message":"Failed to fetch retweets for 1940337104468553842","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:46.765EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:00:47.394EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:00:47.570EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":43,"like_count":213,"quote_count":4,"bookmark_count":1,"impression_count":21425},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:00:48.162EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:00:48.164EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:00:48.231EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:48.233EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:00:50.293EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:50.294EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:00:54.375EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:00:54.377EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:01:02.379EDT","level":"WARN","message":"Failed to fetch retweets for 1939707597931897026","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:01:02.382EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:01:02.792EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:01:03.014EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":13,"reply_count":6,"like_count":69,"quote_count":1,"bookmark_count":1,"impression_count":17469},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:01:03.513EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"PShsFAwM1TFRc2CHbqKN4","duration":"1 minutes","summary":{"tweetsProcessed":4,"engagementsFound":0,"pointsAwarded":0,"apiCallsUsed":4,"retweets":0,"replies":0,"uniqueUsers":0,"errors":0}}
+{"timestamp":"2025-07-02T22:01:03.694EDT","level":"INFO","message":"📊 Rate limit status","used":74,"remaining":46,"limit":120,"percentUsed":62}
+{"timestamp":"2025-07-02T22:09:44.176EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"-TUecYUZ_lSWlamxn0p1Q","startTime":"2025-07-02T22:09:44.176EDT"}
+{"timestamp":"2025-07-02T22:09:44.765EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"-TUecYUZ_lSWlamxn0p1Q","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-02T22:09:45.587EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:09:45.588EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:09:45.890EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:09:46.136EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:09:46.319EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":20,"reply_count":9,"like_count":97,"quote_count":4,"bookmark_count":8,"impression_count":11182},"engagementsFound":19,"apiCallsUsed":2,"retweets":19,"replies":0}
+{"timestamp":"2025-07-02T22:09:48.561EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:09:48.563EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:09:48.937EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:09:49.454EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:09:49.628EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":37,"reply_count":38,"like_count":229,"quote_count":4,"bookmark_count":4,"impression_count":17213},"engagementsFound":36,"apiCallsUsed":2,"retweets":36,"replies":0}
+{"timestamp":"2025-07-02T22:09:53.742EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:09:53.745EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:09:53.990EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:09:54.463EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:09:54.644EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":43,"like_count":213,"quote_count":4,"bookmark_count":1,"impression_count":21452},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-02T22:09:56.706EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:09:56.709EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:09:56.938EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:09:57.163EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:09:57.344EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":13,"reply_count":6,"like_count":69,"quote_count":1,"bookmark_count":1,"impression_count":17512},"engagementsFound":13,"apiCallsUsed":2,"retweets":13,"replies":0}
+{"timestamp":"2025-07-02T22:09:59.935EDT","level":"INFO","message":"Points awarded for tweet 1939707597931897026","summary":{"likes":10,"retweets":20,"replies":0,"total":30},"userCount":1}
+{"timestamp":"2025-07-02T22:10:00.402EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"-TUecYUZ_lSWlamxn0p1Q","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":85,"pointsAwarded":30,"apiCallsUsed":8,"retweets":85,"replies":0,"uniqueUsers":72,"errors":0}}
+{"timestamp":"2025-07-02T22:10:00.602EDT","level":"INFO","message":"📊 Rate limit status","used":82,"remaining":38,"limit":120,"percentUsed":68}
+{"timestamp":"2025-07-02T22:10:28.354EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"1htXhFnucFab5AapLLvEO","startTime":"2025-07-02T22:10:28.354EDT"}
+{"timestamp":"2025-07-02T22:10:28.775EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"1htXhFnucFab5AapLLvEO","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-02T22:10:29.654EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:10:29.656EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:10:29.990EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T22:10:30.277EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:10:30.466EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":20,"reply_count":9,"like_count":97,"quote_count":4,"bookmark_count":8,"impression_count":11183},"engagementsFound":19,"apiCallsUsed":2,"retweets":19,"replies":0}
+{"timestamp":"2025-07-02T22:10:32.718EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:10:32.720EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:10:32.783EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:32.786EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:10:34.846EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:34.847EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:10:38.907EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:38.909EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:10:46.911EDT","level":"WARN","message":"Failed to fetch retweets for 1940378522083836061","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:46.913EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T22:10:47.510EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:10:47.685EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":37,"reply_count":38,"like_count":229,"quote_count":4,"bookmark_count":4,"impression_count":17216},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:10:48.371EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:10:48.373EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:10:48.439EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:48.440EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:10:50.502EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:50.503EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:10:54.565EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:10:54.567EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:11:02.569EDT","level":"WARN","message":"Failed to fetch retweets for 1940337104468553842","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:11:02.572EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T22:11:03.231EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:11:03.406EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":43,"like_count":213,"quote_count":3,"bookmark_count":1,"impression_count":21454},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:11:04.014EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:11:04.015EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:11:04.076EDT","level":"WARN","message":"Retry attempt 1/3 after 1000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:11:04.077EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":2000}
+{"timestamp":"2025-07-02T22:11:06.144EDT","level":"WARN","message":"Retry attempt 2/3 after 2000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:11:06.145EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":4000}
+{"timestamp":"2025-07-02T22:11:10.208EDT","level":"WARN","message":"Retry attempt 3/3 after 4000ms","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:11:10.213EDT","level":"WARN","message":"Rate limit hit, waiting longer","delay":8000}
+{"timestamp":"2025-07-02T22:11:18.214EDT","level":"WARN","message":"Failed to fetch retweets for 1939707597931897026","error":"Request failed with code 429"}
+{"timestamp":"2025-07-02T22:11:18.214EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T22:11:18.534EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T22:11:18.724EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":13,"reply_count":6,"like_count":69,"quote_count":1,"bookmark_count":1,"impression_count":17515},"engagementsFound":0,"apiCallsUsed":1,"retweets":0,"replies":0}
+{"timestamp":"2025-07-02T22:11:19.225EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"1htXhFnucFab5AapLLvEO","duration":"1 minutes","summary":{"tweetsProcessed":4,"engagementsFound":19,"pointsAwarded":0,"apiCallsUsed":5,"retweets":19,"replies":0,"uniqueUsers":19,"errors":0}}
+{"timestamp":"2025-07-02T22:11:19.404EDT","level":"INFO","message":"📊 Rate limit status","used":87,"remaining":33,"limit":120,"percentUsed":73}
+{"timestamp":"2025-07-02T23:00:00.045EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"ufsba-w4sCpQW1oN9cJof","startTime":"2025-07-02T23:00:00.044EDT"}
+{"timestamp":"2025-07-02T23:00:00.512EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"ufsba-w4sCpQW1oN9cJof","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-02T23:00:01.437EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T23:00:01.439EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T23:00:01.761EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-02T23:00:02.083EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T23:00:02.263EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":21,"reply_count":9,"like_count":97,"quote_count":4,"bookmark_count":9,"impression_count":11282},"engagementsFound":20,"apiCallsUsed":2,"retweets":20,"replies":0}
+{"timestamp":"2025-07-02T23:00:04.617EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T23:00:04.620EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T23:00:04.981EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-02T23:00:05.389EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T23:00:05.563EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":38,"like_count":230,"quote_count":4,"bookmark_count":4,"impression_count":17311},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-02T23:00:09.803EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T23:00:09.807EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T23:00:10.099EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-02T23:00:10.568EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T23:00:10.744EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":43,"like_count":214,"quote_count":3,"bookmark_count":1,"impression_count":21586},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-02T23:00:12.821EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T23:00:12.823EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T23:00:13.077EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-02T23:00:13.308EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-02T23:00:13.490EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":13,"reply_count":6,"like_count":69,"quote_count":1,"bookmark_count":1,"impression_count":17633},"engagementsFound":13,"apiCallsUsed":2,"retweets":13,"replies":0}
+{"timestamp":"2025-07-02T23:00:15.398EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"ufsba-w4sCpQW1oN9cJof","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":87,"pointsAwarded":0,"apiCallsUsed":8,"retweets":87,"replies":0,"uniqueUsers":73,"errors":0}}
+{"timestamp":"2025-07-02T23:00:15.581EDT","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-03T00:00:00.028EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"1UknVU4zEbnsbkpNwGtOt","startTime":"2025-07-03T00:00:00.028EDT"}
+{"timestamp":"2025-07-03T00:00:00.588EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"1UknVU4zEbnsbkpNwGtOt","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-03T00:00:01.493EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T00:00:01.494EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T00:00:01.815EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T00:00:02.109EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T00:00:02.292EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":21,"reply_count":10,"like_count":98,"quote_count":4,"bookmark_count":9,"impression_count":11428},"engagementsFound":20,"apiCallsUsed":2,"retweets":20,"replies":0}
+{"timestamp":"2025-07-03T00:00:04.638EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T00:00:04.639EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T00:00:04.977EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T00:00:05.448EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T00:00:05.620EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":38,"like_count":231,"quote_count":4,"bookmark_count":4,"impression_count":17473},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T00:00:09.847EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T00:00:09.850EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T00:00:10.125EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T00:00:10.602EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T00:00:10.773EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":43,"like_count":215,"quote_count":3,"bookmark_count":1,"impression_count":21766},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T00:00:12.834EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T00:00:12.836EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T00:00:13.091EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T00:00:13.325EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T00:00:13.506EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":13,"reply_count":6,"like_count":69,"quote_count":1,"bookmark_count":1,"impression_count":17753},"engagementsFound":13,"apiCallsUsed":2,"retweets":13,"replies":0}
+{"timestamp":"2025-07-03T00:00:15.402EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"1UknVU4zEbnsbkpNwGtOt","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":87,"pointsAwarded":0,"apiCallsUsed":8,"retweets":87,"replies":0,"uniqueUsers":73,"errors":0}}
+{"timestamp":"2025-07-03T00:00:15.584EDT","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-03T01:00:00.032EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"IF6tEAvI6yP3KxS6EH82c","startTime":"2025-07-03T01:00:00.032EDT"}
+{"timestamp":"2025-07-03T01:00:00.536EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"IF6tEAvI6yP3KxS6EH82c","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-03T01:00:01.350EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T01:00:01.352EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T01:00:01.675EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T01:00:01.948EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T01:00:02.134EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":22,"reply_count":10,"like_count":100,"quote_count":4,"bookmark_count":9,"impression_count":11548},"engagementsFound":21,"apiCallsUsed":2,"retweets":21,"replies":0}
+{"timestamp":"2025-07-03T01:00:04.674EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T01:00:04.675EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T01:00:05.043EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T01:00:05.455EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T01:00:05.640EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":39,"like_count":238,"quote_count":5,"bookmark_count":4,"impression_count":17724},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T01:00:09.906EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T01:00:09.909EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T01:00:10.175EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T01:00:10.656EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T01:00:10.834EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":44,"like_count":218,"quote_count":3,"bookmark_count":1,"impression_count":21973},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T01:00:12.927EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T01:00:12.928EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T01:00:13.219EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T01:00:13.533EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T01:00:13.719EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":14,"reply_count":6,"like_count":70,"quote_count":1,"bookmark_count":1,"impression_count":17879},"engagementsFound":14,"apiCallsUsed":2,"retweets":14,"replies":0}
+{"timestamp":"2025-07-03T01:00:15.774EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"IF6tEAvI6yP3KxS6EH82c","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":89,"pointsAwarded":0,"apiCallsUsed":8,"retweets":89,"replies":0,"uniqueUsers":74,"errors":0}}
+{"timestamp":"2025-07-03T01:00:15.962EDT","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}
+{"timestamp":"2025-07-03T02:00:00.033EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"-MyXI7KHxV6ad4i8_JCs0","startTime":"2025-07-03T02:00:00.033EDT"}
+{"timestamp":"2025-07-03T02:00:00.575EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"-MyXI7KHxV6ad4i8_JCs0","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-03T02:00:01.379EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T02:00:01.380EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T02:00:01.731EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T02:00:02.022EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T02:00:02.209EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":22,"reply_count":10,"like_count":102,"quote_count":4,"bookmark_count":9,"impression_count":11658},"engagementsFound":21,"apiCallsUsed":2,"retweets":21,"replies":0}
+{"timestamp":"2025-07-03T02:00:04.734EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T02:00:04.735EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T02:00:05.136EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T02:00:05.599EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T02:00:05.777EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":39,"like_count":240,"quote_count":5,"bookmark_count":4,"impression_count":17930},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T02:00:10.138EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T02:00:10.141EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T02:00:10.432EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T02:00:11.007EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T02:00:11.195EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":45,"like_count":218,"quote_count":3,"bookmark_count":1,"impression_count":22055},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T02:00:13.253EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T02:00:13.255EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T02:00:13.540EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T02:00:13.781EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T02:00:13.962EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":14,"reply_count":6,"like_count":71,"quote_count":1,"bookmark_count":1,"impression_count":17998},"engagementsFound":14,"apiCallsUsed":2,"retweets":14,"replies":0}
+{"timestamp":"2025-07-03T02:00:15.931EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"-MyXI7KHxV6ad4i8_JCs0","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":89,"pointsAwarded":0,"apiCallsUsed":8,"retweets":89,"replies":0,"uniqueUsers":74,"errors":0}}
+{"timestamp":"2025-07-03T02:00:16.112EDT","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}
+{"timestamp":"2025-07-03T03:00:00.031EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"lZf4ztli1VFNLdvBdjzKw","startTime":"2025-07-03T03:00:00.030EDT"}
+{"timestamp":"2025-07-03T03:00:00.596EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"lZf4ztli1VFNLdvBdjzKw","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-03T03:00:01.403EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T03:00:01.405EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T03:00:01.772EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T03:00:02.065EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T03:00:02.258EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":23,"reply_count":10,"like_count":103,"quote_count":4,"bookmark_count":11,"impression_count":11761},"engagementsFound":22,"apiCallsUsed":2,"retweets":22,"replies":0}
+{"timestamp":"2025-07-03T03:00:04.900EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T03:00:04.902EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T03:00:05.316EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T03:00:05.832EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T03:00:06.011EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":40,"like_count":243,"quote_count":5,"bookmark_count":4,"impression_count":18082},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T03:00:10.766EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T03:00:10.768EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T03:00:11.152EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T03:00:11.615EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T03:00:11.820EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":45,"like_count":220,"quote_count":3,"bookmark_count":1,"impression_count":22114},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T03:00:13.995EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T03:00:13.997EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T03:00:14.289EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T03:00:14.521EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T03:00:14.724EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":14,"reply_count":6,"like_count":71,"quote_count":1,"bookmark_count":1,"impression_count":18086},"engagementsFound":14,"apiCallsUsed":2,"retweets":14,"replies":0}
+{"timestamp":"2025-07-03T03:00:16.693EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"lZf4ztli1VFNLdvBdjzKw","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":90,"pointsAwarded":0,"apiCallsUsed":8,"retweets":90,"replies":0,"uniqueUsers":75,"errors":0}}
+{"timestamp":"2025-07-03T03:00:16.877EDT","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}
+{"timestamp":"2025-07-03T04:00:00.093EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"djPQH2QR2HMbcXoKYj0ie","startTime":"2025-07-03T04:00:00.093EDT"}
+{"timestamp":"2025-07-03T04:00:00.588EDT","level":"INFO","message":"📊 Found 4 tweets from last 24 hours","batchId":"djPQH2QR2HMbcXoKYj0ie","tweetCount":4,"maxAllowed":60}
+{"timestamp":"2025-07-03T04:00:01.396EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T04:00:01.397EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T04:00:01.855EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T04:00:02.164EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T04:00:02.347EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":24,"reply_count":10,"like_count":103,"quote_count":4,"bookmark_count":11,"impression_count":11844},"engagementsFound":23,"apiCallsUsed":2,"retweets":23,"replies":0}
+{"timestamp":"2025-07-03T04:00:05.058EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T04:00:05.059EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T04:00:05.501EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T04:00:06.020EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T04:00:06.196EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":40,"like_count":246,"quote_count":5,"bookmark_count":4,"impression_count":18205},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T04:00:10.412EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T04:00:10.415EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T04:00:10.793EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T04:00:11.323EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T04:00:11.526EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":45,"like_count":219,"quote_count":3,"bookmark_count":1,"impression_count":22170},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T04:00:13.604EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T04:00:13.607EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T04:00:13.873EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T04:00:14.138EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T04:00:14.332EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":14,"reply_count":6,"like_count":72,"quote_count":1,"bookmark_count":1,"impression_count":18207},"engagementsFound":14,"apiCallsUsed":2,"retweets":14,"replies":0}
+{"timestamp":"2025-07-03T04:00:16.313EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"djPQH2QR2HMbcXoKYj0ie","duration":"0 minutes","summary":{"tweetsProcessed":4,"engagementsFound":91,"pointsAwarded":0,"apiCallsUsed":8,"retweets":91,"replies":0,"uniqueUsers":76,"errors":0}}
+{"timestamp":"2025-07-03T04:00:16.495EDT","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}
+{"timestamp":"2025-07-03T05:00:00.033EDT","level":"INFO","message":"🚀 Starting batch processing","batchId":"pCAEs4p7qw1QHeEVyXMPG","startTime":"2025-07-03T05:00:00.033EDT"}
+{"timestamp":"2025-07-03T05:00:00.505EDT","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"pCAEs4p7qw1QHeEVyXMPG","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-03T05:00:01.319EDT","level":"DEBUG","message":"Processing tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T05:00:01.321EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T05:00:01.651EDT","level":"DEBUG","message":"Fetching replies for tweet 1940417005657395366"}
+{"timestamp":"2025-07-03T05:00:01.982EDT","level":"WARN","message":"Failed to fetch replies for 1940417005657395366","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T05:00:02.217EDT","level":"SUCCESS","message":"Processed tweet 1940417005657395366","metrics":{"retweet_count":24,"reply_count":10,"like_count":104,"quote_count":4,"bookmark_count":11,"impression_count":11943},"engagementsFound":23,"apiCallsUsed":2,"retweets":23,"replies":0}
+{"timestamp":"2025-07-03T05:00:04.834EDT","level":"DEBUG","message":"Processing tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T05:00:04.836EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T05:00:05.277EDT","level":"DEBUG","message":"Fetching replies for tweet 1940378522083836061"}
+{"timestamp":"2025-07-03T05:00:05.786EDT","level":"WARN","message":"Failed to fetch replies for 1940378522083836061","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T05:00:05.990EDT","level":"SUCCESS","message":"Processed tweet 1940378522083836061","metrics":{"retweet_count":38,"reply_count":41,"like_count":247,"quote_count":5,"bookmark_count":4,"impression_count":18301},"engagementsFound":37,"apiCallsUsed":2,"retweets":37,"replies":0}
+{"timestamp":"2025-07-03T05:00:10.416EDT","level":"DEBUG","message":"Processing tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T05:00:10.419EDT","level":"DEBUG","message":"Fetching retweets for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T05:00:10.717EDT","level":"DEBUG","message":"Fetching replies for tweet 1940337104468553842"}
+{"timestamp":"2025-07-03T05:00:11.386EDT","level":"WARN","message":"Failed to fetch replies for 1940337104468553842","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T05:00:11.567EDT","level":"SUCCESS","message":"Processed tweet 1940337104468553842","metrics":{"retweet_count":18,"reply_count":45,"like_count":220,"quote_count":3,"bookmark_count":1,"impression_count":22218},"engagementsFound":17,"apiCallsUsed":2,"retweets":17,"replies":0}
+{"timestamp":"2025-07-03T05:00:13.702EDT","level":"DEBUG","message":"Processing tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T05:00:13.704EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T05:00:13.984EDT","level":"DEBUG","message":"Fetching replies for tweet 1939707597931897026"}
+{"timestamp":"2025-07-03T05:00:14.310EDT","level":"WARN","message":"Failed to fetch replies for 1939707597931897026","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T05:00:14.502EDT","level":"SUCCESS","message":"Processed tweet 1939707597931897026","metrics":{"retweet_count":14,"reply_count":6,"like_count":72,"quote_count":1,"bookmark_count":1,"impression_count":18312},"engagementsFound":14,"apiCallsUsed":2,"retweets":14,"replies":0}
+{"timestamp":"2025-07-03T05:00:16.767EDT","level":"DEBUG","message":"Processing tweet 1939958549175468160"}
+{"timestamp":"2025-07-03T05:00:16.769EDT","level":"DEBUG","message":"Fetching retweets for tweet 1939958549175468160"}
+{"timestamp":"2025-07-03T05:00:16.965EDT","level":"DEBUG","message":"Fetching replies for tweet 1939958549175468160"}
+{"timestamp":"2025-07-03T05:00:17.735EDT","level":"WARN","message":"Failed to fetch replies for 1939958549175468160","error":"repliesData.data is not iterable"}
+{"timestamp":"2025-07-03T05:00:17.922EDT","level":"SUCCESS","message":"Processed tweet 1939958549175468160","metrics":{"retweet_count":1,"reply_count":165,"like_count":169,"quote_count":0,"bookmark_count":6,"impression_count":1475},"engagementsFound":1,"apiCallsUsed":2,"retweets":1,"replies":0}
+{"timestamp":"2025-07-03T05:00:19.074EDT","level":"INFO","message":"Points awarded for tweet 1939958549175468160","summary":{"likes":10,"retweets":20,"replies":0,"total":30},"userCount":1}
+{"timestamp":"2025-07-03T05:00:19.468EDT","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"pCAEs4p7qw1QHeEVyXMPG","duration":"0 minutes","summary":{"tweetsProcessed":5,"engagementsFound":92,"pointsAwarded":30,"apiCallsUsed":10,"retweets":92,"replies":0,"uniqueUsers":77,"errors":0}}
+{"timestamp":"2025-07-03T05:00:19.652EDT","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}

@@ -24,6 +24,25 @@ const twitterClient = new TwitterApi({
 
 const readOnlyClient = twitterClient.readOnly
 
+// ====== SMART RATE LIMIT HANDLING ======
+// Global variable to track Twitter's rate limit reset time
+let twitterRateLimitReset = null
+
+// Extract rate limit info from Twitter API error
+function extractRateLimitInfo(error) {
+  // Check various possible locations for rate limit headers
+  const headers = error?.headers || error?.response?.headers || error?._headers || {}
+  const resetTime = headers['x-rate-limit-reset'] || headers['X-Rate-Limit-Reset']
+  
+  if (resetTime) {
+    // Convert Unix timestamp to milliseconds
+    return parseInt(resetTime) * 1000
+  }
+  
+  return null
+}
+// ======================================
+
 // Process batch job
 async function processBatch(metricsOnlyMode = false) {
   console.log('🔄 Starting batch processing...')
@@ -304,6 +323,59 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
             console.log(`   📊 Rate Limit: Not available (Essential API access may not provide rate limit headers)`);
           }
         } catch (retweetError) {
+          // ====== SMART RATE LIMIT HANDLING ======
+          if (retweetError.code === 429 || retweetError.statusCode === 429) {
+            const now = new Date()
+            const resetTime = extractRateLimitInfo(retweetError)
+            
+            if (resetTime) {
+              twitterRateLimitReset = resetTime
+              const resetDate = new Date(resetTime)
+              const waitMs = resetTime - now.getTime()
+              const waitMinutes = Math.ceil(waitMs / 1000 / 60)
+              
+              console.log('\n\n')
+              console.log('====== RATE LIMIT HIT ======')
+              console.log(`⚠️  Rate limit hit at ${now.toLocaleString()}`)
+              console.log(`⏰  Reset time: ${resetDate.toLocaleString()}`)
+              console.log(`⏸️  Pausing batch for ${waitMinutes} minutes`)
+              console.log('============================\n')
+              
+              // Update batch status
+              batchJob.status = 'paused_rate_limit'
+              batchJob.pausedAt = now.toISOString()
+              batchJob.willResumeAt = resetDate.toISOString()
+              await redis.json.set(`engagement:batch:${batchId}`, '$', batchJob)
+              
+              // Set timer to automatically restart
+              if (waitMs > 0) {
+                console.log(`⏱️  Setting timer for ${waitMinutes} minutes...`)
+                
+                setTimeout(async () => {
+                  console.log('\n')
+                  console.log('====== RATE LIMIT RESET ======')
+                  console.log(`🔄 Rate limit reset. Restarting batch now.`)
+                  console.log(`⏰  Current time: ${new Date().toLocaleString()}`)
+                  console.log('==============================\n')
+                  
+                  // Clear the rate limit reset time
+                  twitterRateLimitReset = null
+                  
+                  // Restart batch processing
+                  try {
+                    await processBatch(metricsOnlyMode)
+                  } catch (restartError) {
+                    console.error('❌ Failed to restart batch:', restartError.message)
+                  }
+                }, waitMs)
+              }
+              
+              // Exit function to stop processing
+              return
+            }
+          }
+          // ======================================
+          
           console.log(`   ❌ ERROR getting retweets:`)
           console.log(`      Message: ${retweetError.message}`)
           console.log(`      Error Code: ${retweetError.code || 'N/A'}`)
@@ -313,10 +385,6 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
             console.log(`      Error Response Body:`, JSON.stringify(retweetError.data, null, 2))
           }
           
-          if (retweetError.errors) {
-            console.log(`      Twitter API Errors:`, JSON.stringify(retweetError.errors, null, 2))
-          }
-          
           retweetersResponse = { data: [] }
         }
         
@@ -324,6 +392,12 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
         if (retweetersResponse.data && retweetersResponse.data.length > 0) {
           console.log(`   ✅ Found ${retweetersResponse.data.length} users who retweeted`)
           for (const retweeter of retweetersResponse.data) {
+            // CRITICAL: Skip if user is retweeting their own tweet
+            if (retweeter.username.toLowerCase() === tweet.authorHandle.toLowerCase()) {
+              console.log(`      ⚠️  Skipping self-engagement: @${retweeter.username} retweeted their own tweet`)
+              continue
+            }
+            
             const connection = await redis.get(`engagement:twitter:${retweeter.username.toLowerCase()}`)
             if (connection) {
               console.log(`      👤 User @${retweeter.username} is connected (Discord ID: ${connection})`)
@@ -331,7 +405,7 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
               if (userConnection) {
                 // Award retweet points
                 const retweetRule = await redis.json.get(`engagement:rules:${userConnection.tier}-retweet`)
-                const retweetBasePoints = retweetRule?.points || 2
+                const retweetBasePoints = retweetRule?.points || 35
                 
                 // Get tier scenarios for bonus multiplier
                 const scenarios = await redis.json.get(`engagement:scenarios:tier${userConnection.tier}`)
@@ -380,7 +454,7 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
                   // Also award like points (assuming they liked it if they retweeted)
                   if (!usersAwardedLikePoints.has(connection)) {
                     const likeRule = await redis.json.get(`engagement:rules:${userConnection.tier}-like`)
-                    const likeBasePoints = likeRule?.points || 1
+                    const likeBasePoints = likeRule?.points || 10
                     const likePoints = Math.round(likeBasePoints * bonusMultiplier)
                     
                     const existingLikeLog = await redis.get(`engagement:interaction:${tweet.tweetId}:${connection}:like`)
@@ -480,6 +554,59 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
             console.log(`   📊 Rate Limit: Not available (Essential API access may not provide rate limit headers)`);
           }
         } catch (replyError) {
+          // ====== SMART RATE LIMIT HANDLING ======
+          if (replyError.code === 429 || replyError.statusCode === 429) {
+            const now = new Date()
+            const resetTime = extractRateLimitInfo(replyError)
+            
+            if (resetTime) {
+              twitterRateLimitReset = resetTime
+              const resetDate = new Date(resetTime)
+              const waitMs = resetTime - now.getTime()
+              const waitMinutes = Math.ceil(waitMs / 1000 / 60)
+              
+              console.log('\n\n')
+              console.log('====== RATE LIMIT HIT ======')
+              console.log(`⚠️  Rate limit hit at ${now.toLocaleString()}`)
+              console.log(`⏰  Reset time: ${resetDate.toLocaleString()}`)
+              console.log(`⏸️  Pausing batch for ${waitMinutes} minutes`)
+              console.log('============================\n')
+              
+              // Update batch status
+              batchJob.status = 'paused_rate_limit'
+              batchJob.pausedAt = now.toISOString()
+              batchJob.willResumeAt = resetDate.toISOString()
+              await redis.json.set(`engagement:batch:${batchId}`, '$', batchJob)
+              
+              // Set timer to automatically restart
+              if (waitMs > 0) {
+                console.log(`⏱️  Setting timer for ${waitMinutes} minutes...`)
+                
+                setTimeout(async () => {
+                  console.log('\n')
+                  console.log('====== RATE LIMIT RESET ======')
+                  console.log(`🔄 Rate limit reset. Restarting batch now.`)
+                  console.log(`⏰  Current time: ${new Date().toLocaleString()}`)
+                  console.log('==============================\n')
+                  
+                  // Clear the rate limit reset time
+                  twitterRateLimitReset = null
+                  
+                  // Restart batch processing
+                  try {
+                    await processBatch(metricsOnlyMode)
+                  } catch (restartError) {
+                    console.error('❌ Failed to restart batch:', restartError.message)
+                  }
+                }, waitMs)
+              }
+              
+              // Exit function to stop processing
+              return
+            }
+          }
+          // ======================================
+          
           console.log(`   ❌ ERROR getting replies:`)
           console.log(`      Message: ${replyError.message}`)
           console.log(`      Error Code: ${replyError.code || 'N/A'}`)
@@ -506,6 +633,12 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
             const replierUsername = authorMap.get(reply.author_id)
             if (!replierUsername) continue
             
+            // CRITICAL: Skip if user is replying to their own tweet
+            if (replierUsername.toLowerCase() === tweet.authorHandle.toLowerCase()) {
+              console.log(`      ⚠️  Skipping self-engagement: @${replierUsername} replied to their own tweet`)
+              continue
+            }
+            
             const connection = await redis.get(`engagement:twitter:${replierUsername.toLowerCase()}`)
             if (connection) {
               console.log(`      👤 User @${replierUsername} is connected (Discord ID: ${connection})`)
@@ -513,7 +646,7 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
               if (userConnection) {
                 // Award reply points
                 const replyRule = await redis.json.get(`engagement:rules:${userConnection.tier}-reply`)
-                const replyBasePoints = replyRule?.points || 3
+                const replyBasePoints = replyRule?.points || 20
                 
                 // Get tier scenarios for bonus multiplier
                 const scenarios = await redis.json.get(`engagement:scenarios:tier${userConnection.tier}`)
@@ -562,7 +695,7 @@ async function processBatchWithId(batchId, batchJob, metricsOnlyMode) {
                   // Also award like points (assuming they liked it if they replied)
                   if (!usersAwardedLikePoints.has(connection)) {
                     const likeRule = await redis.json.get(`engagement:rules:${userConnection.tier}-like`)
-                    const likeBasePoints = likeRule?.points || 1
+                    const likeBasePoints = likeRule?.points || 10
                     const likePoints = Math.round(likeBasePoints * bonusMultiplier)
                     
                     const existingLikeLog = await redis.get(`engagement:interaction:${tweet.tweetId}:${connection}:like`)

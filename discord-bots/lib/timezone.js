@@ -44,16 +44,15 @@ function getEdtMidnight(daysAgo = 0) {
  * Format date to EDT ISO string with timezone indicator
  */
 function toEdtIsoString(date) {
-  const edt = utcToEdt(date);
-  const year = edt.getFullYear();
-  const month = String(edt.getMonth() + 1).padStart(2, '0');
-  const day = String(edt.getDate()).padStart(2, '0');
-  const hours = String(edt.getHours()).padStart(2, '0');
-  const minutes = String(edt.getMinutes()).padStart(2, '0');
-  const seconds = String(edt.getSeconds()).padStart(2, '0');
-  const ms = String(edt.getMilliseconds()).padStart(3, '0');
+  // Convert to EDT
+  const edtDate = utcToEdt(date);
   
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${ms}EDT`;
+  // Get the UTC version of this EDT time
+  const utcEquivalent = new Date(date.getTime());
+  
+  // Return the UTC ISO string which represents the correct time
+  // This ensures proper parsing later
+  return utcEquivalent.toISOString();
 }
 
 /**

@@ -83,6 +83,49 @@ module.exports = {
       
       // Environment variables will be loaded from .env.local
       // node_args: '--experimental-modules' // Not needed for .js files
+    },
+    {
+      name: 'engagement-cron-v2',
+      script: './engagement-cron-v2.js',
+      cwd: '/Users/nabu/kol/discord-bots',
+      exec_mode: 'fork',
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '500M',
+      env: {
+        NODE_ENV: 'production'
+      },
+      error_file: './logs/engagement-cron-error.log',
+      out_file: './logs/engagement-cron-out.log',
+      log_file: './logs/engagement-cron-combined.log',
+      time: true,
+      
+      // Enable IPC for fork mode
+      instance_var: 'INSTANCE_ID',
+      
+      // Restart settings
+      min_uptime: '10s',
+      max_restarts: 10,
+      restart_delay: 1000,
+      
+      // Exponential backoff for restarts
+      exp_backoff_restart_delay: 100,
+      
+      // Kill timeout
+      kill_timeout: 5000,
+      
+      // Listen for shutdown signals
+      listen_timeout: 3000,
+      
+      // Merge logs
+      merge_logs: true,
+      
+      // Log rotation
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      
+      // Auto restart on file changes (disabled in production)
+      ignore_watch: ['node_modules', 'logs', '*.log']
     }
   ],
   

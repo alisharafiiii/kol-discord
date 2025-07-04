@@ -9,7 +9,7 @@ require('dotenv').config({ path: envPath })
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, REST, Routes } = require('discord.js')
 const { Redis } = require('@upstash/redis')
 const { GoogleGenerativeAI } = require('@google/generative-ai')
-const { toEdtIsoString, getEdtDateString } = require('./lib/timezone')
+const { toEdtIsoString, getEdtDateString, getCurrentEdt } = require('./lib/timezone')
 
 // Check required environment variables
 const requiredVars = ['UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN']
@@ -180,7 +180,11 @@ async function isUserApproved(twitterHandle) {
     if (!userData) {
       const userIds = await redis.smembers(`idx:username:${normalizedHandle}`)
       if (userIds && userIds.length > 0) {
-        userData = await redis.json.get(userIds[0])
+        // Check ALL entries in the index, not just the first one
+        for (const userId of userIds) {
+          userData = await redis.json.get(userId)
+          if (userData) break // Stop when we find valid data
+        }
       }
     }
     
@@ -188,7 +192,11 @@ async function isUserApproved(twitterHandle) {
     if (!userData) {
       const profileIds = await redis.smembers(`idx:profile:handle:${normalizedHandle}`)
       if (profileIds && profileIds.length > 0) {
-        userData = await redis.json.get(profileIds[0])
+        // Check ALL entries in the index
+        for (const profileId of profileIds) {
+          userData = await redis.json.get(profileId)
+          if (userData) break // Stop when we find valid data
+        }
       }
     }
     
@@ -239,12 +247,39 @@ async function updateUserRole(twitterHandle, newRole) {
 async function getTierScenarios(tier) {
   try {
     const safeTier = tier || 'micro' // Default to micro if tier is null/undefined
+    
+    // First check if we have tier configuration from admin panel
+    const tierConfig = await redis.json.get(`engagement:tier-config:${safeTier}`)
+    if (tierConfig) {
+      // Convert tier config to scenario format
+      return {
+        dailyTweetLimit: tierConfig.dailyTweetLimit,
+        submissionCost: tierConfig.submissionCost,
+        bonusMultiplier: tierConfig.multiplier,
+        categories: ['General', 'DeFi', 'NFT', 'Gaming', 'Tech', 'Memes', 'News'],
+        minFollowers: getMinFollowersByTier(safeTier)
+      }
+    }
+    
+    // Fall back to scenario data if no tier config
     const scenarios = await redis.json.get(`engagement:scenarios:${safeTier}`)
     return scenarios || getDefaultScenarios(safeTier)
   } catch (error) {
     console.error('Error getting tier scenarios:', error)
     return getDefaultScenarios(tier || 'micro')
   }
+}
+
+// Get minimum followers by tier
+function getMinFollowersByTier(tier) {
+  const followersMap = {
+    'micro': 100,
+    'rising': 500,
+    'star': 1000,
+    'legend': 5000,
+    'hero': 10000
+  }
+  return followersMap[tier] || 100
 }
 
 // Default scenarios by tier
@@ -301,19 +336,40 @@ async function retryOperation(fn, operation = 'operation', retries = 3) {
 
 // Create minimal tweet embed with preview
 function createTweetEmbed(tweet, submitterName, includeButtons = true) {
-  // Choose color based on tier
+  // Choose color based on tier - more vibrant colors
   const tierColors = {
-    'micro': 0x6B7280,  // Gray
-    'rising': 0x3BA55D, // Green
-    'star': 0x5865F2,   // Blue
-    'legend': 0xEA580C, // Orange
-    'hero': 0x9333EA    // Purple
+    'micro': 0x6B7280,   // Gray
+    'rising': 0x3B82F6,  // Blue
+    'star': 0xFBBF24,    // Yellow
+    'legend': 0xFB923C,  // Orange
+    'hero': 0xA855F7     // Purple
   }
   
-  // Calculate potential points
+  // Tier emojis for better visibility
+  const tierEmojis = {
+    'micro': '⚪',
+    'rising': '🔵',
+    'star': '⭐',
+    'legend': '🟠',
+    'hero': '🟣'
+  }
+  
+  // Tier display names
+  const tierNames = {
+    'micro': 'MICRO',
+    'rising': 'RISING',
+    'star': 'STAR',
+    'legend': 'LEGEND',
+    'hero': 'HERO'
+  }
+  
+  // Calculate potential points with new values
   const likePoints = Math.floor(10 * tweet.bonusMultiplier)
-  const retweetPoints = Math.floor(20 * tweet.bonusMultiplier)
-  const replyPoints = Math.floor(30 * tweet.bonusMultiplier)
+  const retweetPoints = Math.floor(35 * tweet.bonusMultiplier)
+  const replyPoints = Math.floor(20 * tweet.bonusMultiplier)
+  
+  const tierEmoji = tierEmojis[tweet.tier] || '⚪'
+  const tierName = tierNames[tweet.tier] || tweet.tier.toUpperCase()
   
   const embed = new EmbedBuilder()
     .setColor(tierColors[tweet.tier] || 0x1DA1F2)
@@ -323,12 +379,13 @@ function createTweetEmbed(tweet, submitterName, includeButtons = true) {
       iconURL: 'https://abs.twimg.com/icons/apple-touch-icon-192x192.png'
     })
     .setDescription(
+      `${tierEmoji} **${tierName} TIER** ${tierEmoji}\n\n` +
       `${tweet.content ? `"${tweet.content}"\n\n` : ''}` +
       `**💰 Earn ${tweet.bonusMultiplier}x points:**\n` +
       `❤️ Like: ${likePoints} pts | 🔁 RT: ${retweetPoints} pts | 💬 Reply: ${replyPoints} pts`
     )
     .addFields(
-      { name: 'Tier', value: `⭐ ${tweet.tier}`, inline: true },
+      { name: 'Tier', value: `${tierEmoji} ${tierName}`, inline: true },
       { name: 'Category', value: `${tweet.category}`, inline: true },
       { name: 'Submitted', value: `<t:${Math.floor(new Date(tweet.submittedAt).getTime() / 1000)}:R>`, inline: true }
     )
@@ -500,6 +557,10 @@ client.on('ready', async () => {
     {
       name: 'recent',
       description: 'View recently submitted tweets'
+    },
+    {
+      name: 'points',
+      description: 'View your points balance and recent activity'
     },
     {
       name: 'tier',
@@ -722,7 +783,8 @@ client.on('interactionCreate', async (interaction) => {
       const member = interaction.guild.members.cache.get(interaction.user.id)
       const isAdmin = member.roles.cache.some(role => role.name === ADMIN_ROLE_NAME)
       
-      if (!isAdmin && connection.twitterHandle !== authorHandle) {
+      // Compare handles case-insensitively
+      if (!isAdmin && connection.twitterHandle.toLowerCase() !== authorHandle.toLowerCase()) {
         await interaction.editReply('❌ You can only submit your own tweets. Admins can submit any tweet.')
         return
       }
@@ -961,6 +1023,220 @@ client.on('interactionCreate', async (interaction) => {
         console.error('Error in /recent command:', error)
         await interaction.editReply('❌ An error occurred while fetching recent tweets.')
       }
+    }
+    
+    else if (commandName === 'points') {
+      await interaction.deferReply({ flags: 64 }) // Ephemeral reply
+      
+      const connection = await redis.json.get(`engagement:connection:${interaction.user.id}`)
+      if (!connection) {
+        await interaction.editReply('❌ Please connect your Twitter account first using `/connect`')
+        return
+      }
+      
+      // Get the latest user data to sync tier
+      const { userData } = await isUserApproved(connection.twitterHandle)
+      if (userData && userData.tier && userData.tier !== connection.tier) {
+        // Update the connection with the latest tier
+        connection.tier = userData.tier
+        await redis.json.set(`engagement:connection:${interaction.user.id}`, '$.tier', userData.tier)
+      }
+      
+      // Get total points from the connection (this is the source of truth)
+      const totalPoints = connection.totalPoints || 0
+      
+      // Get user's engagement history more efficiently
+      // First, get all tweet interactions for this user
+      const interactionKeys = await redis.keys(`engagement:interaction:*:${interaction.user.id}:*`)
+      const userLogs = []
+      
+      // Get the log IDs from interactions
+      for (const key of interactionKeys) {
+        const logId = await redis.get(key)
+        if (logId) {
+          const log = await redis.json.get(`engagement:log:${logId}`)
+          if (log) {
+            userLogs.push(log)
+          }
+        }
+      }
+      
+      // Sort logs by timestamp (newest first)
+      userLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      
+      // Get recent logs (last 10)
+      const recentLogs = userLogs.slice(0, 10)
+      
+      // Calculate points summary using EDT
+      const pointsSummary = {
+        today: 0,
+        week: 0,
+        month: 0
+      }
+      
+      // Get current EDT time
+      const nowEdt = getCurrentEdt()
+      
+      // Today start in EDT (midnight)
+      const todayStartEdt = new Date(nowEdt)
+      todayStartEdt.setHours(0, 0, 0, 0)
+      
+      // Week start in EDT (7 days ago)
+      const weekStartEdt = new Date(nowEdt)
+      weekStartEdt.setDate(weekStartEdt.getDate() - 7)
+      
+      // Month start in EDT (30 days ago)
+      const monthStartEdt = new Date(nowEdt)
+      monthStartEdt.setDate(monthStartEdt.getDate() - 30)
+      
+      // Debug logging
+      console.log(`[POINTS DEBUG] User: ${connection.twitterHandle}`)
+      console.log(`[POINTS DEBUG] Discord ID: ${interaction.user.id}`)
+      console.log(`[POINTS DEBUG] Now EDT: ${nowEdt}`)
+      console.log(`[POINTS DEBUG] Today Start: ${todayStartEdt}`)
+      console.log(`[POINTS DEBUG] Week Start: ${weekStartEdt}`) 
+      console.log(`[POINTS DEBUG] Month Start: ${monthStartEdt}`)
+      console.log(`[POINTS DEBUG] Engagement logs found: ${userLogs.length}`)
+      
+      // Calculate points earned in different periods
+      userLogs.forEach(log => {
+        // Parse the EDT timestamp - remove "EDT" suffix and parse
+        let logDate
+        if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
+          // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
+          // This represents 20:21 EDT, which is 00:21 UTC (next day)
+          // Remove EDT suffix and parse as local time, then add 4 hours for UTC
+          const cleanTimestamp = log.timestamp.replace('EDT', '')
+          const edtTime = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
+          logDate = edtTime
+        } else {
+          // New format: Standard ISO string, parse directly
+          logDate = new Date(log.timestamp)
+        }
+        
+        // Only count if date is valid
+        if (!isNaN(logDate.getTime())) {
+          console.log(`[POINTS DEBUG] Log: ${log.interactionType} +${log.points} pts at ${logDate}`)
+          
+          if (logDate >= todayStartEdt) {
+            pointsSummary.today += log.points
+            console.log(`  -> Counted in TODAY`)
+          }
+          if (logDate >= weekStartEdt) {
+            pointsSummary.week += log.points
+            console.log(`  -> Counted in WEEK`)
+          }
+          if (logDate >= monthStartEdt) {
+            pointsSummary.month += log.points
+            console.log(`  -> Counted in MONTH`)
+          }
+        } else {
+          console.log(`[POINTS DEBUG] Invalid date for log: ${log.timestamp}`)
+        }
+      })
+      
+      console.log(`[POINTS DEBUG] Final summary:`)
+      console.log(`  Today: ${pointsSummary.today} pts`)
+      console.log(`  Week: ${pointsSummary.week} pts`)
+      console.log(`  Month: ${pointsSummary.month} pts`)
+      
+      // Create embed
+      const embed = new EmbedBuilder()
+        .setColor(0x00FF00)
+        .setTitle('💰 Your Points Balance')
+        .setDescription(`**Total Points:** ${totalPoints} points\n*Includes all activities: Twitter engagement, Discord, contests, etc.*`)
+        .addFields(
+          { name: '📊 Twitter Engagement Points', value: 'Points earned from likes, retweets, and replies:', inline: false },
+          { name: 'Today', value: `+${pointsSummary.today} pts`, inline: true },
+          { name: 'Last 7 Days', value: `+${pointsSummary.week} pts`, inline: true },
+          { name: 'Last 30 Days', value: `+${pointsSummary.month} pts`, inline: true }
+        )
+        .setFooter({ text: `@${connection.twitterHandle} • Tier ${connection.tier ? connection.tier.toUpperCase() : 'MICRO'}` })
+        .setTimestamp()
+      
+      // Add recent activity if available
+      if (recentLogs.length > 0) {
+        // First, get unique tweet IDs and fetch tweet data
+        const tweetIdToAuthor = new Map()
+        const uniqueTweetIds = [...new Set(recentLogs.map(log => log.tweetId).filter(Boolean))]
+        
+        // Use the tweet ID mapping to find tweet data
+        for (const tweetId of uniqueTweetIds) {
+          const tweetIdKey = await redis.get(`engagement:tweetid:${tweetId}`)
+          if (tweetIdKey) {
+            const tweet = await redis.json.get(`engagement:tweet:${tweetIdKey}`)
+            if (tweet) {
+              tweetIdToAuthor.set(tweetId, tweet.authorHandle)
+            }
+          }
+        }
+        
+        const activityLines = recentLogs.map(log => {
+          const emoji = log.interactionType === 'like' ? '❤️' : 
+                        log.interactionType === 'retweet' ? '🔁' : '💬'
+          
+          // Parse EDT timestamp
+          let time
+          if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
+            // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
+            // This represents 20:21 EDT, which is 00:21 UTC (next day)
+            // Remove EDT suffix and parse as local time, then add 4 hours for UTC
+            const cleanTimestamp = log.timestamp.replace('EDT', '')
+            time = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
+          } else {
+            // New format: Standard ISO string, parse directly
+            time = new Date(log.timestamp)
+          }
+          
+          // Create timestamp string if valid
+          let timeStr = ''
+          if (!isNaN(time.getTime())) {
+            timeStr = `<t:${Math.floor(time.getTime() / 1000)}:R>`
+          } else {
+            // Fallback to showing the raw timestamp
+            timeStr = log.timestamp || 'Unknown time'
+          }
+          
+          // Get tweet author info
+          const tweetAuthor = log.tweetId ? tweetIdToAuthor.get(log.tweetId) : null
+          const tweetInfo = tweetAuthor ? ` - @${tweetAuthor}` : ''
+          
+          return `${emoji} +${log.points} pts ${timeStr}${tweetInfo}`
+        })
+        
+        embed.addFields({ 
+          name: '📊 Recent Activity', 
+          value: activityLines.join('\n') || 'No recent activity',
+          inline: false 
+        })
+      } else {
+        embed.addFields({
+          name: '📊 Recent Activity',
+          value: 'No engagement activity yet. Start engaging with tweets to earn points!',
+          inline: false
+        })
+      }
+      
+      // Add note about other point sources
+      const engagementTotal = userLogs.reduce((sum, log) => sum + log.points, 0)
+      const otherPoints = totalPoints - engagementTotal
+      
+      if (otherPoints > 0) {
+        embed.addFields({
+          name: '📝 Other Points',
+          value: `You have ${otherPoints} points from Discord activity, contests, and other sources (not shown in time breakdowns).`,
+          inline: false
+        })
+      }
+      
+      // Note about spending (future feature)
+      embed.addFields({
+        name: '💸 Points Spent',
+        value: 'Point spending coming soon!',
+        inline: false
+      })
+      
+      await interaction.editReply({ embeds: [embed] })
     }
     
     else if (commandName === 'tier') {

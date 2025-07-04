@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Trophy, Users, Twitter, RefreshCw, Settings, Activity, Plus, Trash2 } from 'lucide-react'
+import { Trophy, Users, Twitter, RefreshCw, Settings, Activity, Plus, Trash2, FileText, TrendingUp } from 'lucide-react'
 
 interface Tweet {
   id: string
@@ -23,7 +23,7 @@ interface Tweet {
 interface LeaderboardEntry {
   discordId: string
   twitterHandle: string
-  tier: number
+  tier: string
   totalPoints: number
   weeklyPoints: number
   rank: number
@@ -46,18 +46,69 @@ interface BatchJob {
   error?: string
 }
 
+interface TierConfig {
+  tier: string
+  displayName: string
+  multiplier: number
+  submissionCost: number
+  dailyTweetLimit: number
+}
+
+interface OptedInUser {
+  discordId: string
+  twitterHandle: string
+  discordUsername?: string
+  discordServers?: string[]
+  tier: string
+  totalPoints: number
+  profilePicture?: string
+  tweetsSubmitted: number
+  totalLikes: number
+  totalRetweets: number
+  totalComments: number
+}
+
+interface PointTransaction {
+  id: string
+  userId: string
+  userName: string
+  points: number
+  action: string
+  timestamp: string
+  description: string
+}
+
 export default function EngagementAdminPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'tweets' | 'leaderboard' | 'settings'>('overview')
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  
+  // Data states
+  const [stats, setStats] = useState({
+    totalTweets: 0,
+    todayTweets: 0,
+    totalEngagements: 0,
+    activeUsers: 0
+  })
   const [tweets, setTweets] = useState<Tweet[]>([])
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
   const [rules, setRules] = useState<PointRule[]>([])
   const [batchJobs, setBatchJobs] = useState<BatchJob[]>([])
-  const [loading, setLoading] = useState(true)
-  const [refreshing, setRefreshing] = useState(false)
-  const [dataLoaded, setDataLoaded] = useState(false)
+  
+  // Settings tab states
+  const [tierConfigs, setTierConfigs] = useState<TierConfig[]>([
+    { tier: 'micro', displayName: 'MICRO', multiplier: 1.0, submissionCost: 50, dailyTweetLimit: 3 },
+    { tier: 'rising', displayName: 'RISING', multiplier: 1.5, submissionCost: 75, dailyTweetLimit: 5 },
+    { tier: 'star', displayName: 'STAR', multiplier: 2.0, submissionCost: 100, dailyTweetLimit: 7 },
+    { tier: 'legend', displayName: 'LEGEND', multiplier: 2.5, submissionCost: 150, dailyTweetLimit: 10 },
+    { tier: 'hero', displayName: 'HERO', multiplier: 3.0, submissionCost: 200, dailyTweetLimit: 15 }
+  ])
+  const [optedInUsers, setOptedInUsers] = useState<OptedInUser[]>([])
+  const [recentTransactions, setRecentTransactions] = useState<PointTransaction[]>([])
+  const [savingTiers, setSavingTiers] = useState(false)
   
   // Add refs to track component state and prevent unnecessary refreshes
   const isComponentMounted = useRef(true)
@@ -114,13 +165,13 @@ export default function EngagementAdminPage() {
       
       if (!['admin', 'core'].includes(userRole)) {
         router.push('/')
-      } else if (!dataLoaded) {
+      } else {
         // Only fetch data if it hasn't been loaded yet
         fetchData()
         startPeriodicUpdates()
       }
     }
-  }, [session, status, router, dataLoaded])
+  }, [session, status, router])
   
   const startPeriodicUpdates = useCallback(() => {
     // Clear any existing interval
@@ -193,11 +244,72 @@ export default function EngagementAdminPage() {
         const data = await jobsRes.json()
         setBatchJobs(data.jobs || [])
       }
+      
+      // Fetch opted-in users
+      await fetchOptedInUsers()
+      
+      // Fetch recent transactions
+      await fetchRecentTransactions()
+      
+      // Calculate stats
+      await fetchStats()
     } catch (error) {
       console.error('[Engagement Admin] Error fetching data:', error)
     } finally {
       setLoading(false)
-      setDataLoaded(true)
+    }
+  }
+  
+  const fetchStats = async () => {
+    try {
+      const res = await fetch('/api/engagement/tweets?hours=24', {
+        credentials: 'include'
+      })
+      if (res.ok) {
+        const data = await res.json()
+        const todayTweets = data.tweets.filter((t: Tweet) => {
+          const tweetDate = new Date(t.submittedAt)
+          const today = new Date()
+          return tweetDate.toDateString() === today.toDateString()
+        }).length
+        
+        setStats({
+          totalTweets: data.tweets.length,
+          todayTweets,
+          totalEngagements: 0, // Calculate from tweets
+          activeUsers: new Set(data.tweets.map((t: Tweet) => t.submitterDiscordId)).size
+        })
+      }
+    } catch (error) {
+      console.error('[Engagement Admin] Error fetching stats:', error)
+    }
+  }
+  
+  const fetchOptedInUsers = async () => {
+    try {
+      const res = await fetch('/api/engagement/opted-in-users', {
+        credentials: 'include'
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setOptedInUsers(data.users || [])
+      }
+    } catch (error) {
+      console.error('[Engagement Admin] Error fetching opted-in users:', error)
+    }
+  }
+  
+  const fetchRecentTransactions = async () => {
+    try {
+      const res = await fetch('/api/engagement/transactions?limit=50', {
+        credentials: 'include'
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setRecentTransactions(data.transactions || [])
+      }
+    } catch (error) {
+      console.error('[Engagement Admin] Error fetching transactions:', error)
     }
   }
   
@@ -294,242 +406,81 @@ export default function EngagementAdminPage() {
     }
   }
   
+  const saveTierConfigurations = async () => {
+    setSavingTiers(true)
+    try {
+      const res = await fetch('/api/engagement/tier-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tiers: tierConfigs }),
+        credentials: 'include'
+      })
+      
+      if (res.ok) {
+        alert('Tier configurations saved successfully')
+      } else {
+        alert('Failed to save tier configurations')
+      }
+    } catch (error) {
+      console.error('[Engagement Admin] Error saving tier configurations:', error)
+      alert('Failed to save tier configurations')
+    } finally {
+      setSavingTiers(false)
+    }
+  }
+  
+  const updateTierConfig = (index: number, field: keyof TierConfig, value: any) => {
+    const newConfigs = [...tierConfigs]
+    newConfigs[index] = { ...newConfigs[index], [field]: value }
+    setTierConfigs(newConfigs)
+  }
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-black p-8 flex items-center justify-center">
         <div className="text-green-300">Loading engagement data...</div>
       </div>
     )
-}
-
-function TierScenarios() {
-  const [scenarios, setScenarios] = useState<any>({})
-  const [editingTier, setEditingTier] = useState<number | null>(null)
-  const [editForm, setEditForm] = useState<any>({})
-
-  useEffect(() => {
-    fetchScenarios()
-  }, [])
-
-  const fetchScenarios = async () => {
-    try {
-      const response = await fetch('/api/engagement/scenarios', {
-        credentials: 'include'
-      })
-      if (response.ok) {
-        const data = await response.json()
-        setScenarios(data)
-      }
-    } catch (error) {
-      console.error('[Engagement Admin] Error fetching scenarios:', error)
-    }
-  }
-
-  const handleEdit = (tier: number) => {
-    setEditingTier(tier)
-    setEditForm(scenarios[`tier${tier}`])
-  }
-
-  const handleSave = async () => {
-    if (!editingTier) return
-
-    try {
-      const response = await fetch('/api/engagement/scenarios', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tier: editingTier,
-          scenarios: editForm
-        }),
-        credentials: 'include'
-      })
-
-      if (response.ok) {
-        await fetchScenarios()
-        setEditingTier(null)
-      }
-    } catch (error) {
-      console.error('[Engagement Admin] Error saving scenarios:', error)
-    }
-  }
-
-  const handleCategoryChange = (index: number, value: string) => {
-    const newCategories = [...editForm.categories]
-    newCategories[index] = value
-    setEditForm({ ...editForm, categories: newCategories })
-  }
-
-  const addCategory = () => {
-    setEditForm({ 
-      ...editForm, 
-      categories: [...editForm.categories, 'New Category'] 
-    })
-  }
-
-  const removeCategory = (index: number) => {
-    const newCategories = editForm.categories.filter((_: any, i: number) => i !== index)
-    setEditForm({ ...editForm, categories: newCategories })
   }
 
   return (
-    <div className="space-y-4">
-      {[1, 2, 3].map(tier => {
-        const tierScenarios = scenarios[`tier${tier}`] || {}
-        const isEditing = editingTier === tier
-
-        return (
-          <div key={tier} className="border border-gray-700 rounded-lg p-4 bg-black">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-white">Tier {tier}</h3>
-              {!isEditing ? (
-                <button
-                  onClick={() => handleEdit(tier)}
-                  className="px-3 py-1 bg-gray-800 text-green-300 rounded hover:bg-gray-700"
-                >
-                  Edit
-                </button>
-              ) : (
-                <div className="space-x-2">
-                  <button
-                    onClick={handleSave}
-                    className="px-3 py-1 bg-green-900 text-green-100 rounded hover:bg-green-800"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setEditingTier(null)}
-                    className="px-3 py-1 bg-gray-800 text-gray-300 rounded hover:bg-gray-700"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {!isEditing ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="font-medium text-gray-400">Daily Tweet Limit:</span>{' '}
-                  <span className="text-white">{tierScenarios.dailyTweetLimit || 'N/A'}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-400">Min Followers:</span>{' '}
-                  <span className="text-white">{tierScenarios.minFollowers || 'N/A'}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-400">Bonus Multiplier:</span>{' '}
-                  <span className="text-white">{tierScenarios.bonusMultiplier || 'N/A'}x</span>
-                </div>
-                <div className="sm:col-span-2">
-                  <span className="font-medium text-gray-400">Categories:</span>{' '}
-                  <span className="text-white">{tierScenarios.categories?.join(', ') || 'N/A'}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Daily Tweet Limit</label>
-                  <input
-                    type="number"
-                    value={editForm.dailyTweetLimit || ''}
-                    onChange={(e) => setEditForm({ ...editForm, dailyTweetLimit: parseInt(e.target.value) })}
-                    className="w-full p-2 bg-black border border-gray-600 rounded text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Minimum Followers</label>
-                  <input
-                    type="number"
-                    value={editForm.minFollowers || ''}
-                    onChange={(e) => setEditForm({ ...editForm, minFollowers: parseInt(e.target.value) })}
-                    className="w-full p-2 bg-black border border-gray-600 rounded text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Bonus Multiplier</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={editForm.bonusMultiplier || ''}
-                    onChange={(e) => setEditForm({ ...editForm, bonusMultiplier: parseFloat(e.target.value) })}
-                    className="w-full p-2 bg-black border border-gray-600 rounded text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Categories</label>
-                  <div className="space-y-2">
-                    {editForm.categories?.map((category: string, index: number) => (
-                      <div key={index} className="flex gap-2">
-                        <input
-                          type="text"
-                          value={category}
-                          onChange={(e) => handleCategoryChange(index, e.target.value)}
-                          className="flex-1 p-2 bg-black border border-gray-600 rounded text-white"
-                        />
-                        <button
-                          onClick={() => removeCategory(index)}
-                          className="px-3 py-2 bg-red-900 text-red-100 rounded hover:bg-red-800"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                    <button
-                      onClick={addCategory}
-                      className="px-3 py-2 bg-gray-800 text-gray-100 rounded hover:bg-gray-700 flex items-center gap-2"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Add Category
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-  
-  return (
-    <div className="min-h-screen bg-black p-4 sm:p-8">
+    <div className="min-h-screen bg-black p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-green-300 mb-2">Engagement Tracker</h1>
-          <p className="text-gray-400">Manage Twitter engagement tracking and points system</p>
-          <p className="text-xs text-gray-500 mt-1">
-            {session ? `Logged in as: ${(session as any).twitterHandle || session.user?.name} (${(session as any).role || 'unknown'})` : ''}
-          </p>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-green-300">Twitter Engagement Tracker</h1>
+          <button
+            onClick={() => router.push('/admin')}
+            className="px-4 py-2 bg-gray-800 text-gray-300 rounded hover:bg-gray-700"
+          >
+            Back to Admin
+          </button>
         </div>
         
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-3 text-blue-400 mb-2">
-              <Twitter className="w-5 h-5" />
-              <span className="text-sm">Active Tweets</span>
+            <div className="flex items-center gap-3 text-green-400 mb-2">
+              <FileText className="w-5 h-5" />
+              <span className="text-sm">Total Tweets</span>
             </div>
-            <p className="text-2xl font-bold text-white">{tweets.length}</p>
+            <p className="text-2xl font-bold text-white">{stats.totalTweets}</p>
           </div>
           
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-3 text-green-400 mb-2">
-              <Users className="w-5 h-5" />
-              <span className="text-sm">Connected Users</span>
+            <div className="flex items-center gap-3 text-blue-400 mb-2">
+              <TrendingUp className="w-5 h-5" />
+              <span className="text-sm">Today's Tweets</span>
             </div>
-            <p className="text-2xl font-bold text-white">{leaderboard.length}</p>
+            <p className="text-2xl font-bold text-white">{stats.todayTweets}</p>
           </div>
           
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
             <div className="flex items-center gap-3 text-purple-400 mb-2">
-              <Trophy className="w-5 h-5" />
-              <span className="text-sm">Top Score</span>
+              <Users className="w-5 h-5" />
+              <span className="text-sm">Active Users</span>
             </div>
-            <p className="text-2xl font-bold text-white">
-              {leaderboard[0]?.totalPoints || 0}
-            </p>
+            <p className="text-2xl font-bold text-white">{stats.activeUsers}</p>
           </div>
           
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
@@ -545,10 +496,10 @@ function TierScenarios() {
         
         {/* Tabs */}
         <div className="flex gap-4 mb-6 border-b border-gray-700 overflow-x-auto">
-          {['overview', 'tweets', 'leaderboard', 'rules', 'scenarios', 'batch'].map(tab => (
+          {['overview', 'tweets', 'leaderboard', 'settings'].map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => setActiveTab(tab as any)}
               className={`pb-2 px-1 capitalize whitespace-nowrap ${
                 activeTab === tab
                   ? 'text-green-300 border-b-2 border-green-300'
@@ -589,61 +540,30 @@ function TierScenarios() {
                   Refresh Tweets
                 </button>
               </div>
-              <div className="mt-4 p-3 bg-black border border-yellow-500 rounded text-sm">
-                <p className="text-yellow-300 font-semibold mb-1">ℹ️ How Batch Processing Works</p>
-                <p className="text-gray-300">
-                  Creating a batch job only queues it. To actually process tweets and award points:
-                </p>
-                <ol className="list-decimal list-inside mt-2 text-gray-400 space-y-1">
-                  <li>Run once: <code className="bg-gray-800 px-1 rounded">node discord-bots/engagement-batch-processor.js</code></li>
-                  <li>Or use the helper: <code className="bg-gray-800 px-1 rounded">node scripts/run-engagement-batch.mjs</code></li>
-                  <li>Set up cron for automation: <code className="bg-gray-800 px-1 rounded">*/30 * * * * cd /path/to/project && node discord-bots/engagement-batch-processor.js</code></li>
-                </ol>
-                <div className="mt-3 p-2 bg-gray-900 rounded">
-                  <p className="text-xs text-gray-400">
-                    <strong>How Points Work:</strong>
-                  </p>
-                  <ul className="list-disc list-inside text-xs text-gray-500 mt-1">
-                    <li>Users must connect both Discord & Twitter accounts</li>
-                    <li>Points for Likes are automatically awarded to users who Retweet OR Comment</li>
-                    <li>If a user both comments and retweets, they receive like points only once</li>
-                    <li>Twitter OAuth 1.0a credentials must be properly configured</li>
-                  </ul>
-                </div>
-              </div>
             </div>
             
             <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-green-300">Recent Activity</h2>
-                <span className="text-xs text-gray-500">Updates every 30 seconds</span>
-              </div>
-              <div className="space-y-3">
-                {tweets
-                  .sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())
-                  .slice(0, 5)
-                  .map(tweet => (
-                  <div key={tweet.id} className="flex items-center justify-between py-2 border-b border-gray-800">
-                    <div>
-                      <p className="text-white">@{tweet.authorHandle}</p>
-                      <p className="text-xs text-gray-400">
-                        Submitted {new Date(tweet.submittedAt).toLocaleString()}
-                      </p>
+              <h2 className="text-xl font-semibold text-green-300 mb-4">Recent Batch Jobs</h2>
+              {batchJobs.length === 0 ? (
+                <p className="text-gray-400">No batch jobs found</p>
+              ) : (
+                <div className="space-y-2">
+                  {batchJobs.slice(0, 5).map(job => (
+                    <div key={job.id} className="flex justify-between items-center p-3 bg-gray-800 rounded">
+                      <div>
+                        <p className="text-sm text-white">Started: {new Date(job.startedAt).toLocaleString()}</p>
+                        <p className="text-xs text-gray-400">
+                          Status: <span className={job.status === 'completed' ? 'text-green-400' : 'text-yellow-400'}>{job.status}</span>
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-white">{job.tweetsProcessed} tweets</p>
+                        <p className="text-xs text-gray-400">{job.engagementsFound} engagements</p>
+                      </div>
                     </div>
-                    <a
-                      href={tweet.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline text-sm"
-                    >
-                      View Tweet
-                    </a>
-                  </div>
-                ))}
-                {tweets.length === 0 && (
-                  <p className="text-gray-500 text-center py-4">No recent tweets yet</p>
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -664,34 +584,26 @@ function TierScenarios() {
                 {tweets.map(tweet => (
                   <tr key={tweet.id}>
                     <td className="px-4 py-3 text-sm text-white">@{tweet.authorHandle}</td>
-                    <td className="px-4 py-3 text-sm text-gray-300">{tweet.category || 'General'}</td>
+                    <td className="px-4 py-3 text-sm text-gray-300">{tweet.category || 'N/A'}</td>
                     <td className="px-4 py-3 text-sm text-gray-300">
                       {tweet.metrics ? (
-                        <span>
-                          ❤️ {tweet.metrics.likes} 🔁 {tweet.metrics.retweets} 💬 {tweet.metrics.replies}
-                        </span>
+                        <span>❤️ {tweet.metrics.likes} 🔁 {tweet.metrics.retweets} 💬 {tweet.metrics.replies}</span>
                       ) : (
-                        <span className="text-gray-500">Not processed</span>
+                        <span className="text-gray-500">Not checked</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-300">
-                      {new Date(tweet.submittedAt).toLocaleDateString()}
+                      {new Date(tweet.submittedAt).toLocaleString()}
                     </td>
                     <td className="px-4 py-3 text-sm">
-                      <a
-                        href={tweet.url}
-                        target="_blank"
+                      <a 
+                        href={tweet.url} 
+                        target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline mr-3"
+                        className="text-blue-400 hover:text-blue-300"
                       >
-                        View
+                        View →
                       </a>
-                      <button
-                        onClick={() => deleteTweet(tweet.id)}
-                        className="text-red-400 hover:text-red-300"
-                      >
-                        Delete
-                      </button>
                     </td>
                   </tr>
                 ))}
@@ -727,88 +639,161 @@ function TierScenarios() {
           </div>
         )}
         
-        {activeTab === 'rules' && (
-          <div className="space-y-6">
+        {activeTab === 'settings' && (
+          <div className="space-y-8">
+            {/* Tiers & Multipliers Section */}
             <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-green-300 mb-4">Point Rules by Tier</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map(tier => (
-                  <div key={tier} className="space-y-3">
-                    <h3 className="text-lg font-medium text-white">Tier {tier}</h3>
-                    {['like', 'retweet', 'reply'].map(type => {
-                      const rule = rules.find(r => r.tier === tier && r.interactionType === type)
-                      return (
-                        <div key={type} className="flex items-center justify-between">
-                          <span className="text-gray-300 capitalize">{type}:</span>
-                          <input
-                            type="number"
-                            value={rule?.points || 0}
-                            onChange={(e) => updateRule(tier, type, parseInt(e.target.value) || 0)}
-                            className="w-20 px-2 py-1 bg-black border border-gray-600 rounded text-white text-right"
-                          />
-                        </div>
-                      )
-                    })}
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-green-300">Tiers & Multipliers</h2>
+                <button
+                  onClick={saveTierConfigurations}
+                  disabled={savingTiers}
+                  className="px-4 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 disabled:opacity-50"
+                >
+                  {savingTiers ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                {tierConfigs.map((config, index) => (
+                  <div key={config.tier} className="grid grid-cols-5 gap-4 p-4 bg-gray-800 rounded-lg">
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Tier</label>
+                      <p className="text-white font-semibold">{config.displayName}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Multiplier</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={config.multiplier}
+                        onChange={(e) => updateTierConfig(index, 'multiplier', parseFloat(e.target.value))}
+                        className="w-full px-2 py-1 bg-black border border-gray-600 rounded text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Submission Cost</label>
+                      <input
+                        type="number"
+                        value={config.submissionCost}
+                        onChange={(e) => updateTierConfig(index, 'submissionCost', parseInt(e.target.value))}
+                        className="w-full px-2 py-1 bg-black border border-gray-600 rounded text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Daily Limit</label>
+                      <input
+                        type="number"
+                        value={config.dailyTweetLimit}
+                        onChange={(e) => updateTierConfig(index, 'dailyTweetLimit', parseInt(e.target.value))}
+                        className="w-full px-2 py-1 bg-black border border-gray-600 rounded text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Points per Action</label>
+                      <div className="text-xs text-gray-300">
+                        L: {Math.round(10 * config.multiplier)}, 
+                        RT: {Math.round(20 * config.multiplier)}, 
+                        C: {Math.round(30 * config.multiplier)}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        )}
-        
-        {activeTab === 'scenarios' && (
-          <div className="space-y-6">
+            
+            {/* Opted-In User List Section */}
             <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-green-300 mb-4">Tier Scenarios</h2>
-              <p className="text-gray-400 mb-6">Configure daily limits, categories, and bonus multipliers for each tier.</p>
-              <TierScenarios />
+              <h2 className="text-xl font-semibold text-green-300 mb-6">Opted-In Users</h2>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-800">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">User</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord Servers</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tier</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Points</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tweets</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Engagement</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {optedInUsers.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                          No opted-in users found
+                        </td>
+                      </tr>
+                    ) : (
+                      optedInUsers.map(user => (
+                        <tr key={user.discordId}>
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-3">
+                              {user.profilePicture && (
+                                <img 
+                                  src={user.profilePicture} 
+                                  alt={user.twitterHandle}
+                                  className="w-8 h-8 rounded-full"
+                                />
+                              )}
+                              <div>
+                                <p className="text-sm text-white">@{user.twitterHandle}</p>
+                                {user.discordUsername && (
+                                  <p className="text-xs text-gray-400">{user.discordUsername}</p>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 text-sm text-gray-300">
+                            {user.discordServers?.join(', ') || 'N/A'}
+                          </td>
+                          <td className="px-4 py-3 text-sm text-gray-300">{user.tier.toUpperCase()}</td>
+                          <td className="px-4 py-3 text-sm font-semibold text-green-400">{user.totalPoints}</td>
+                          <td className="px-4 py-3 text-sm text-gray-300">{user.tweetsSubmitted}</td>
+                          <td className="px-4 py-3 text-sm text-gray-300">
+                            <span title="Likes">❤️ {user.totalLikes}</span>{' '}
+                            <span title="Retweets">🔁 {user.totalRetweets}</span>{' '}
+                            <span title="Comments">💬 {user.totalComments}</span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
-        
-        {activeTab === 'batch' && (
-          <div className="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-800">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Started</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tweets</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Engagements</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Duration</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700">
-                {batchJobs.map(job => (
-                  <tr key={job.id}>
-                    <td className="px-4 py-3 text-sm text-white">
-                      {new Date(job.startedAt).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 text-sm">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        job.status === 'completed' ? 'bg-green-900 text-green-300' :
-                        job.status === 'running' ? 'bg-blue-900 text-blue-300' :
-                        job.status === 'failed' ? 'bg-red-900 text-red-300' :
-                        'bg-gray-800 text-gray-300'
-                      }`}>
-                        {job.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-300">{job.tweetsProcessed}</td>
-                    <td className="px-4 py-3 text-sm text-gray-300">{job.engagementsFound}</td>
-                    <td className="px-4 py-3 text-sm text-gray-300">
-                      {job.completedAt ? (
-                        `${Math.round((new Date(job.completedAt).getTime() - new Date(job.startedAt).getTime()) / 1000)}s`
-                      ) : job.status === 'running' ? (
-                        'Running...'
-                      ) : (
-                        '-'
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            
+            {/* Recent Points Transactions Section */}
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-green-300 mb-6">Recent Points Transactions</h2>
+              
+              <div className="space-y-2">
+                {recentTransactions.length === 0 ? (
+                  <p className="text-gray-400">No recent transactions</p>
+                ) : (
+                  recentTransactions.map(transaction => (
+                    <div key={transaction.id} className="flex justify-between items-center p-3 bg-gray-800 rounded">
+                      <div className="flex items-center gap-3">
+                        <div className={`px-2 py-1 rounded text-xs font-semibold ${
+                          transaction.points > 0 ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'
+                        }`}>
+                          {transaction.points > 0 ? '+' : ''}{transaction.points}
+                        </div>
+                        <div>
+                          <p className="text-sm text-white">{transaction.userName}</p>
+                          <p className="text-xs text-gray-400">{transaction.description}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-gray-400">{transaction.action}</p>
+                        <p className="text-xs text-gray-500">{new Date(transaction.timestamp).toLocaleString()}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>

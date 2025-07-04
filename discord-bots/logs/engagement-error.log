@@ -8,3 +8,354 @@
 2025-07-02T22:20:17:    Please grant these permissions to the bot for full functionality
 2025-07-02T22:20:17: ⚠️  Bot role position too low in NABU LINES
 2025-07-02T22:20:17:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T20:38:28: ❌ Error handling interaction: UpstashError: Command failed: invalid character 's' looking for beginning of value
+    at AutoPipelineExecutor.withAutoPipeline (/Users/nabu/kol/node_modules/@upstash/redis/nodejs.js:376:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:991:7)
+2025-07-03T20:58:17: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T20:58:17:    - ManageRoles
+2025-07-03T20:58:17:    Please grant these permissions to the bot for full functionality
+2025-07-03T20:58:17: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T20:58:17:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:08:04: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:08:04:    - ManageRoles
+2025-07-03T21:08:04:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:08:04: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:08:04:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:15:54: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:15:54:    - ManageRoles
+2025-07-03T21:15:54:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:15:54: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:15:54:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:29:11: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:29:11:    - ManageRoles
+2025-07-03T21:29:11:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:29:11: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:29:11:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:32:10: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:32:10:    - ManageRoles
+2025-07-03T21:32:10:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:32:10: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:32:10:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:40:57: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:40:57:    - ManageRoles
+2025-07-03T21:40:57:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:40:57: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:40:57:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:47:14: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:47:14:    - ManageRoles
+2025-07-03T21:47:14:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:47:14: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:47:14:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T21:56:45: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T21:56:45:    - ManageRoles
+2025-07-03T21:56:45:    Please grant these permissions to the bot for full functionality
+2025-07-03T21:56:45: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T21:56:45:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T22:32:56: ⚠️  Missing permissions in NABU LINES:
+2025-07-03T22:32:56:    - ManageRoles
+2025-07-03T22:32:56:    Please grant these permissions to the bot for full functionality
+2025-07-03T22:32:56: ⚠️  Bot role position too low in NABU LINES
+2025-07-03T22:32:56:    Move bot role above 'kol' role to enable role assignment
+2025-07-03T22:39:28: Error in /recent command: CombinedPropertyError (1)
+  Received one or more errors
+
+  input[0]
+  | CombinedPropertyError (1)
+  |   Received one or more errors
+  | 
+  |   input.value
+  |   | ExpectedConstraintError > s.string().lengthLessThanOrEqual()
+  |   |   Invalid string length
+  |   | 
+  |   |   Expected: expected.length <= 1024
+  |   | 
+  |   |   Received:
+  |   |   | '**1. @d_vattan**\n"Are you ready to grab your golden ticket? @NetworkNoya opened registration for its Space Rase white ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/d_vattan/status/1940700882733310299?t=M2txCBHwraLEQyG5M4wwhg&s=19)\n\n**2. @frostyfogx**\n"gm fam, i’m back :D\n\nwas a rough patch ngl but screw it, we movin\n\nhere’s what’s poppin rn in the ma..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/frostyfogx/status/1940085055444996237)\n\n**3. @DanialRH_7**\n"GM BM legends 🌄 \n\nA new day with @NetworkNoya 🔥\ngNOYA 🔊 https://t.co/9OEhEgdbeq"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/DanialRH_7/status/1940736468248633578?t=xY_ieKFlLTFBkyU-zBxaMA&s=19)\n\n**4. @hopcofficial**\n"I never love to share this news or picture on social media but now its hard one cat needs your help ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hopcofficial/status/1880728021881254110?s=46)\n\n**5. @bull_base**\n"Good morning 🔐\nJust getting started\n@Ledger \n@spurs https://t.co/4NA03zHylF"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940711596852187566?t=CiTSI5yjwnu9FK9aoGCokg&s=19)\n\n**6. @hadimasoudii**\n"Today was an incredibly exciting and special day I was suddenly surprised by one of the coolest and ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hadimasoudii/status/1940884606754214222?t=Y824Koqixwn21WAcOyF4JQ&s=19)\n\n**7. @bull_base**\n"Good Night web3 🌎 https://t.co/XsDWVoXKCX"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940858380920541308?t=_xcLANr5rii5vtoCb2_c8w&s=19)\n\n**8. @MADMATT3M**\n"GM $open fam \n@OpenledgerHQ is revolutionizing AI They\'re building a decentralized L2 on OP Stack + ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/MADMATT3M/status/1940647730067517701?s=19)\n\n**9. @sokot2260**\n"gMITO represents more than locked assets it embodies a shared vision. True creators focus on buildin..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/sokot2260/status/1940795139640996200?t=_c_YYlc-pH_HDcRHT-WfbQ&s=19)\n\n**10. @sharafi_eth**\n"testing the new bot with the @nabulines squad. https://t.co/DU53HgNbgw"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/sharafi_eth/status/1940866812578877909)\n\n'
+
+    at _ArrayValidator.handle (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:1254:70)
+    at _ArrayValidator.parse (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:972:90)
+    at EmbedBuilder.addFields (/Users/nabu/kol/node_modules/@discordjs/builders/dist/index.js:235:31)
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:969:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-07-03T22:41:06: Error in /recent command: CombinedPropertyError (1)
+  Received one or more errors
+
+  input[0]
+  | CombinedPropertyError (1)
+  |   Received one or more errors
+  | 
+  |   input.value
+  |   | ExpectedConstraintError > s.string().lengthLessThanOrEqual()
+  |   |   Invalid string length
+  |   | 
+  |   |   Expected: expected.length <= 1024
+  |   | 
+  |   |   Received:
+  |   |   | '**1. @d_vattan**\n"Are you ready to grab your golden ticket? @NetworkNoya opened registration for its Space Rase white ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/d_vattan/status/1940700882733310299?t=M2txCBHwraLEQyG5M4wwhg&s=19)\n\n**2. @frostyfogx**\n"gm fam, i’m back :D\n\nwas a rough patch ngl but screw it, we movin\n\nhere’s what’s poppin rn in the ma..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/frostyfogx/status/1940085055444996237)\n\n**3. @DanialRH_7**\n"GM BM legends 🌄 \n\nA new day with @NetworkNoya 🔥\ngNOYA 🔊 https://t.co/9OEhEgdbeq"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/DanialRH_7/status/1940736468248633578?t=xY_ieKFlLTFBkyU-zBxaMA&s=19)\n\n**4. @hopcofficial**\n"I never love to share this news or picture on social media but now its hard one cat needs your help ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hopcofficial/status/1880728021881254110?s=46)\n\n**5. @bull_base**\n"Good morning 🔐\nJust getting started\n@Ledger \n@spurs https://t.co/4NA03zHylF"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940711596852187566?t=CiTSI5yjwnu9FK9aoGCokg&s=19)\n\n**6. @hadimasoudii**\n"Today was an incredibly exciting and special day I was suddenly surprised by one of the coolest and ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hadimasoudii/status/1940884606754214222?t=Y824Koqixwn21WAcOyF4JQ&s=19)\n\n**7. @bull_base**\n"Good Night web3 🌎 https://t.co/XsDWVoXKCX"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940858380920541308?t=_xcLANr5rii5vtoCb2_c8w&s=19)\n\n**8. @MADMATT3M**\n"GM $open fam \n@OpenledgerHQ is revolutionizing AI They\'re building a decentralized L2 on OP Stack + ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/MADMATT3M/status/1940647730067517701?s=19)\n\n**9. @sokot2260**\n"gMITO represents more than locked assets it embodies a shared vision. True creators focus on buildin..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/sokot2260/status/1940795139640996200?t=_c_YYlc-pH_HDcRHT-WfbQ&s=19)\n\n**10. @sharafi_eth**\n"testing the new bot with the @nabulines squad. https://t.co/DU53HgNbgw"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/sharafi_eth/status/1940866812578877909)\n\n'
+
+    at _ArrayValidator.handle (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:1254:70)
+    at _ArrayValidator.parse (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:972:90)
+    at EmbedBuilder.addFields (/Users/nabu/kol/node_modules/@discordjs/builders/dist/index.js:235:31)
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:969:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-07-03T23:00:56: Error posting to channel: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:814:13) {
+  requestBody: {
+    files: [],
+    json: {
+      content: undefined,
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: [Array],
+      components: [Array],
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-03T23:00:56: Even simple embed failed: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:825:15) {
+  requestBody: {
+    files: [],
+    json: {
+      content: undefined,
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: [Array],
+      components: undefined,
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-03T23:00:56: Cannot send any message to channel: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:837:17) {
+  requestBody: {
+    files: [],
+    json: {
+      content: '**@frostyfogx**\n' +
+        '"$HUB: 𝐓𝐡𝐞 𝐒𝐦𝐚𝐫𝐭𝐞𝐬𝐭 𝐀𝐢𝐫𝐝𝐫𝐨𝐩 𝐨𝐟 𝟐𝟎𝟐𝟓 👁️\n' +
+        '\n' +
+        'Visionaries, step into the glow train HUB’s AI on CT with your sharpest insights.\n' +
+        '\n' +
+        'Earn IQ Points, unlock $HUB tokens and shape onchain’s future 🎭\n' +
+        '\n' +
+        'Your moment is now 🫵 https://t.co/sqKKoWYOBd"\n' +
+        '\n' +
+        '💰 Earn 1x points | ⭐ Tier micro | General\n' +
+        '🔗 https://x.com/frostyfogx/status/1896280099856760889',
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: undefined,
+      components: undefined,
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-03T23:01:47: Error in /recent command: CombinedPropertyError (1)
+  Received one or more errors
+
+  input[0]
+  | CombinedPropertyError (1)
+  |   Received one or more errors
+  | 
+  |   input.value
+  |   | ExpectedConstraintError > s.string().lengthLessThanOrEqual()
+  |   |   Invalid string length
+  |   | 
+  |   |   Expected: expected.length <= 1024
+  |   | 
+  |   |   Received:
+  |   |   | '**1. @frostyfogx**\n"$HUB: 𝐓𝐡𝐞 𝐒𝐦𝐚𝐫𝐭𝐞𝐬𝐭 𝐀𝐢𝐫𝐝𝐫𝐨𝐩 𝐨𝐟 𝟐𝟎𝟐𝟓 👁️\n\nVisionaries, step into the glow trai..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/frostyfogx/status/1896280099856760889)\n\n**2. @d_vattan**\n"Are you ready to grab your golden ticket? @NetworkNoya opened registration for its Space Rase white ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/d_vattan/status/1940700882733310299?t=M2txCBHwraLEQyG5M4wwhg&s=19)\n\n**3. @frostyfogx**\n"gm fam, i’m back :D\n\nwas a rough patch ngl but screw it, we movin\n\nhere’s what’s poppin rn in the ma..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/frostyfogx/status/1940085055444996237)\n\n**4. @DanialRH_7**\n"GM BM legends 🌄 \n\nA new day with @NetworkNoya 🔥\ngNOYA 🔊 https://t.co/9OEhEgdbeq"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/DanialRH_7/status/1940736468248633578?t=xY_ieKFlLTFBkyU-zBxaMA&s=19)\n\n**5. @hopcofficial**\n"I never love to share this news or picture on social media but now its hard one cat needs your help ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hopcofficial/status/1880728021881254110?s=46)\n\n**6. @bull_base**\n"Good morning 🔐\nJust getting started\n@Ledger \n@spurs https://t.co/4NA03zHylF"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940711596852187566?t=CiTSI5yjwnu9FK9aoGCokg&s=19)\n\n**7. @hadimasoudii**\n"Today was an incredibly exciting and special day I was suddenly surprised by one of the coolest and ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hadimasoudii/status/1940884606754214222?t=Y824Koqixwn21WAcOyF4JQ&s=19)\n\n**8. @bull_base**\n"Good Night web3 🌎 https://t.co/XsDWVoXKCX"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1940858380920541308?t=_xcLANr5rii5vtoCb2_c8w&s=19)\n\n**9. @MADMATT3M**\n"GM $open fam \n@OpenledgerHQ is revolutionizing AI They\'re building a decentralized L2 on OP Stack + ..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/MADMATT3M/status/1940647730067517701?s=19)\n\n**10. @sokot2260**\n"gMITO represents more than locked assets it embodies a shared vision. True creators focus on buildin..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/sokot2260/status/1940795139640996200?t=_c_YYlc-pH_HDcRHT-WfbQ&s=19)\n\n'
+
+    at _ArrayValidator.handle (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:1254:70)
+    at _ArrayValidator.parse (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:972:90)
+    at EmbedBuilder.addFields (/Users/nabu/kol/node_modules/@discordjs/builders/dist/index.js:235:31)
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:969:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-07-03T23:16:46: Error posting to channel: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:814:13) {
+  requestBody: {
+    files: [],
+    json: {
+      content: undefined,
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: [Array],
+      components: [Array],
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-03T23:16:46: Even simple embed failed: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:825:15) {
+  requestBody: {
+    files: [],
+    json: {
+      content: undefined,
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: [Array],
+      components: undefined,
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-03T23:16:46: Cannot send any message to channel: DiscordAPIError[50001]: Missing Access
+    at handleErrors (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:748:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SequentialHandler.runRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1149:23)
+    at async SequentialHandler.queueRequest (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:980:14)
+    at async _REST.request (/Users/nabu/kol/node_modules/@discordjs/rest/dist/index.js:1293:22)
+    at async TextChannel.send (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:195:15)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:837:17) {
+  requestBody: {
+    files: [],
+    json: {
+      content: '**@frostyfogx**\n' +
+        '"gm fam\n' +
+        '\n' +
+        'here’s what’s new in defi lately 👇\n' +
+        '\n' +
+        'solana launched app kit to help devs build apps fast with ai\n' +
+        '\n' +
+        'aave rolled out umbrella for staking yield-bearing tokens and earning extra rewards\n' +
+        '\n' +
+        'vitalik said ethereum l1 could scale 10x within a year\n' +
+        '\n' +
+        'gmx express live on arbitrum and https://t.co/mq8HI1lO5S"\n' +
+        '\n' +
+        '💰 Earn 1x points | ⭐ Tier micro | General\n' +
+        '🔗 https://x.com/frostyfogx/status/1931294819059417337https://x.com/frostyfogx/status/1929827187529548007https://x.com/frostyfogx/status/1928365783790330352https://x.com/frostyfogx/status/1926907765433192783',
+      tts: false,
+      nonce: undefined,
+      enforce_nonce: false,
+      embeds: undefined,
+      components: undefined,
+      username: undefined,
+      avatar_url: undefined,
+      allowed_mentions: undefined,
+      flags: undefined,
+      message_reference: undefined,
+      attachments: undefined,
+      sticker_ids: undefined,
+      thread_name: undefined,
+      applied_tags: undefined,
+      poll: undefined
+    }
+  },
+  rawError: { message: 'Missing Access', code: 50001 },
+  code: 50001,
+  status: 403,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/channels/1382942333741568190/messages'
+}
+2025-07-04T01:27:41: ⚠️  Missing permissions in NABU LINES:
+2025-07-04T01:27:41:    - ManageRoles
+2025-07-04T01:27:41:    Please grant these permissions to the bot for full functionality
+2025-07-04T01:27:41: ⚠️  Bot role position too low in NABU LINES
+2025-07-04T01:27:41:    Move bot role above 'kol' role to enable role assignment

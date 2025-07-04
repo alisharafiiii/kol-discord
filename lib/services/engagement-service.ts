@@ -245,21 +245,20 @@ export class EngagementService {
     return entries.slice(0, limit)
   }
   
-  // Default point rules setup
+  // Default point rules setup - base points for all tiers
   static async setupDefaultRules(): Promise<void> {
-    // Tier 1 (Basic)
-    await this.setPointRule(1, 'like', 1)
-    await this.setPointRule(1, 'retweet', 2)
-    await this.setPointRule(1, 'reply', 3)
+    // Set base points (multipliers will be applied by tier)
+    await this.setPointRule(1, 'like', 10)
+    await this.setPointRule(1, 'retweet', 35)
+    await this.setPointRule(1, 'reply', 20)
     
-    // Tier 2 (Active)
-    await this.setPointRule(2, 'like', 2)
-    await this.setPointRule(2, 'retweet', 4)
-    await this.setPointRule(2, 'reply', 6)
+    // For backward compatibility, set the same base points for all tiers
+    await this.setPointRule(2, 'like', 10)
+    await this.setPointRule(2, 'retweet', 35)
+    await this.setPointRule(2, 'reply', 20)
     
-    // Tier 3 (Power User)
-    await this.setPointRule(3, 'like', 3)
-    await this.setPointRule(3, 'retweet', 6)
-    await this.setPointRule(3, 'reply', 9)
+    await this.setPointRule(3, 'like', 10)
+    await this.setPointRule(3, 'retweet', 35)
+    await this.setPointRule(3, 'reply', 20)
   }
 } 
