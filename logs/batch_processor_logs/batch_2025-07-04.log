@@ -1,0 +1,4 @@
+{"timestamp":"2025-07-04T20:00:00.390Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"cVvpPv_NqvH7o0euyVVf5","startTime":"2025-07-04T20:00:00.390Z"}
+{"timestamp":"2025-07-04T20:00:00.592Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true}
+{"timestamp":"2025-07-04T20:00:01.327Z","level":"INFO","message":"📊 Found 0 tweets from last 24 hours","batchId":"cVvpPv_NqvH7o0euyVVf5","tweetCount":0,"maxAllowed":60}
+{"timestamp":"2025-07-04T20:00:01.571Z","level":"INFO","message":"✅ No tweets to process","batchId":"cVvpPv_NqvH7o0euyVVf5"}

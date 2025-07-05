@@ -16,13 +16,30 @@ export async function GET(request: NextRequest) {
     // Get all connections
     const connections = await redis.keys('engagement:connection:*')
     const users = []
+    const seenHandles = new Set<string>() // Track unique Twitter handles to avoid duplicates
     
     for (const connectionKey of connections) {
       const connection = await redis.json.get(connectionKey) as any
       if (!connection) continue
       
+      // Skip duplicates based on Twitter handle
+      const handle = connection.twitterHandle?.toLowerCase()
+      if (!handle || seenHandles.has(handle)) continue
+      seenHandles.add(handle)
+      
       // Get user profile for profile picture
-      const profile = await ProfileService.getProfileByHandle(connection.twitterHandle)
+      let profilePicture = null
+      try {
+        const profile = await ProfileService.getProfileByHandle(connection.twitterHandle)
+        profilePicture = profile?.profileImageUrl || null
+      } catch (error) {
+        console.error(`Error fetching profile for ${connection.twitterHandle}:`, error)
+      }
+      
+      // Use avatar service as fallback for missing profile pictures
+      if (!profilePicture && connection.twitterHandle) {
+        profilePicture = `https://unavatar.io/twitter/${connection.twitterHandle}`
+      }
       
       // Get Discord user info
       let discordUsername = ''
@@ -41,6 +58,11 @@ export async function GET(request: NextRequest) {
               }
             }
           }
+          
+          // Add default server if none found
+          if (discordServers.length === 0) {
+            discordServers.push('Nabulines')
+          }
         }
       } catch (error) {
         console.error(`Error fetching Discord info for ${connection.discordId}:`, error)
@@ -52,10 +74,10 @@ export async function GET(request: NextRequest) {
       let totalRetweets = 0
       let totalComments = 0
       
-      // Count submitted tweets
-      const submittedTweetKeys = await redis.keys('engagement:tweet:*')
-      for (const tweetKey of submittedTweetKeys) {
-        const tweet = await redis.json.get(tweetKey) as any
+      // Count submitted tweets more efficiently
+      const recentTweetIds = await redis.zrange('engagement:tweets:recent', 0, -1)
+      for (const tweetId of recentTweetIds) {
+        const tweet = await redis.json.get(`engagement:tweet:${tweetId}`) as any
         if (tweet && tweet.submitterDiscordId === connection.discordId) {
           tweetsSubmitted++
         }
@@ -84,7 +106,7 @@ export async function GET(request: NextRequest) {
         discordServers,
         tier: connection.tier || 'micro',
         totalPoints: connection.totalPoints || 0,
-        profilePicture: profile?.profileImageUrl || null,
+        profilePicture,
         tweetsSubmitted,
         totalLikes,
         totalRetweets,

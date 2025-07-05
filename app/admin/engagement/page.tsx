@@ -109,6 +109,7 @@ export default function EngagementAdminPage() {
   const [optedInUsers, setOptedInUsers] = useState<OptedInUser[]>([])
   const [recentTransactions, setRecentTransactions] = useState<PointTransaction[]>([])
   const [savingTiers, setSavingTiers] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false)
   
   // Add refs to track component state and prevent unnecessary refreshes
   const isComponentMounted = useRef(true)
@@ -138,10 +139,10 @@ export default function EngagementAdminPage() {
         }
       } else {
         console.log('[Engagement Admin] Page visible, resuming updates if needed')
-        // Only fetch if enough time has passed since last fetch
+        // Only fetch if enough time has passed since last fetch AND data has been loaded before
         const timeSinceLastFetch = Date.now() - lastFetchTime.current
-        if (timeSinceLastFetch > FETCH_COOLDOWN) {
-          fetchData()
+        if (dataLoaded && timeSinceLastFetch > 60000) { // Only refresh if more than 1 minute has passed
+          fetchRecentTweets() // Only refresh tweets, not all data
         }
         // Restart periodic updates
         startPeriodicUpdates()
@@ -165,13 +166,13 @@ export default function EngagementAdminPage() {
       
       if (!['admin', 'core'].includes(userRole)) {
         router.push('/')
-      } else {
+      } else if (!dataLoaded) {
         // Only fetch data if it hasn't been loaded yet
         fetchData()
         startPeriodicUpdates()
       }
     }
-  }, [session, status, router])
+  }, [session, status, router, dataLoaded])
   
   const startPeriodicUpdates = useCallback(() => {
     // Clear any existing interval
@@ -245,11 +246,7 @@ export default function EngagementAdminPage() {
         setBatchJobs(data.jobs || [])
       }
       
-      // Fetch opted-in users
-      await fetchOptedInUsers()
-      
-      // Fetch recent transactions
-      await fetchRecentTransactions()
+      // Don't fetch settings data on initial load - only when settings tab is clicked
       
       // Calculate stats
       await fetchStats()
@@ -257,6 +254,7 @@ export default function EngagementAdminPage() {
       console.error('[Engagement Admin] Error fetching data:', error)
     } finally {
       setLoading(false)
+      setDataLoaded(true)
     }
   }
   
@@ -499,7 +497,14 @@ export default function EngagementAdminPage() {
           {['overview', 'tweets', 'leaderboard', 'settings'].map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab as any)}
+              onClick={() => {
+                setActiveTab(tab as any)
+                // Only fetch settings data when settings tab is clicked
+                if (tab === 'settings' && optedInUsers.length === 0) {
+                  fetchOptedInUsers()
+                  fetchRecentTransactions()
+                }
+              }}
               className={`pb-2 px-1 capitalize whitespace-nowrap ${
                 activeTab === tab
                   ? 'text-green-300 border-b-2 border-green-300'
@@ -596,14 +601,22 @@ export default function EngagementAdminPage() {
                       {new Date(tweet.submittedAt).toLocaleString()}
                     </td>
                     <td className="px-4 py-3 text-sm">
-                      <a 
-                        href={tweet.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:text-blue-300"
-                      >
-                        View →
-                      </a>
+                      <div className="flex items-center gap-3">
+                        <a 
+                          href={tweet.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:text-blue-300"
+                        >
+                          View
+                        </a>
+                        <button
+                          onClick={() => deleteTweet(tweet.id)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -693,8 +706,8 @@ export default function EngagementAdminPage() {
                       <label className="block text-sm text-gray-400 mb-1">Points per Action</label>
                       <div className="text-xs text-gray-300">
                         L: {Math.round(10 * config.multiplier)}, 
-                        RT: {Math.round(20 * config.multiplier)}, 
-                        C: {Math.round(30 * config.multiplier)}
+                        RT: {Math.round(35 * config.multiplier)}, 
+                        C: {Math.round(20 * config.multiplier)}
                       </div>
                     </div>
                   </div>

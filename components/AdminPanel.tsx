@@ -2316,7 +2316,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           </button>
           <button 
             className={`px-4 py-2 whitespace-nowrap ${activeTab === 'engagement' ? 'bg-green-800' : ''}`}
-            onClick={() => setActiveTab('engagement')}
+            onClick={() => window.location.href = '/admin/engagement'}
           >
             Engagement
           </button>
@@ -3323,24 +3323,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           </div>
         )}
 
-        {/* Engagement Tab */}
-        {activeTab === 'engagement' && (
-          <div className="space-y-6">
-            <h2 className="text-lg mb-4">Twitter Engagement Tracker</h2>
-            <p className="text-sm opacity-70 mb-4">Track Twitter engagement with points-based system for Discord users</p>
-            
-            {/* Redirect to Engagement page */}
-            <div className="border border-green-300 p-8 text-center">
-              <p className="mb-4 text-green-300">The engagement tracker has its own dedicated page for managing tweets, leaderboards, and point rules.</p>
-              <button
-                onClick={() => window.location.href = '/admin/engagement'}
-                className="px-6 py-2 bg-green-900 text-green-100 rounded hover:bg-green-800 transition-colors"
-              >
-                Go to Engagement Tracker →
-              </button>
-            </div>
-          </div>
-        )}
+
 
         {/* Contests Tab */}
         {activeTab === 'contests' && (
