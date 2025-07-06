@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search') || ''
     
     // Validate parameters
-    if (page < 1 || limit < 1 || limit > 100) {
+    if (page < 1 || limit < 1 || limit > 1000) {
       return NextResponse.json({ error: 'Invalid pagination parameters' }, { status: 400 })
     }
     

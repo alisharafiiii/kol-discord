@@ -36,20 +36,33 @@ interface EnhancedUsersTabProps {
   onUserUpdate?: () => void
 }
 
+interface UserStats {
+  totalPoints: number
+  activeUsers: number
+  averagePoints: number
+  totalTweets: number
+}
+
 const USERS_PER_PAGE = 20
 
 export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
   const [users, setUsers] = useState<OptedInUser[]>([])
-  const [filteredUsers, setFilteredUsers] = useState<OptedInUser[]>([])
   const [loading, setLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalUsers, setTotalUsers] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
   const [editingUser, setEditingUser] = useState<string | null>(null)
   const [editedPoints, setEditedPoints] = useState<Record<string, number>>({})
   const [savingPoints, setSavingPoints] = useState<string | null>(null)
   const [sortBy, setSortBy] = useState<'points' | 'tweets' | 'engagement'>('points')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
+  const [allUsersStats, setAllUsersStats] = useState<UserStats>({
+    totalPoints: 0,
+    activeUsers: 0,
+    averagePoints: 0,
+    totalTweets: 0
+  })
   
   // Refs for performance optimization
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -58,13 +71,36 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
   // Debounced search function
   const debouncedSearch = useCallback(
     debounce((term: string) => {
-      performSearch(term)
+      setCurrentPage(1) // Reset to first page when searching
+      fetchUsers(1, term)
     }, 300),
-    []
+    [sortBy, sortOrder]
   )
   
-  // Fetch users with pagination
-  const fetchUsers = async (page: number = 1) => {
+  // Fetch all users stats (for the header stats)
+  const fetchAllUsersStats = async () => {
+    try {
+      const res = await fetch('/api/engagement/users-stats', {
+        credentials: 'include'
+      })
+      
+      if (res.ok) {
+        const data = await res.json()
+        
+        setAllUsersStats({
+          totalPoints: data.totalPoints,
+          activeUsers: data.activeUsers,
+          averagePoints: data.averagePoints,
+          totalTweets: data.totalTweets
+        })
+      }
+    } catch (error) {
+      console.error('[Enhanced Users Tab] Error fetching all users stats:', error)
+    }
+  }
+  
+  // Fetch users with pagination and search
+  const fetchUsers = async (page: number = 1, search: string = searchTerm) => {
     // Cancel any pending requests
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()
@@ -75,8 +111,20 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
     
     setLoading(true)
     try {
+      // Build URL with search parameter if present
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: USERS_PER_PAGE.toString(),
+        sort: sortBy,
+        order: sortOrder
+      })
+      
+      if (search.trim()) {
+        params.append('search', search.trim())
+      }
+      
       const res = await fetch(
-        `/api/engagement/opted-in-users-enhanced?page=${page}&limit=${USERS_PER_PAGE}&sort=${sortBy}&order=${sortOrder}`,
+        `/api/engagement/opted-in-users-enhanced?${params.toString()}`,
         {
           credentials: 'include',
           signal: abortControllerRef.current.signal
@@ -87,7 +135,8 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
         const data = await res.json()
         setUsers(data.users || [])
         setTotalUsers(data.total || 0)
-        setFilteredUsers(data.users || [])
+        setTotalPages(data.totalPages || Math.ceil((data.total || 0) / USERS_PER_PAGE))
+        setCurrentPage(page)
       }
     } catch (error: any) {
       if (error.name !== 'AbortError') {
@@ -96,24 +145,6 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
     } finally {
       setLoading(false)
     }
-  }
-  
-  // Perform search
-  const performSearch = (term: string) => {
-    if (!term.trim()) {
-      setFilteredUsers(users)
-      return
-    }
-    
-    const searchLower = term.toLowerCase()
-    const filtered = users.filter(user => 
-      user.twitterHandle.toLowerCase().includes(searchLower) ||
-      user.discordUsername?.toLowerCase().includes(searchLower) ||
-      user.discordId.toLowerCase().includes(searchLower) ||
-      user.discordServers?.some(server => server.toLowerCase().includes(searchLower))
-    )
-    
-    setFilteredUsers(filtered)
   }
   
   // Handle search input change
@@ -131,6 +162,15 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
       setSortBy(field)
       setSortOrder('desc')
     }
+    setCurrentPage(1) // Reset to first page when sorting changes
+  }
+  
+  // Handle page change
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage)
+      fetchUsers(newPage)
+    }
   }
   
   // Adjust user points
@@ -138,7 +178,7 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
     const newPoints = editedPoints[discordId]
     if (newPoints === undefined) return
     
-    const user = filteredUsers.find(u => u.discordId === discordId)
+    const user = users.find(u => u.discordId === discordId)
     if (!user) return
     
     const pointDifference = newPoints - user.totalPoints
@@ -169,11 +209,13 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
             : u
         )
         setUsers(updatedUsers)
-        setFilteredUsers(updatedUsers.filter(u => 
-          !searchTerm || 
-          u.twitterHandle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          u.discordUsername?.toLowerCase().includes(searchTerm.toLowerCase())
-        ))
+        
+        // Update stats if needed
+        setAllUsersStats(prev => ({
+          ...prev,
+          totalPoints: prev.totalPoints + pointDifference,
+          averagePoints: Math.round((prev.totalPoints + pointDifference) / totalUsers)
+        }))
         
         setEditingUser(null)
         delete editedPoints[discordId]
@@ -199,25 +241,15 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
     }
   }
   
-  // Calculate total pages
-  const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE)
-  
-  // Get current page users
-  const startIndex = searchTerm ? 0 : (currentPage - 1) * USERS_PER_PAGE
-  const endIndex = searchTerm ? filteredUsers.length : startIndex + USERS_PER_PAGE
-  const currentUsers = filteredUsers.slice(startIndex, endIndex)
-  
   // Effects
   useEffect(() => {
     fetchUsers(currentPage)
   }, [currentPage, sortBy, sortOrder])
   
   useEffect(() => {
-    // Reset to page 1 when search changes
-    if (searchTerm) {
-      setCurrentPage(1)
-    }
-  }, [searchTerm])
+    // Fetch all users stats on mount
+    fetchAllUsersStats()
+  }, [])
   
   // Cleanup on unmount
   useEffect(() => {
@@ -236,7 +268,9 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
           <div>
             <h2 className="text-xl font-semibold text-green-300">Engagement Users</h2>
             <p className="text-sm text-gray-400 mt-1">
-              {searchTerm ? `${filteredUsers.length} results found` : `Total: ${totalUsers} users`}
+              {searchTerm 
+                ? `Found ${totalUsers} users matching "${searchTerm}"` 
+                : `Total: ${totalUsers} users`}
             </p>
           </div>
           
@@ -256,7 +290,10 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
             
             {/* Refresh Button */}
             <button
-              onClick={() => fetchUsers(currentPage)}
+              onClick={() => {
+                fetchUsers(currentPage)
+                fetchAllUsersStats()
+              }}
               disabled={loading}
               className="px-4 py-2 bg-gray-800 text-gray-100 rounded hover:bg-gray-700 flex items-center gap-2 disabled:opacity-50"
             >
@@ -266,15 +303,15 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
           </div>
         </div>
         
-        {/* Quick Stats */}
+        {/* Quick Stats - Now showing ALL users stats, not just loaded ones */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           <div className="bg-gray-800 rounded p-3">
             <div className="flex items-center gap-2 text-green-400 mb-1">
               <Award className="w-4 h-4" />
-              <span className="text-xs">Total Points</span>
+              <span className="text-xs">Total Points (All Users)</span>
             </div>
             <p className="text-lg font-bold text-white">
-              {users.reduce((sum, user) => sum + user.totalPoints, 0).toLocaleString()}
+              {allUsersStats.totalPoints.toLocaleString()}
             </p>
           </div>
           
@@ -284,7 +321,7 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
               <span className="text-xs">Active Users</span>
             </div>
             <p className="text-lg font-bold text-white">
-              {users.filter(u => u.tweetsSubmitted > 0).length}
+              {allUsersStats.activeUsers}
             </p>
           </div>
           
@@ -294,7 +331,7 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
               <span className="text-xs">Avg Points</span>
             </div>
             <p className="text-lg font-bold text-white">
-              {users.length > 0 ? Math.round(users.reduce((sum, user) => sum + user.totalPoints, 0) / users.length) : 0}
+              {allUsersStats.averagePoints}
             </p>
           </div>
           
@@ -304,7 +341,7 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
               <span className="text-xs">Total Tweets</span>
             </div>
             <p className="text-lg font-bold text-white">
-              {users.reduce((sum, user) => sum + user.tweetsSubmitted, 0)}
+              {allUsersStats.totalTweets}
             </p>
           </div>
         </div>
@@ -341,21 +378,21 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {loading && currentUsers.length === 0 ? (
+              {loading && users.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
                     <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2" />
                     Loading users...
                   </td>
                 </tr>
-              ) : currentUsers.length === 0 ? (
+              ) : users.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
                     {searchTerm ? 'No users found matching your search' : 'No users found'}
                   </td>
                 </tr>
               ) : (
-                currentUsers.map(user => (
+                users.map(user => (
                   <tr key={user.discordId} className="hover:bg-gray-800/50 transition-colors">
                     {/* User Info */}
                     <td className="px-4 py-3">
@@ -499,18 +536,19 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
           </table>
         </div>
         
-        {/* Pagination */}
-        {!searchTerm && totalPages > 1 && (
+        {/* Pagination - Now shown even with search results */}
+        {totalPages > 1 && (
           <div className="px-4 py-3 bg-gray-800 border-t border-gray-700">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-400">
-                Showing {startIndex + 1} to {Math.min(endIndex, totalUsers)} of {totalUsers} users
+                Showing {((currentPage - 1) * USERS_PER_PAGE) + 1} to {Math.min(currentPage * USERS_PER_PAGE, totalUsers)} of {totalUsers} users
+                {searchTerm && ` matching "${searchTerm}"`}
               </div>
               
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1 || loading}
                   className="p-1 rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-400" />
@@ -532,12 +570,13 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
                     return (
                       <button
                         key={pageNum}
-                        onClick={() => setCurrentPage(pageNum)}
+                        onClick={() => handlePageChange(pageNum)}
+                        disabled={loading}
                         className={`px-3 py-1 rounded text-sm ${
                           currentPage === pageNum
                             ? 'bg-green-900 text-green-100'
                             : 'hover:bg-gray-700 text-gray-400'
-                        }`}
+                        } disabled:opacity-50`}
                       >
                         {pageNum}
                       </button>
@@ -546,8 +585,8 @@ export function EnhancedUsersTab({ onUserUpdate }: EnhancedUsersTabProps) {
                 </div>
                 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages || loading}
                   className="p-1 rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="w-5 h-5 text-gray-400" />
