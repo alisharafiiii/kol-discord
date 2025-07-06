@@ -126,6 +126,32 @@ module.exports = {
       
       // Auto restart on file changes (disabled in production)
       ignore_watch: ['node_modules', 'logs', '*.log']
+    },
+    {
+      name: 'engagement-cron',
+      script: './engagement-cron.js',
+      cwd: '/Users/nabu/kol/discord-bots',
+      watch: false,
+      env: {
+        NODE_ENV: 'production'
+      },
+      error_file: './logs/engagement-cron-error.log',
+      out_file: './logs/engagement-cron-out.log',
+      log_file: './logs/engagement-cron-combined.log',
+      time: true
+    },
+    {
+      name: 'engagement-cron-enhanced',
+      script: './engagement-cron-enhanced.js',
+      cwd: '/Users/nabu/kol/discord-bots',
+      watch: false,
+      env: {
+        NODE_ENV: 'production'
+      },
+      error_file: './logs/engagement-cron-enhanced-error.log',
+      out_file: './logs/engagement-cron-enhanced-out.log',
+      log_file: './logs/engagement-cron-enhanced-combined.log',
+      time: true
     }
   ],
   

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Trophy, Users, Twitter, RefreshCw, Settings, Activity, Plus, Trash2, FileText, TrendingUp } from 'lucide-react'
+import { EnhancedUsersTab } from '@/components/EnhancedUsersTab'
 
 interface Tweet {
   id: string
@@ -739,111 +740,14 @@ export default function EngagementAdminPage() {
               </div>
               
               <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-800">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">User</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord ID</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord Servers</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tier</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Points</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tweets</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Engagement</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {optedInUsers.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
-                        No opted-in users found
-                      </td>
-                    </tr>
-                  ) : (
-                    optedInUsers.map(user => (
-                      <tr key={user.discordId}>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-3">
-                            {user.profilePicture && (
-                              <img 
-                                src={user.profilePicture} 
-                                alt={user.twitterHandle}
-                                className="w-8 h-8 rounded-full"
-                              />
-                            )}
-                            <div>
-                              <p className="text-sm text-white">@{user.twitterHandle}</p>
-                              {user.discordUsername && (
-                                <p className="text-xs text-gray-400">{user.discordUsername}</p>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                        {/* Discord ID column */}
-                        <td className="px-4 py-3 text-xs text-gray-400 font-mono">
-                          {user.discordId}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-300">
-                          {user.discordServers?.join(', ') || 'N/A'}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-300">{user.tier.toUpperCase()}</td>
-                        <td className="px-4 py-3">
-                          {editingUser === user.discordId ? (
-                            <div className="flex items-center gap-2">
-                              <input
-                                type="number"
-                                value={editedPoints[user.discordId] ?? user.totalPoints}
-                                onChange={(e) => setEditedPoints({
-                                  ...editedPoints,
-                                  [user.discordId]: parseInt(e.target.value) || 0
-                                })}
-                                className="w-24 px-2 py-1 bg-black border border-gray-600 rounded text-white text-sm"
-                                autoFocus
-                              />
-                              <button
-                                onClick={() => adjustUserPoints(user.discordId)}
-                                disabled={savingPoints === user.discordId}
-                                className="px-2 py-1 bg-green-900 text-green-100 rounded text-xs hover:bg-green-800 disabled:opacity-50"
-                              >
-                                {savingPoints === user.discordId ? '...' : 'Save'}
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setEditingUser(null)
-                                  delete editedPoints[user.discordId]
-                                }}
-                                className="px-2 py-1 bg-gray-800 text-gray-100 rounded text-xs hover:bg-gray-700"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          ) : (
-                            <button
-                              onClick={() => {
-                                setEditingUser(user.discordId)
-                                setEditedPoints({
-                                  ...editedPoints,
-                                  [user.discordId]: user.totalPoints
-                                })
-                              }}
-                              className="text-sm font-semibold text-green-400 hover:text-green-300 hover:underline cursor-pointer"
-                            >
-                              {user.totalPoints}
-                            </button>
-                          )}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-300">{user.tweetsSubmitted}</td>
-                        <td className="px-4 py-3 text-sm text-gray-300">
-                          <span title="Likes">❤️ {user.totalLikes}</span>{' '}
-                          <span title="Retweets">🔁 {user.totalRetweets}</span>{' '}
-                          <span title="Comments">💬 {user.totalComments}</span>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                <EnhancedUsersTab
+                  onUserUpdate={() => {
+                    fetchRecentTransactions()
+                    fetchStats()
+                  }}
+                />
+              </div>
             </div>
-          </div>
           </div>
         )}
         
