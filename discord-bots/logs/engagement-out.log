@@ -10684,3 +10684,602 @@
   useExternalEmojis: true
 }
 2025-07-04T23:42:46: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T02:20:01: [SHARD 0] Reconnecting... 2025-07-05T06:20:01.703Z
+2025-07-05T02:20:02: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T02:27:31: 📥 Received interaction: 2 - Command: connect - User: grayledger
+2025-07-05T02:27:31: 🎯 Processing command: connect
+2025-07-05T03:13:48: 📥 Received interaction: 2 - Command: connect - User: grayledger
+2025-07-05T03:13:48: 🎯 Processing command: connect
+2025-07-05T03:43:16: 📥 Received interaction: 2 - Command: submit - User: bunnyboo9797_7
+2025-07-05T03:43:16: 🎯 Processing command: submit
+2025-07-05T03:43:17: [SUBMIT] User bunnyboo9797_7 submitting tweet: https://x.com/harurahimz18248/status/1941402337769304398?s=46
+2025-07-05T03:43:17: [SUBMIT] Tweet ID extracted: 1941402337769304398
+2025-07-05T03:43:17: [SUBMIT] User connected as @harurahimz18248
+2025-07-05T03:43:17: [SUBMIT] Checking approval status for @harurahimz18248...
+2025-07-05T03:43:17: [SUBMIT] Approval status: true
+2025-07-05T03:43:17: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T03:43:17: [SUBMIT] Tier scenarios loaded: daily limit = 3
+2025-07-05T03:43:18: 📝 Fetched tweet content: Success
+2025-07-05T03:43:18: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T03:43:20: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T04:44:30: 📥 Received interaction: 2 - Command: leaderboard - User: loki.base.eth
+2025-07-05T04:44:30: 🎯 Processing command: leaderboard
+2025-07-05T05:25:55: [SHARD 0] Reconnecting... 2025-07-05T09:25:55.996Z
+2025-07-05T05:25:56: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T07:37:26: 📥 Received interaction: 2 - Command: submit - User: danyalrh
+2025-07-05T07:37:26: 🎯 Processing command: submit
+2025-07-05T07:37:27: [SUBMIT] User danyalrh submitting tweet: https://x.com/DanialRH_7/status/1941443770987446524?t=_NhebQF7_NyJd_70w7w4dA&s=19
+2025-07-05T07:37:27: [SUBMIT] Tweet ID extracted: 1941443770987446524
+2025-07-05T07:37:27: [SUBMIT] User connected as @danialrh_7
+2025-07-05T07:37:27: [SUBMIT] Checking approval status for @danialrh_7...
+2025-07-05T07:37:27: [SUBMIT] Approval status: true
+2025-07-05T07:37:27: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T07:37:27: [SUBMIT] Tier scenarios loaded: daily limit = 3
+2025-07-05T07:37:27: 📝 Fetched tweet content: Success
+2025-07-05T07:37:29: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T07:37:30: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T08:23:51: 📥 Received interaction: 2 - Command: recent - User: navlld
+2025-07-05T08:23:51: 🎯 Processing command: recent
+2025-07-05T08:24:08: 📥 Received interaction: 2 - Command: submit - User: navlld
+2025-07-05T08:24:08: 🎯 Processing command: submit
+2025-07-05T08:24:08: [SUBMIT] User navlld submitting tweet: https://x.com/navlld/status/1941467194816450599?s=46
+2025-07-05T08:24:08: [SUBMIT] Tweet ID extracted: 1941467194816450599
+2025-07-05T08:24:08: [SUBMIT] User connected as @navlld
+2025-07-05T08:24:08: [SUBMIT] Checking approval status for @navlld...
+2025-07-05T08:24:09: [SUBMIT] Approval status: true
+2025-07-05T08:24:09: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T08:24:09: [SUBMIT] Tier scenarios loaded: daily limit = 3
+2025-07-05T08:24:09: 📝 Fetched tweet content: Success
+2025-07-05T08:24:11: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T08:24:11: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T08:24:22: 📥 Received interaction: 2 - Command: leaderboard - User: navlld
+2025-07-05T08:24:22: 🎯 Processing command: leaderboard
+2025-07-05T08:28:45: [SHARD 0] Reconnecting... 2025-07-05T12:28:45.575Z
+2025-07-05T08:28:46: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T09:09:24: [SHARD 0] Reconnecting... 2025-07-05T13:09:24.190Z
+2025-07-05T09:09:24: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T09:21:17: [SHARD 0] Reconnecting... 2025-07-05T13:21:17.861Z
+2025-07-05T09:21:18: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T10:09:59: 📥 Received interaction: 2 - Command: connect - User: enemend
+2025-07-05T10:09:59: 🎯 Processing command: connect
+2025-07-05T10:24:38: 📥 Received interaction: 2 - Command: leaderboard - User: loki.base.eth
+2025-07-05T10:24:38: 🎯 Processing command: leaderboard
+2025-07-05T10:35:09: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-05T10:35:09: 🎯 Processing command: submit
+2025-07-05T10:35:09: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1941406501077385603?t=BTz1ab2Btz5wDiv2TVA2GA&s=19
+2025-07-05T10:35:09: [SUBMIT] Tweet ID extracted: 1941406501077385603
+2025-07-05T10:35:09: [SUBMIT] User connected as @bull_base
+2025-07-05T10:35:09: [SUBMIT] Checking approval status for @bull_base...
+2025-07-05T10:35:10: [SUBMIT] Approval status: true
+2025-07-05T10:35:10: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T10:35:10: [SUBMIT] Tier scenarios loaded: daily limit = 3
+2025-07-05T10:35:10: 📝 Fetched tweet content: Success
+2025-07-05T10:35:11: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T10:35:12: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T10:39:32: 📥 Received interaction: 2 - Command: submit - User: zahrazareiw
+2025-07-05T10:39:32: 🎯 Processing command: submit
+2025-07-05T10:39:32: [SUBMIT] User zahrazareiw submitting tweet: https://x.com/zahrazareiw/status/1941506623043928564?t=fl0FvV42aIi2HvVVAdigdw&s=19
+2025-07-05T10:39:32: [SUBMIT] Tweet ID extracted: 1941506623043928564
+2025-07-05T10:39:33: [SUBMIT] User connected as @zahrazareiw
+2025-07-05T10:39:33: [SUBMIT] Checking approval status for @zahrazareiw...
+2025-07-05T10:39:33: [SUBMIT] Approval status: true
+2025-07-05T10:39:33: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T10:39:33: [SUBMIT] Tier scenarios loaded: daily limit = 3
+2025-07-05T10:39:33: 📝 Fetched tweet content: Success
+2025-07-05T10:39:35: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T10:39:35: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T10:50:20: 📥 Received interaction: 2 - Command: leaderboard - User: danyalrh
+2025-07-05T10:50:20: 🎯 Processing command: leaderboard
+2025-07-05T11:59:24: [SHARD 0] Reconnecting... 2025-07-05T15:59:24.821Z
+2025-07-05T11:59:25: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T13:28:07: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-05T13:28:07: 🎯 Processing command: leaderboard
+2025-07-05T13:28:34: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-05T13:28:34: 🎯 Processing command: submit
+2025-07-05T13:28:34: [SUBMIT] User alinabu submitting tweet: www.google.com
+2025-07-05T13:36:56: 📥 Received interaction: 2 - Command: submit - User: alinabu
+2025-07-05T13:36:56: 🎯 Processing command: submit
+2025-07-05T13:36:56: [SUBMIT] User alinabu submitting tweet: https://x.com/Ledger/status/1941159210575937823
+2025-07-05T13:36:56: [SUBMIT] Tweet ID extracted: 1941159210575937823
+2025-07-05T13:36:56: [SUBMIT] User connected as @sharafi_eth
+2025-07-05T13:36:56: [SUBMIT] Checking approval status for @sharafi_eth...
+2025-07-05T13:36:57: [SUBMIT] Approval status: true
+2025-07-05T13:36:57: [SUBMIT] Getting tier scenarios for tier: legend
+2025-07-05T13:36:57: [SUBMIT] Tier scenarios loaded: daily limit = 4
+2025-07-05T13:36:57: 📝 Fetched tweet content: Success
+2025-07-05T13:36:58: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T13:36:59: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T13:39:18: 📥 Received interaction: 2 - Command: submit - User: navlld
+2025-07-05T13:39:18: 🎯 Processing command: submit
+2025-07-05T13:39:18: [SUBMIT] User navlld submitting tweet: https://x.com/navlld/status/1941467194816450599?s=46
+2025-07-05T13:39:18: [SUBMIT] Tweet ID extracted: 1941467194816450599
+2025-07-05T13:39:18: [SUBMIT] User connected as @navlld
+2025-07-05T13:39:18: [SUBMIT] Checking approval status for @navlld...
+2025-07-05T13:39:19: [SUBMIT] Approval status: true
+2025-07-05T13:39:19: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T13:39:19: [SUBMIT] Tier scenarios loaded: daily limit = 1
+2025-07-05T13:43:15: 📥 Received interaction: 2 - Command: submit - User: loki.base.eth
+2025-07-05T13:43:15: 🎯 Processing command: submit
+2025-07-05T13:43:16: [SUBMIT] User loki.base.eth submitting tweet: https://x.com/sokot2260/status/1941385775519523007?t=TUoV1BqtX51zPadWl-Patw&s=19
+2025-07-05T13:43:16: [SUBMIT] Tweet ID extracted: 1941385775519523007
+2025-07-05T13:43:16: [SUBMIT] User connected as @sokot2260
+2025-07-05T13:43:16: [SUBMIT] Checking approval status for @sokot2260...
+2025-07-05T13:43:16: [SUBMIT] Approval status: true
+2025-07-05T13:43:16: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T13:43:16: [SUBMIT] Tier scenarios loaded: daily limit = 1
+2025-07-05T13:43:17: 📝 Fetched tweet content: Success
+2025-07-05T13:43:17: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T13:43:18: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T13:46:37: 📥 Received interaction: 2 - Command: connect - User: grayledger
+2025-07-05T13:46:37: 🎯 Processing command: connect
+2025-07-05T13:47:21: 📥 Received interaction: 2 - Command: submit - User: navlld
+2025-07-05T13:47:21: 🎯 Processing command: submit
+2025-07-05T13:47:21: [SUBMIT] User navlld submitting tweet: https://x.com/navlld/status/1941467194816450599?s=46
+2025-07-05T13:47:21: [SUBMIT] Tweet ID extracted: 1941467194816450599
+2025-07-05T13:47:21: [SUBMIT] User connected as @navlld
+2025-07-05T13:47:21: [SUBMIT] Checking approval status for @navlld...
+2025-07-05T13:47:21: [SUBMIT] Approval status: true
+2025-07-05T13:47:21: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T13:47:21: 📥 Received interaction: 2 - Command: submit - User: loki.base.eth
+2025-07-05T13:47:21: 🎯 Processing command: submit
+2025-07-05T13:47:21: [SUBMIT] Tier scenarios loaded: daily limit = 1
+2025-07-05T13:47:21: [SUBMIT] User loki.base.eth submitting tweet: https://x.com/sokot2260/status/1941385775519523007?t=TUoV1BqtX51zPadWl-Patw&s=19
+2025-07-05T13:47:21: [SUBMIT] Tweet ID extracted: 1941385775519523007
+2025-07-05T13:47:22: [SUBMIT] User connected as @sokot2260
+2025-07-05T13:47:22: [SUBMIT] Checking approval status for @sokot2260...
+2025-07-05T13:47:22: [SUBMIT] Approval status: true
+2025-07-05T13:47:22: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T13:47:22: [SUBMIT] Tier scenarios loaded: daily limit = 1
+2025-07-05T13:49:26: 📥 Received interaction: 2 - Command: submit - User: navlld
+2025-07-05T13:49:26: 🎯 Processing command: submit
+2025-07-05T13:49:27: [SUBMIT] User navlld submitting tweet: https://x.com/navlld/status/1940879473009963308?s=46
+2025-07-05T13:49:27: [SUBMIT] Tweet ID extracted: 1940879473009963308
+2025-07-05T13:49:27: [SUBMIT] User connected as @navlld
+2025-07-05T13:49:27: [SUBMIT] Checking approval status for @navlld...
+2025-07-05T13:49:27: [SUBMIT] Approval status: true
+2025-07-05T13:49:27: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T13:49:27: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-05T13:49:27: 📝 Fetched tweet content: Success
+2025-07-05T13:49:28: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-05T13:49:29: ✅ Posted tweet preview to #engagement-tracker
+2025-07-05T13:55:36: 🔍 Loading environment from: /Users/nabu/kol/.env.local
+2025-07-05T13:55:38: ✅ AI model initialized for sentiment analysis
+2025-07-05T13:55:39: 🚀 Engagement bot starting...
+2025-07-05T13:55:39: [SHARD 0] Ready! 2025-07-05T17:55:39.445Z
+2025-07-05T13:55:39: ✅ Engagement bot logged in as nabulines_engagement#3015
+2025-07-05T13:55:39: 📋 Permissions in NABU LINES: 17 permissions
+2025-07-05T13:55:39: 🔄 Refreshing application (/) commands...
+2025-07-05T13:55:39: ✅ Registered commands to guild: NABU LINES
+2025-07-05T13:55:39: ✅ Slash commands registered
+2025-07-05T14:02:22: 📥 Received interaction: 2 - Command: submit - User: enemend
+2025-07-05T14:02:22: 🎯 Processing command: submit
+2025-07-05T14:02:22: [SUBMIT] User enemend submitting tweet: https://x.com/SAOWEB3/status/1933521446095237447?t=c7Z16RWYBxfxj2UtwQT6dw&s=19
+2025-07-05T14:02:22: [SUBMIT] Tweet ID extracted: 1933521446095237447
+2025-07-05T14:02:22: [SUBMIT] User connected as @saoweb3
+2025-07-05T14:02:22: [SUBMIT] Checking approval status for @saoweb3...
+2025-07-05T14:02:23: [SUBMIT] Approval status: true
+2025-07-05T14:02:23: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T14:02:23: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-05T14:02:23: [SUBMIT] User's current points: 40
+2025-07-05T14:02:23: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-05T14:17:38: 📥 Received interaction: 2 - Command: points - User: loki.base.eth
+2025-07-05T14:17:38: 🎯 Processing command: points
+2025-07-05T14:17:40: [POINTS DEBUG] User: sokot2260
+2025-07-05T14:17:40: [POINTS DEBUG] Discord ID: 1362907874694533155
+2025-07-05T14:17:40: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:17:40 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:17:40 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:17:40 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40: [POINTS DEBUG] Engagement logs found: 8
+2025-07-05T14:17:40: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:45 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:44 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:24 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:24 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:38 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:38 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:20 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:19 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:17:40:   -> Counted in TODAY
+2025-07-05T14:17:40:   -> Counted in WEEK
+2025-07-05T14:17:40:   -> Counted in MONTH
+2025-07-05T14:17:40: [POINTS DEBUG] Final summary:
+2025-07-05T14:17:40:   Today: 160 pts
+2025-07-05T14:17:40:   Week: 160 pts
+2025-07-05T14:17:40:   Month: 160 pts
+2025-07-05T14:20:11: 📥 Received interaction: 2 - Command: leaderboard - User: loki.base.eth
+2025-07-05T14:20:11: 🎯 Processing command: leaderboard
+2025-07-05T14:23:56: 🔍 Loading environment from: /Users/nabu/kol/.env.local
+2025-07-05T14:23:56: ✅ AI model initialized for sentiment analysis
+2025-07-05T14:23:57: 🚀 Engagement bot starting...
+2025-07-05T14:23:57: [SHARD 0] Ready! 2025-07-05T18:23:57.423Z
+2025-07-05T14:23:57: ✅ Engagement bot logged in as nabulines_engagement#3015
+2025-07-05T14:23:57: 📋 Permissions in NABU LINES: 17 permissions
+2025-07-05T14:23:57: 🔄 Refreshing application (/) commands...
+2025-07-05T14:23:57: ✅ Registered commands to guild: NABU LINES
+2025-07-05T14:23:57: ✅ Slash commands registered
+2025-07-05T14:24:51: 📥 Received interaction: 2 - Command: points - User: grayledger
+2025-07-05T14:24:51: 🎯 Processing command: points
+2025-07-05T14:24:53: [POINTS DEBUG] User: mohamadhere
+2025-07-05T14:24:53: [POINTS DEBUG] Discord ID: 1378232537708499048
+2025-07-05T14:24:53: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:24:53 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:24:53 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:24:53 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53: [POINTS DEBUG] Engagement logs found: 4
+2025-07-05T14:24:53: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:33 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53:   -> Counted in TODAY
+2025-07-05T14:24:53:   -> Counted in WEEK
+2025-07-05T14:24:53:   -> Counted in MONTH
+2025-07-05T14:24:53: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:32 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53:   -> Counted in TODAY
+2025-07-05T14:24:53:   -> Counted in WEEK
+2025-07-05T14:24:53:   -> Counted in MONTH
+2025-07-05T14:24:53: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53:   -> Counted in TODAY
+2025-07-05T14:24:53:   -> Counted in WEEK
+2025-07-05T14:24:53:   -> Counted in MONTH
+2025-07-05T14:24:53: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:24:53:   -> Counted in TODAY
+2025-07-05T14:24:53:   -> Counted in WEEK
+2025-07-05T14:24:53:   -> Counted in MONTH
+2025-07-05T14:24:53: [POINTS DEBUG] Final summary:
+2025-07-05T14:24:53:   Today: 80 pts
+2025-07-05T14:24:53:   Week: 80 pts
+2025-07-05T14:24:53:   Month: 80 pts
+2025-07-05T14:29:11: 📥 Received interaction: 2 - Command: submit - User: grayledger
+2025-07-05T14:29:11: 🎯 Processing command: submit
+2025-07-05T14:29:11: [SUBMIT] User grayledger submitting tweet: https://x.com/mohamadhere/status/1941487576906420385?s=46
+2025-07-05T14:29:11: [SUBMIT] Tweet ID extracted: 1941487576906420385
+2025-07-05T14:29:11: [SUBMIT] User connected as @mohamadhere
+2025-07-05T14:29:11: [SUBMIT] Checking approval status for @mohamadhere...
+2025-07-05T14:29:12: [SUBMIT] Approval status: true
+2025-07-05T14:29:12: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T14:29:12: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-05T14:29:12: [SUBMIT] User's current points: 80
+2025-07-05T14:29:12: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-05T14:32:36: 📥 Received interaction: 2 - Command: leaderboard - User: .yaldajoon
+2025-07-05T14:32:36: 🎯 Processing command: leaderboard
+2025-07-05T14:34:58: 📥 Received interaction: 2 - Command: points - User: grayledger
+2025-07-05T14:34:58: 🎯 Processing command: points
+2025-07-05T14:35:00: [POINTS DEBUG] User: mohamadhere
+2025-07-05T14:35:00: [POINTS DEBUG] Discord ID: 1378232537708499048
+2025-07-05T14:35:00: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:35:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:35:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:35:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00: [POINTS DEBUG] Engagement logs found: 4
+2025-07-05T14:35:00: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:33 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00:   -> Counted in TODAY
+2025-07-05T14:35:00:   -> Counted in WEEK
+2025-07-05T14:35:00:   -> Counted in MONTH
+2025-07-05T14:35:00: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:32 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00:   -> Counted in TODAY
+2025-07-05T14:35:00:   -> Counted in WEEK
+2025-07-05T14:35:00:   -> Counted in MONTH
+2025-07-05T14:35:00: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00:   -> Counted in TODAY
+2025-07-05T14:35:00:   -> Counted in WEEK
+2025-07-05T14:35:00:   -> Counted in MONTH
+2025-07-05T14:35:00: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:35:00:   -> Counted in TODAY
+2025-07-05T14:35:00:   -> Counted in WEEK
+2025-07-05T14:35:00:   -> Counted in MONTH
+2025-07-05T14:35:00: [POINTS DEBUG] Final summary:
+2025-07-05T14:35:00:   Today: 80 pts
+2025-07-05T14:35:00:   Week: 80 pts
+2025-07-05T14:35:00:   Month: 80 pts
+2025-07-05T14:35:35: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-05T14:35:35: 🎯 Processing command: leaderboard
+2025-07-05T14:40:13: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-05T14:40:13: 🎯 Processing command: points
+2025-07-05T14:40:15: [POINTS DEBUG] User: yaldamasoudi
+2025-07-05T14:40:15: [POINTS DEBUG] Discord ID: 1093635916150624466
+2025-07-05T14:40:15: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:40:15 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:40:15 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:40:15 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15: [POINTS DEBUG] Engagement logs found: 6
+2025-07-05T14:40:15: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:35 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:35 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:08 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:07 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:12 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:11 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:15:   -> Counted in TODAY
+2025-07-05T14:40:15:   -> Counted in WEEK
+2025-07-05T14:40:15:   -> Counted in MONTH
+2025-07-05T14:40:15: [POINTS DEBUG] Final summary:
+2025-07-05T14:40:15:   Today: 120 pts
+2025-07-05T14:40:15:   Week: 120 pts
+2025-07-05T14:40:15:   Month: 120 pts
+2025-07-05T14:40:36: 📥 Received interaction: 2 - Command: points - User: grayledger
+2025-07-05T14:40:36: 🎯 Processing command: points
+2025-07-05T14:40:38: [POINTS DEBUG] User: mohamadhere
+2025-07-05T14:40:38: [POINTS DEBUG] Discord ID: 1378232537708499048
+2025-07-05T14:40:38: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:40:38 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:40:38 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:40:38 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38: [POINTS DEBUG] Engagement logs found: 4
+2025-07-05T14:40:38: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:33 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38:   -> Counted in TODAY
+2025-07-05T14:40:38:   -> Counted in WEEK
+2025-07-05T14:40:38:   -> Counted in MONTH
+2025-07-05T14:40:38: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:32 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38:   -> Counted in TODAY
+2025-07-05T14:40:38:   -> Counted in WEEK
+2025-07-05T14:40:38:   -> Counted in MONTH
+2025-07-05T14:40:38: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38:   -> Counted in TODAY
+2025-07-05T14:40:38:   -> Counted in WEEK
+2025-07-05T14:40:38:   -> Counted in MONTH
+2025-07-05T14:40:38: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:40:38:   -> Counted in TODAY
+2025-07-05T14:40:38:   -> Counted in WEEK
+2025-07-05T14:40:38:   -> Counted in MONTH
+2025-07-05T14:40:38: [POINTS DEBUG] Final summary:
+2025-07-05T14:40:38:   Today: 80 pts
+2025-07-05T14:40:38:   Week: 80 pts
+2025-07-05T14:40:38:   Month: 80 pts
+2025-07-05T14:44:21: 📥 Received interaction: 2 - Command: submit - User: grayledger
+2025-07-05T14:44:21: 🎯 Processing command: submit
+2025-07-05T14:44:21: [SUBMIT] User grayledger submitting tweet: https://x.com/mohamadhere/status/1941487576906420385?s=46
+2025-07-05T14:44:21: [SUBMIT] Tweet ID extracted: 1941487576906420385
+2025-07-05T14:44:21: [SUBMIT] User connected as @mohamadhere
+2025-07-05T14:44:21: [SUBMIT] Checking approval status for @mohamadhere...
+2025-07-05T14:44:21: [SUBMIT] Approval status: true
+2025-07-05T14:44:21: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T14:44:22: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-05T14:44:22: [SUBMIT] User's current points: 80
+2025-07-05T14:44:22: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-05T14:52:46: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-05T14:52:46: 🎯 Processing command: points
+2025-07-05T14:52:48: [POINTS DEBUG] User: yaldamasoudi
+2025-07-05T14:52:48: [POINTS DEBUG] Discord ID: 1093635916150624466
+2025-07-05T14:52:48: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 10:52:48 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48: [POINTS DEBUG] Week Start: Sat Jun 28 2025 10:52:48 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48: [POINTS DEBUG] Month Start: Thu Jun 05 2025 10:52:48 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48: [POINTS DEBUG] Engagement logs found: 6
+2025-07-05T14:52:48: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:35 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:35 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:08 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:07 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:12 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:11 GMT-0400 (Eastern Daylight Time)
+2025-07-05T14:52:48:   -> Counted in TODAY
+2025-07-05T14:52:48:   -> Counted in WEEK
+2025-07-05T14:52:48:   -> Counted in MONTH
+2025-07-05T14:52:48: [POINTS DEBUG] Final summary:
+2025-07-05T14:52:48:   Today: 120 pts
+2025-07-05T14:52:48:   Week: 120 pts
+2025-07-05T14:52:48:   Month: 120 pts
+2025-07-05T15:01:58: 📥 Received interaction: 2 - Command: submit - User: frostyfog
+2025-07-05T15:01:58: 🎯 Processing command: submit
+2025-07-05T15:01:58: [SUBMIT] User frostyfog submitting tweet: https://x.com/frostyfogx/status/1941532076123066752
+2025-07-05T15:01:58: [SUBMIT] Tweet ID extracted: 1941532076123066752
+2025-07-05T15:01:58: [SUBMIT] User connected as @frostyfogx
+2025-07-05T15:01:58: [SUBMIT] Checking approval status for @frostyfogx...
+2025-07-05T15:01:58: [SUBMIT] Approval status: true
+2025-07-05T15:01:58: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-05T15:01:58: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-05T15:01:58: [SUBMIT] User's current points: 40
+2025-07-05T15:01:58: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-05T15:08:09: 📥 Received interaction: 2 - Command: points - User: grayledger
+2025-07-05T15:08:09: 🎯 Processing command: points
+2025-07-05T15:08:11: [POINTS DEBUG] User: mohamadhere
+2025-07-05T15:08:11: [POINTS DEBUG] Discord ID: 1378232537708499048
+2025-07-05T15:08:11: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 11:08:11 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11: [POINTS DEBUG] Week Start: Sat Jun 28 2025 11:08:11 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11: [POINTS DEBUG] Month Start: Thu Jun 05 2025 11:08:11 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11: [POINTS DEBUG] Engagement logs found: 8
+2025-07-05T15:08:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:48 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:48 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:21 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:01:33 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:01:32 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:22 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:08:11:   -> Counted in TODAY
+2025-07-05T15:08:11:   -> Counted in WEEK
+2025-07-05T15:08:11:   -> Counted in MONTH
+2025-07-05T15:08:11: [POINTS DEBUG] Final summary:
+2025-07-05T15:08:11:   Today: 160 pts
+2025-07-05T15:08:11:   Week: 160 pts
+2025-07-05T15:08:11:   Month: 160 pts
+2025-07-05T15:09:54: 📥 Received interaction: 2 - Command: points - User: enemend
+2025-07-05T15:09:54: 🎯 Processing command: points
+2025-07-05T15:09:57: [POINTS DEBUG] User: saoweb3
+2025-07-05T15:09:57: [POINTS DEBUG] Discord ID: 1058710166599647232
+2025-07-05T15:09:57: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 11:09:57 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57: [POINTS DEBUG] Week Start: Sat Jun 28 2025 11:09:57 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57: [POINTS DEBUG] Month Start: Thu Jun 05 2025 11:09:57 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57: [POINTS DEBUG] Engagement logs found: 8
+2025-07-05T15:09:57: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:01:01 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:01:00 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:46 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:46 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:15 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:15 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:18 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:18 GMT-0400 (Eastern Daylight Time)
+2025-07-05T15:09:57:   -> Counted in TODAY
+2025-07-05T15:09:57:   -> Counted in WEEK
+2025-07-05T15:09:57:   -> Counted in MONTH
+2025-07-05T15:09:57: [POINTS DEBUG] Final summary:
+2025-07-05T15:09:57:   Today: 160 pts
+2025-07-05T15:09:57:   Week: 160 pts
+2025-07-05T15:09:57:   Month: 160 pts
+2025-07-05T15:23:44: 📥 Received interaction: 2 - Command: leaderboard - User: enemend
+2025-07-05T15:23:44: 🎯 Processing command: leaderboard
+2025-07-05T15:43:16: [SHARD 0] Reconnecting... 2025-07-05T19:43:16.318Z
+2025-07-05T15:43:16: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T15:53:12: [SHARD 0] Reconnecting... 2025-07-05T19:53:12.048Z
+2025-07-05T15:53:12: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T16:11:37: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-05T16:11:37: 🎯 Processing command: leaderboard
+2025-07-05T16:47:28: [SHARD 0] Reconnecting... 2025-07-05T20:47:28.799Z
+2025-07-05T16:47:29: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T17:04:17: 📥 Received interaction: 2 - Command: submit - User: frostyfog
+2025-07-05T17:04:17: 🎯 Processing command: submit
+2025-07-05T17:04:17: [SUBMIT] User frostyfog submitting tweet: ' or 1=1;--
+2025-07-05T17:04:36: 📥 Received interaction: 2 - Command: submit - User: frostyfog
+2025-07-05T17:04:36: 🎯 Processing command: submit
+2025-07-05T17:04:36: [SUBMIT] User frostyfog submitting tweet: <script>alert('XSS')</script>
+2025-07-05T17:08:30: 📥 Received interaction: 2 - Command: submit - User: frostyfog
+2025-07-05T17:08:30: 🎯 Processing command: submit
+2025-07-05T17:08:30: [SUBMIT] User frostyfog submitting tweet: http://169.254.169.254/latest/meta-data/
+2025-07-05T17:59:08: [SHARD 0] Reconnecting... 2025-07-05T21:59:08.765Z
+2025-07-05T17:59:09: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T19:38:23: [SHARD 0] Reconnecting... 2025-07-05T23:38:23.312Z
+2025-07-05T19:38:23: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T22:47:48: [SHARD 0] Reconnecting... 2025-07-06T02:47:48.653Z
+2025-07-05T22:47:49: [SHARD 0] Resumed, replayed 1 events
+2025-07-05T23:38:02: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-05T23:38:02: 🎯 Processing command: leaderboard
+2025-07-05T23:41:14: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-05T23:41:14: 🎯 Processing command: leaderboard

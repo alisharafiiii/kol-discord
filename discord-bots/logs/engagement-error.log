@@ -30016,3 +30016,13 @@
     hostname: 'polished-vulture-15957.upstash.io'
   }
 }
+2025-07-05T13:55:39: ⚠️  Missing permissions in NABU LINES:
+2025-07-05T13:55:39:    - ManageRoles
+2025-07-05T13:55:39:    Please grant these permissions to the bot for full functionality
+2025-07-05T13:55:39: ⚠️  Bot role position too low in NABU LINES
+2025-07-05T13:55:39:    Move bot role above 'kol' role to enable role assignment
+2025-07-05T14:23:57: ⚠️  Missing permissions in NABU LINES:
+2025-07-05T14:23:57:    - ManageRoles
+2025-07-05T14:23:57:    Please grant these permissions to the bot for full functionality
+2025-07-05T14:23:57: ⚠️  Bot role position too low in NABU LINES
+2025-07-05T14:23:57:    Move bot role above 'kol' role to enable role assignment

@@ -615,6 +615,26 @@ client.on('ready', async () => {
         description: 'Points bonus multiplier',
         required: false
       }]
+    },
+    {
+      name: 'adjustpoints',
+      description: 'Admin/Core: Adjust user points',
+      options: [{
+        name: 'user',
+        type: 6, // USER
+        description: 'The user whose points to adjust',
+        required: true
+      }, {
+        name: 'points',
+        type: 4, // INTEGER
+        description: 'Points to add (positive) or remove (negative)',
+        required: true
+      }, {
+        name: 'reason',
+        type: 3, // STRING
+        description: 'Reason for adjustment (optional)',
+        required: false
+      }]
     }
   ]
   
@@ -760,6 +780,25 @@ client.on('interactionCreate', async (interaction) => {
       const scenarios = await getTierScenarios(connection.tier)
       console.log(`[SUBMIT] Tier scenarios loaded: daily limit = ${scenarios.dailyTweetLimit}`)
       
+      // STEP 1: Check user's current points
+      const currentPoints = connection.totalPoints || 0
+      console.log(`[SUBMIT] User's current points: ${currentPoints}`)
+      
+      // STEP 2: Retrieve the required submission cost from settings based on tier
+      const submissionCost = scenarios.submissionCost || 0
+      console.log(`[SUBMIT] Required submission cost for tier ${connection.tier}: ${submissionCost} points`)
+      
+      // STEP 3: Check if user has enough points
+      if (submissionCost > 0 && currentPoints < submissionCost) {
+        // User doesn't have enough points
+        await interaction.editReply(
+          `❌ Not enough points. You need **${submissionCost} points** to submit a tweet.\n` +
+          `Your current balance: **${currentPoints} points**\n` +
+          `You need **${submissionCost - currentPoints} more points** to submit.`
+        )
+        return
+      }
+      
       // Check daily limit
       const today = getEdtDateString(new Date())
       const dailySubmissions = await redis.get(`engagement:daily:${interaction.user.id}:${today}`) || 0
@@ -845,6 +884,41 @@ client.on('interactionCreate', async (interaction) => {
         await redis.incr(`engagement:daily:${interaction.user.id}:${today}`)
         await redis.expire(`engagement:daily:${interaction.user.id}:${today}`, 86400) // 24 hours
         
+        // STEP 4: Deduct points immediately if submission cost is configured
+        if (submissionCost > 0) {
+          console.log(`[SUBMIT] Deducting ${submissionCost} points from user @${connection.twitterHandle}`)
+          
+          try {
+            // Deduct points from user's connection
+            await redis.json.numincrby(`engagement:connection:${interaction.user.id}`, '$.totalPoints', -submissionCost)
+            console.log(`[SUBMIT] Successfully deducted ${submissionCost} points. New balance: ${currentPoints - submissionCost}`)
+            
+            // Log the point deduction for transparency
+            const deductionLog = {
+              id: nanoid(),
+              userId: interaction.user.id,
+              twitterHandle: connection.twitterHandle,
+              action: 'tweet_submission',
+              points: -submissionCost,
+              balance: currentPoints - submissionCost,
+              tweetId: tweet.id,
+              timestamp: toEdtIsoString(new Date()),
+              tier: connection.tier
+            }
+            
+            // Save deduction log
+            await redis.json.set(`engagement:deduction:${deductionLog.id}`, '$', deductionLog)
+            await redis.zadd('engagement:deductions:recent', { 
+              score: Date.now(), 
+              member: deductionLog.id 
+            })
+            
+          } catch (deductError) {
+            console.error('[SUBMIT] Error deducting points:', deductError)
+            // Don't fail the submission, but log the error
+          }
+        }
+        
         // Send to channel
         const channel = interaction.guild.channels.cache.find(ch => ch.name === BOT_CHANNEL_NAME)
         if (channel) {
@@ -894,7 +968,14 @@ client.on('interactionCreate', async (interaction) => {
           console.log(`Channel "${BOT_CHANNEL_NAME}" not found. Please create it for tweet announcements.`)
         }
         
-        await interaction.editReply(`✅ Tweet submitted successfully! (${parseInt(dailySubmissions) + 1}/${scenarios.dailyTweetLimit} today)`)
+        // Create success message with point deduction info if applicable
+        let successMessage = `✅ Tweet submitted successfully! (${parseInt(dailySubmissions) + 1}/${scenarios.dailyTweetLimit} today)`
+        
+        if (submissionCost > 0) {
+          successMessage += `\n💰 **${submissionCost} points deducted** - New balance: **${currentPoints - submissionCost} points**`
+        }
+        
+        await interaction.editReply(successMessage)
       } catch (error) {
         console.error('Error submitting tweet:', error)
         await interaction.editReply('❌ An error occurred while submitting the tweet. Please try again.')
@@ -927,6 +1008,7 @@ client.on('interactionCreate', async (interaction) => {
         .addFields(
           { name: 'Daily Limit', value: `${dailySubmissions}/${scenarios.dailyTweetLimit}`, inline: true },
           { name: 'Bonus Multiplier', value: `${scenarios.bonusMultiplier}x`, inline: true },
+          { name: 'Submission Cost', value: `${scenarios.submissionCost || 0} points`, inline: true },
           { name: 'Categories', value: scenarios.categories.join(', '), inline: false }
         )
         .setTimestamp()
@@ -1307,6 +1389,77 @@ client.on('interactionCreate', async (interaction) => {
                  `Bonus Multiplier: ${currentScenarios.bonusMultiplier}x`,
         flags: 64 
       })
+    }
+    
+    else if (commandName === 'adjustpoints') {
+      // Admin/Core only
+      const member = interaction.guild.members.cache.get(interaction.user.id)
+      const isAdmin = member.roles.cache.some(role => role.name === ADMIN_ROLE_NAME)
+      const isCore = member.roles.cache.some(role => role.name === 'core')
+      
+      if (!isAdmin && !isCore) {
+        await interaction.reply({ content: '❌ This command is for Admin and Core roles only.', flags: 64 })
+        return
+      }
+      
+      const user = interaction.options.getUser('user')
+      const points = interaction.options.getInteger('points')
+      const reason = interaction.options.getString('reason') || 'Manual adjustment'
+      
+      // Get user connection
+      const connection = await redis.json.get(`engagement:connection:${user.id}`)
+      if (!connection) {
+        await interaction.reply({ content: `❌ User ${user.username} has not connected their Twitter account.`, flags: 64 })
+        return
+      }
+      
+      // Update points
+      const currentPoints = connection.totalPoints || 0
+      const newPoints = Math.max(0, currentPoints + points) // Ensure points don't go negative
+      
+      await redis.json.set(`engagement:connection:${user.id}`, '$.totalPoints', newPoints)
+      
+      // Create transaction log
+      const transactionId = `adj_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      const transaction = {
+        id: transactionId,
+        userId: user.id,
+        userName: `@${connection.twitterHandle}`,
+        points: points,
+        action: 'manual_adjustment',
+        timestamp: toEdtIsoString(new Date()),
+        description: reason,
+        adminId: interaction.user.id,
+        adminName: interaction.user.username,
+        previousBalance: currentPoints,
+        newBalance: newPoints
+      }
+      
+      // Save transaction
+      await redis.json.set(`engagement:transaction:${transactionId}`, '$', transaction)
+      await redis.zadd('engagement:transactions:recent', {
+        score: Date.now(),
+        member: transactionId
+      })
+      
+      // Log the adjustment
+      console.log(`[Points Adjustment] ${interaction.user.username} adjusted ${points} points for @${connection.twitterHandle} (${user.id}). Reason: ${reason}`)
+      
+      // Create response embed
+      const embed = new EmbedBuilder()
+        .setColor(points > 0 ? 0x00FF00 : 0xFF0000) // Green for positive, red for negative
+        .setTitle('💰 Points Adjustment')
+        .setDescription(`Successfully adjusted points for @${connection.twitterHandle}`)
+        .addFields(
+          { name: 'Adjustment', value: `${points > 0 ? '+' : ''}${points} points`, inline: true },
+          { name: 'New Balance', value: `${newPoints} points`, inline: true },
+          { name: 'Previous Balance', value: `${currentPoints} points`, inline: true },
+          { name: 'Reason', value: reason, inline: false }
+        )
+        .setFooter({ text: `Adjusted by ${interaction.user.username}` })
+        .setTimestamp()
+      
+      await interaction.reply({ embeds: [embed], flags: 64 })
     }
     }
     

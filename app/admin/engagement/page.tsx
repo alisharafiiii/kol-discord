@@ -82,7 +82,7 @@ export default function EngagementAdminPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   
-  const [activeTab, setActiveTab] = useState<'overview' | 'tweets' | 'leaderboard' | 'settings'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'tweets' | 'leaderboard' | 'users' | 'settings'>('overview')
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   
@@ -110,6 +110,11 @@ export default function EngagementAdminPage() {
   const [recentTransactions, setRecentTransactions] = useState<PointTransaction[]>([])
   const [savingTiers, setSavingTiers] = useState(false)
   const [dataLoaded, setDataLoaded] = useState(false)
+  
+  // Add state for editing points
+  const [editingUser, setEditingUser] = useState<string | null>(null)
+  const [editedPoints, setEditedPoints] = useState<{ [key: string]: number }>({})
+  const [savingPoints, setSavingPoints] = useState<string | null>(null)
   
   // Add refs to track component state and prevent unnecessary refreshes
   const isComponentMounted = useRef(true)
@@ -290,7 +295,9 @@ export default function EngagementAdminPage() {
       })
       if (res.ok) {
         const data = await res.json()
-        setOptedInUsers(data.users || [])
+        // Sort users by total points (highest to lowest)
+        const sortedUsers = (data.users || []).sort((a: OptedInUser, b: OptedInUser) => b.totalPoints - a.totalPoints)
+        setOptedInUsers(sortedUsers)
       }
     } catch (error) {
       console.error('[Engagement Admin] Error fetching opted-in users:', error)
@@ -433,6 +440,62 @@ export default function EngagementAdminPage() {
     setTierConfigs(newConfigs)
   }
   
+  const adjustUserPoints = async (discordId: string) => {
+    const newPoints = editedPoints[discordId]
+    if (newPoints === undefined) return
+    
+    const user = optedInUsers.find(u => u.discordId === discordId)
+    if (!user) return
+    
+    const pointDifference = newPoints - user.totalPoints
+    if (pointDifference === 0) {
+      setEditingUser(null)
+      return
+    }
+    
+    setSavingPoints(discordId)
+    
+    try {
+      const res = await fetch('/api/engagement/adjust-points', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          discordId,
+          points: pointDifference,
+          reason: `Manual adjustment via admin panel`
+        }),
+        credentials: 'include'
+      })
+      
+      if (res.ok) {
+        const data = await res.json()
+        // Update the user's points in the local state
+        setOptedInUsers(users => 
+          users.map(u => 
+            u.discordId === discordId 
+              ? { ...u, totalPoints: newPoints }
+              : u
+          )
+        )
+        setEditingUser(null)
+        delete editedPoints[discordId]
+        
+        // Refresh transactions to show the adjustment
+        fetchRecentTransactions()
+        
+        alert(`Successfully adjusted points for @${user.twitterHandle}. New balance: ${newPoints} points`)
+      } else {
+        const data = await res.json()
+        alert(data.error || 'Failed to adjust points')
+      }
+    } catch (error) {
+      console.error('[Engagement Admin] Error adjusting points:', error)
+      alert('Failed to adjust points')
+    } finally {
+      setSavingPoints(null)
+    }
+  }
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-black p-8 flex items-center justify-center">
@@ -494,14 +557,17 @@ export default function EngagementAdminPage() {
         
         {/* Tabs */}
         <div className="flex gap-4 mb-6 border-b border-gray-700 overflow-x-auto">
-          {['overview', 'tweets', 'leaderboard', 'settings'].map(tab => (
+          {['overview', 'tweets', 'leaderboard', 'users', 'settings'].map(tab => (
             <button
               key={tab}
               onClick={() => {
                 setActiveTab(tab as any)
-                // Only fetch settings data when settings tab is clicked
-                if (tab === 'settings' && optedInUsers.length === 0) {
+                // Fetch users data when users tab is clicked
+                if (tab === 'users' && optedInUsers.length === 0) {
                   fetchOptedInUsers()
+                }
+                // Fetch settings data when settings tab is clicked
+                if (tab === 'settings' && recentTransactions.length === 0) {
                   fetchRecentTransactions()
                 }
               }}
@@ -652,6 +718,135 @@ export default function EngagementAdminPage() {
           </div>
         )}
         
+        {activeTab === 'users' && (
+          <div className="space-y-6">
+            {/* Users Overview Section */}
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-green-300">Opted-In Users</h2>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Total users: {optedInUsers.length} • Sorted by points (highest to lowest)
+                  </p>
+                </div>
+                <button
+                  onClick={fetchOptedInUsers}
+                  className="px-4 py-2 bg-gray-800 text-gray-100 rounded hover:bg-gray-700 flex items-center gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Refresh
+                </button>
+              </div>
+              
+              <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-800">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">User</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord ID</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord Servers</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tier</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Points</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tweets</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Engagement</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {optedInUsers.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
+                        No opted-in users found
+                      </td>
+                    </tr>
+                  ) : (
+                    optedInUsers.map(user => (
+                      <tr key={user.discordId}>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
+                            {user.profilePicture && (
+                              <img 
+                                src={user.profilePicture} 
+                                alt={user.twitterHandle}
+                                className="w-8 h-8 rounded-full"
+                              />
+                            )}
+                            <div>
+                              <p className="text-sm text-white">@{user.twitterHandle}</p>
+                              {user.discordUsername && (
+                                <p className="text-xs text-gray-400">{user.discordUsername}</p>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        {/* Discord ID column */}
+                        <td className="px-4 py-3 text-xs text-gray-400 font-mono">
+                          {user.discordId}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-300">
+                          {user.discordServers?.join(', ') || 'N/A'}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-300">{user.tier.toUpperCase()}</td>
+                        <td className="px-4 py-3">
+                          {editingUser === user.discordId ? (
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="number"
+                                value={editedPoints[user.discordId] ?? user.totalPoints}
+                                onChange={(e) => setEditedPoints({
+                                  ...editedPoints,
+                                  [user.discordId]: parseInt(e.target.value) || 0
+                                })}
+                                className="w-24 px-2 py-1 bg-black border border-gray-600 rounded text-white text-sm"
+                                autoFocus
+                              />
+                              <button
+                                onClick={() => adjustUserPoints(user.discordId)}
+                                disabled={savingPoints === user.discordId}
+                                className="px-2 py-1 bg-green-900 text-green-100 rounded text-xs hover:bg-green-800 disabled:opacity-50"
+                              >
+                                {savingPoints === user.discordId ? '...' : 'Save'}
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setEditingUser(null)
+                                  delete editedPoints[user.discordId]
+                                }}
+                                className="px-2 py-1 bg-gray-800 text-gray-100 rounded text-xs hover:bg-gray-700"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setEditingUser(user.discordId)
+                                setEditedPoints({
+                                  ...editedPoints,
+                                  [user.discordId]: user.totalPoints
+                                })
+                              }}
+                              className="text-sm font-semibold text-green-400 hover:text-green-300 hover:underline cursor-pointer"
+                            >
+                              {user.totalPoints}
+                            </button>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-300">{user.tweetsSubmitted}</td>
+                        <td className="px-4 py-3 text-sm text-gray-300">
+                          <span title="Likes">❤️ {user.totalLikes}</span>{' '}
+                          <span title="Retweets">🔁 {user.totalRetweets}</span>{' '}
+                          <span title="Comments">💬 {user.totalComments}</span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+        )}
+        
         {activeTab === 'settings' && (
           <div className="space-y-8">
             {/* Tiers & Multipliers Section */}
@@ -712,68 +907,6 @@ export default function EngagementAdminPage() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-            
-            {/* Opted-In User List Section */}
-            <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-green-300 mb-6">Opted-In Users</h2>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-800">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">User</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Discord Servers</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tier</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Points</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Tweets</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Engagement</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-700">
-                    {optedInUsers.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
-                          No opted-in users found
-                        </td>
-                      </tr>
-                    ) : (
-                      optedInUsers.map(user => (
-                        <tr key={user.discordId}>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center gap-3">
-                              {user.profilePicture && (
-                                <img 
-                                  src={user.profilePicture} 
-                                  alt={user.twitterHandle}
-                                  className="w-8 h-8 rounded-full"
-                                />
-                              )}
-                              <div>
-                                <p className="text-sm text-white">@{user.twitterHandle}</p>
-                                {user.discordUsername && (
-                                  <p className="text-xs text-gray-400">{user.discordUsername}</p>
-                                )}
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-300">
-                            {user.discordServers?.join(', ') || 'N/A'}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-300">{user.tier.toUpperCase()}</td>
-                          <td className="px-4 py-3 text-sm font-semibold text-green-400">{user.totalPoints}</td>
-                          <td className="px-4 py-3 text-sm text-gray-300">{user.tweetsSubmitted}</td>
-                          <td className="px-4 py-3 text-sm text-gray-300">
-                            <span title="Likes">❤️ {user.totalLikes}</span>{' '}
-                            <span title="Retweets">🔁 {user.totalRetweets}</span>{' '}
-                            <span title="Comments">💬 {user.totalComments}</span>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
               </div>
             </div>
             
