@@ -1108,217 +1108,24 @@ client.on('interactionCreate', async (interaction) => {
     }
     
     else if (commandName === 'points') {
-      await interaction.deferReply({ flags: 64 }) // Ephemeral reply
-      
-      const connection = await redis.json.get(`engagement:connection:${interaction.user.id}`)
-      if (!connection) {
-        await interaction.editReply('❌ Please connect your Twitter account first using `/connect`')
-        return
-      }
-      
-      // Get the latest user data to sync tier
-      const { userData } = await isUserApproved(connection.twitterHandle)
-      if (userData && userData.tier && userData.tier !== connection.tier) {
-        // Update the connection with the latest tier
-        connection.tier = userData.tier
-        await redis.json.set(`engagement:connection:${interaction.user.id}`, '$.tier', userData.tier)
-      }
-      
-      // Get total points from the connection (this is the source of truth)
-      const totalPoints = connection.totalPoints || 0
-      
-      // Get user's engagement history more efficiently
-      // First, get all tweet interactions for this user
-      const interactionKeys = await redis.keys(`engagement:interaction:*:${interaction.user.id}:*`)
-      const userLogs = []
-      
-      // Get the log IDs from interactions
-      for (const key of interactionKeys) {
-        const logId = await redis.get(key)
-        if (logId) {
-          const log = await redis.json.get(`engagement:log:${logId}`)
-          if (log) {
-            userLogs.push(log)
-          }
-        }
-      }
-      
-      // Sort logs by timestamp (newest first)
-      userLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-      
-      // Get recent logs (last 10)
-      const recentLogs = userLogs.slice(0, 10)
-      
-      // Calculate points summary using EDT
-      const pointsSummary = {
-        today: 0,
-        week: 0,
-        month: 0
-      }
-      
-      // Get current EDT time
-      const nowEdt = getCurrentEdt()
-      
-      // Today start in EDT (midnight)
-      const todayStartEdt = new Date(nowEdt)
-      todayStartEdt.setHours(0, 0, 0, 0)
-      
-      // Week start in EDT (7 days ago)
-      const weekStartEdt = new Date(nowEdt)
-      weekStartEdt.setDate(weekStartEdt.getDate() - 7)
-      
-      // Month start in EDT (30 days ago)
-      const monthStartEdt = new Date(nowEdt)
-      monthStartEdt.setDate(monthStartEdt.getDate() - 30)
-      
-      // Debug logging
-      console.log(`[POINTS DEBUG] User: ${connection.twitterHandle}`)
-      console.log(`[POINTS DEBUG] Discord ID: ${interaction.user.id}`)
-      console.log(`[POINTS DEBUG] Now EDT: ${nowEdt}`)
-      console.log(`[POINTS DEBUG] Today Start: ${todayStartEdt}`)
-      console.log(`[POINTS DEBUG] Week Start: ${weekStartEdt}`) 
-      console.log(`[POINTS DEBUG] Month Start: ${monthStartEdt}`)
-      console.log(`[POINTS DEBUG] Engagement logs found: ${userLogs.length}`)
-      
-      // Calculate points earned in different periods
-      userLogs.forEach(log => {
-        // Parse the EDT timestamp - remove "EDT" suffix and parse
-        let logDate
-        if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
-          // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
-          // This represents 20:21 EDT, which is 00:21 UTC (next day)
-          // Remove EDT suffix and parse as local time, then add 4 hours for UTC
-          const cleanTimestamp = log.timestamp.replace('EDT', '')
-          const edtTime = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
-          logDate = edtTime
-        } else {
-          // New format: Standard ISO string, parse directly
-          logDate = new Date(log.timestamp)
-        }
-        
-        // Only count if date is valid
-        if (!isNaN(logDate.getTime())) {
-          console.log(`[POINTS DEBUG] Log: ${log.interactionType} +${log.points} pts at ${logDate}`)
-          
-          if (logDate >= todayStartEdt) {
-            pointsSummary.today += log.points
-            console.log(`  -> Counted in TODAY`)
-          }
-          if (logDate >= weekStartEdt) {
-            pointsSummary.week += log.points
-            console.log(`  -> Counted in WEEK`)
-          }
-          if (logDate >= monthStartEdt) {
-            pointsSummary.month += log.points
-            console.log(`  -> Counted in MONTH`)
-          }
-        } else {
-          console.log(`[POINTS DEBUG] Invalid date for log: ${log.timestamp}`)
-        }
-      })
-      
-      console.log(`[POINTS DEBUG] Final summary:`)
-      console.log(`  Today: ${pointsSummary.today} pts`)
-      console.log(`  Week: ${pointsSummary.week} pts`)
-      console.log(`  Month: ${pointsSummary.month} pts`)
-      
-      // Create embed
-      const embed = new EmbedBuilder()
-        .setColor(0x00FF00)
-        .setTitle('💰 Your Points Balance')
-        .setDescription(`**Total Points:** ${totalPoints} points\n*Includes all activities: Twitter engagement, Discord, contests, etc.*`)
-        .addFields(
-          { name: '📊 Twitter Engagement Points', value: 'Points earned from likes, retweets, and replies:', inline: false },
-          { name: 'Today', value: `+${pointsSummary.today} pts`, inline: true },
-          { name: 'Last 7 Days', value: `+${pointsSummary.week} pts`, inline: true },
-          { name: 'Last 30 Days', value: `+${pointsSummary.month} pts`, inline: true }
-        )
-        .setFooter({ text: `@${connection.twitterHandle} • Tier ${connection.tier ? connection.tier.toUpperCase() : 'MICRO'}` })
-        .setTimestamp()
-      
-      // Add recent activity if available
-      if (recentLogs.length > 0) {
-        // First, get unique tweet IDs and fetch tweet data
-        const tweetIdToAuthor = new Map()
-        const uniqueTweetIds = [...new Set(recentLogs.map(log => log.tweetId).filter(Boolean))]
-        
-        // Use the tweet ID mapping to find tweet data
-        for (const tweetId of uniqueTweetIds) {
-          const tweetIdKey = await redis.get(`engagement:tweetid:${tweetId}`)
-          if (tweetIdKey) {
-            const tweet = await redis.json.get(`engagement:tweet:${tweetIdKey}`)
-            if (tweet) {
-              tweetIdToAuthor.set(tweetId, tweet.authorHandle)
+      await interaction.reply({ 
+        embeds: [{
+          color: 0x00ff00,
+          title: '🎮 Nabulines Points Dashboard',
+          description: 'View your points, weekly activity, and recent transactions in our retro-style dashboard!',
+          fields: [
+            {
+              name: '🔗 Access Your Dashboard',
+              value: '[Click here to view your points dashboard](https://www.nabulines.com/dashboard)',
+              inline: false
             }
+          ],
+          footer: {
+            text: 'Login with your Twitter/X account to see your stats'
           }
-        }
-        
-        const activityLines = recentLogs.map(log => {
-          const emoji = log.interactionType === 'like' ? '❤️' : 
-                        log.interactionType === 'retweet' ? '🔁' : '💬'
-          
-          // Parse EDT timestamp
-          let time
-          if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
-            // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
-            // This represents 20:21 EDT, which is 00:21 UTC (next day)
-            // Remove EDT suffix and parse as local time, then add 4 hours for UTC
-            const cleanTimestamp = log.timestamp.replace('EDT', '')
-            time = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
-          } else {
-            // New format: Standard ISO string, parse directly
-            time = new Date(log.timestamp)
-          }
-          
-          // Create timestamp string if valid
-          let timeStr = ''
-          if (!isNaN(time.getTime())) {
-            timeStr = `<t:${Math.floor(time.getTime() / 1000)}:R>`
-          } else {
-            // Fallback to showing the raw timestamp
-            timeStr = log.timestamp || 'Unknown time'
-          }
-          
-          // Get tweet author info
-          const tweetAuthor = log.tweetId ? tweetIdToAuthor.get(log.tweetId) : null
-          const tweetInfo = tweetAuthor ? ` - @${tweetAuthor}` : ''
-          
-          return `${emoji} +${log.points} pts ${timeStr}${tweetInfo}`
-        })
-        
-        embed.addFields({ 
-          name: '📊 Recent Activity', 
-          value: activityLines.join('\n') || 'No recent activity',
-          inline: false 
-        })
-      } else {
-        embed.addFields({
-          name: '📊 Recent Activity',
-          value: 'No engagement activity yet. Start engaging with tweets to earn points!',
-          inline: false
-        })
-      }
-      
-      // Add note about other point sources
-      const engagementTotal = userLogs.reduce((sum, log) => sum + log.points, 0)
-      const otherPoints = totalPoints - engagementTotal
-      
-      if (otherPoints > 0) {
-        embed.addFields({
-          name: '📝 Other Points',
-          value: `You have ${otherPoints} points from Discord activity, contests, and other sources (not shown in time breakdowns).`,
-          inline: false
-        })
-      }
-      
-      // Note about spending (future feature)
-      embed.addFields({
-        name: '💸 Points Spent',
-        value: 'Point spending coming soon!',
-        inline: false
+        }],
+        flags: 64 // Ephemeral
       })
-      
-      await interaction.editReply({ embeds: [embed] })
     }
     
     else if (commandName === 'tier') {

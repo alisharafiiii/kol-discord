@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* CSS Reset */
 * {
@@ -331,4 +332,230 @@ button, input, select, textarea { font-size: 0.8em; }
   100% {
     background-position: 200% center;
   }
+}
+
+/* Pixel Art Dashboard Styles */
+.pixel-text {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pixel-container {
+  position: relative;
+  background: #000;
+  image-rendering: pixelated;
+}
+
+.pixel-border {
+  border: 4px solid #374151;
+  box-shadow: 
+    0 0 0 4px #000,
+    0 0 0 8px #1F2937,
+    0 0 0 12px #000;
+}
+
+.pixel-button {
+  @apply pixel-text;
+  border: 2px solid currentColor;
+  box-shadow: 
+    4px 4px 0 0 rgba(0, 0, 0, 0.5),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.1s ease;
+}
+
+.pixel-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 
+    2px 2px 0 0 rgba(0, 0, 0, 0.5),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.pixel-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* Pixel animations */
+@keyframes pixelFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pixelBounceIn {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pixelSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pixelGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.pixel-fade-in {
+  animation: pixelFadeIn 0.3s ease-out;
+}
+
+.pixel-bounce-in {
+  animation: pixelBounceIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.pixel-spin {
+  animation: pixelSpin 2s linear infinite;
+}
+
+.pixel-glow {
+  animation: pixelGlow 2s ease-in-out infinite;
+}
+
+/* Pixel loader */
+.pixel-loader {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.pixel-block {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  animation: pixelLoaderPulse 1s ease-in-out infinite;
+}
+
+.pixel-block:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pixel-block:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pixelLoaderPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* Pixel spinner */
+.pixel-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  animation: pixelSpin 0.6s linear infinite;
+}
+
+/* Pixel avatar */
+.pixel-avatar-frame {
+  position: relative;
+  border: 3px solid #374151;
+  background: #000;
+  padding: 2px;
+}
+
+.pixel-avatar {
+  image-rendering: pixelated;
+  filter: contrast(1.2);
+}
+
+/* Pixel tier badges */
+.pixel-tier-badge {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+  border: 2px solid #000;
+}
+
+.pixel-tier-badge.micro {
+  background: #6B7280;
+  color: #E5E7EB;
+}
+
+.pixel-tier-badge.rising {
+  background: #10B981;
+  color: #ECFDF5;
+}
+
+.pixel-tier-badge.star {
+  background: #3B82F6;
+  color: #EFF6FF;
+}
+
+.pixel-tier-badge.legend {
+  background: #F59E0B;
+  color: #FFFBEB;
+}
+
+.pixel-tier-badge.hero {
+  background: #8B5CF6;
+  color: #F3E8FF;
+}
+
+/* Pixel hover effects */
+.pixel-hover:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+.pixel-hover-grow:hover {
+  transform: scale(1.02);
+  transition: transform 0.1s ease;
+}
+
+/* Pixel transaction item */
+.pixel-transaction-item {
+  border: 1px solid #374151;
+  transition: all 0.1s ease;
+}
+
+.pixel-transaction-item:hover {
+  background: #111827 !important;
+  border-color: #6B7280;
+  transform: translateX(2px);
+}
+
+/* Pixel scrollbar */
+.pixel-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pixel-scrollbar::-webkit-scrollbar-track {
+  background: #1F2937;
+}
+
+.pixel-scrollbar::-webkit-scrollbar-thumb {
+  background: #4B5563;
+  border: 1px solid #1F2937;
+}
+
+.pixel-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Pixel number animation */
+.pixel-number {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.pixel-number:hover {
+  transform: scale(1.1);
+}
+
+/* Canvas styling */
+.pixel-canvas {
+  border: 2px solid #374151;
+  background: #111827;
 }
