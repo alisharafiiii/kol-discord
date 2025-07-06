@@ -3,8 +3,13 @@ const https = require('https');
 console.log('🔍 Testing Twitter OAuth Configuration...\n');
 
 // Check environment variables
-const CLIENT_ID = process.env.TWITTER_CLIENT_ID || 'WFVqeHRGbGdaQnlyQVJlOG5PQ1A6MTpjaQ';
-const CLIENT_SECRET = process.env.TWITTER_CLIENT_SECRET || 'OdKx3LANqE0pEQYYqoaLmT4ecCuI5wvZvOhUrpCCr7tnFHoQPJ';
+const CLIENT_ID = process.env.TWITTER_CLIENT_ID;
+const CLIENT_SECRET = process.env.TWITTER_CLIENT_SECRET;
+
+if (!CLIENT_ID || !CLIENT_SECRET) {
+  console.error('❌ TWITTER_CLIENT_ID and TWITTER_CLIENT_SECRET must be set in environment variables');
+  process.exit(1);
+}
 const CALLBACK_URL = 'http://localhost:3000/api/auth/callback/twitter';
 
 console.log('📋 OAuth Configuration:');

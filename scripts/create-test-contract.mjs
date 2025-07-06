@@ -7,7 +7,7 @@ async function createTestContract() {
     body: {
       title: 'Test KOL Agreement',
       role: 'Key Opinion Leader',
-      walletAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f6E123',
+      walletAddress: process.env.TEST_WALLET_ADDRESS || '0x0000000000000000000000000000000000000000',
       startDate: '2024-01-01',
       endDate: '2024-12-31',
       terms: 'This is a test contract for demonstration purposes.\n\nThe KOL agrees to:\n- Create content about the project\n- Engage with the community\n- Maintain professional standards',

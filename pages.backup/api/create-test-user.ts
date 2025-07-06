@@ -19,7 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       audienceTypes: ["Crypto Traders", "DeFi Users"],
       chains: ["Ethereum", "Solana", "Base"],
       walletAddresses: {
-        phantom: "84XFY6jknaQSLUUwb3WjhujvWxjvcr6WN2xJ97XXG1jj"
+        ethereum: process.env.TEST_ETH_ADDRESS || "test-eth-address",
+        phantom: process.env.TEST_PHANTOM_WALLET || "test-wallet-address"
       },
       role: "user",
       approvalStatus: "pending",

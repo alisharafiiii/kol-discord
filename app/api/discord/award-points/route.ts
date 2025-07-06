@@ -2,10 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 import { DiscordPointsBridge } from '@/lib/services/discord-points-bridge'
 
 // Simple API key authentication for bot isolation
-const DISCORD_BOT_API_KEY = process.env.DISCORD_BOT_API_KEY || 'discord-bot-points-key-2024'
+const DISCORD_BOT_API_KEY = process.env.DISCORD_BOT_API_KEY
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if API key is configured
+    if (!DISCORD_BOT_API_KEY) {
+      console.error('❌ DISCORD_BOT_API_KEY environment variable is not set!')
+      return NextResponse.json(
+        { error: 'Discord bot API key not configured' },
+        { status: 500 }
+      )
+    }
+    
     // Check API key
     const apiKey = req.headers.get('x-api-key')
     if (apiKey !== DISCORD_BOT_API_KEY) {
@@ -69,6 +78,15 @@ export async function POST(req: NextRequest) {
 // GET endpoint to check recent transactions
 export async function GET(req: NextRequest) {
   try {
+    // Check if API key is configured
+    if (!DISCORD_BOT_API_KEY) {
+      console.error('❌ DISCORD_BOT_API_KEY environment variable is not set!')
+      return NextResponse.json(
+        { error: 'Discord bot API key not configured' },
+        { status: 500 }
+      )
+    }
+    
     // Check API key
     const apiKey = req.headers.get('x-api-key')
     if (apiKey !== DISCORD_BOT_API_KEY) {

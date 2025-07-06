@@ -25,7 +25,12 @@ console.log('✅ Connected to Upstash Redis')
 
 // Points API configuration
 const POINTS_API_URL = process.env.POINTS_API_URL || 'http://localhost:3000/api/discord/award-points'
-const DISCORD_BOT_API_KEY = process.env.DISCORD_BOT_API_KEY || 'discord-bot-points-key-2024'
+const DISCORD_BOT_API_KEY = process.env.DISCORD_BOT_API_KEY
+if (!DISCORD_BOT_API_KEY) {
+  console.error('❌ DISCORD_BOT_API_KEY environment variable is not set!')
+  console.error('Please add DISCORD_BOT_API_KEY to your .env file')
+  process.exit(1)
+}
 console.log(`🎯 Points API configured: ${POINTS_API_URL}`)
 
 // Initialize Gemini AI for sentiment analysis

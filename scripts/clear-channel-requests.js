@@ -1,7 +1,11 @@
 const Redis = require('ioredis');
 
 async function clearChannelRequests() {
-  const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+  if (!process.env.REDIS_URL) {
+    console.warn('⚠️  REDIS_URL not set, using localhost fallback');
+  }
+  const redis = new Redis(redisUrl);
   
   try {
     console.log('Looking for channel info requests...');

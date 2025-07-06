@@ -41311,3 +41311,54 @@
 2025-07-05T23:38:02: 🎯 Processing command: leaderboard
 2025-07-05T23:41:14: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
 2025-07-05T23:41:14: 🎯 Processing command: leaderboard
+2025-07-06T00:17:11: [SHARD 0] Reconnecting... 2025-07-06T04:17:11.029Z
+2025-07-06T00:17:11: [SHARD 0] Resumed, replayed 1 events
+2025-07-06T01:00:09: 📥 Received interaction: 2 - Command: points - User: enemend
+2025-07-06T01:00:09: 🎯 Processing command: points
+2025-07-06T01:00:11: [POINTS DEBUG] User: saoweb3
+2025-07-06T01:00:11: [POINTS DEBUG] Discord ID: 1058710166599647232
+2025-07-06T01:00:11: [POINTS DEBUG] Now EDT: Sat Jul 05 2025 21:00:11 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11: [POINTS DEBUG] Today Start: Sat Jul 05 2025 00:00:00 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11: [POINTS DEBUG] Week Start: Sat Jun 28 2025 21:00:11 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11: [POINTS DEBUG] Month Start: Thu Jun 05 2025 21:00:11 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11: [POINTS DEBUG] Engagement logs found: 8
+2025-07-06T01:00:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:01:01 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:01:00 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:46 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:46 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 15:00:15 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 15:00:15 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: like +10 pts at Sat Jul 05 2025 14:00:18 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Log: reply +30 pts at Sat Jul 05 2025 14:00:18 GMT-0400 (Eastern Daylight Time)
+2025-07-06T01:00:11:   -> Counted in TODAY
+2025-07-06T01:00:11:   -> Counted in WEEK
+2025-07-06T01:00:11:   -> Counted in MONTH
+2025-07-06T01:00:11: [POINTS DEBUG] Final summary:
+2025-07-06T01:00:11:   Today: 160 pts
+2025-07-06T01:00:11:   Week: 160 pts
+2025-07-06T01:00:11:   Month: 160 pts
+2025-07-06T01:02:32: 📥 Received interaction: 2 - Command: leaderboard - User: enemend
+2025-07-06T01:02:32: 🎯 Processing command: leaderboard
+2025-07-06T01:14:23: [SHARD 0] Reconnecting... 2025-07-06T05:14:23.927Z
+2025-07-06T01:14:24: [SHARD 0] Resumed, replayed 1 events

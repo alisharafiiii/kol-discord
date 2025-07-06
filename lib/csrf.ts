@@ -3,9 +3,11 @@ import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 
 // CSRF token configuration
-const CSRF_SECRET = new TextEncoder().encode(
-  process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || 'fallback-csrf-secret-change-me'
-)
+const csrfSecretString = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET
+if (!csrfSecretString) {
+  throw new Error('CSRF_SECRET or NEXTAUTH_SECRET must be set in environment variables')
+}
+const CSRF_SECRET = new TextEncoder().encode(csrfSecretString)
 const CSRF_TOKEN_NAME = 'csrf-token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
 const TOKEN_EXPIRY = '1h' // 1 hour expiry

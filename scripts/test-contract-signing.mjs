@@ -32,7 +32,7 @@ async function testContractSigning() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         signature: '0x' + 'a'.repeat(130), // Mock signature
-        signerAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f6E123',
+        signerAddress: process.env.TEST_WALLET_ADDRESS || '0x0000000000000000000000000000000000000000',
         twitterHandle: 'testuser',
         nonce: Date.now()
       })
