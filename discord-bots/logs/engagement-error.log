@@ -30026,3 +30026,19 @@
 2025-07-05T14:23:57:    Please grant these permissions to the bot for full functionality
 2025-07-05T14:23:57: ⚠️  Bot role position too low in NABU LINES
 2025-07-05T14:23:57:    Move bot role above 'kol' role to enable role assignment
+2025-07-06T17:14:47: ⚠️  Missing permissions in NABU LINES:
+2025-07-06T17:14:47:    - ManageRoles
+2025-07-06T17:14:47:    Please grant these permissions to the bot for full functionality
+2025-07-06T17:14:47: ⚠️  Bot role position too low in NABU LINES
+2025-07-06T17:14:47:    Move bot role above 'kol' role to enable role assignment
+2025-07-06T17:16:10: ❌ Error handling interaction: Error [InteractionAlreadyReplied]: The reply to this interaction has already been sent or deferred.
+    at ChatInputCommandInteraction.reply (/Users/nabu/kol/node_modules/discord.js/src/structures/interfaces/InteractionResponses.js:163:46)
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:1334:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: 'InteractionAlreadyReplied'
+}
+2025-07-06T17:21:31: ⚠️  Missing permissions in NABU LINES:
+2025-07-06T17:21:31:    - ManageRoles
+2025-07-06T17:21:31:    Please grant these permissions to the bot for full functionality
+2025-07-06T17:21:31: ⚠️  Bot role position too low in NABU LINES
+2025-07-06T17:21:31:    Move bot role above 'kol' role to enable role assignment

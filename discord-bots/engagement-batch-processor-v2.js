@@ -386,6 +386,9 @@ async function awardPoints(tweet, engagements, batchId) {
         await redis.set(`engagement:interaction:${tweet.tweetId}:${connection}:retweet`, logId)
         await redis.json.numincrby(`engagement:connection:${connection}`, '$.totalPoints', points)
         
+        // Add to user's engagement history
+        await redis.zadd(`engagement:user:${connection}:logs`, { score: Date.now(), member: logId })
+        
         pointsAwarded.push({
           username: engagement.username,
           discordId: connection,
@@ -414,6 +417,9 @@ async function awardPoints(tweet, engagements, batchId) {
           
           await redis.set(`engagement:interaction:${tweet.tweetId}:${connection}:like`, likeLogId)
           await redis.json.numincrby(`engagement:connection:${connection}`, '$.totalPoints', likePoints)
+          
+          // Add to user's engagement history
+          await redis.zadd(`engagement:user:${connection}:logs`, { score: Date.now(), member: likeLogId })
           
           usersAwardedLikePoints.add(connection)
           
@@ -453,6 +459,9 @@ async function awardPoints(tweet, engagements, batchId) {
         await redis.set(`engagement:interaction:${tweet.tweetId}:${connection}:reply`, logId)
         await redis.json.numincrby(`engagement:connection:${connection}`, '$.totalPoints', points)
         
+        // Add to user's engagement history
+        await redis.zadd(`engagement:user:${connection}:logs`, { score: Date.now(), member: logId })
+        
         pointsAwarded.push({
           username: engagement.username,
           discordId: connection,
@@ -481,6 +490,9 @@ async function awardPoints(tweet, engagements, batchId) {
           
           await redis.set(`engagement:interaction:${tweet.tweetId}:${connection}:like`, likeLogId)
           await redis.json.numincrby(`engagement:connection:${connection}`, '$.totalPoints', likePoints)
+          
+          // Add to user's engagement history
+          await redis.zadd(`engagement:user:${connection}:logs`, { score: Date.now(), member: likeLogId })
           
           usersAwardedLikePoints.add(connection)
           

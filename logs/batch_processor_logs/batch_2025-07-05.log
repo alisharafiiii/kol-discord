@@ -2779,3 +2779,704 @@
 {"timestamp":"2025-07-06T18:01:37.404Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
 {"timestamp":"2025-07-06T18:01:38.108Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"rM9KPk1GHle9WFaY6Y8uf","duration":"2 minutes","summary":{"tweetsProcessed":10,"engagementsFound":370,"pointsAwarded":1572,"apiCallsUsed":10,"retweets":9,"replies":361,"uniqueUsers":182,"errors":5}}
 {"timestamp":"2025-07-06T18:01:38.314Z","level":"INFO","message":"📊 Rate limit status","used":4,"remaining":116,"limit":120,"percentUsed":3}
+{"timestamp":"2025-07-06T19:00:00.409Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"ptJQ9roI5Uqd2zQ2Is7Kn","startTime":"2025-07-06T19:00:00.409Z"}
+{"timestamp":"2025-07-06T19:00:00.625Z","level":"INFO","message":"📊 Initial rate limit check","current":4,"remaining":116,"allowed":true}
+{"timestamp":"2025-07-06T19:00:00.917Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"ptJQ9roI5Uqd2zQ2Is7Kn","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-06T19:00:01.865Z","level":"DEBUG","message":"Processing tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:01.867Z","level":"DEBUG","message":"Fetching retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:02.198Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:02.200Z","level":"DEBUG","message":"Fetching replies for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:02.555Z","level":"DEBUG","message":"Found 35 replies in conversation thread for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:02.557Z","level":"SUCCESS","message":"Processed tweet 1941791391249567789","engagementsFound":36,"apiCallsUsed":2,"retweets":1,"replies":35}
+{"timestamp":"2025-07-06T19:00:03.108Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:03.112Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.297Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.299Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.300Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.300Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.301Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.302Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.303Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.304Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.305Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:04.308Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:08.061Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:08.063Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:08.064Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:08.066Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T19:00:10.256Z","level":"DEBUG","message":"Processing tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:10.258Z","level":"DEBUG","message":"Fetching retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:10.588Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:10.590Z","level":"DEBUG","message":"Fetching replies for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:11.225Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:11.227Z","level":"SUCCESS","message":"Processed tweet 1941806710089212117","engagementsFound":101,"apiCallsUsed":2,"retweets":1,"replies":100}
+{"timestamp":"2025-07-06T19:00:13.735Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:20.558Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T19:00:29.751Z","level":"INFO","message":"Points awarded for tweet 1941806710089212117","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T19:00:30.509Z","level":"DEBUG","message":"Processing tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:30.510Z","level":"DEBUG","message":"Fetching retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:31.106Z","level":"DEBUG","message":"Found 4 retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:31.109Z","level":"DEBUG","message":"Fetching replies for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:31.801Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:31.803Z","level":"SUCCESS","message":"Processed tweet 1941811026405568629","engagementsFound":104,"apiCallsUsed":2,"retweets":4,"replies":100}
+{"timestamp":"2025-07-06T19:00:32.704Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:32.802Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:34.288Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:34.575Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:35.085Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:35.087Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:35.609Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:35.848Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:35.944Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:36.039Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:36.653Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:36.803Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:36.898Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:36.993Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:37.088Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:37.183Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:37.423Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:37.425Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:38.471Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:38.566Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:38.759Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:38.994Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.090Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.092Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.285Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.424Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.427Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.429Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.526Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:39.531Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.139Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.328Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.567Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.759Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.857Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:40.997Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.093Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.094Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.284Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.525Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.620Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.624Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T19:00:41.811Z","level":"INFO","message":"Points awarded for tweet 1941811026405568629","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T19:00:42.426Z","level":"DEBUG","message":"Processing tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:42.427Z","level":"DEBUG","message":"Fetching retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:42.679Z","level":"DEBUG","message":"Found 3 retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:42.686Z","level":"DEBUG","message":"Fetching replies for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:43.350Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:43.351Z","level":"SUCCESS","message":"Processed tweet 1941803661081919932","engagementsFound":103,"apiCallsUsed":2,"retweets":3,"replies":100}
+{"timestamp":"2025-07-06T19:00:49.908Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.007Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.102Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.104Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.106Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.108Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.108Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.632Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.634Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.635Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.731Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:50.733Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:51.575Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:51.576Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:51.577Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:51.670Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:51.858Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.006Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.007Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.008Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.009Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.103Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.106Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:52.107Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:00:58.297Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T19:01:00.918Z","level":"INFO","message":"Points awarded for tweet 1941803661081919932","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T19:01:01.968Z","level":"DEBUG","message":"Processing tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T19:01:01.971Z","level":"DEBUG","message":"Fetching retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T19:01:02.334Z","level":"DEBUG","message":"No retweets found for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T19:01:02.344Z","level":"DEBUG","message":"Fetching replies for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T19:01:02.893Z","level":"DEBUG","message":"Found 35 replies in conversation thread for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T19:01:02.895Z","level":"SUCCESS","message":"Processed tweet 1941802594159976685","engagementsFound":35,"apiCallsUsed":2,"retweets":0,"replies":35}
+{"timestamp":"2025-07-06T19:01:13.594Z","level":"INFO","message":"Points awarded for tweet 1941802594159976685","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T19:01:14.313Z","level":"DEBUG","message":"Processing tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T19:01:14.315Z","level":"DEBUG","message":"Fetching retweets for tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T19:01:14.414Z","level":"ERROR","message":"Failed to process tweet 1941831924940439679","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:15.262Z","level":"DEBUG","message":"Processing tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T19:01:15.264Z","level":"DEBUG","message":"Fetching retweets for tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T19:01:15.335Z","level":"ERROR","message":"Failed to process tweet 1941885033247043977","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:16.218Z","level":"DEBUG","message":"Processing tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T19:01:16.219Z","level":"DEBUG","message":"Fetching retweets for tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T19:01:16.284Z","level":"ERROR","message":"Failed to process tweet 1941872219195343072","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:17.008Z","level":"DEBUG","message":"Processing tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T19:01:17.009Z","level":"DEBUG","message":"Fetching retweets for tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T19:01:17.074Z","level":"ERROR","message":"Failed to process tweet 1941775451245936686","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:17.887Z","level":"DEBUG","message":"Processing tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T19:01:17.888Z","level":"DEBUG","message":"Fetching retweets for tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T19:01:17.953Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:18.839Z","level":"DEBUG","message":"Processing tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T19:01:18.840Z","level":"DEBUG","message":"Fetching retweets for tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T19:01:18.899Z","level":"ERROR","message":"Failed to process tweet 1941901024278598136","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T19:01:19.888Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"ptJQ9roI5Uqd2zQ2Is7Kn","duration":"1 minutes","summary":{"tweetsProcessed":11,"engagementsFound":379,"pointsAwarded":240,"apiCallsUsed":10,"retweets":9,"replies":370,"uniqueUsers":185,"errors":6}}
+{"timestamp":"2025-07-06T19:01:20.189Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-06T20:00:00.352Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"BeXTr2RSf4uuT3Oc-y38S","startTime":"2025-07-06T20:00:00.352Z"}
+{"timestamp":"2025-07-06T20:00:00.626Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true}
+{"timestamp":"2025-07-06T20:00:00.975Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"BeXTr2RSf4uuT3Oc-y38S","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-06T20:00:01.866Z","level":"DEBUG","message":"Processing tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:01.868Z","level":"DEBUG","message":"Fetching retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:02.143Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:02.145Z","level":"DEBUG","message":"Fetching replies for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:02.546Z","level":"DEBUG","message":"Found 36 replies in conversation thread for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:02.548Z","level":"SUCCESS","message":"Processed tweet 1941791391249567789","engagementsFound":37,"apiCallsUsed":2,"retweets":1,"replies":36}
+{"timestamp":"2025-07-06T20:00:03.162Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:03.164Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.306Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.308Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.309Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.310Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.311Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.311Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.312Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.313Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.313Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:04.314Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:08.075Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:08.079Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:08.081Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:08.082Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T20:00:09.979Z","level":"DEBUG","message":"Processing tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:09.981Z","level":"DEBUG","message":"Fetching retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:10.225Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:10.226Z","level":"DEBUG","message":"Fetching replies for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:10.744Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:10.745Z","level":"SUCCESS","message":"Processed tweet 1941806710089212117","engagementsFound":101,"apiCallsUsed":2,"retweets":1,"replies":100}
+{"timestamp":"2025-07-06T20:00:13.129Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:19.700Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T20:00:28.615Z","level":"DEBUG","message":"Processing tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:28.618Z","level":"DEBUG","message":"Fetching retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:28.874Z","level":"DEBUG","message":"Found 4 retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:28.876Z","level":"DEBUG","message":"Fetching replies for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:29.386Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:29.390Z","level":"SUCCESS","message":"Processed tweet 1941811026405568629","engagementsFound":104,"apiCallsUsed":2,"retweets":4,"replies":100}
+{"timestamp":"2025-07-06T20:00:30.521Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:30.714Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:30.860Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:31.382Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:31.663Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:32.196Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:32.197Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:32.712Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:32.956Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:33.052Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:33.149Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:33.763Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:33.858Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.005Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.104Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.202Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.298Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.529Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:34.532Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:35.577Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:35.673Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:35.863Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.100Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.195Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.198Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.386Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.480Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.481Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.482Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.623Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:36.624Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:37.244Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:37.437Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:37.672Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:37.863Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:37.961Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:38.058Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:38.196Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:38.199Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:38.389Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T20:00:39.247Z","level":"DEBUG","message":"Processing tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:39.250Z","level":"DEBUG","message":"Fetching retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:39.545Z","level":"DEBUG","message":"Found 3 retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:39.550Z","level":"DEBUG","message":"Fetching replies for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:40.051Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:40.053Z","level":"SUCCESS","message":"Processed tweet 1941803661081919932","engagementsFound":103,"apiCallsUsed":2,"retweets":3,"replies":100}
+{"timestamp":"2025-07-06T20:00:44.338Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.488Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.583Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.585Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.586Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.588Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:44.590Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:45.104Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:45.105Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:45.106Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:45.200Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:45.202Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.062Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.064Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.065Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.159Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.350Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.445Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.451Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.455Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.457Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.588Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.592Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:46.594Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:54.822Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T20:00:57.353Z","level":"INFO","message":"Points awarded for tweet 1941803661081919932","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T20:00:58.214Z","level":"DEBUG","message":"Processing tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T20:00:58.217Z","level":"DEBUG","message":"Fetching retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T20:00:58.644Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T20:00:58.646Z","level":"DEBUG","message":"Fetching replies for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T20:00:59.255Z","level":"DEBUG","message":"Found 37 replies in conversation thread for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T20:00:59.257Z","level":"SUCCESS","message":"Processed tweet 1941802594159976685","engagementsFound":38,"apiCallsUsed":2,"retweets":1,"replies":37}
+{"timestamp":"2025-07-06T20:01:10.557Z","level":"INFO","message":"Points awarded for tweet 1941802594159976685","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T20:01:11.660Z","level":"DEBUG","message":"Processing tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T20:01:11.661Z","level":"DEBUG","message":"Fetching retweets for tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T20:01:11.856Z","level":"ERROR","message":"Failed to process tweet 1941831924940439679","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:12.566Z","level":"DEBUG","message":"Processing tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T20:01:12.568Z","level":"DEBUG","message":"Fetching retweets for tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T20:01:12.643Z","level":"ERROR","message":"Failed to process tweet 1941885033247043977","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:13.326Z","level":"DEBUG","message":"Processing tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T20:01:13.326Z","level":"DEBUG","message":"Fetching retweets for tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T20:01:13.397Z","level":"ERROR","message":"Failed to process tweet 1941872219195343072","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:14.038Z","level":"DEBUG","message":"Processing tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T20:01:14.039Z","level":"DEBUG","message":"Fetching retweets for tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T20:01:14.102Z","level":"ERROR","message":"Failed to process tweet 1941775451245936686","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:14.750Z","level":"DEBUG","message":"Processing tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T20:01:14.751Z","level":"DEBUG","message":"Fetching retweets for tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T20:01:14.903Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:15.520Z","level":"DEBUG","message":"Processing tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T20:01:15.523Z","level":"DEBUG","message":"Fetching retweets for tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T20:01:15.590Z","level":"ERROR","message":"Failed to process tweet 1941901024278598136","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T20:01:16.042Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"BeXTr2RSf4uuT3Oc-y38S","duration":"1 minutes","summary":{"tweetsProcessed":11,"engagementsFound":383,"pointsAwarded":80,"apiCallsUsed":10,"retweets":10,"replies":373,"uniqueUsers":189,"errors":6}}
+{"timestamp":"2025-07-06T20:01:16.233Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}
+{"timestamp":"2025-07-06T21:00:00.387Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"S9wjEc1uPbWKwDI55DoB9","startTime":"2025-07-06T21:00:00.387Z"}
+{"timestamp":"2025-07-06T21:00:00.665Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true}
+{"timestamp":"2025-07-06T21:00:00.955Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"S9wjEc1uPbWKwDI55DoB9","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-06T21:00:01.902Z","level":"DEBUG","message":"Processing tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:01.904Z","level":"DEBUG","message":"Fetching retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:02.238Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:02.240Z","level":"DEBUG","message":"Fetching replies for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:02.624Z","level":"DEBUG","message":"Found 36 replies in conversation thread for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:02.628Z","level":"SUCCESS","message":"Processed tweet 1941791391249567789","engagementsFound":37,"apiCallsUsed":2,"retweets":1,"replies":36}
+{"timestamp":"2025-07-06T21:00:03.286Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:03.288Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.475Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.480Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.485Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.488Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.490Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.495Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.496Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.497Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.498Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:04.499Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:08.644Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:08.645Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:08.646Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:08.648Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T21:00:11.340Z","level":"INFO","message":"Points awarded for tweet 1941791391249567789","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T21:00:12.293Z","level":"DEBUG","message":"Processing tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:12.296Z","level":"DEBUG","message":"Fetching retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:12.517Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:12.522Z","level":"DEBUG","message":"Fetching replies for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:13.117Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:13.119Z","level":"SUCCESS","message":"Processed tweet 1941806710089212117","engagementsFound":101,"apiCallsUsed":2,"retweets":1,"replies":100}
+{"timestamp":"2025-07-06T21:00:17.206Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:26.644Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T21:00:35.556Z","level":"INFO","message":"Points awarded for tweet 1941806710089212117","summary":{"likes":50,"retweets":0,"replies":150,"total":200},"userCount":5}
+{"timestamp":"2025-07-06T21:00:36.176Z","level":"DEBUG","message":"Processing tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:36.177Z","level":"DEBUG","message":"Fetching retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:36.453Z","level":"DEBUG","message":"Found 4 retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:36.454Z","level":"DEBUG","message":"Fetching replies for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:37.007Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:37.009Z","level":"SUCCESS","message":"Processed tweet 1941811026405568629","engagementsFound":104,"apiCallsUsed":2,"retweets":4,"replies":100}
+{"timestamp":"2025-07-06T21:00:40.083Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:40.274Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:40.512Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:41.202Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:41.676Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:42.190Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:42.193Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:42.702Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:44.041Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:44.379Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:44.903Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:45.918Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:46.017Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:46.349Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:46.450Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:46.549Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:48.567Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:50.476Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:50.478Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:51.711Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:51.808Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.147Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.392Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.572Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.577Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.772Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.871Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.874Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.875Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.975Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:52.979Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:54.864Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.059Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.289Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.483Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.582Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.717Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T21:00:55.815Z","level":"INFO","message":"Points awarded for tweet 1941811026405568629","summary":{"likes":50,"retweets":0,"replies":150,"total":200},"userCount":5}
+{"timestamp":"2025-07-06T21:00:56.434Z","level":"DEBUG","message":"Processing tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:00:56.436Z","level":"DEBUG","message":"Fetching retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:00:56.765Z","level":"DEBUG","message":"Found 3 retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:00:56.767Z","level":"DEBUG","message":"Fetching replies for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:00:57.419Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:00:57.422Z","level":"SUCCESS","message":"Processed tweet 1941803661081919932","engagementsFound":103,"apiCallsUsed":2,"retweets":3,"replies":100}
+{"timestamp":"2025-07-06T21:01:01.672Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:01.770Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.172Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.174Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.175Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.176Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.177Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.810Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.812Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.814Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.918Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:03.920Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:04.824Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:04.826Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:04.827Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:04.926Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.156Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.255Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.256Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.258Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.259Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.357Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.359Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:05.361Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:15.406Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T21:01:18.062Z","level":"INFO","message":"Points awarded for tweet 1941803661081919932","summary":{"likes":30,"retweets":0,"replies":90,"total":120},"userCount":3}
+{"timestamp":"2025-07-06T21:01:19.073Z","level":"DEBUG","message":"Processing tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T21:01:19.076Z","level":"DEBUG","message":"Fetching retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T21:01:19.453Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T21:01:19.457Z","level":"DEBUG","message":"Fetching replies for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T21:01:19.933Z","level":"DEBUG","message":"Found 38 replies in conversation thread for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T21:01:19.935Z","level":"SUCCESS","message":"Processed tweet 1941802594159976685","engagementsFound":39,"apiCallsUsed":2,"retweets":1,"replies":38}
+{"timestamp":"2025-07-06T21:01:35.328Z","level":"INFO","message":"Points awarded for tweet 1941802594159976685","summary":{"likes":40,"retweets":0,"replies":120,"total":160},"userCount":4}
+{"timestamp":"2025-07-06T21:01:35.950Z","level":"DEBUG","message":"Processing tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T21:01:35.952Z","level":"DEBUG","message":"Fetching retweets for tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T21:01:36.091Z","level":"ERROR","message":"Failed to process tweet 1941831924940439679","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:36.707Z","level":"DEBUG","message":"Processing tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T21:01:36.710Z","level":"DEBUG","message":"Fetching retweets for tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T21:01:36.812Z","level":"ERROR","message":"Failed to process tweet 1941885033247043977","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:37.427Z","level":"DEBUG","message":"Processing tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T21:01:37.430Z","level":"DEBUG","message":"Fetching retweets for tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T21:01:37.490Z","level":"ERROR","message":"Failed to process tweet 1941872219195343072","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:38.186Z","level":"DEBUG","message":"Processing tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T21:01:38.188Z","level":"DEBUG","message":"Fetching retweets for tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T21:01:38.256Z","level":"ERROR","message":"Failed to process tweet 1941775451245936686","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:38.904Z","level":"DEBUG","message":"Processing tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T21:01:38.906Z","level":"DEBUG","message":"Fetching retweets for tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T21:01:38.980Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:39.616Z","level":"DEBUG","message":"Processing tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T21:01:39.618Z","level":"DEBUG","message":"Fetching retweets for tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T21:01:39.771Z","level":"ERROR","message":"Failed to process tweet 1941901024278598136","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T21:01:40.163Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"S9wjEc1uPbWKwDI55DoB9","duration":"2 minutes","summary":{"tweetsProcessed":11,"engagementsFound":384,"pointsAwarded":720,"apiCallsUsed":10,"retweets":10,"replies":374,"uniqueUsers":195,"errors":6}}
+{"timestamp":"2025-07-06T21:01:40.380Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-06T22:00:00.469Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"wXjvmAF5dBqBZpTMSKtBJ","startTime":"2025-07-06T22:00:00.469Z"}
+{"timestamp":"2025-07-06T22:00:00.658Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true}
+{"timestamp":"2025-07-06T22:00:00.993Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"wXjvmAF5dBqBZpTMSKtBJ","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-06T22:00:01.908Z","level":"DEBUG","message":"Processing tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:01.910Z","level":"DEBUG","message":"Fetching retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:02.189Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:02.190Z","level":"DEBUG","message":"Fetching replies for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:02.663Z","level":"DEBUG","message":"Found 38 replies in conversation thread for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:02.664Z","level":"SUCCESS","message":"Processed tweet 1941791391249567789","engagementsFound":39,"apiCallsUsed":2,"retweets":1,"replies":38}
+{"timestamp":"2025-07-06T22:00:05.807Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:05.809Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.952Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.954Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.954Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.955Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.955Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.956Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.956Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.958Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.959Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:06.960Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:10.716Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:10.718Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:10.718Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:10.719Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T22:00:12.375Z","level":"INFO","message":"Points awarded for tweet 1941791391249567789","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T22:00:13.143Z","level":"DEBUG","message":"Processing tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:13.145Z","level":"DEBUG","message":"Fetching retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:13.575Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:13.576Z","level":"DEBUG","message":"Fetching replies for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:14.240Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:14.241Z","level":"SUCCESS","message":"Processed tweet 1941806710089212117","engagementsFound":101,"apiCallsUsed":2,"retweets":1,"replies":100}
+{"timestamp":"2025-07-06T22:00:23.387Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:30.642Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T22:00:36.504Z","level":"INFO","message":"Points awarded for tweet 1941806710089212117","summary":{"likes":30,"retweets":0,"replies":90,"total":120},"userCount":3}
+{"timestamp":"2025-07-06T22:00:37.263Z","level":"DEBUG","message":"Processing tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:37.264Z","level":"DEBUG","message":"Fetching retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:37.691Z","level":"DEBUG","message":"Found 4 retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:37.692Z","level":"DEBUG","message":"Fetching replies for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:38.331Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:38.332Z","level":"SUCCESS","message":"Processed tweet 1941811026405568629","engagementsFound":104,"apiCallsUsed":2,"retweets":4,"replies":100}
+{"timestamp":"2025-07-06T22:00:42.411Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:42.607Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:42.705Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:43.215Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:43.553Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:44.080Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:44.082Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:44.603Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:45.221Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:45.315Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:45.410Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.082Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.177Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.272Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.367Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.462Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:46.981Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:47.655Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:47.656Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:48.702Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:48.804Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:48.992Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.228Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.324Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.325Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.513Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.607Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.608Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.609Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.750Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:49.751Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:50.799Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:50.988Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:51.175Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:51.417Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:51.511Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T22:00:51.512Z","level":"INFO","message":"Points awarded for tweet 1941811026405568629","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T22:00:52.224Z","level":"DEBUG","message":"Processing tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:52.225Z","level":"DEBUG","message":"Fetching retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:52.616Z","level":"DEBUG","message":"Found 3 retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:52.617Z","level":"DEBUG","message":"Fetching replies for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:53.300Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:53.304Z","level":"SUCCESS","message":"Processed tweet 1941803661081919932","engagementsFound":103,"apiCallsUsed":2,"retweets":3,"replies":100}
+{"timestamp":"2025-07-06T22:00:59.468Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:00:59.561Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.090Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.091Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.092Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.093Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.094Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.606Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.607Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.608Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.761Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:00.762Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.569Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.569Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.570Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.661Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.903Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:01.999Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.000Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.001Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.002Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.095Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.096Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:02.097Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:09.523Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T22:01:11.101Z","level":"INFO","message":"Points awarded for tweet 1941803661081919932","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T22:01:11.957Z","level":"DEBUG","message":"Processing tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T22:01:11.961Z","level":"DEBUG","message":"Fetching retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T22:01:12.341Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T22:01:12.343Z","level":"DEBUG","message":"Fetching replies for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T22:01:12.863Z","level":"DEBUG","message":"Found 40 replies in conversation thread for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T22:01:12.865Z","level":"SUCCESS","message":"Processed tweet 1941802594159976685","engagementsFound":41,"apiCallsUsed":2,"retweets":1,"replies":40}
+{"timestamp":"2025-07-06T22:01:27.499Z","level":"INFO","message":"Points awarded for tweet 1941802594159976685","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T22:01:28.451Z","level":"DEBUG","message":"Processing tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T22:01:28.452Z","level":"DEBUG","message":"Fetching retweets for tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T22:01:28.621Z","level":"ERROR","message":"Failed to process tweet 1941831924940439679","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:29.352Z","level":"DEBUG","message":"Processing tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T22:01:29.353Z","level":"DEBUG","message":"Fetching retweets for tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T22:01:29.422Z","level":"ERROR","message":"Failed to process tweet 1941885033247043977","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:30.213Z","level":"DEBUG","message":"Processing tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T22:01:30.215Z","level":"DEBUG","message":"Fetching retweets for tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T22:01:30.287Z","level":"ERROR","message":"Failed to process tweet 1941872219195343072","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:31.019Z","level":"DEBUG","message":"Processing tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T22:01:31.020Z","level":"DEBUG","message":"Fetching retweets for tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T22:01:31.175Z","level":"ERROR","message":"Failed to process tweet 1941775451245936686","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:31.969Z","level":"DEBUG","message":"Processing tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T22:01:31.970Z","level":"DEBUG","message":"Fetching retweets for tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T22:01:32.041Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:32.923Z","level":"DEBUG","message":"Processing tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T22:01:32.924Z","level":"DEBUG","message":"Fetching retweets for tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T22:01:32.986Z","level":"ERROR","message":"Failed to process tweet 1941901024278598136","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:33.789Z","level":"DEBUG","message":"Processing tweet 1941954783155216424"}
+{"timestamp":"2025-07-06T22:01:33.797Z","level":"DEBUG","message":"Fetching retweets for tweet 1941954783155216424"}
+{"timestamp":"2025-07-06T22:01:33.877Z","level":"ERROR","message":"Failed to process tweet 1941954783155216424","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T22:01:34.549Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"wXjvmAF5dBqBZpTMSKtBJ","duration":"2 minutes","summary":{"tweetsProcessed":12,"engagementsFound":388,"pointsAwarded":360,"apiCallsUsed":10,"retweets":10,"replies":378,"uniqueUsers":194,"errors":7}}
+{"timestamp":"2025-07-06T22:01:34.736Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}
+{"timestamp":"2025-07-06T23:00:00.426Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"8T50Iq5zmoj5j695t2hqE","startTime":"2025-07-06T23:00:00.426Z"}
+{"timestamp":"2025-07-06T23:00:00.618Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true}
+{"timestamp":"2025-07-06T23:00:00.915Z","level":"INFO","message":"📊 Found 13 tweets from last 24 hours","batchId":"8T50Iq5zmoj5j695t2hqE","tweetCount":13,"maxAllowed":60}
+{"timestamp":"2025-07-06T23:00:01.867Z","level":"DEBUG","message":"Processing tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:01.868Z","level":"DEBUG","message":"Fetching retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:02.155Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:02.157Z","level":"DEBUG","message":"Fetching replies for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:02.549Z","level":"DEBUG","message":"Found 39 replies in conversation thread for tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:02.550Z","level":"SUCCESS","message":"Processed tweet 1941791391249567789","engagementsFound":40,"apiCallsUsed":2,"retweets":1,"replies":39}
+{"timestamp":"2025-07-06T23:00:05.540Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:05.541Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.681Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.683Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.684Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.684Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.685Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.685Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.687Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.687Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.688Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:06.688Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:10.446Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:10.448Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:10.449Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:10.449Z","level":"DEBUG","message":"Skipping self-engagement: @d_vattan on their own tweet 1941791391249567789"}
+{"timestamp":"2025-07-06T23:00:12.111Z","level":"INFO","message":"Points awarded for tweet 1941791391249567789","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T23:00:12.727Z","level":"DEBUG","message":"Processing tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:12.728Z","level":"DEBUG","message":"Fetching retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:12.983Z","level":"DEBUG","message":"Found 2 retweets for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:12.984Z","level":"DEBUG","message":"Fetching replies for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:13.546Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:13.547Z","level":"SUCCESS","message":"Processed tweet 1941806710089212117","engagementsFound":102,"apiCallsUsed":2,"retweets":2,"replies":100}
+{"timestamp":"2025-07-06T23:00:19.169Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:27.127Z","level":"DEBUG","message":"Skipping self-engagement: @mohamadhere on their own tweet 1941806710089212117"}
+{"timestamp":"2025-07-06T23:00:32.277Z","level":"INFO","message":"Points awarded for tweet 1941806710089212117","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T23:00:32.897Z","level":"DEBUG","message":"Processing tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:32.900Z","level":"DEBUG","message":"Fetching retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:33.150Z","level":"DEBUG","message":"Found 4 retweets for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:33.152Z","level":"DEBUG","message":"Fetching replies for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:33.647Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:33.649Z","level":"SUCCESS","message":"Processed tweet 1941811026405568629","engagementsFound":104,"apiCallsUsed":2,"retweets":4,"replies":100}
+{"timestamp":"2025-07-06T23:00:34.466Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:36.042Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:38.420Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:38.661Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:38.757Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:39.283Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:39.617Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:40.141Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:40.142Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:40.665Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:41.286Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:41.383Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:41.476Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:42.098Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:42.238Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:42.336Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:42.432Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:42.528Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:43.047Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:43.664Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:43.665Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:44.714Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:44.860Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.050Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.240Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.385Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.386Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.576Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.672Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.674Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.674Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.770Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:45.772Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:46.810Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:47.054Z","level":"DEBUG","message":"Skipping self-engagement: @navlld on their own tweet 1941811026405568629"}
+{"timestamp":"2025-07-06T23:00:47.055Z","level":"INFO","message":"Points awarded for tweet 1941811026405568629","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-06T23:00:47.670Z","level":"DEBUG","message":"Processing tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:47.671Z","level":"DEBUG","message":"Fetching retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:47.914Z","level":"DEBUG","message":"Found 3 retweets for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:47.915Z","level":"DEBUG","message":"Fetching replies for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:48.672Z","level":"DEBUG","message":"Found 100 replies in conversation thread for tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:48.673Z","level":"SUCCESS","message":"Processed tweet 1941803661081919932","engagementsFound":103,"apiCallsUsed":2,"retweets":3,"replies":100}
+{"timestamp":"2025-07-06T23:00:49.767Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:55.963Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.058Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.581Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.581Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.582Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.582Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:56.582Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:57.108Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:57.109Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:57.109Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:57.202Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:57.203Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.060Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.061Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.062Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.157Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.344Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.491Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.493Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.493Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.493Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.588Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.589Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:00:58.589Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:01:05.593Z","level":"DEBUG","message":"Skipping self-engagement: @frostyfogx on their own tweet 1941803661081919932"}
+{"timestamp":"2025-07-06T23:01:06.973Z","level":"INFO","message":"Points awarded for tweet 1941803661081919932","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T23:01:07.592Z","level":"DEBUG","message":"Processing tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T23:01:07.593Z","level":"DEBUG","message":"Fetching retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T23:01:07.929Z","level":"DEBUG","message":"Found 1 retweets for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T23:01:07.930Z","level":"DEBUG","message":"Fetching replies for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T23:01:08.359Z","level":"DEBUG","message":"Found 41 replies in conversation thread for tweet 1941802594159976685"}
+{"timestamp":"2025-07-06T23:01:08.359Z","level":"SUCCESS","message":"Processed tweet 1941802594159976685","engagementsFound":42,"apiCallsUsed":2,"retweets":1,"replies":41}
+{"timestamp":"2025-07-06T23:01:22.703Z","level":"INFO","message":"Points awarded for tweet 1941802594159976685","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-06T23:01:23.324Z","level":"DEBUG","message":"Processing tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T23:01:23.326Z","level":"DEBUG","message":"Fetching retweets for tweet 1941831924940439679"}
+{"timestamp":"2025-07-06T23:01:23.413Z","level":"ERROR","message":"Failed to process tweet 1941831924940439679","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:24.032Z","level":"DEBUG","message":"Processing tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T23:01:24.034Z","level":"DEBUG","message":"Fetching retweets for tweet 1941885033247043977"}
+{"timestamp":"2025-07-06T23:01:24.183Z","level":"ERROR","message":"Failed to process tweet 1941885033247043977","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:24.800Z","level":"DEBUG","message":"Processing tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T23:01:24.802Z","level":"DEBUG","message":"Fetching retweets for tweet 1941872219195343072"}
+{"timestamp":"2025-07-06T23:01:24.868Z","level":"ERROR","message":"Failed to process tweet 1941872219195343072","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:25.515Z","level":"DEBUG","message":"Processing tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T23:01:25.516Z","level":"DEBUG","message":"Fetching retweets for tweet 1941775451245936686"}
+{"timestamp":"2025-07-06T23:01:25.593Z","level":"ERROR","message":"Failed to process tweet 1941775451245936686","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:26.280Z","level":"DEBUG","message":"Processing tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T23:01:26.281Z","level":"DEBUG","message":"Fetching retweets for tweet 1941875549627945314"}
+{"timestamp":"2025-07-06T23:01:26.350Z","level":"ERROR","message":"Failed to process tweet 1941875549627945314","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:26.994Z","level":"DEBUG","message":"Processing tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T23:01:26.995Z","level":"DEBUG","message":"Fetching retweets for tweet 1941901024278598136"}
+{"timestamp":"2025-07-06T23:01:27.063Z","level":"ERROR","message":"Failed to process tweet 1941901024278598136","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:27.713Z","level":"DEBUG","message":"Processing tweet 1941954783155216424"}
+{"timestamp":"2025-07-06T23:01:27.715Z","level":"DEBUG","message":"Fetching retweets for tweet 1941954783155216424"}
+{"timestamp":"2025-07-06T23:01:27.853Z","level":"ERROR","message":"Failed to process tweet 1941954783155216424","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:28.566Z","level":"DEBUG","message":"Processing tweet 1941589555531993484"}
+{"timestamp":"2025-07-06T23:01:28.568Z","level":"DEBUG","message":"Fetching retweets for tweet 1941589555531993484"}
+{"timestamp":"2025-07-06T23:01:28.640Z","level":"ERROR","message":"Failed to process tweet 1941589555531993484","error":"Request failed with code 429","stack":"Error: Request failed with code 429\n    at RequestHandlerHelper.createResponseError (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:104:16)\n    at RequestHandlerHelper.onResponseEndHandler (/Users/nabu/kol/node_modules/twitter-api-v2/dist/cjs/client-mixins/request-handler.helper.js:262:25)\n    at Gunzip.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"}
+{"timestamp":"2025-07-06T23:01:29.090Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"8T50Iq5zmoj5j695t2hqE","duration":"1 minutes","summary":{"tweetsProcessed":13,"engagementsFound":391,"pointsAwarded":280,"apiCallsUsed":10,"retweets":11,"replies":380,"uniqueUsers":194,"errors":8}}
+{"timestamp":"2025-07-06T23:01:29.279Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}

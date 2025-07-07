@@ -13,19 +13,36 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    console.log('[Dashboard] Session status:', status)
+    console.log('[Dashboard] Session data:', session)
+    
     // Check authentication status
     if (status === 'loading') return
     
     if (status === 'unauthenticated') {
+      console.log('[Dashboard] User is unauthenticated, showing login modal')
       setShowLoginModal(true)
       setIsLoading(false)
-    } else if (status === 'authenticated') {
+    } else if (status === 'authenticated' && session) {
+      console.log('[Dashboard] User is authenticated:', session.user?.name)
       setIsLoading(false)
     }
-  }, [status])
+  }, [status, session])
+
+  const handleLoginSuccess = () => {
+    console.log('[Dashboard] Login successful, reloading session')
+    setShowLoginModal(false)
+    // Force page reload to get fresh session
+    window.location.reload()
+  }
+
+  const handleLoginClose = () => {
+    setShowLoginModal(false)
+    router.push('/')
+  }
 
   // Show loading screen while checking auth
-  if (isLoading) {
+  if (isLoading || status === 'loading') {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="pixel-container">
@@ -41,25 +58,22 @@ export default function DashboardPage() {
   }
 
   // Show login modal if not authenticated
-  if (showLoginModal && !session) {
+  if (showLoginModal || status === 'unauthenticated') {
     return (
-      <div className="min-h-screen bg-black">
-        <PixelLoginModal 
-          onClose={() => {
-            setShowLoginModal(false)
-            router.push('/')
-          }}
-          onSuccess={() => {
-            setShowLoginModal(false)
-            window.location.reload()
-          }}
-        />
-      </div>
+      <>
+        <div className="min-h-screen bg-black flex items-center justify-center p-4">
+          <div className="pixel-container pixel-border p-8 max-w-md">
+            <h1 className="pixel-text text-2xl text-green-300 mb-4 text-center">NABULINES DASHBOARD</h1>
+            <p className="pixel-text text-sm text-gray-400 text-center">Please login to view your points</p>
+          </div>
+        </div>
+        <PixelLoginModal onClose={handleLoginClose} onSuccess={handleLoginSuccess} />
+      </>
     )
   }
 
   // Show dashboard if authenticated
-  if (session) {
+  if (status === 'authenticated' && session) {
     return <PixelDashboard session={session} />
   }
 

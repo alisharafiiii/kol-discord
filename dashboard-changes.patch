@@ -1,0 +1,1394 @@
+diff --git a/PIXEL_DASHBOARD_IMPLEMENTATION.md b/PIXEL_DASHBOARD_IMPLEMENTATION.md
+new file mode 100644
+index 0000000..b1cd10d
+--- /dev/null
++++ b/PIXEL_DASHBOARD_IMPLEMENTATION.md
+@@ -0,0 +1,148 @@
++# Nabulines Points Dashboard Implementation
++
++## Overview
++
++A retro pixel-art style game dashboard for users to view their engagement points and activity. Accessible at `/dashboard` with automatic authentication check.
++
++## Features Implemented
++
++### 1. **Authentication Flow**
++- Automatic login check on page load
++- Pixel-art style login modal if not authenticated
++- Twitter/X OAuth integration
++- Requires Discord account to be linked
++
++### 2. **Dashboard Content**
++- **User Profile Section**
++  - Profile picture with pixel-art frame
++  - Twitter handle (@username)
++  - Discord ID
++  - Tier badge (MICRO, RISING, STAR, LEGEND, HERO)
++  - Total points with animated counter
++
++- **Weekly Activity Chart**
++  - Canvas-based pixel-art bar chart
++  - Shows points earned over last 7 days
++  - Retro-style axis and labels
++  - Hover effects on bars
++
++- **Recent Transactions**
++  - Last 10 point transactions
++  - Color-coded (green for gains, red for losses)
++  - Scrollable list with pixel-art styling
++  - Hover animations
++
++### 3. **Interactive Features**
++- **Sound Effects** (toggleable)
++  - Click sounds for buttons
++  - Success sound on data load
++  - Error sound on failures
++  - Hover effects
++  - Web Audio API implementation
++
++- **Animations**
++  - Pixel fade-in effects
++  - Bounce-in modal animation
++  - Spinning coin icon
++  - Glowing text effects
++  - Loader animation
++
++### 4. **Technical Implementation**
++
++#### Files Created:
++- `app/dashboard/page.tsx` - Main dashboard page with auth check
++- `components/PixelLoginModal.tsx` - Retro-style login modal
++- `components/PixelDashboard.tsx` - Main dashboard component
++- `components/PixelChart.tsx` - Canvas-based bar chart
++- `lib/pixel-sounds.ts` - Retro sound effects library
++- `app/api/dashboard/data/route.ts` - API endpoint for dashboard data
++
++#### Styling:
++- Custom pixel-art CSS classes in `app/globals.css`
++- Uses existing pixel font from `public/fonts/pixel.ttf`
++- Retro color scheme (green, blue, yellow accents on black)
++- 8-bit style borders and shadows
++
++## Usage
++
++### For End Users:
++1. Discord bot provides link: `nabulines.com/dashboard`
++2. Click link to access dashboard
++3. Login with Twitter/X if not authenticated
++4. View points, weekly activity, and recent transactions
++5. Toggle sounds on/off with speaker icon
++
++### For Discord Bot Integration:
++When users use `!points` command, bot should respond with:
++```
++Your total points: [POINTS]
++View your dashboard: https://nabulines.com/dashboard
++```
++
++## Key Design Decisions
++
++1. **Single Page Layout**: All information visible without scrolling
++2. **Retro Gaming Aesthetic**: 
++   - Pixel font
++   - 8-bit style graphics
++   - Chiptune-inspired sounds
++   - Classic arcade color scheme
++3. **Performance Optimized**:
++   - Lightweight canvas rendering
++   - Debounced API calls
++   - Lazy-loaded components
++4. **Accessibility**:
++   - Sound toggle for users who prefer silence
++   - High contrast colors
++   - Clear visual hierarchy
++
++## API Response Format
++
++The `/api/dashboard/data` endpoint returns:
++```json
++{
++  "user": {
++    "discordId": "123456789",
++    "twitterHandle": "username",
++    "profilePicture": "https://...",
++    "totalPoints": 1250,
++    "tier": "rising"
++  },
++  "weeklyPoints": [
++    { "date": "2025-01-01", "points": 150 },
++    { "date": "2025-01-02", "points": 200 },
++    // ... 7 days total
++  ],
++  "recentTransactions": [
++    {
++      "id": "abc123",
++      "action": "retweet",
++      "points": 35,
++      "timestamp": "2025-01-05T10:30:00Z",
++      "description": "Retweeted"
++    }
++    // ... up to 10 transactions
++  ]
++}
++```
++
++## Future Enhancements
++
++1. **Achievements System**: Unlock badges for milestones
++2. **Leaderboard Integration**: See ranking among other users
++3. **Mini-Games**: Earn bonus points through retro games
++4. **Customization**: Choose dashboard themes/colors
++5. **Export Data**: Download points history as CSV
++6. **Mobile App**: Native mobile experience
++
++## Testing
++
++To test the dashboard:
++1. Ensure user has linked Discord account
++2. Navigate to `/dashboard`
++3. Should auto-login if already authenticated
++4. Verify points match engagement system data
++5. Test sound toggle functionality
++6. Check responsive design on mobile
++
++The dashboard provides a fun, retro gaming experience while maintaining clarity and ease of use for viewing engagement points. 
+\ No newline at end of file
+diff --git a/app/api/dashboard/data/route.ts b/app/api/dashboard/data/route.ts
+new file mode 100644
+index 0000000..a638986
+--- /dev/null
++++ b/app/api/dashboard/data/route.ts
+@@ -0,0 +1,104 @@
++import { NextRequest, NextResponse } from 'next/server'
++import { getServerSession } from 'next-auth'
++import { authOptions } from '@/lib/auth-options'
++import { redis } from '@/lib/redis'
++import { ProfileService } from '@/lib/services/profile-service'
++import { EngagementService } from '@/lib/services/engagement-service'
++
++export async function GET(request: NextRequest) {
++  try {
++    // Get session
++    const session = await getServerSession(authOptions)
++    if (!session?.user?.name) {
++      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
++    }
++
++    // Get user profile
++    const profile = await ProfileService.getProfileByHandle(session.user.name)
++    if (!profile) {
++      return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
++    }
++
++    // Get Discord connection
++    const discordConnection = await redis.get(`engagement:twitter:${session.user.name?.toLowerCase()}`)
++    if (!discordConnection) {
++      return NextResponse.json({ error: 'Discord account not linked' }, { status: 400 })
++    }
++
++    // Get engagement data
++    const engagementData = await redis.json.get(`engagement:connection:${discordConnection}`) as any
++    if (!engagementData) {
++      return NextResponse.json({ error: 'Engagement data not found' }, { status: 404 })
++    }
++
++    // Get weekly points (last 7 days)
++    const weeklyPoints = []
++    const today = new Date()
++    today.setHours(0, 0, 0, 0)
++    
++    for (let i = 6; i >= 0; i--) {
++      const date = new Date(today)
++      date.setDate(date.getDate() - i)
++      const dateStr = date.toISOString().split('T')[0]
++      
++      // Get points for this day
++      const dayStart = date.getTime()
++      const dayEnd = dayStart + (24 * 60 * 60 * 1000)
++      
++      // Get engagement logs for this day
++      const logs = await EngagementService.getUserEngagements(discordConnection, 1000)
++      const dayLogs = logs.filter(log => {
++        const logTime = new Date(log.timestamp).getTime()
++        return logTime >= dayStart && logTime < dayEnd
++      })
++      
++      const dayPoints = dayLogs.reduce((sum, log) => sum + log.points, 0)
++      
++      weeklyPoints.push({
++        date: dateStr,
++        points: dayPoints
++      })
++    }
++
++    // Get recent transactions (last 10)
++    const recentLogs = await EngagementService.getUserEngagements(discordConnection, 10)
++    const recentTransactions = recentLogs.map(log => ({
++      id: log.id,
++      action: log.interactionType,
++      points: log.points,
++      timestamp: log.timestamp,
++      description: getTransactionDescription(log)
++    }))
++
++    // Return dashboard data
++    return NextResponse.json({
++      user: {
++        discordId: discordConnection,
++        twitterHandle: session.user.name || '',
++        profilePicture: profile.profileImageUrl || session.user.image || '',
++        totalPoints: engagementData.totalPoints || 0,
++        tier: engagementData.tier || 'micro'
++      },
++      weeklyPoints,
++      recentTransactions
++    })
++
++  } catch (error) {
++    console.error('Error fetching dashboard data:', error)
++    return NextResponse.json({ error: 'Failed to fetch dashboard data' }, { status: 500 })
++  }
++}
++
++function getTransactionDescription(log: any): string {
++  const actionMap: Record<string, string> = {
++    like: 'Liked a tweet',
++    retweet: 'Retweeted',
++    reply: 'Replied to tweet',
++    comment: 'Commented on tweet',
++    submit: 'Submitted tweet',
++    bonus: 'Bonus points',
++    adjustment: 'Points adjustment'
++  }
++  
++  return actionMap[log.interactionType] || log.interactionType
++} 
+\ No newline at end of file
+diff --git a/app/dashboard/layout.tsx b/app/dashboard/layout.tsx
+new file mode 100644
+index 0000000..fbf2f32
+--- /dev/null
++++ b/app/dashboard/layout.tsx
+@@ -0,0 +1,7 @@
++export default function DashboardLayout({
++  children,
++}: {
++  children: React.ReactNode
++}) {
++  return <>{children}</>
++} 
+\ No newline at end of file
+diff --git a/app/dashboard/page.tsx b/app/dashboard/page.tsx
+new file mode 100644
+index 0000000..811bd69
+--- /dev/null
++++ b/app/dashboard/page.tsx
+@@ -0,0 +1,68 @@
++'use client'
++
++import { useEffect, useState } from 'react'
++import { useSession } from 'next-auth/react'
++import { useRouter } from 'next/navigation'
++import PixelLoginModal from '@/components/PixelLoginModal'
++import PixelDashboard from '@/components/PixelDashboard'
++
++export default function DashboardPage() {
++  const { data: session, status } = useSession()
++  const router = useRouter()
++  const [showLoginModal, setShowLoginModal] = useState(false)
++  const [isLoading, setIsLoading] = useState(true)
++
++  useEffect(() => {
++    // Check authentication status
++    if (status === 'loading') return
++    
++    if (status === 'unauthenticated') {
++      setShowLoginModal(true)
++      setIsLoading(false)
++    } else if (status === 'authenticated') {
++      setIsLoading(false)
++    }
++  }, [status])
++
++  // Show loading screen while checking auth
++  if (isLoading) {
++    return (
++      <div className="min-h-screen bg-black flex items-center justify-center">
++        <div className="pixel-container">
++          <div className="pixel-loader">
++            <div className="pixel-block"></div>
++            <div className="pixel-block"></div>
++            <div className="pixel-block"></div>
++          </div>
++          <p className="pixel-text text-green-300 mt-4">LOADING...</p>
++        </div>
++      </div>
++    )
++  }
++
++  // Show login modal if not authenticated
++  if (showLoginModal && !session) {
++    return (
++      <div className="min-h-screen bg-black">
++        <PixelLoginModal 
++          onClose={() => {
++            setShowLoginModal(false)
++            router.push('/')
++          }}
++          onSuccess={() => {
++            setShowLoginModal(false)
++            window.location.reload()
++          }}
++        />
++      </div>
++    )
++  }
++
++  // Show dashboard if authenticated
++  if (session) {
++    return <PixelDashboard session={session} />
++  }
++
++  // Fallback
++  return null
++} 
+\ No newline at end of file
+diff --git a/app/globals.css b/app/globals.css
+index a7f7763..533e0eb 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -3,6 +3,7 @@
+ @tailwind utilities;
+ 
+ @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
++@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+ 
+ /* CSS Reset */
+ * {
+@@ -332,3 +333,229 @@ button, input, select, textarea { font-size: 0.8em; }
+     background-position: 200% center;
+   }
+ }
++
++/* Pixel Art Dashboard Styles */
++.pixel-text {
++  font-family: 'Press Start 2P', monospace;
++  letter-spacing: 1px;
++  text-transform: uppercase;
++  image-rendering: pixelated;
++  -webkit-font-smoothing: none;
++  -moz-osx-font-smoothing: grayscale;
++}
++
++.pixel-container {
++  position: relative;
++  background: #000;
++  image-rendering: pixelated;
++}
++
++.pixel-border {
++  border: 4px solid #374151;
++  box-shadow: 
++    0 0 0 4px #000,
++    0 0 0 8px #1F2937,
++    0 0 0 12px #000;
++}
++
++.pixel-button {
++  @apply pixel-text;
++  border: 2px solid currentColor;
++  box-shadow: 
++    4px 4px 0 0 rgba(0, 0, 0, 0.5),
++    inset -2px -2px 0 0 rgba(0, 0, 0, 0.3);
++  transition: all 0.1s ease;
++}
++
++.pixel-button:hover {
++  transform: translate(2px, 2px);
++  box-shadow: 
++    2px 2px 0 0 rgba(0, 0, 0, 0.5),
++    inset -2px -2px 0 0 rgba(0, 0, 0, 0.3);
++}
++
++.pixel-button:active {
++  transform: translate(4px, 4px);
++  box-shadow: none;
++}
++
++/* Pixel animations */
++@keyframes pixelFadeIn {
++  from { opacity: 0; }
++  to { opacity: 1; }
++}
++
++@keyframes pixelBounceIn {
++  0% { transform: scale(0); }
++  50% { transform: scale(1.1); }
++  100% { transform: scale(1); }
++}
++
++@keyframes pixelSpin {
++  from { transform: rotate(0deg); }
++  to { transform: rotate(360deg); }
++}
++
++@keyframes pixelGlow {
++  0%, 100% { filter: brightness(1); }
++  50% { filter: brightness(1.2); }
++}
++
++.pixel-fade-in {
++  animation: pixelFadeIn 0.3s ease-out;
++}
++
++.pixel-bounce-in {
++  animation: pixelBounceIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
++}
++
++.pixel-spin {
++  animation: pixelSpin 2s linear infinite;
++}
++
++.pixel-glow {
++  animation: pixelGlow 2s ease-in-out infinite;
++}
++
++/* Pixel loader */
++.pixel-loader {
++  display: flex;
++  gap: 4px;
++  justify-content: center;
++}
++
++.pixel-block {
++  width: 8px;
++  height: 8px;
++  background: #10B981;
++  animation: pixelLoaderPulse 1s ease-in-out infinite;
++}
++
++.pixel-block:nth-child(2) {
++  animation-delay: 0.2s;
++}
++
++.pixel-block:nth-child(3) {
++  animation-delay: 0.4s;
++}
++
++@keyframes pixelLoaderPulse {
++  0%, 100% { transform: scale(1); opacity: 1; }
++  50% { transform: scale(1.5); opacity: 0.5; }
++}
++
++/* Pixel spinner */
++.pixel-spinner {
++  width: 16px;
++  height: 16px;
++  border: 2px solid rgba(255, 255, 255, 0.3);
++  border-top-color: white;
++  animation: pixelSpin 0.6s linear infinite;
++}
++
++/* Pixel avatar */
++.pixel-avatar-frame {
++  position: relative;
++  border: 3px solid #374151;
++  background: #000;
++  padding: 2px;
++}
++
++.pixel-avatar {
++  image-rendering: pixelated;
++  filter: contrast(1.2);
++}
++
++/* Pixel tier badges */
++.pixel-tier-badge {
++  position: absolute;
++  bottom: -8px;
++  right: -8px;
++  padding: 2px 6px;
++  font-size: 10px;
++  font-family: 'Press Start 2P', monospace;
++  text-transform: uppercase;
++  border: 2px solid #000;
++}
++
++.pixel-tier-badge.micro {
++  background: #6B7280;
++  color: #E5E7EB;
++}
++
++.pixel-tier-badge.rising {
++  background: #10B981;
++  color: #ECFDF5;
++}
++
++.pixel-tier-badge.star {
++  background: #3B82F6;
++  color: #EFF6FF;
++}
++
++.pixel-tier-badge.legend {
++  background: #F59E0B;
++  color: #FFFBEB;
++}
++
++.pixel-tier-badge.hero {
++  background: #8B5CF6;
++  color: #F3E8FF;
++}
++
++/* Pixel hover effects */
++.pixel-hover:hover {
++  filter: brightness(1.2);
++  cursor: pointer;
++}
++
++.pixel-hover-grow:hover {
++  transform: scale(1.02);
++  transition: transform 0.1s ease;
++}
++
++/* Pixel transaction item */
++.pixel-transaction-item {
++  border: 1px solid #374151;
++  transition: all 0.1s ease;
++}
++
++.pixel-transaction-item:hover {
++  background: #111827 !important;
++  border-color: #6B7280;
++  transform: translateX(2px);
++}
++
++/* Pixel scrollbar */
++.pixel-scrollbar::-webkit-scrollbar {
++  width: 8px;
++}
++
++.pixel-scrollbar::-webkit-scrollbar-track {
++  background: #1F2937;
++}
++
++.pixel-scrollbar::-webkit-scrollbar-thumb {
++  background: #4B5563;
++  border: 1px solid #1F2937;
++}
++
++.pixel-scrollbar::-webkit-scrollbar-thumb:hover {
++  background: #6B7280;
++}
++
++/* Pixel number animation */
++.pixel-number {
++  display: inline-block;
++  transition: transform 0.3s ease;
++}
++
++.pixel-number:hover {
++  transform: scale(1.1);
++}
++
++/* Canvas styling */
++.pixel-canvas {
++  border: 2px solid #374151;
++  background: #111827;
++}
+diff --git a/components/PixelChart.tsx b/components/PixelChart.tsx
+new file mode 100644
+index 0000000..42dd394
+--- /dev/null
++++ b/components/PixelChart.tsx
+@@ -0,0 +1,121 @@
++'use client'
++
++import { useEffect, useRef } from 'react'
++
++interface ChartData {
++  date: string
++  points: number
++}
++
++interface PixelChartProps {
++  data: ChartData[]
++}
++
++export default function PixelChart({ data }: PixelChartProps) {
++  const canvasRef = useRef<HTMLCanvasElement>(null)
++
++  useEffect(() => {
++    const canvas = canvasRef.current
++    if (!canvas) return
++
++    const ctx = canvas.getContext('2d')
++    if (!ctx) return
++
++    // Set canvas size
++    const width = canvas.width = canvas.offsetWidth * 2
++    const height = canvas.height = canvas.offsetHeight * 2
++    
++    // Scale for retina displays
++    ctx.scale(2, 2)
++
++    // Clear canvas
++    ctx.fillStyle = '#000000'
++    ctx.fillRect(0, 0, width, height)
++
++    if (data.length === 0) {
++      // No data message
++      ctx.fillStyle = '#6B7280'
++      ctx.font = '16px monospace'
++      ctx.textAlign = 'center'
++      ctx.fillText('NO DATA', canvas.offsetWidth / 2, canvas.offsetHeight / 2)
++      return
++    }
++
++    // Calculate dimensions
++    const padding = 20
++    const chartWidth = canvas.offsetWidth - (padding * 2)
++    const chartHeight = canvas.offsetHeight - (padding * 3)
++    const barWidth = Math.floor(chartWidth / data.length)
++    const maxPoints = Math.max(...data.map(d => d.points), 1)
++
++    // Draw bars
++    data.forEach((item, index) => {
++      const barHeight = (item.points / maxPoints) * chartHeight
++      const x = padding + (index * barWidth) + (barWidth * 0.1)
++      const y = canvas.offsetHeight - padding - barHeight
++      const width = barWidth * 0.8
++
++      // Create pixelated gradient effect
++      const gradient = ctx.createLinearGradient(x, y, x, y + barHeight)
++      gradient.addColorStop(0, '#10B981')
++      gradient.addColorStop(1, '#059669')
++
++      // Draw bar with pixel effect
++      for (let i = 0; i < barHeight; i += 4) {
++        ctx.fillStyle = gradient
++        ctx.fillRect(x, y + i, width, 3)
++      }
++
++      // Draw value on top
++      if (item.points > 0) {
++        ctx.fillStyle = '#10B981'
++        ctx.font = 'bold 10px monospace'
++        ctx.textAlign = 'center'
++        ctx.fillText(
++          item.points.toString(), 
++          x + width / 2, 
++          y - 5
++        )
++      }
++
++      // Draw date label
++      ctx.fillStyle = '#6B7280'
++      ctx.font = '10px monospace'
++      ctx.textAlign = 'center'
++      const date = new Date(item.date)
++      const label = date.toLocaleDateString('en', { weekday: 'short' })
++      ctx.fillText(
++        label, 
++        x + width / 2, 
++        canvas.offsetHeight - 5
++      )
++    })
++
++    // Draw axis lines with pixel effect
++    ctx.strokeStyle = '#374151'
++    ctx.lineWidth = 2
++    
++    // Y-axis
++    ctx.beginPath()
++    ctx.moveTo(padding, padding)
++    ctx.lineTo(padding, canvas.offsetHeight - padding)
++    ctx.stroke()
++    
++    // X-axis
++    ctx.beginPath()
++    ctx.moveTo(padding, canvas.offsetHeight - padding)
++    ctx.lineTo(canvas.offsetWidth - padding, canvas.offsetHeight - padding)
++    ctx.stroke()
++
++  }, [data])
++
++  return (
++    <div className="relative w-full h-48">
++      <canvas 
++        ref={canvasRef}
++        className="w-full h-full pixel-canvas"
++        style={{ imageRendering: 'pixelated' }}
++      />
++    </div>
++  )
++} 
+\ No newline at end of file
+diff --git a/components/PixelDashboard.tsx b/components/PixelDashboard.tsx
+new file mode 100644
+index 0000000..4c8584e
+--- /dev/null
++++ b/components/PixelDashboard.tsx
+@@ -0,0 +1,210 @@
++'use client'
++
++import { useEffect, useState } from 'react'
++import { Session } from 'next-auth'
++import { Award, TrendingUp, Clock, Volume2, VolumeX } from 'lucide-react'
++import PixelChart from './PixelChart'
++import { playSound, toggleSound, isSoundEnabled } from '@/lib/pixel-sounds'
++
++interface DashboardData {
++  user: {
++    discordId: string
++    twitterHandle: string
++    profilePicture: string
++    totalPoints: number
++    tier: string
++  }
++  weeklyPoints: {
++    date: string
++    points: number
++  }[]
++  recentTransactions: {
++    id: string
++    action: string
++    points: number
++    timestamp: string
++    description: string
++  }[]
++}
++
++interface PixelDashboardProps {
++  session: Session
++}
++
++export default function PixelDashboard({ session }: PixelDashboardProps) {
++  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
++  const [loading, setLoading] = useState(true)
++  const [soundEnabled, setSoundEnabled] = useState(false)
++
++  useEffect(() => {
++    // Load sound preference
++    setSoundEnabled(isSoundEnabled())
++    fetchDashboardData()
++  }, [])
++
++  const fetchDashboardData = async () => {
++    try {
++      const res = await fetch('/api/dashboard/data', {
++        credentials: 'include'
++      })
++      
++      if (res.ok) {
++        const data = await res.json()
++        setDashboardData(data)
++        playSound('success')
++      }
++    } catch (error) {
++      console.error('Error fetching dashboard data:', error)
++      playSound('error')
++    } finally {
++      setLoading(false)
++    }
++  }
++
++  const handleSoundToggle = () => {
++    toggleSound()
++    setSoundEnabled(!soundEnabled)
++    playSound('click')
++  }
++
++  if (loading) {
++    return (
++      <div className="min-h-screen bg-black flex items-center justify-center">
++        <div className="pixel-container">
++          <div className="pixel-loader">
++            <div className="pixel-block"></div>
++            <div className="pixel-block"></div>
++            <div className="pixel-block"></div>
++          </div>
++          <p className="pixel-text text-green-300 mt-4">LOADING DASHBOARD...</p>
++        </div>
++      </div>
++    )
++  }
++
++  if (!dashboardData) {
++    return (
++      <div className="min-h-screen bg-black flex items-center justify-center">
++        <div className="pixel-container pixel-border p-8">
++          <p className="pixel-text text-red-400">ERROR: UNABLE TO LOAD DATA</p>
++        </div>
++      </div>
++    )
++  }
++
++  const { user, weeklyPoints, recentTransactions } = dashboardData
++
++  return (
++    <div className="min-h-screen bg-black p-4 md:p-8">
++      <div className="max-w-6xl mx-auto">
++        {/* Header */}
++        <div className="flex justify-between items-center mb-8">
++          <h1 className="pixel-text text-3xl text-green-300 pixel-glow">POINTS DASHBOARD</h1>
++          
++          {/* Sound toggle */}
++          <button
++            onClick={handleSoundToggle}
++            className="pixel-button p-3 bg-gray-900 hover:bg-gray-800"
++            title={soundEnabled ? 'Mute sounds' : 'Enable sounds'}
++          >
++            {soundEnabled ? (
++              <Volume2 className="w-5 h-5 text-green-300" />
++            ) : (
++              <VolumeX className="w-5 h-5 text-gray-500" />
++            )}
++          </button>
++        </div>
++
++        {/* User Info Card */}
++        <div className="pixel-container pixel-border bg-gray-900 p-6 mb-8 pixel-hover-grow">
++          <div className="flex items-center gap-6">
++            {/* Profile Picture */}
++            <div className="relative">
++              <div className="pixel-avatar-frame">
++                <img 
++                  src={user.profilePicture} 
++                  alt={user.twitterHandle}
++                  className="w-20 h-20 pixel-avatar"
++                />
++              </div>
++              <div className={`pixel-tier-badge ${user.tier}`}>
++                {user.tier.toUpperCase()}
++              </div>
++            </div>
++            
++            {/* User Details */}
++            <div className="flex-1">
++              <h2 className="pixel-text text-xl text-white mb-1">@{user.twitterHandle}</h2>
++              <p className="pixel-text text-sm text-gray-400">Discord ID: {user.discordId}</p>
++            </div>
++            
++            {/* Points Display */}
++            <div className="text-right">
++              <div className="flex items-center gap-2 mb-1">
++                <Award className="w-6 h-6 text-yellow-400 pixel-spin" />
++                <span className="pixel-text text-3xl text-yellow-400 font-bold pixel-number">
++                  {user.totalPoints.toLocaleString()}
++                </span>
++              </div>
++              <p className="pixel-text text-sm text-gray-400">TOTAL POINTS</p>
++            </div>
++          </div>
++        </div>
++
++        <div className="grid md:grid-cols-2 gap-8">
++          {/* Weekly Activity Chart */}
++          <div className="pixel-container pixel-border bg-gray-900 p-6">
++            <div className="flex items-center gap-2 mb-4">
++              <TrendingUp className="w-5 h-5 text-green-300" />
++              <h3 className="pixel-text text-lg text-green-300">WEEKLY ACTIVITY</h3>
++            </div>
++            
++            <PixelChart data={weeklyPoints} />
++          </div>
++
++          {/* Recent Transactions */}
++          <div className="pixel-container pixel-border bg-gray-900 p-6">
++            <div className="flex items-center gap-2 mb-4">
++              <Clock className="w-5 h-5 text-blue-300" />
++              <h3 className="pixel-text text-lg text-blue-300">RECENT ACTIVITY</h3>
++            </div>
++            
++            <div className="space-y-3 max-h-64 overflow-y-auto pixel-scrollbar">
++              {recentTransactions.length === 0 ? (
++                <p className="pixel-text text-gray-500 text-center py-8">NO RECENT ACTIVITY</p>
++              ) : (
++                recentTransactions.map((transaction) => (
++                  <div 
++                    key={transaction.id} 
++                    className="pixel-transaction-item flex justify-between items-center p-3 bg-black rounded"
++                  >
++                    <div className="flex-1">
++                      <p className="pixel-text text-sm text-white">{transaction.description}</p>
++                      <p className="pixel-text text-xs text-gray-500">
++                        {new Date(transaction.timestamp).toLocaleString()}
++                      </p>
++                    </div>
++                    <div className="text-right">
++                      <span className={`pixel-text font-bold ${
++                        transaction.points > 0 ? 'text-green-400' : 'text-red-400'
++                      }`}>
++                        {transaction.points > 0 ? '+' : ''}{transaction.points}
++                      </span>
++                    </div>
++                  </div>
++                ))
++              )}
++            </div>
++          </div>
++        </div>
++
++        {/* Footer */}
++        <div className="text-center mt-8">
++          <p className="pixel-text text-xs text-gray-500">
++            POWERED BY NABULINES • RETRO GAMING VIBES
++          </p>
++        </div>
++      </div>
++    </div>
++  )
++} 
+\ No newline at end of file
+diff --git a/components/PixelLoginModal.tsx b/components/PixelLoginModal.tsx
+new file mode 100644
+index 0000000..85aeac6
+--- /dev/null
++++ b/components/PixelLoginModal.tsx
+@@ -0,0 +1,78 @@
++'use client'
++
++import { useState } from 'react'
++import { signIn } from 'next-auth/react'
++import { Twitter, X } from 'lucide-react'
++
++interface PixelLoginModalProps {
++  onClose: () => void
++  onSuccess: () => void
++}
++
++export default function PixelLoginModal({ onClose, onSuccess }: PixelLoginModalProps) {
++  const [isLoading, setIsLoading] = useState(false)
++
++  const handleTwitterLogin = async () => {
++    setIsLoading(true)
++    try {
++      const result = await signIn('twitter', { 
++        redirect: false,
++        callbackUrl: '/dashboard' 
++      })
++      
++      if (result?.ok) {
++        onSuccess()
++      }
++    } catch (error) {
++      console.error('Login error:', error)
++      setIsLoading(false)
++    }
++  }
++
++  return (
++    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
++      {/* Backdrop */}
++      <div className="absolute inset-0 bg-black bg-opacity-80 pixel-fade-in" onClick={onClose} />
++      
++      {/* Modal */}
++      <div className="relative pixel-container pixel-border bg-black p-8 max-w-md w-full pixel-bounce-in">
++        {/* Close button */}
++        <button
++          onClick={onClose}
++          className="absolute top-4 right-4 text-gray-400 hover:text-white pixel-hover"
++        >
++          <X className="w-6 h-6" />
++        </button>
++        
++        {/* Content */}
++        <div className="text-center">
++          <h2 className="pixel-text text-3xl text-green-300 mb-2">WELCOME ANON</h2>
++          <p className="pixel-text text-gray-400 mb-8">Login to view your points dashboard</p>
++          
++          {/* Login button */}
++          <button
++            onClick={handleTwitterLogin}
++            disabled={isLoading}
++            className="pixel-button bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 w-full flex items-center justify-center gap-3 disabled:opacity-50"
++          >
++            {isLoading ? (
++              <>
++                <div className="pixel-spinner" />
++                <span className="pixel-text">CONNECTING...</span>
++              </>
++            ) : (
++              <>
++                <Twitter className="w-5 h-5" />
++                <span className="pixel-text">LOGIN WITH X</span>
++              </>
++            )}
++          </button>
++          
++          <p className="pixel-text text-xs text-gray-500 mt-4">
++            Your Discord account must be linked to continue
++          </p>
++        </div>
++      </div>
++    </div>
++  )
++} 
+\ No newline at end of file
+diff --git a/discord-bots/engagement-bot.js b/discord-bots/engagement-bot.js
+index 42ba39f..f216ccd 100644
+--- a/discord-bots/engagement-bot.js
++++ b/discord-bots/engagement-bot.js
+@@ -1108,217 +1108,24 @@ client.on('interactionCreate', async (interaction) => {
+     }
+     
+     else if (commandName === 'points') {
+-      await interaction.deferReply({ flags: 64 }) // Ephemeral reply
+-      
+-      const connection = await redis.json.get(`engagement:connection:${interaction.user.id}`)
+-      if (!connection) {
+-        await interaction.editReply('❌ Please connect your Twitter account first using `/connect`')
+-        return
+-      }
+-      
+-      // Get the latest user data to sync tier
+-      const { userData } = await isUserApproved(connection.twitterHandle)
+-      if (userData && userData.tier && userData.tier !== connection.tier) {
+-        // Update the connection with the latest tier
+-        connection.tier = userData.tier
+-        await redis.json.set(`engagement:connection:${interaction.user.id}`, '$.tier', userData.tier)
+-      }
+-      
+-      // Get total points from the connection (this is the source of truth)
+-      const totalPoints = connection.totalPoints || 0
+-      
+-      // Get user's engagement history more efficiently
+-      // First, get all tweet interactions for this user
+-      const interactionKeys = await redis.keys(`engagement:interaction:*:${interaction.user.id}:*`)
+-      const userLogs = []
+-      
+-      // Get the log IDs from interactions
+-      for (const key of interactionKeys) {
+-        const logId = await redis.get(key)
+-        if (logId) {
+-          const log = await redis.json.get(`engagement:log:${logId}`)
+-          if (log) {
+-            userLogs.push(log)
+-          }
+-        }
+-      }
+-      
+-      // Sort logs by timestamp (newest first)
+-      userLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+-      
+-      // Get recent logs (last 10)
+-      const recentLogs = userLogs.slice(0, 10)
+-      
+-      // Calculate points summary using EDT
+-      const pointsSummary = {
+-        today: 0,
+-        week: 0,
+-        month: 0
+-      }
+-      
+-      // Get current EDT time
+-      const nowEdt = getCurrentEdt()
+-      
+-      // Today start in EDT (midnight)
+-      const todayStartEdt = new Date(nowEdt)
+-      todayStartEdt.setHours(0, 0, 0, 0)
+-      
+-      // Week start in EDT (7 days ago)
+-      const weekStartEdt = new Date(nowEdt)
+-      weekStartEdt.setDate(weekStartEdt.getDate() - 7)
+-      
+-      // Month start in EDT (30 days ago)
+-      const monthStartEdt = new Date(nowEdt)
+-      monthStartEdt.setDate(monthStartEdt.getDate() - 30)
+-      
+-      // Debug logging
+-      console.log(`[POINTS DEBUG] User: ${connection.twitterHandle}`)
+-      console.log(`[POINTS DEBUG] Discord ID: ${interaction.user.id}`)
+-      console.log(`[POINTS DEBUG] Now EDT: ${nowEdt}`)
+-      console.log(`[POINTS DEBUG] Today Start: ${todayStartEdt}`)
+-      console.log(`[POINTS DEBUG] Week Start: ${weekStartEdt}`) 
+-      console.log(`[POINTS DEBUG] Month Start: ${monthStartEdt}`)
+-      console.log(`[POINTS DEBUG] Engagement logs found: ${userLogs.length}`)
+-      
+-      // Calculate points earned in different periods
+-      userLogs.forEach(log => {
+-        // Parse the EDT timestamp - remove "EDT" suffix and parse
+-        let logDate
+-        if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
+-          // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
+-          // This represents 20:21 EDT, which is 00:21 UTC (next day)
+-          // Remove EDT suffix and parse as local time, then add 4 hours for UTC
+-          const cleanTimestamp = log.timestamp.replace('EDT', '')
+-          const edtTime = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
+-          logDate = edtTime
+-        } else {
+-          // New format: Standard ISO string, parse directly
+-          logDate = new Date(log.timestamp)
+-        }
+-        
+-        // Only count if date is valid
+-        if (!isNaN(logDate.getTime())) {
+-          console.log(`[POINTS DEBUG] Log: ${log.interactionType} +${log.points} pts at ${logDate}`)
+-          
+-          if (logDate >= todayStartEdt) {
+-            pointsSummary.today += log.points
+-            console.log(`  -> Counted in TODAY`)
+-          }
+-          if (logDate >= weekStartEdt) {
+-            pointsSummary.week += log.points
+-            console.log(`  -> Counted in WEEK`)
+-          }
+-          if (logDate >= monthStartEdt) {
+-            pointsSummary.month += log.points
+-            console.log(`  -> Counted in MONTH`)
+-          }
+-        } else {
+-          console.log(`[POINTS DEBUG] Invalid date for log: ${log.timestamp}`)
+-        }
+-      })
+-      
+-      console.log(`[POINTS DEBUG] Final summary:`)
+-      console.log(`  Today: ${pointsSummary.today} pts`)
+-      console.log(`  Week: ${pointsSummary.week} pts`)
+-      console.log(`  Month: ${pointsSummary.month} pts`)
+-      
+-      // Create embed
+-      const embed = new EmbedBuilder()
+-        .setColor(0x00FF00)
+-        .setTitle('💰 Your Points Balance')
+-        .setDescription(`**Total Points:** ${totalPoints} points\n*Includes all activities: Twitter engagement, Discord, contests, etc.*`)
+-        .addFields(
+-          { name: '📊 Twitter Engagement Points', value: 'Points earned from likes, retweets, and replies:', inline: false },
+-          { name: 'Today', value: `+${pointsSummary.today} pts`, inline: true },
+-          { name: 'Last 7 Days', value: `+${pointsSummary.week} pts`, inline: true },
+-          { name: 'Last 30 Days', value: `+${pointsSummary.month} pts`, inline: true }
+-        )
+-        .setFooter({ text: `@${connection.twitterHandle} • Tier ${connection.tier ? connection.tier.toUpperCase() : 'MICRO'}` })
+-        .setTimestamp()
+-      
+-      // Add recent activity if available
+-      if (recentLogs.length > 0) {
+-        // First, get unique tweet IDs and fetch tweet data
+-        const tweetIdToAuthor = new Map()
+-        const uniqueTweetIds = [...new Set(recentLogs.map(log => log.tweetId).filter(Boolean))]
+-        
+-        // Use the tweet ID mapping to find tweet data
+-        for (const tweetId of uniqueTweetIds) {
+-          const tweetIdKey = await redis.get(`engagement:tweetid:${tweetId}`)
+-          if (tweetIdKey) {
+-            const tweet = await redis.json.get(`engagement:tweet:${tweetIdKey}`)
+-            if (tweet) {
+-              tweetIdToAuthor.set(tweetId, tweet.authorHandle)
++      await interaction.reply({ 
++        embeds: [{
++          color: 0x00ff00,
++          title: '🎮 Nabulines Points Dashboard',
++          description: 'View your points, weekly activity, and recent transactions in our retro-style dashboard!',
++          fields: [
++            {
++              name: '🔗 Access Your Dashboard',
++              value: '[Click here to view your points dashboard](https://www.nabulines.com/dashboard)',
++              inline: false
+             }
++          ],
++          footer: {
++            text: 'Login with your Twitter/X account to see your stats'
+           }
+-        }
+-        
+-        const activityLines = recentLogs.map(log => {
+-          const emoji = log.interactionType === 'like' ? '❤️' : 
+-                        log.interactionType === 'retweet' ? '🔁' : '💬'
+-          
+-          // Parse EDT timestamp
+-          let time
+-          if (typeof log.timestamp === 'string' && log.timestamp.endsWith('EDT')) {
+-            // Old format: timestamp like "2025-07-03T20:21:00.000EDT"
+-            // This represents 20:21 EDT, which is 00:21 UTC (next day)
+-            // Remove EDT suffix and parse as local time, then add 4 hours for UTC
+-            const cleanTimestamp = log.timestamp.replace('EDT', '')
+-            time = new Date(cleanTimestamp + '-04:00') // Parse with EDT offset
+-          } else {
+-            // New format: Standard ISO string, parse directly
+-            time = new Date(log.timestamp)
+-          }
+-          
+-          // Create timestamp string if valid
+-          let timeStr = ''
+-          if (!isNaN(time.getTime())) {
+-            timeStr = `<t:${Math.floor(time.getTime() / 1000)}:R>`
+-          } else {
+-            // Fallback to showing the raw timestamp
+-            timeStr = log.timestamp || 'Unknown time'
+-          }
+-          
+-          // Get tweet author info
+-          const tweetAuthor = log.tweetId ? tweetIdToAuthor.get(log.tweetId) : null
+-          const tweetInfo = tweetAuthor ? ` - @${tweetAuthor}` : ''
+-          
+-          return `${emoji} +${log.points} pts ${timeStr}${tweetInfo}`
+-        })
+-        
+-        embed.addFields({ 
+-          name: '📊 Recent Activity', 
+-          value: activityLines.join('\n') || 'No recent activity',
+-          inline: false 
+-        })
+-      } else {
+-        embed.addFields({
+-          name: '📊 Recent Activity',
+-          value: 'No engagement activity yet. Start engaging with tweets to earn points!',
+-          inline: false
+-        })
+-      }
+-      
+-      // Add note about other point sources
+-      const engagementTotal = userLogs.reduce((sum, log) => sum + log.points, 0)
+-      const otherPoints = totalPoints - engagementTotal
+-      
+-      if (otherPoints > 0) {
+-        embed.addFields({
+-          name: '📝 Other Points',
+-          value: `You have ${otherPoints} points from Discord activity, contests, and other sources (not shown in time breakdowns).`,
+-          inline: false
+-        })
+-      }
+-      
+-      // Note about spending (future feature)
+-      embed.addFields({
+-        name: '💸 Points Spent',
+-        value: 'Point spending coming soon!',
+-        inline: false
++        }],
++        flags: 64 // Ephemeral
+       })
+-      
+-      await interaction.editReply({ embeds: [embed] })
+     }
+     
+     else if (commandName === 'tier') {
+diff --git a/lib/pixel-sounds.ts b/lib/pixel-sounds.ts
+new file mode 100644
+index 0000000..f5a2f00
+--- /dev/null
++++ b/lib/pixel-sounds.ts
+@@ -0,0 +1,123 @@
++// Pixel sounds library for retro gaming audio effects
++
++let soundEnabled = typeof window !== 'undefined' && localStorage.getItem('pixelSounds') !== 'false'
++
++// Web Audio API context
++let audioContext: AudioContext | null = null
++
++// Initialize audio context on user interaction
++if (typeof window !== 'undefined') {
++  document.addEventListener('click', initAudioContext, { once: true })
++}
++
++function initAudioContext() {
++  if (!audioContext && typeof window !== 'undefined') {
++    audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
++  }
++}
++
++// Sound effect generators
++const sounds = {
++  click: () => {
++    if (!audioContext || !soundEnabled) return
++    
++    const oscillator = audioContext.createOscillator()
++    const gainNode = audioContext.createGain()
++    
++    oscillator.connect(gainNode)
++    gainNode.connect(audioContext.destination)
++    
++    oscillator.frequency.value = 800
++    oscillator.type = 'square'
++    
++    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
++    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1)
++    
++    oscillator.start(audioContext.currentTime)
++    oscillator.stop(audioContext.currentTime + 0.1)
++  },
++  
++  success: () => {
++    if (!audioContext || !soundEnabled) return
++    
++    const oscillator1 = audioContext.createOscillator()
++    const oscillator2 = audioContext.createOscillator()
++    const gainNode = audioContext.createGain()
++    
++    oscillator1.connect(gainNode)
++    oscillator2.connect(gainNode)
++    gainNode.connect(audioContext.destination)
++    
++    oscillator1.type = 'square'
++    oscillator2.type = 'square'
++    
++    oscillator1.frequency.setValueAtTime(440, audioContext.currentTime)
++    oscillator1.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.15)
++    
++    oscillator2.frequency.setValueAtTime(554.37, audioContext.currentTime)
++    oscillator2.frequency.exponentialRampToValueAtTime(1108.73, audioContext.currentTime + 0.15)
++    
++    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
++    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3)
++    
++    oscillator1.start(audioContext.currentTime)
++    oscillator2.start(audioContext.currentTime)
++    oscillator1.stop(audioContext.currentTime + 0.3)
++    oscillator2.stop(audioContext.currentTime + 0.3)
++  },
++  
++  error: () => {
++    if (!audioContext || !soundEnabled) return
++    
++    const oscillator = audioContext.createOscillator()
++    const gainNode = audioContext.createGain()
++    
++    oscillator.connect(gainNode)
++    gainNode.connect(audioContext.destination)
++    
++    oscillator.type = 'sawtooth'
++    oscillator.frequency.setValueAtTime(200, audioContext.currentTime)
++    oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.2)
++    
++    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
++    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2)
++    
++    oscillator.start(audioContext.currentTime)
++    oscillator.stop(audioContext.currentTime + 0.2)
++  },
++  
++  hover: () => {
++    if (!audioContext || !soundEnabled) return
++    
++    const oscillator = audioContext.createOscillator()
++    const gainNode = audioContext.createGain()
++    
++    oscillator.connect(gainNode)
++    gainNode.connect(audioContext.destination)
++    
++    oscillator.frequency.value = 1200
++    oscillator.type = 'sine'
++    
++    gainNode.gain.setValueAtTime(0.05, audioContext.currentTime)
++    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05)
++    
++    oscillator.start(audioContext.currentTime)
++    oscillator.stop(audioContext.currentTime + 0.05)
++  }
++}
++
++export function playSound(type: keyof typeof sounds) {
++  initAudioContext()
++  sounds[type]?.()
++}
++
++export function toggleSound() {
++  soundEnabled = !soundEnabled
++  if (typeof window !== 'undefined') {
++    localStorage.setItem('pixelSounds', soundEnabled.toString())
++  }
++}
++
++export function isSoundEnabled() {
++  return soundEnabled
++} 
+\ No newline at end of file
