@@ -11824,3 +11824,557 @@
 2025-07-07T00:37:58: 🎯 Processing command: points
 2025-07-07T00:55:00: [SHARD 0] Reconnecting... 2025-07-07T04:55:00.104Z
 2025-07-07T00:55:00: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T02:41:21: [SHARD 0] Reconnecting... 2025-07-07T06:41:21.626Z
+2025-07-07T02:41:23: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T02:47:18: 📥 Received interaction: 2 - Command: points - User: ahmed._.11
+2025-07-07T02:47:18: 🎯 Processing command: points
+2025-07-07T02:57:06: 📥 Received interaction: 2 - Command: submit - User: enemend
+2025-07-07T02:57:06: 🎯 Processing command: submit
+2025-07-07T02:57:06: [SUBMIT] User enemend submitting tweet: https://x.com/SAOWEB3/status/1942114933287596380?t=Muadkb1scTEzg5E2vIhV9A&s=19
+2025-07-07T02:57:06: [SUBMIT] Tweet ID extracted: 1942114933287596380
+2025-07-07T02:57:06: [SUBMIT] User connected as @saoweb3
+2025-07-07T02:57:06: [SUBMIT] Checking approval status for @saoweb3...
+2025-07-07T02:57:07: [SUBMIT] Approval status: true
+2025-07-07T02:57:07: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T02:57:07: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T02:57:07: [SUBMIT] User's current points: 780
+2025-07-07T02:57:07: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T02:57:07: 📝 Fetched tweet content: Success
+2025-07-07T02:57:08: [SUBMIT] Deducting 500 points from user @saoweb3
+2025-07-07T02:57:08: [SUBMIT] Successfully deducted 500 points. New balance: 280
+2025-07-07T02:57:09: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T02:57:10: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T02:59:41: 📥 Received interaction: 2 - Command: points - User: salar07503
+2025-07-07T02:59:41: 🎯 Processing command: points
+2025-07-07T03:03:06: [SHARD 0] Reconnecting... 2025-07-07T07:03:06.009Z
+2025-07-07T03:03:06: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T03:03:30: 📥 Received interaction: 2 - Command: points - User: afshinx06
+2025-07-07T03:03:30: 🎯 Processing command: points
+2025-07-07T03:18:12: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-07T03:18:12: 🎯 Processing command: submit
+2025-07-07T03:18:12: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942120456892387474?t=-KSAXDRTwFD6NokuaOeqiQ&s=19
+2025-07-07T03:18:12: [SUBMIT] Tweet ID extracted: 1942120456892387474
+2025-07-07T03:18:12: [SUBMIT] User connected as @bull_base
+2025-07-07T03:18:12: [SUBMIT] Checking approval status for @bull_base...
+2025-07-07T03:18:13: [SUBMIT] Approval status: true
+2025-07-07T03:18:13: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T03:18:13: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T03:18:13: [SUBMIT] User's current points: 160
+2025-07-07T03:18:13: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T03:54:03: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T03:54:03: 🎯 Processing command: points
+2025-07-07T04:06:47: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T04:06:47: 🎯 Processing command: points
+2025-07-07T04:20:21: 📥 Received interaction: 2 - Command: submit - User: hadimasoudi
+2025-07-07T04:20:21: 🎯 Processing command: submit
+2025-07-07T04:20:21: [SUBMIT] User hadimasoudi submitting tweet: https://x.com/hadimasoudii/status/1942136401434189881?t=YogqdXBY7sWWLtmT0N26xQ&s=19
+2025-07-07T04:20:21: [SUBMIT] Tweet ID extracted: 1942136401434189881
+2025-07-07T04:20:21: [SUBMIT] User connected as @hadimasoudii
+2025-07-07T04:20:21: [SUBMIT] Checking approval status for @hadimasoudii...
+2025-07-07T04:20:22: [SUBMIT] Approval status: true
+2025-07-07T04:20:22: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T04:20:22: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T04:20:22: [SUBMIT] User's current points: 840
+2025-07-07T04:20:22: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T04:20:22: 📝 Fetched tweet content: Success
+2025-07-07T04:20:23: [SUBMIT] Deducting 500 points from user @hadimasoudii
+2025-07-07T04:20:24: [SUBMIT] Successfully deducted 500 points. New balance: 340
+2025-07-07T04:20:24: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T04:20:25: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T04:43:43: 📥 Received interaction: 2 - Command: submit - User: hadimasoudi
+2025-07-07T04:43:43: 🎯 Processing command: submit
+2025-07-07T04:43:43: [SUBMIT] User hadimasoudi submitting tweet: https://x.com/hadimasoudii/status/1942142064717689255?s=19
+2025-07-07T04:43:43: [SUBMIT] Tweet ID extracted: 1942142064717689255
+2025-07-07T04:43:44: [SUBMIT] User connected as @hadimasoudii
+2025-07-07T04:43:44: [SUBMIT] Checking approval status for @hadimasoudii...
+2025-07-07T04:43:44: [SUBMIT] Approval status: true
+2025-07-07T04:43:44: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T04:43:44: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T04:43:44: [SUBMIT] User's current points: 340
+2025-07-07T04:43:44: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T04:44:18: 📥 Received interaction: 2 - Command: points - User: masoud08455
+2025-07-07T04:44:18: 🎯 Processing command: points
+2025-07-07T04:44:41: 📥 Received interaction: 2 - Command: leaderboard - User: hadimasoudi
+2025-07-07T04:44:41: 🎯 Processing command: leaderboard
+2025-07-07T04:45:13: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-07T04:45:13: 🎯 Processing command: points
+2025-07-07T04:52:08: 📥 Received interaction: 2 - Command: submit - User: zahrazareiw
+2025-07-07T04:52:08: 🎯 Processing command: submit
+2025-07-07T04:52:08: [SUBMIT] User zahrazareiw submitting tweet: https://x.com/zahrazareiw/status/1942143234848776683?t=3WRw2TbnlZealnpt_G6Kvg&s=19
+2025-07-07T04:52:08: [SUBMIT] Tweet ID extracted: 1942143234848776683
+2025-07-07T04:52:08: [SUBMIT] User connected as @zahrazareiw
+2025-07-07T04:52:08: [SUBMIT] Checking approval status for @zahrazareiw...
+2025-07-07T04:52:08: [SUBMIT] Approval status: true
+2025-07-07T04:52:08: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T04:52:09: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T04:52:09: [SUBMIT] User's current points: 780
+2025-07-07T04:52:09: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T04:52:09: 📝 Fetched tweet content: Success
+2025-07-07T04:52:10: [SUBMIT] Deducting 500 points from user @zahrazareiw
+2025-07-07T04:52:10: [SUBMIT] Successfully deducted 500 points. New balance: 280
+2025-07-07T04:52:11: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T04:52:12: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T04:52:58: 📥 Received interaction: 2 - Command: leaderboard - User: bull_base
+2025-07-07T04:52:58: 🎯 Processing command: leaderboard
+2025-07-07T04:56:34: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T04:56:34: 🎯 Processing command: points
+2025-07-07T04:57:15: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-07T04:57:15: 🎯 Processing command: submit
+2025-07-07T04:57:16: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942120456892387474?t=8rnT1O_BLacrt7XP7Wzekw&s=19
+2025-07-07T04:57:16: [SUBMIT] Tweet ID extracted: 1942120456892387474
+2025-07-07T04:57:16: [SUBMIT] User connected as @bull_base
+2025-07-07T04:57:16: [SUBMIT] Checking approval status for @bull_base...
+2025-07-07T04:57:16: [SUBMIT] Approval status: true
+2025-07-07T04:57:16: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T04:57:16: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T04:57:16: [SUBMIT] User's current points: 160
+2025-07-07T04:57:16: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T05:13:22: [SHARD 0] Reconnecting... 2025-07-07T09:13:22.413Z
+2025-07-07T05:13:23: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T05:19:56: 📥 Received interaction: 2 - Command: leaderboard - User: bull_base
+2025-07-07T05:19:56: 🎯 Processing command: leaderboard
+2025-07-07T05:29:53: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T05:29:53: 🎯 Processing command: points
+2025-07-07T05:35:12: 📥 Received interaction: 2 - Command: recent - User: navlld
+2025-07-07T05:35:12: 🎯 Processing command: recent
+2025-07-07T05:35:28: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T05:35:28: 🎯 Processing command: points
+2025-07-07T05:37:23: 📥 Received interaction: 2 - Command: leaderboard - User: bull_base
+2025-07-07T05:37:23: 🎯 Processing command: leaderboard
+2025-07-07T05:49:48: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-07T05:49:48: 🎯 Processing command: submit
+2025-07-07T05:49:48: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942120456892387474?t=8rnT1O_BLacrt7XP7Wzekw&s=19
+2025-07-07T05:49:48: [SUBMIT] Tweet ID extracted: 1942120456892387474
+2025-07-07T05:49:48: [SUBMIT] User connected as @bull_base
+2025-07-07T05:49:48: [SUBMIT] Checking approval status for @bull_base...
+2025-07-07T05:49:49: [SUBMIT] Approval status: true
+2025-07-07T05:49:49: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T05:49:49: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T05:49:49: [SUBMIT] User's current points: 160
+2025-07-07T05:49:49: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T06:20:38: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-07T06:20:38: 🎯 Processing command: points
+2025-07-07T06:35:00: [SHARD 0] Reconnecting... 2025-07-07T10:35:00.203Z
+2025-07-07T06:35:00: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T06:56:37: 📥 Received interaction: 2 - Command: points - User: ahmed._.11
+2025-07-07T06:56:37: 🎯 Processing command: points
+2025-07-07T07:07:14: [SHARD 0] Reconnecting... 2025-07-07T11:07:14.816Z
+2025-07-07T07:07:15: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T07:14:08: 📥 Received interaction: 2 - Command: connect - User: pouya_zarei81_06102
+2025-07-07T07:14:08: 🎯 Processing command: connect
+2025-07-07T07:16:27: 📥 Received interaction: 2 - Command: connect - User: pouya_zarei81_06102
+2025-07-07T07:16:27: 🎯 Processing command: connect
+2025-07-07T07:30:36: 📥 Received interaction: 2 - Command: points - User: enemend
+2025-07-07T07:30:36: 🎯 Processing command: points
+2025-07-07T07:50:40: 📥 Received interaction: 2 - Command: points - User: afshinx06
+2025-07-07T07:50:40: 🎯 Processing command: points
+2025-07-07T08:14:38: 📥 Received interaction: 2 - Command: submit - User: navlld
+2025-07-07T08:14:38: 🎯 Processing command: submit
+2025-07-07T08:14:38: [SUBMIT] User navlld submitting tweet: https://x.com/navlld/status/1942195364834013283?s=46
+2025-07-07T08:14:38: [SUBMIT] Tweet ID extracted: 1942195364834013283
+2025-07-07T08:14:38: [SUBMIT] User connected as @navlld
+2025-07-07T08:14:38: [SUBMIT] Checking approval status for @navlld...
+2025-07-07T08:14:38: [SUBMIT] Approval status: true
+2025-07-07T08:14:38: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T08:14:39: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T08:14:39: [SUBMIT] User's current points: 240
+2025-07-07T08:14:39: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T08:24:24: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T08:24:24: 🎯 Processing command: points
+2025-07-07T08:51:27: [SHARD 0] Reconnecting... 2025-07-07T12:51:27.782Z
+2025-07-07T08:51:28: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T08:55:35: 📥 Received interaction: 2 - Command: leaderboard - User: .yaldajoon
+2025-07-07T08:55:35: 🎯 Processing command: leaderboard
+2025-07-07T08:59:31: 📥 Received interaction: 2 - Command: submit - User: hadimasoudi
+2025-07-07T08:59:31: 🎯 Processing command: submit
+2025-07-07T08:59:31: [SUBMIT] User hadimasoudi submitting tweet: https://x.com/hadimasoudii/status/1942142064717689255?t=1FeakvSDDgoFXWOQ9_OMOw&s=19
+2025-07-07T08:59:31: [SUBMIT] Tweet ID extracted: 1942142064717689255
+2025-07-07T08:59:31: [SUBMIT] User connected as @hadimasoudii
+2025-07-07T08:59:31: [SUBMIT] Checking approval status for @hadimasoudii...
+2025-07-07T08:59:32: [SUBMIT] Approval status: true
+2025-07-07T08:59:32: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T08:59:32: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T08:59:32: [SUBMIT] User's current points: 520
+2025-07-07T08:59:32: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T08:59:33: 📝 Fetched tweet content: Success
+2025-07-07T08:59:34: [SUBMIT] Deducting 500 points from user @hadimasoudii
+2025-07-07T08:59:34: [SUBMIT] Successfully deducted 500 points. New balance: 20
+2025-07-07T08:59:35: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T08:59:35: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T09:36:57: 📥 Received interaction: 2 - Command: connect - User: mamali.base.eth
+2025-07-07T09:36:57: 🎯 Processing command: connect
+2025-07-07T09:47:46: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-07T09:47:46: 🎯 Processing command: points
+2025-07-07T09:53:20: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T09:53:20: 🎯 Processing command: points
+2025-07-07T09:53:55: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T09:53:55: 🎯 Processing command: points
+2025-07-07T09:54:38: 📥 Received interaction: 2 - Command: submit - User: .yaldajoon
+2025-07-07T09:54:38: 🎯 Processing command: submit
+2025-07-07T09:54:38: [SUBMIT] User .yaldajoon submitting tweet: https://x.com/yaldamasoudi/status/1942213106286948642?s=46
+2025-07-07T09:54:38: [SUBMIT] Tweet ID extracted: 1942213106286948642
+2025-07-07T09:54:38: [SUBMIT] User connected as @yaldamasoudi
+2025-07-07T09:54:38: [SUBMIT] Checking approval status for @yaldamasoudi...
+2025-07-07T09:54:39: [SUBMIT] Approval status: true
+2025-07-07T09:54:39: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T09:54:39: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T09:54:39: [SUBMIT] User's current points: 440
+2025-07-07T09:54:39: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T10:11:52: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-07T10:11:52: 🎯 Processing command: points
+2025-07-07T10:15:44: 📥 Received interaction: 2 - Command: leaderboard - User: nervyesi1
+2025-07-07T10:15:44: 🎯 Processing command: leaderboard
+2025-07-07T10:16:13: 📥 Received interaction: 2 - Command: points - User: nervyesi1
+2025-07-07T10:16:13: 🎯 Processing command: points
+2025-07-07T10:16:40: 📥 Received interaction: 2 - Command: connect - User: nervyesi1
+2025-07-07T10:16:40: 🎯 Processing command: connect
+2025-07-07T10:17:08: 📥 Received interaction: 2 - Command: connect - User: nervyesi1
+2025-07-07T10:17:08: 🎯 Processing command: connect
+2025-07-07T10:20:12: 📥 Received interaction: 2 - Command: leaderboard - User: loki.base.eth
+2025-07-07T10:20:12: 🎯 Processing command: leaderboard
+2025-07-07T10:24:05: 📥 Received interaction: 2 - Command: leaderboard - User: hadimasoudi
+2025-07-07T10:24:05: 🎯 Processing command: leaderboard
+2025-07-07T10:48:43: 📥 Received interaction: 2 - Command: points - User: nervyesi1
+2025-07-07T10:48:43: 🎯 Processing command: points
+2025-07-07T10:49:47: 📥 Received interaction: 2 - Command: leaderboard - User: nervyesi1
+2025-07-07T10:49:47: 🎯 Processing command: leaderboard
+2025-07-07T10:54:13: 📥 Received interaction: 2 - Command: leaderboard - User: nervyesi1
+2025-07-07T10:54:13: 🎯 Processing command: leaderboard
+2025-07-07T11:11:32: 📥 Received interaction: 2 - Command: points - User: masoud08455
+2025-07-07T11:11:32: 🎯 Processing command: points
+2025-07-07T11:22:52: 📥 Received interaction: 2 - Command: leaderboard - User: nervyesi1
+2025-07-07T11:22:52: 🎯 Processing command: leaderboard
+2025-07-07T11:47:19: [SHARD 0] Reconnecting... 2025-07-07T15:47:19.282Z
+2025-07-07T11:47:20: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T12:16:09: 📥 Received interaction: 2 - Command: points - User: peirov_78474
+2025-07-07T12:16:09: 🎯 Processing command: points
+2025-07-07T13:00:16: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-07T13:00:16: 🎯 Processing command: leaderboard
+2025-07-07T13:10:17: 📥 Received interaction: 2 - Command: points - User: loki.base.eth
+2025-07-07T13:10:17: 🎯 Processing command: points
+2025-07-07T13:11:02: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-07T13:11:02: 🎯 Processing command: points
+2025-07-07T13:13:12: 📥 Received interaction: 2 - Command: leaderboard - User: loki.base.eth
+2025-07-07T13:13:12: 🎯 Processing command: leaderboard
+2025-07-07T13:18:08: 📥 Received interaction: 2 - Command: submit - User: pouya_sprno
+2025-07-07T13:18:08: 🎯 Processing command: submit
+2025-07-07T13:18:09: [SUBMIT] User pouya_sprno submitting tweet: https://x.com/Relaxedtony/status/1941951877026816262
+2025-07-07T13:18:09: [SUBMIT] Tweet ID extracted: 1941951877026816262
+2025-07-07T13:18:09: [SUBMIT] User connected as @relaxedtony
+2025-07-07T13:18:09: [SUBMIT] Checking approval status for @relaxedtony...
+2025-07-07T13:18:09: [SUBMIT] Approval status: true
+2025-07-07T13:18:09: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T13:18:09: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T13:18:09: [SUBMIT] User's current points: 160
+2025-07-07T13:18:09: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T13:21:24: [SHARD 0] Reconnecting... 2025-07-07T17:21:24.221Z
+2025-07-07T13:21:24: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T13:21:39: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T13:21:39: 🎯 Processing command: points
+2025-07-07T13:22:34: 📥 Received interaction: 2 - Command: points - User: .yaldajoon
+2025-07-07T13:22:34: 🎯 Processing command: points
+2025-07-07T13:22:58: 📥 Received interaction: 2 - Command: leaderboard - User: hadimasoudi
+2025-07-07T13:22:58: 🎯 Processing command: leaderboard
+2025-07-07T13:25:05: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-07T13:25:05: 🎯 Processing command: leaderboard
+2025-07-07T13:25:05: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T13:25:05: 🎯 Processing command: points
+2025-07-07T13:37:56: 📥 Received interaction: 2 - Command: points - User: afshinx06
+2025-07-07T13:37:56: 🎯 Processing command: points
+2025-07-07T13:39:51: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T13:39:51: 🎯 Processing command: points
+2025-07-07T13:42:20: 📥 Received interaction: 2 - Command: leaderboard - User: navlld
+2025-07-07T13:42:20: 🎯 Processing command: leaderboard
+2025-07-07T13:43:02: [SHARD 0] Reconnecting... 2025-07-07T17:43:02.481Z
+2025-07-07T13:43:03: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T14:08:36: 📥 Received interaction: 2 - Command: points - User: salar07503
+2025-07-07T14:08:36: 🎯 Processing command: points
+2025-07-07T14:09:17: [SHARD 0] Reconnecting... 2025-07-07T18:09:17.451Z
+2025-07-07T14:09:18: [SHARD 0] Resumed, replayed 2 events
+2025-07-07T14:14:49: 📥 Received interaction: 2 - Command: points - User: ahmed._.11
+2025-07-07T14:14:49: 🎯 Processing command: points
+2025-07-07T14:22:51: 📥 Received interaction: 2 - Command: leaderboard - User: hadimasoudi
+2025-07-07T14:22:51: 🎯 Processing command: leaderboard
+2025-07-07T14:28:26: 📥 Received interaction: 2 - Command: points - User: peirov_78474
+2025-07-07T14:28:26: 🎯 Processing command: points
+2025-07-07T14:30:20: 📥 Received interaction: 2 - Command: connect - User: peirov_78474
+2025-07-07T14:30:20: 🎯 Processing command: connect
+2025-07-07T14:30:45: 📥 Received interaction: 2 - Command: connect - User: mamali.base.eth
+2025-07-07T14:30:45: 🎯 Processing command: connect
+2025-07-07T14:32:54: 📥 Received interaction: 2 - Command: submit - User: mamali.base.eth
+2025-07-07T14:32:54: 🎯 Processing command: submit
+2025-07-07T14:32:54: [SUBMIT] User mamali.base.eth submitting tweet: https://x.com/mamali_eth/status/1942262350725194031?t=bRQ3-xICpZjC-t4IqHlsJw&s=19
+2025-07-07T14:32:54: [SUBMIT] Tweet ID extracted: 1942262350725194031
+2025-07-07T14:32:54: [SUBMIT] User connected as @mamali_eth
+2025-07-07T14:32:54: [SUBMIT] Checking approval status for @mamali_eth...
+2025-07-07T14:32:55: [SUBMIT] Approval status: true
+2025-07-07T14:32:55: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T14:32:55: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T14:32:55: [SUBMIT] User's current points: 0
+2025-07-07T14:32:55: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T14:43:11: 📥 Received interaction: 2 - Command: submit - User: .yaldajoon
+2025-07-07T14:43:11: 🎯 Processing command: submit
+2025-07-07T14:43:12: [SUBMIT] User .yaldajoon submitting tweet: https://x.com/yaldamasoudi/status/1942292590801371399?s=46
+2025-07-07T14:43:12: [SUBMIT] Tweet ID extracted: 1942292590801371399
+2025-07-07T14:43:12: [SUBMIT] User connected as @yaldamasoudi
+2025-07-07T14:43:12: [SUBMIT] Checking approval status for @yaldamasoudi...
+2025-07-07T14:43:13: [SUBMIT] Approval status: true
+2025-07-07T14:43:13: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T14:43:13: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T14:43:13: [SUBMIT] User's current points: 600
+2025-07-07T14:43:13: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T14:43:13: 📝 Fetched tweet content: Success
+2025-07-07T14:43:14: [SUBMIT] Deducting 500 points from user @yaldamasoudi
+2025-07-07T14:43:14: [SUBMIT] Successfully deducted 500 points. New balance: 100
+2025-07-07T14:43:15: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T14:43:16: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T14:43:37: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-07T14:43:37: 🎯 Processing command: submit
+2025-07-07T14:43:38: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942120456892387474?t=34mQlQznOaTwUjwsiqtMNQ&s=19
+2025-07-07T14:43:38: [SUBMIT] Tweet ID extracted: 1942120456892387474
+2025-07-07T14:43:38: [SUBMIT] User connected as @bull_base
+2025-07-07T14:43:38: [SUBMIT] Checking approval status for @bull_base...
+2025-07-07T14:43:38: [SUBMIT] Approval status: true
+2025-07-07T14:43:38: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T14:43:38: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T14:43:38: [SUBMIT] User's current points: 520
+2025-07-07T14:43:38: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T14:43:39: 📝 Fetched tweet content: Success
+2025-07-07T14:43:40: [SUBMIT] Deducting 500 points from user @bull_base
+2025-07-07T14:43:40: [SUBMIT] Successfully deducted 500 points. New balance: 20
+2025-07-07T14:43:40: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T14:43:41: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T15:09:15: 📥 Received interaction: 2 - Command: submit - User: _flux96
+2025-07-07T15:09:15: 🎯 Processing command: submit
+2025-07-07T15:09:16: [SUBMIT] User _flux96 submitting tweet: https://x.com/alivakilzade1/status/1942197812860527080?s=46
+2025-07-07T15:09:16: [SUBMIT] Tweet ID extracted: 1942197812860527080
+2025-07-07T15:09:16: [SUBMIT] User connected as @alivakilzade1
+2025-07-07T15:09:16: [SUBMIT] Checking approval status for @alivakilzade1...
+2025-07-07T15:09:16: [SUBMIT] Approval status: true
+2025-07-07T15:09:16: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T15:09:16: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T15:09:16: [SUBMIT] User's current points: 740
+2025-07-07T15:09:16: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T15:09:17: 📝 Fetched tweet content: Success
+2025-07-07T15:09:17: [SUBMIT] Deducting 500 points from user @alivakilzade1
+2025-07-07T15:09:18: [SUBMIT] Successfully deducted 500 points. New balance: 240
+2025-07-07T15:09:18: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T15:09:19: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T15:09:36: 📥 Received interaction: 2 - Command: points - User: _flux96
+2025-07-07T15:09:36: 🎯 Processing command: points
+2025-07-07T15:10:21: 📥 Received interaction: 2 - Command: points - User: ahmed._.11
+2025-07-07T15:10:21: 🎯 Processing command: points
+2025-07-07T15:10:23: 📥 Received interaction: 2 - Command: connect - User: _flux96
+2025-07-07T15:10:23: 🎯 Processing command: connect
+2025-07-07T15:10:51: 📥 Received interaction: 2 - Command: leaderboard - User: _flux96
+2025-07-07T15:10:51: 🎯 Processing command: leaderboard
+2025-07-07T15:11:59: 📥 Received interaction: 2 - Command: points - User: _flux96
+2025-07-07T15:11:59: 🎯 Processing command: points
+2025-07-07T15:15:17: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-07T15:15:17: 🎯 Processing command: points
+2025-07-07T15:16:15: 📥 Received interaction: 2 - Command: submit - User: shafagh74
+2025-07-07T15:16:15: 🎯 Processing command: submit
+2025-07-07T15:16:16: [SUBMIT] User shafagh74 submitting tweet: https://x.com/Shafagh74/status/1942240543624573233?t=ig0bz4PJ2liQR8aBM5_i5w&s=19
+2025-07-07T15:16:16: [SUBMIT] Tweet ID extracted: 1942240543624573233
+2025-07-07T15:16:16: [SUBMIT] User connected as @shafagh74
+2025-07-07T15:16:16: [SUBMIT] Checking approval status for @shafagh74...
+2025-07-07T15:16:16: [SUBMIT] Approval status: true
+2025-07-07T15:16:16: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T15:16:16: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T15:16:16: [SUBMIT] User's current points: 520
+2025-07-07T15:16:16: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T15:16:17: 📝 Fetched tweet content: Success
+2025-07-07T15:16:17: [SUBMIT] Deducting 500 points from user @shafagh74
+2025-07-07T15:16:18: [SUBMIT] Successfully deducted 500 points. New balance: 20
+2025-07-07T15:16:18: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T15:16:19: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T15:37:04: 📥 Received interaction: 2 - Command: submit - User: realrexorex
+2025-07-07T15:37:04: 🎯 Processing command: submit
+2025-07-07T15:37:04: [SUBMIT] User realrexorex submitting tweet: https://x.com/iamrexorex/status/1942297765570064780?t=nzV7so9hr4a4DCk22Vvbug&s=19
+2025-07-07T15:37:04: [SUBMIT] Tweet ID extracted: 1942297765570064780
+2025-07-07T15:37:04: [SUBMIT] User connected as @iamrexorex
+2025-07-07T15:37:04: [SUBMIT] Checking approval status for @iamrexorex...
+2025-07-07T15:37:05: [SUBMIT] Approval status: true
+2025-07-07T15:37:05: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T15:37:05: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T15:37:05: [SUBMIT] User's current points: 520
+2025-07-07T15:37:05: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T15:37:05: 📝 Fetched tweet content: Success
+2025-07-07T15:37:06: [SUBMIT] Deducting 500 points from user @iamrexorex
+2025-07-07T15:37:06: [SUBMIT] Successfully deducted 500 points. New balance: 20
+2025-07-07T15:37:06: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T15:37:07: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T15:38:03: 📥 Received interaction: 2 - Command: submit - User: enemend
+2025-07-07T15:38:03: 🎯 Processing command: submit
+2025-07-07T15:38:04: [SUBMIT] User enemend submitting tweet: https://x.com/SAOWEB3/status/1942306609511752188?t=4cOQqvhKpBe_kL077JYraA&s=19
+2025-07-07T15:38:04: [SUBMIT] Tweet ID extracted: 1942306609511752188
+2025-07-07T15:38:04: [SUBMIT] User connected as @saoweb3
+2025-07-07T15:38:04: [SUBMIT] Checking approval status for @saoweb3...
+2025-07-07T15:38:04: [SUBMIT] Approval status: true
+2025-07-07T15:38:04: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T15:38:04: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T15:38:04: [SUBMIT] User's current points: 590
+2025-07-07T15:38:04: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T15:38:05: 📝 Fetched tweet content: Success
+2025-07-07T15:38:06: [SUBMIT] Deducting 500 points from user @saoweb3
+2025-07-07T15:38:06: [SUBMIT] Successfully deducted 500 points. New balance: 90
+2025-07-07T15:38:06: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T15:38:07: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T15:45:02: 📥 Received interaction: 2 - Command: submit - User: danyalrh
+2025-07-07T15:45:02: 🎯 Processing command: submit
+2025-07-07T15:45:02: [SUBMIT] User danyalrh submitting tweet: https://x.com/DanialRH_7/status/1942305180327809407?t=1KOwS5CnReXbOSm8bKrVjg&s=19
+2025-07-07T15:45:02: [SUBMIT] Tweet ID extracted: 1942305180327809407
+2025-07-07T15:45:02: [SUBMIT] User connected as @danialrh_7
+2025-07-07T15:45:02: [SUBMIT] Checking approval status for @danialrh_7...
+2025-07-07T15:45:03: [SUBMIT] Approval status: true
+2025-07-07T15:45:03: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T15:45:03: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T15:45:03: [SUBMIT] User's current points: 940
+2025-07-07T15:45:03: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T15:45:03: 📝 Fetched tweet content: Success
+2025-07-07T15:45:04: [SUBMIT] Deducting 500 points from user @danialrh_7
+2025-07-07T15:45:05: [SUBMIT] Successfully deducted 500 points. New balance: 440
+2025-07-07T15:45:05: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T15:45:05: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T16:21:29: 📥 Received interaction: 2 - Command: submit - User: saka_sol
+2025-07-07T16:21:29: 🎯 Processing command: submit
+2025-07-07T16:21:29: [SUBMIT] User saka_sol submitting tweet: https://x.com/saka_sol/status/1942317770831716787?t=k6QbFQGFtPygtMwu8tqC3w&s=19
+2025-07-07T16:21:29: [SUBMIT] Tweet ID extracted: 1942317770831716787
+2025-07-07T16:21:29: [SUBMIT] User connected as @saka_sol
+2025-07-07T16:21:29: [SUBMIT] Checking approval status for @saka_sol...
+2025-07-07T16:21:30: [SUBMIT] Approval status: true
+2025-07-07T16:21:30: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T16:21:30: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T16:21:30: [SUBMIT] User's current points: 540
+2025-07-07T16:21:30: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T16:21:30: 📝 Fetched tweet content: Success
+2025-07-07T16:21:31: [SUBMIT] Deducting 500 points from user @saka_sol
+2025-07-07T16:21:31: [SUBMIT] Successfully deducted 500 points. New balance: 40
+2025-07-07T16:21:31: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T16:21:32: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T16:28:38: 📥 Received interaction: 2 - Command: submit - User: afshinx06
+2025-07-07T16:28:38: 🎯 Processing command: submit
+2025-07-07T16:28:38: [SUBMIT] User afshinx06 submitting tweet: https://x.com/afshinx06/status/1942318230376165852?t=IxmUqxVh9DhA_isLWFwSiw&s=19
+2025-07-07T16:28:38: [SUBMIT] Tweet ID extracted: 1942318230376165852
+2025-07-07T16:28:38: [SUBMIT] User connected as @afshinx06
+2025-07-07T16:28:38: [SUBMIT] Checking approval status for @afshinx06...
+2025-07-07T16:28:39: [SUBMIT] Approval status: true
+2025-07-07T16:28:39: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-07T16:28:39: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-07T16:28:39: [SUBMIT] User's current points: 550
+2025-07-07T16:28:39: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-07T16:28:39: 📝 Fetched tweet content: Success
+2025-07-07T16:28:40: [SUBMIT] Deducting 500 points from user @afshinx06
+2025-07-07T16:28:40: [SUBMIT] Successfully deducted 500 points. New balance: 50
+2025-07-07T16:28:40: Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: true
+}
+2025-07-07T16:28:41: ✅ Posted tweet preview to #engagement-tracker
+2025-07-07T16:30:21: [SHARD 0] Reconnecting... 2025-07-07T20:30:21.200Z
+2025-07-07T16:30:21: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T16:31:20: 📥 Received interaction: 2 - Command: leaderboard - User: nervyesi1
+2025-07-07T16:31:20: 🎯 Processing command: leaderboard
+2025-07-07T16:54:36: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-07T16:54:36: 🎯 Processing command: points
+2025-07-07T16:56:02: 📥 Received interaction: 2 - Command: leaderboard - User: navlld
+2025-07-07T16:56:02: 🎯 Processing command: leaderboard
+2025-07-07T17:01:23: 📥 Received interaction: 2 - Command: leaderboard - User: afshinx06
+2025-07-07T17:01:23: 🎯 Processing command: leaderboard
+2025-07-07T17:02:40: [SHARD 0] Reconnecting... 2025-07-07T21:02:40.663Z
+2025-07-07T17:02:41: 📥 Received interaction: 2 - Command: points - User: afshinx06
+2025-07-07T17:02:41: 🎯 Processing command: points
+2025-07-07T17:02:41: [SHARD 0] Resumed, replayed 2 events
+2025-07-07T17:16:13: 📥 Received interaction: 2 - Command: leaderboard - User: _flux96
+2025-07-07T17:16:13: 🎯 Processing command: leaderboard
+2025-07-07T17:16:40: 📥 Received interaction: 2 - Command: points - User: _flux96
+2025-07-07T17:16:40: 🎯 Processing command: points
+2025-07-07T18:16:24: 📥 Received interaction: 2 - Command: leaderboard - User: bull_base
+2025-07-07T18:16:24: 🎯 Processing command: leaderboard
+2025-07-07T18:47:05: 📥 Received interaction: 2 - Command: points - User: salar07503
+2025-07-07T18:47:05: 🎯 Processing command: points
+2025-07-07T19:01:43: 📥 Received interaction: 2 - Command: points - User: saka_sol
+2025-07-07T19:01:43: 🎯 Processing command: points
+2025-07-07T19:07:17: [SHARD 0] Reconnecting... 2025-07-07T23:07:17.083Z
+2025-07-07T19:07:17: [SHARD 0] Resumed, replayed 1 events
+2025-07-07T19:18:51: 📥 Received interaction: 2 - Command: connect - User: pouya_zarei81_06102
+2025-07-07T19:18:51: 🎯 Processing command: connect
+2025-07-07T21:31:19: [SHARD 0] Reconnecting... 2025-07-08T01:31:19.901Z
+2025-07-07T21:31:20: [SHARD 0] Resumed, replayed 1 events
+2025-07-08T00:38:13: [SHARD 0] Reconnecting... 2025-07-08T04:38:13.540Z
+2025-07-08T00:38:14: [SHARD 0] Resumed, replayed 1 events

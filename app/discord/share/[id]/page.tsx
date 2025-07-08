@@ -125,6 +125,8 @@ function DiscordSharePageContent() {
   const [isPublicShare, setIsPublicShare] = useState(false)
   const searchParams = useSearchParams()
   const timeframe = searchParams.get('timeframe') || 'weekly'
+  const startDate = searchParams.get('startDate') || ''
+  const endDate = searchParams.get('endDate') || ''
   
   // Convert URL-safe format back to normal format
   // Handle both %3A (URL-encoded colon) and -- (double dash) formats
@@ -218,8 +220,17 @@ function DiscordSharePageContent() {
           setProject(projectData)
           console.log('Discord Share: Public project loaded:', projectData.name)
           
-          // Fetch analytics with public flag
-          const analyticsRes = await fetch(`/api/discord/projects/${encodeURIComponent(projectId)}/analytics?timeframe=${timeframe}&public=true`, {
+          // Fetch analytics with public flag and custom date parameters
+          let analyticsUrl = `/api/discord/projects/${encodeURIComponent(projectId)}/analytics?timeframe=${timeframe}&public=true`
+          
+          // Add custom date parameters if timeframe is custom
+          if (timeframe === 'custom' && startDate && endDate) {
+            analyticsUrl += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`
+          }
+          
+          console.log('Discord Share: Fetching analytics from:', analyticsUrl)
+          
+          const analyticsRes = await fetch(analyticsUrl, {
             headers: {
               'Content-Type': 'application/json',
             }
@@ -421,8 +432,15 @@ function DiscordSharePageContent() {
             }
           }
           
-          // Fetch analytics
-          const analyticsRes = await fetch(`/api/discord/projects/${encodeURIComponent(projectId)}/analytics?timeframe=${timeframe}`, {
+          // Fetch analytics with custom date parameters if needed
+          let analyticsUrl = `/api/discord/projects/${encodeURIComponent(projectId)}/analytics?timeframe=${timeframe}`
+          
+          // Add custom date parameters if timeframe is custom
+          if (timeframe === 'custom' && startDate && endDate) {
+            analyticsUrl += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`
+          }
+          
+          const analyticsRes = await fetch(analyticsUrl, {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
@@ -452,7 +470,7 @@ function DiscordSharePageContent() {
     }
     
     checkAccessAndFetchData()
-  }, [session, status, projectId, timeframe])
+  }, [session, status, projectId, timeframe, startDate, endDate])
 
   // Memoize sentiment evolution data to prevent recalculation on every render
   const sentimentEvolutionData = React.useMemo(() => {
@@ -680,7 +698,10 @@ function DiscordSharePageContent() {
   const timeframeLabel = timeframe === 'daily' ? 'Last 24 Hours' : 
                         timeframe === 'weekly' ? 'Last 7 Days' : 
                         timeframe === 'monthly' ? 'Last 30 Days' :
-                        timeframe === 'allTime' ? 'All Time' : 'Last 7 Days'
+                        timeframe === 'allTime' ? 'All Time' :
+                        timeframe === 'custom' && startDate && endDate ? 
+                          `${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}` :
+                        'Last 7 Days'
 
   return (
     <div className="min-h-screen bg-black text-white">

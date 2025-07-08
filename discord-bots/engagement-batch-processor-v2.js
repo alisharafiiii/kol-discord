@@ -91,26 +91,34 @@ async function checkRateLimit() {
     // New window, reset counter
     await redis.set(windowKey, now)
     await redis.set(rateLimitKey, 0)
-    return { allowed: true, current: 0, remaining: RATE_LIMIT.MAX_REQUESTS_PER_WINDOW }
+    return { 
+      allowed: true, 
+      current: 0, 
+      remaining: RATE_LIMIT.MAX_REQUESTS_PER_WINDOW,
+      resetTime: now + RATE_LIMIT.WINDOW_DURATION_MS
+    }
   }
   
   // Get current count
   const current = parseInt(await redis.get(rateLimitKey) || 0)
+  const resetTime = parseInt(windowStart) + RATE_LIMIT.WINDOW_DURATION_MS
   
   if (current >= RATE_LIMIT.MAX_REQUESTS_PER_WINDOW) {
-    const timeUntilReset = RATE_LIMIT.WINDOW_DURATION_MS - (now - windowStart)
+    const timeUntilReset = resetTime - now
     return { 
       allowed: false, 
       current, 
       remaining: 0,
-      resetIn: Math.ceil(timeUntilReset / 1000 / 60) // minutes
+      resetIn: Math.ceil(timeUntilReset / 1000 / 60), // minutes
+      resetTime
     }
   }
   
   return { 
     allowed: true, 
     current, 
-    remaining: RATE_LIMIT.MAX_REQUESTS_PER_WINDOW - current 
+    remaining: RATE_LIMIT.MAX_REQUESTS_PER_WINDOW - current,
+    resetTime
   }
 }
 
@@ -165,72 +173,68 @@ async function updateBatchStatus(batchId, status, data = {}) {
 
 // Process a single tweet with rate limiting
 async function processTweet(tweet, batchId, shouldAwardPoints = true) {
-  const result = {
-    tweetId: tweet.tweetId,
-    metrics: null,
-    engagements: [],
-    error: null,
-    apiCallsUsed: 0
-  }
+  const startTime = Date.now()
+  const engagements = []
+  let apiCallsUsed = 0
+  
+  console.log(`\n📝 Processing tweet ${tweet.tweetId} by @${tweet.authorHandle}`)
   
   try {
-    // Check rate limit before making API calls
-    const rateCheck = await checkRateLimit()
-    if (!rateCheck.allowed) {
-      throw new Error(`Rate limit exceeded. Reset in ${rateCheck.resetIn} minutes`)
+    // First check rate limit
+    const currentRateStatus = await checkRateLimit()
+    console.log(`   🔍 Current API usage: ${currentRateStatus.current}/${RATE_LIMIT.MAX_REQUESTS_PER_WINDOW} (${currentRateStatus.remaining} remaining)`)
+    
+    if (!currentRateStatus.allowed) {
+      console.log(`   ❌ Rate limit exceeded - skipping tweet`)
+      return {
+        engagements: [],
+        apiCallsUsed: 0,
+        error: 'Rate limit exceeded'
+      }
     }
     
-    await log('DEBUG', `Processing tweet ${tweet.tweetId}`)
-    
-    // API Call 1: Fetch retweets using retweeted_by endpoint
-    await log('DEBUG', `Fetching retweets for tweet ${tweet.tweetId}`)
-    
-    // ========== IMPROVEMENT: Enhanced Error Handling & Logging ==========
+    // Fetch retweets
+    console.log(`   📊 Fetching retweets...`)
     try {
       const retweetsData = await readOnlyClient.v2.tweetRetweetedBy(tweet.tweetId, {
         max_results: 100,
         'user.fields': ['username']
       })
       
-      await incrementRateLimit(1)
-      result.apiCallsUsed++
+      await incrementRateLimit()
+      apiCallsUsed++
       
       // Process retweets
       if (retweetsData && retweetsData.data && Array.isArray(retweetsData.data)) {
         for (const user of retweetsData.data) {
-          if (user && user.username) {
-            result.engagements.push({
+          if (user && user.username && user.username !== tweet.authorHandle) {
+            engagements.push({
               type: 'retweet',
-              username: user.username.toLowerCase(),
-              userId: user.id
+              username: user.username.toLowerCase()
             })
           }
         }
-        await log('DEBUG', `Found ${retweetsData.data.length} retweets for tweet ${tweet.tweetId}`)
+        console.log(`   ✅ Found ${retweetsData.data.length} retweets (API calls used: ${apiCallsUsed})`)
       } else {
-        await log('DEBUG', `No retweets found for tweet ${tweet.tweetId}`)
+        console.log(`   ✅ Found 0 retweets (API calls used: ${apiCallsUsed})`)
       }
     } catch (retweetError) {
-      // ====== SMART RATE LIMIT HANDLING ======
+      // Handle rate limit
       if (retweetError.code === 429 || retweetError.statusCode === 429) {
         const resetTime = extractRateLimitInfo(retweetError)
         if (resetTime) {
           twitterRateLimitReset = resetTime
         }
-        throw retweetError // Re-throw to stop processing
+        throw retweetError
       }
-      // ======================================
-      
+      console.log(`   ⚠️ Failed to fetch retweets: ${retweetError.message}`)
       await log('WARN', `Failed to fetch retweets for ${tweet.tweetId}`, {
         error: retweetError.message
       })
     }
-    // ========== END IMPROVEMENT: Enhanced Error Handling & Logging ==========
     
-    // API Call 2: Fetch replies using search endpoint
-    await log('DEBUG', `Fetching replies for tweet ${tweet.tweetId}`)
-    
-    // ========== IMPROVEMENT: Enhanced Error Handling & Logging ==========
+    // Fetch replies
+    console.log(`   📊 Fetching replies...`)
     try {
       const repliesData = await readOnlyClient.v2.search(
         `conversation_id:${tweet.tweetId}`,
@@ -242,90 +246,82 @@ async function processTweet(tweet, batchId, shouldAwardPoints = true) {
         }
       )
       
-      await incrementRateLimit(1)
-      result.apiCallsUsed++
+      await incrementRateLimit()
+      apiCallsUsed++
       
-      // ===== FIX FOR NESTED TWEETS IN REPLIES DATA =====
-      // Twitter API v2 sometimes returns data in a nested structure
+      // Process replies  
       let replies = []
       if (!Array.isArray(repliesData.data) && repliesData.data && repliesData.data.data) {
-        // Handle nested structure: response.data.data contains the tweets array
         replies = repliesData.data.data
       } else if (Array.isArray(repliesData.data)) {
-        // Handle direct array structure
         replies = repliesData.data
-      } else {
-        // No valid tweets found
-        replies = []
       }
-      // ===== END FIX FOR NESTED TWEETS =====
       
-      // Process replies
-      if (replies && replies.length > 0) {
-        // Only process if we have users data
-        if (repliesData.includes?.users && Array.isArray(repliesData.includes.users)) {
-          const authorMap = new Map()
-          repliesData.includes.users.forEach(user => {
-            authorMap.set(user.id, user.username)
-          })
-          
-          // Count all tweets returned by the conversation_id search as replies
-          // The search already filters by conversation_id, so all results are part of the thread
-          for (const reply of replies) {
-            const username = authorMap.get(reply.author_id)
-            
-            if (username) {
-              result.engagements.push({
-                type: 'reply',
-                username: username.toLowerCase(),
-                userId: reply.author_id
-              })
-            }
+      if (replies && replies.length > 0 && repliesData.includes?.users) {
+        const authorMap = new Map()
+        repliesData.includes.users.forEach(user => {
+          authorMap.set(user.id, user.username)
+        })
+        
+        for (const reply of replies) {
+          const username = authorMap.get(reply.author_id)
+          if (username && username !== tweet.authorHandle) {
+            engagements.push({
+              type: 'reply',
+              username: username.toLowerCase()
+            })
           }
-          
-          await log('DEBUG', `Found ${replies.length} replies in conversation thread for tweet ${tweet.tweetId}`)
-        } else {
-          await log('DEBUG', `No user data in replies response for tweet ${tweet.tweetId}`)
         }
+        console.log(`   ✅ Found ${replies.length} replies (API calls used: ${apiCallsUsed})`)
       } else {
-        await log('DEBUG', `No replies found for tweet ${tweet.tweetId}`)
+        console.log(`   ✅ Found 0 replies (API calls used: ${apiCallsUsed})`)
       }
     } catch (repliesError) {
-      // ====== SMART RATE LIMIT HANDLING ======
+      // Handle rate limit
       if (repliesError.code === 429 || repliesError.statusCode === 429) {
         const resetTime = extractRateLimitInfo(repliesError)
         if (resetTime) {
           twitterRateLimitReset = resetTime
         }
-        throw repliesError // Re-throw to stop processing
+        throw repliesError
       }
-      // ======================================
-      
+      console.log(`   ⚠️ Failed to fetch replies: ${repliesError.message}`)
       await log('WARN', `Failed to fetch replies for ${tweet.tweetId}`, {
         error: repliesError.message
       })
     }
-    // ========== END IMPROVEMENT: Enhanced Error Handling & Logging ==========
     
-    // Removed the extra metrics API call to stay within rate limits
-    // We already have engagement data from the retweets and replies calls
+    // Log final API usage for this tweet
+    const finalRateStatus = await checkRateLimit()
+    console.log(`   📈 Tweet processing complete:`)
+    console.log(`      • Engagements found: ${engagements.length}`)
+    console.log(`      • API calls used: ${apiCallsUsed}`)
+    console.log(`      • API remaining: ${finalRateStatus.remaining}`)
     
-    await log('SUCCESS', `Processed tweet ${tweet.tweetId}`, {
-      engagementsFound: result.engagements.length,
-      apiCallsUsed: result.apiCallsUsed,
-      retweets: result.engagements.filter(e => e.type === 'retweet').length,
-      replies: result.engagements.filter(e => e.type === 'reply').length
+    if (finalRateStatus.remaining < 5) {
+      console.log(`   ⚠️  WARNING: Only ${finalRateStatus.remaining} API calls remaining!`)
+    }
+    
+    const processingTime = Date.now() - startTime
+    await log('INFO', `Processed tweet ${tweet.tweetId}`, {
+      engagements: engagements.length,
+      apiCallsUsed,
+      processingTime: `${processingTime}ms`,
+      remainingApiCalls: finalRateStatus.remaining
     })
+    
+    return {
+      engagements,
+      apiCallsUsed
+    }
     
   } catch (error) {
-    result.error = error.message
-    await log('ERROR', `Failed to process tweet ${tweet.tweetId}`, {
-      error: error.message,
-      stack: error.stack
-    })
+    return {
+      engagements: [],
+      apiCallsUsed: 0,
+      error: error.message
+    }
   }
-  
-  return result
 }
 
 // Award points for engagements
@@ -370,6 +366,13 @@ async function awardPoints(tweet, engagements, batchId) {
       // Check if already awarded
       const existingLog = await redis.get(`engagement:interaction:${tweet.tweetId}:${connection}:retweet`)
       if (!existingLog) {
+        // Log points calculation
+        console.log(`💰 Awarding RETWEET points:`)
+        console.log(`   • User: @${engagement.username} (${tier} tier)`)
+        console.log(`   • Base Points: ${retweetRule?.points || 35}`)
+        console.log(`   • Multiplier: ${bonusMultiplier}x`)
+        console.log(`   • Total Points: ${points}`)
+        
         // Award retweet points
         const logId = nanoid()
         await redis.json.set(`engagement:log:${logId}`, '$', {
@@ -402,6 +405,8 @@ async function awardPoints(tweet, engagements, batchId) {
         if (!usersAwardedLikePoints.has(connection)) {
           const likeRule = await redis.json.get(`engagement:rules:${tier}-like`)
           const likePoints = Math.round((likeRule?.points || 10) * bonusMultiplier)
+          
+          console.log(`   • Auto-awarding LIKE points: ${likePoints}`)
           
           const likeLogId = nanoid()
           await redis.json.set(`engagement:log:${likeLogId}`, '$', {
@@ -443,6 +448,13 @@ async function awardPoints(tweet, engagements, batchId) {
       // Check if already awarded
       const existingLog = await redis.get(`engagement:interaction:${tweet.tweetId}:${connection}:reply`)
       if (!existingLog) {
+        // Log points calculation
+        console.log(`💰 Awarding REPLY/COMMENT points:`)
+        console.log(`   • User: @${engagement.username} (${tier} tier)`)
+        console.log(`   • Base Points: ${replyRule?.points || 20}`)
+        console.log(`   • Multiplier: ${bonusMultiplier}x`)
+        console.log(`   • Total Points: ${points}`)
+        
         // Award reply points
         const logId = nanoid()
         await redis.json.set(`engagement:log:${logId}`, '$', {
@@ -475,6 +487,8 @@ async function awardPoints(tweet, engagements, batchId) {
         if (!usersAwardedLikePoints.has(connection)) {
           const likeRule = await redis.json.get(`engagement:rules:${tier}-like`)
           const likePoints = Math.round((likeRule?.points || 10) * bonusMultiplier)
+          
+          console.log(`   • Auto-awarding LIKE points: ${likePoints}`)
           
           const likeLogId = nanoid()
           await redis.json.set(`engagement:log:${likeLogId}`, '$', {
@@ -545,15 +559,57 @@ async function processBatch() {
     startTime: toEdtIsoString(batchStartTime) 
   })
   
-
+  // ========== LOG CURRENT POINTS CONFIGURATION ==========
+  console.log('\n' + '='.repeat(60))
+  console.log('📊 FETCHING CURRENT POINTS CONFIGURATION')
+  console.log('='.repeat(60))
   
-  // Check rate limit before starting
+  // Fetch and display current point rules from database
+  const tiers = ['micro', 'rising', 'star', 'legend', 'hero']
+  const pointsConfig = {}
+  
+  for (const tier of tiers) {
+    const retweetRule = await redis.json.get(`engagement:rules:${tier}-retweet`)
+    const replyRule = await redis.json.get(`engagement:rules:${tier}-reply`)
+    const likeRule = await redis.json.get(`engagement:rules:${tier}-like`)
+    
+    pointsConfig[tier] = {
+      retweet: retweetRule?.points || 35,
+      reply: replyRule?.points || 20,
+      like: likeRule?.points || 10
+    }
+    
+    console.log(`\n📌 ${tier.toUpperCase()} Tier Points:`)
+    console.log(`   • Retweet: ${pointsConfig[tier].retweet} points`)
+    console.log(`   • Reply/Comment: ${pointsConfig[tier].reply} points`)
+    console.log(`   • Like: ${pointsConfig[tier].like} points (auto-awarded with RT/Reply)`)
+  }
+  
+  await log('INFO', '📊 Points configuration loaded', { pointsConfig })
+  console.log('\n' + '='.repeat(60) + '\n')
+
+  // ========== CHECK AND LOG RATE LIMIT STATUS ==========
   const initialRateCheck = await checkRateLimit()
+  
+  console.log('🔍 TWITTER API RATE LIMIT STATUS')
+  console.log('='.repeat(40))
+  console.log(`📈 Requests Used: ${initialRateCheck.current}/${RATE_LIMIT.MAX_REQUESTS_PER_WINDOW}`)
+  console.log(`📉 Requests Remaining: ${initialRateCheck.remaining}`)
+  console.log(`⏰ Reset Time: ${initialRateCheck.resetTime ? toEdtIsoString(new Date(initialRateCheck.resetTime)) : 'Unknown'}`)
+  console.log(`✅ Can Proceed: ${initialRateCheck.allowed ? 'YES' : 'NO'}`)
+  
+  if (initialRateCheck.remaining < 10) {
+    console.log('⚠️  WARNING: Approaching rate limit! Only ${initialRateCheck.remaining} requests remaining.')
+  }
+  
   await log('INFO', '📊 Initial rate limit check', {
     current: initialRateCheck.current,
     remaining: initialRateCheck.remaining,
-    allowed: initialRateCheck.allowed
+    allowed: initialRateCheck.allowed,
+    resetTime: initialRateCheck.resetTime ? toEdtIsoString(new Date(initialRateCheck.resetTime)) : null
   })
+  
+  console.log('='.repeat(40) + '\n')
   
   if (!initialRateCheck.allowed) {
     await log('ERROR', '❌ Cannot start batch - rate limit exceeded', {
@@ -829,6 +885,41 @@ async function processBatch() {
     
     // ========== IMPROVEMENT: Prevent Concurrent Batches ==========
     isBatchRunning = false
+    
+    // Trim old batches (keep only last 100)
+    const oldBatches = await redis.zrange('engagement:batches', 0, -101)
+    if (oldBatches.length > 0) {
+      await redis.zrem('engagement:batches', ...oldBatches)
+      for (const oldId of oldBatches) {
+        await redis.del(`engagement:batch:${oldId}`)
+      }
+    }
+    
+    // ========== CLEAR CACHES AFTER BATCH ==========
+    // Clear engagement caches to ensure fresh data
+    const cacheKeys = await redis.keys('engagement:cache:*')
+    if (cacheKeys.length > 0) {
+      await redis.del(...cacheKeys)
+      console.log(`🗑️ Cleared ${cacheKeys.length} cache entries after batch completion`)
+      await log('INFO', `Cleared ${cacheKeys.length} cache entries`, { batchId })
+    }
+    
+    await log('SUCCESS', `✅ Batch completed successfully`, {
+      batchId,
+      startTime: toEdtIsoString(batchStartTime),
+      endTime: toEdtIsoString(new Date()),
+      duration: `${(Date.now() - batchStartTime.getTime()) / 1000}s`,
+      summary: {
+        tweetsProcessed: batchJob.tweetsProcessed,
+        engagementsFound: totalEngagements,
+        pointsAwarded: totalPointsAwarded,
+        apiCallsUsed: totalApiCalls,
+        retweets: engagementSummary.retweets,
+        replies: engagementSummary.replies,
+        uniqueUsers: engagementSummary.uniqueUsers.size,
+        errors: errors.length
+      }
+    })
     
   } catch (error) {
     batchJob.status = 'failed'

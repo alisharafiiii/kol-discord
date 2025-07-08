@@ -204,36 +204,42 @@ export class EngagementService {
   
   // Leaderboard
   static async getLeaderboard(limit: number = 50): Promise<LeaderboardEntry[]> {
+    // Check cache first
+    const cacheKey = `engagement:cache:leaderboard:${limit}`
+    const cached = await redis.get(cacheKey)
+    if (cached) {
+      console.log('[EngagementService] Returning cached leaderboard')
+      return JSON.parse(cached)
+    }
+    
+    console.log('[EngagementService] Building leaderboard from scratch...')
+    const startTime = Date.now()
+    
     const keys = await redis.keys('engagement:connection:*')
     const entries: LeaderboardEntry[] = []
     
-    for (const key of keys) {
-      const connection = await redis.json.get(key) as TwitterConnection
-      if (connection) {
-        // Calculate weekly points from recent logs
-        const weekCutoff = Date.now() - (7 * 24 * 60 * 60 * 1000)
-        const weeklyLogIds = await redis.zrange(
-          `engagement:user:${connection.discordId}:logs`,
-          weekCutoff,
-          '+inf',
-          { byScore: true }
-        )
+    // Batch fetch all connections
+    const batchSize = 50
+    for (let i = 0; i < keys.length; i += batchSize) {
+      const batchKeys = keys.slice(i, i + batchSize)
+      const batchPromises = batchKeys.map(async (key: string) => {
+        const connection = await redis.json.get(key) as TwitterConnection
+        if (!connection) return null
         
-        let weeklyPoints = 0
-        for (const logId of weeklyLogIds) {
-          const log = await redis.json.get(`engagement:log:${logId}`) as EngagementLog
-          if (log) weeklyPoints += log.points
-        }
-        
-        entries.push({
+        // For now, set weekly points to 0 to optimize initial load
+        // We can calculate these in a background job
+        return {
           discordId: connection.discordId,
           twitterHandle: connection.twitterHandle,
           tier: connection.tier,
           totalPoints: connection.totalPoints,
-          weeklyPoints,
+          weeklyPoints: 0,
           rank: 0
-        })
-      }
+        } as LeaderboardEntry
+      })
+      
+      const batchResults = await Promise.all(batchPromises)
+      entries.push(...batchResults.filter(Boolean) as LeaderboardEntry[])
     }
     
     // Sort by total points and assign ranks
@@ -242,7 +248,124 @@ export class EngagementService {
       entry.rank = index + 1
     })
     
-    return entries.slice(0, limit)
+    const result = entries.slice(0, limit)
+    
+    // Cache for 5 minutes
+    await redis.setex(cacheKey, 300, JSON.stringify(result))
+    
+    const duration = Date.now() - startTime
+    console.log(`[EngagementService] Leaderboard built in ${duration}ms for ${entries.length} users`)
+    
+    return result
+  }
+  
+  // Optimized method to get all opted-in users with minimal Redis calls
+  static async getOptedInUsersOptimized(): Promise<any[]> {
+    // Check cache first
+    const cacheKey = 'engagement:cache:opted-in-users'
+    const cached = await redis.get(cacheKey)
+    if (cached) {
+      console.log('[EngagementService] Returning cached opted-in users')
+      return JSON.parse(cached)
+    }
+    
+    console.log('[EngagementService] Building opted-in users list from scratch...')
+    const startTime = Date.now()
+    
+    const connections = await redis.keys('engagement:connection:*')
+    const users = []
+    const seenHandles = new Set<string>()
+    
+    // Process in batches for better performance
+    const batchSize = 50
+    for (let i = 0; i < connections.length; i += batchSize) {
+      const batch = connections.slice(i, i + batchSize)
+      const batchPromises = batch.map(async (connectionKey: string) => {
+        const connection = await redis.json.get(connectionKey) as any
+        if (!connection) return null
+        
+        // Skip duplicates
+        const handle = connection.twitterHandle?.toLowerCase()
+        if (!handle || seenHandles.has(handle)) return null
+        seenHandles.add(handle)
+        
+        // Basic user data - skip expensive lookups for now
+        return {
+          discordId: connection.discordId,
+          twitterHandle: connection.twitterHandle,
+          tier: connection.tier || 'micro',
+          totalPoints: connection.totalPoints || 0,
+          // These will be populated by a background job
+          profilePicture: `https://unavatar.io/twitter/${connection.twitterHandle}`,
+          discordUsername: '',
+          discordServers: ['Nabulines'],
+          tweetsSubmitted: 0,
+          totalLikes: 0,
+          totalRetweets: 0,
+          totalComments: 0
+        }
+      })
+      
+      const batchResults = await Promise.all(batchPromises)
+      users.push(...batchResults.filter(Boolean))
+    }
+    
+    // Sort by total points
+    users.sort((a, b) => b.totalPoints - a.totalPoints)
+    
+    // Cache for 5 minutes
+    await redis.setex(cacheKey, 300, JSON.stringify(users))
+    
+    const duration = Date.now() - startTime
+    console.log(`[EngagementService] Opted-in users built in ${duration}ms for ${users.length} users`)
+    
+    return users
+  }
+  
+  // Method to update user stats in background
+  static async updateUserStatsBackground(discordId: string): Promise<void> {
+    try {
+      // Count submitted tweets
+      let tweetsSubmitted = 0
+      const recentTweetIds = await redis.zrange('engagement:tweets:recent', 0, -1)
+      for (const tweetId of recentTweetIds) {
+        const tweet = await redis.json.get(`engagement:tweet:${tweetId}`) as any
+        if (tweet && tweet.submitterDiscordId === discordId) {
+          tweetsSubmitted++
+        }
+      }
+      
+      // Count engagements
+      let totalLikes = 0, totalRetweets = 0, totalComments = 0
+      const engagementLogs = await this.getUserEngagements(discordId, 1000)
+      for (const log of engagementLogs) {
+        switch (log.interactionType) {
+          case 'like': totalLikes++; break
+          case 'retweet': totalRetweets++; break
+          case 'reply': totalComments++; break
+        }
+      }
+      
+      // Store stats
+      await redis.hset(`engagement:user:${discordId}:stats`, {
+        tweetsSubmitted,
+        totalLikes,
+        totalRetweets,
+        totalComments,
+        lastUpdated: Date.now()
+      })
+    } catch (error) {
+      console.error(`Error updating stats for ${discordId}:`, error)
+    }
+  }
+  
+  // Clear caches
+  static async clearCaches(): Promise<void> {
+    const cacheKeys = await redis.keys('engagement:cache:*')
+    if (cacheKeys.length > 0) {
+      await redis.del(...cacheKeys)
+      console.log(`[EngagementService] Cleared ${cacheKeys.length} cache entries`)
+    }
   }
   
   // Default point rules setup - base points for all tiers

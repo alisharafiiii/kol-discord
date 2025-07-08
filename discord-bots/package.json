@@ -4,6 +4,7 @@
   "description": "Discord bots for KOL platform engagement tracking",
   "dependencies": {
     "@pm2/io": "^6.1.0",
+    "node-fetch": "^2.7.0",
     "nodemailer": "^7.0.4"
   }
 }

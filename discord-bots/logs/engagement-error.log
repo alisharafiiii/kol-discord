@@ -30042,3 +30042,24 @@
 2025-07-06T17:21:31:    Please grant these permissions to the bot for full functionality
 2025-07-06T17:21:31: ⚠️  Bot role position too low in NABU LINES
 2025-07-06T17:21:31:    Move bot role above 'kol' role to enable role assignment
+2025-07-07T05:35:14: Error in /recent command: CombinedPropertyError (1)
+  Received one or more errors
+
+  input[0]
+  | CombinedPropertyError (1)
+  |   Received one or more errors
+  | 
+  |   input.value
+  |   | ExpectedConstraintError > s.string().lengthLessThanOrEqual()
+  |   |   Invalid string length
+  |   | 
+  |   |   Expected: expected.length <= 1024
+  |   | 
+  |   |   Received:
+  |   |   | '**1. @zahrazareiw**\n"Can i get Gm😺🌞\n\n               Have a good Monday friends🍭 https://t.co/FI9mrfDtG8"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/zahrazareiw/status/1942143234848776683?t=3WRw2TbnlZealnpt_G6Kvg&s=19)\n\n**2. @hadimasoudii**\n"🏀 Not just a block,it\'s a digital defense!\n\nWith @Ledger , hackers don’t get to shoot at the hoop,W..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/hadimasoudii/status/1942136401434189881?t=YogqdXBY7sWWLtmT0N26xQ&s=19)\n\n**3. @SAOWEB3**\n"Tired of jumping between dashboards and chains? Same here!\n\nBeen using @Infinit_Labs for a few days,..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/SAOWEB3/status/1942114933287596380?t=Muadkb1scTEzg5E2vIhV9A&s=19)\n\n**4. @chillparia**\n".@anoma isn’t just another chain \nit’s a new way to coordinate value.\n\nDeclare what you want (intent..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/chillparia/status/1941589555531993484?s=46&t=UrsGf5PZAnbtk5N3Me3pwA)\n\n**5. @Azerakk**\n"I\'m so happy to be a believer of \n\n➛ @NetworkNoya\n\n➛ And @NetworkNoya\n\n➛ And again @NetworkNoya\n\n Al..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/Azerakk/status/1941954783155216424)\n\n**6. @Relaxedtony**\n"So I checked out @wardenprotocol for real.\n\nTurns out it’s not just another “AI crypto” hype train.\n..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/Relaxedtony/status/1941901024278598136)\n\n**7. @bull_base**\n"Good morning web3 ✨️ https://t.co/wDNCcLFF9U"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/bull_base/status/1941875549627945314?t=J35ZHyovt8Ajdemwg2LtIQ&s=19)\n\n**8. @iamrexorex**\n"Gm, what\'s the plan today? https://t.co/H4p5PZC9FC"\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/iamrexorex/status/1941775451245936686?t=84ZgBpIVrqqjp-Lm05xovw&s=19)\n\n**9. @parsa_nftt**\n"Currently sitting at #11 on the 7-day @JoinSapien leaderboard and #29 on the 30-day 👀\n\nGoal? Lockin..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/parsa_nftt/status/1941872219195343072?s=46)\n\n**10. @yaldamasoudi**\n"Been digging into @anoma lately, and here’s what finally made it click for me:\n\nMost blockchains are..."\n💰 1x points | ⭐ Tier micro | [View Tweet](https://x.com/yaldamasoudi/status/1941885033247043977?s=46)\n\n'
+
+    at _ArrayValidator.handle (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:1254:70)
+    at _ArrayValidator.parse (/Users/nabu/kol/node_modules/@sapphire/shapeshift/dist/cjs/index.cjs:972:90)
+    at EmbedBuilder.addFields (/Users/nabu/kol/node_modules/@discordjs/builders/dist/index.js:235:31)
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:1100:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
