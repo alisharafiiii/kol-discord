@@ -170,3 +170,659 @@
 {"timestamp":"2025-07-08T05:01:06.958Z","level":"INFO","message":"📊 Rate limit status","used":4,"remaining":116,"limit":120,"percentUsed":3}
 {"timestamp":"2025-07-08T05:01:07.719Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"EQn4MN52wpn_z3aSichQP","startTime":"2025-07-08T05:00:00.621Z","endTime":"2025-07-08T05:01:07.719Z","duration":"67.098s","summary":{"tweetsProcessed":13,"engagementsFound":163,"pointsAwarded":0,"apiCallsUsed":10,"retweets":10,"replies":153,"uniqueUsers":92,"errors":8}}
 {"timestamp":"2025-07-08T06:00:00.411Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"Srq4cP6jnhJvS6LC0_tgy","startTime":"2025-07-08T06:00:00.411Z"}
+{"timestamp":"2025-07-08T06:00:01.816Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T06:00:02.095Z","level":"INFO","message":"📊 Initial rate limit check","current":4,"remaining":116,"allowed":true,"resetTime":"2025-07-08T06:00:21.061Z"}
+{"timestamp":"2025-07-08T06:00:02.670Z","level":"INFO","message":"📊 Found 13 tweets from last 24 hours","batchId":"Srq4cP6jnhJvS6LC0_tgy","tweetCount":13,"maxAllowed":60}
+{"timestamp":"2025-07-08T06:00:05.147Z","level":"INFO","message":"Processed tweet 1942114933287596380","engagements":42,"apiCallsUsed":2,"processingTime":"1516ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T06:00:20.512Z","level":"INFO","message":"Processed tweet 1942136401434189881","engagements":0,"apiCallsUsed":2,"processingTime":"1033ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T06:00:23.166Z","level":"INFO","message":"Processed tweet 1942143234848776683","engagements":63,"apiCallsUsed":2,"processingTime":"2124ms","remainingApiCalls":120}
+{"timestamp":"2025-07-08T06:00:40.212Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":36,"apiCallsUsed":2,"processingTime":"1359ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T06:00:52.767Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":25,"apiCallsUsed":2,"processingTime":"1305ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T06:00:53.226Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T06:01:04.709Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T06:01:04.712Z","level":"INFO","message":"Points awarded for tweet 1942292590801371399","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-08T06:01:12.877Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"Srq4cP6jnhJvS6LC0_tgy","duration":"1 minutes","summary":{"tweetsProcessed":13,"engagementsFound":166,"pointsAwarded":40,"apiCallsUsed":10,"retweets":10,"replies":156,"uniqueUsers":93,"errors":8}}
+{"timestamp":"2025-07-08T06:01:13.064Z","level":"INFO","message":"📊 Rate limit status","used":4,"remaining":116,"limit":120,"percentUsed":3}
+{"timestamp":"2025-07-08T06:01:13.793Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"Srq4cP6jnhJvS6LC0_tgy","startTime":"2025-07-08T06:00:00.411Z","endTime":"2025-07-08T06:01:13.793Z","duration":"73.382s","summary":{"tweetsProcessed":13,"engagementsFound":166,"pointsAwarded":40,"apiCallsUsed":10,"retweets":10,"replies":156,"uniqueUsers":93,"errors":8}}
+{"timestamp":"2025-07-08T07:00:00.492Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"y4-5I9h-z1VQzZST-2qWj","startTime":"2025-07-08T07:00:00.492Z"}
+{"timestamp":"2025-07-08T07:00:01.933Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T07:00:02.226Z","level":"INFO","message":"📊 Initial rate limit check","current":4,"remaining":116,"allowed":true,"resetTime":"2025-07-08T07:00:22.480Z"}
+{"timestamp":"2025-07-08T07:00:02.964Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"y4-5I9h-z1VQzZST-2qWj","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T07:00:05.296Z","level":"INFO","message":"Processed tweet 1942136401434189881","engagements":0,"apiCallsUsed":2,"processingTime":"1388ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T07:00:07.584Z","level":"INFO","message":"Processed tweet 1942143234848776683","engagements":65,"apiCallsUsed":2,"processingTime":"1435ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T07:00:26.419Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":36,"apiCallsUsed":2,"processingTime":"1771ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T07:00:40.214Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":25,"apiCallsUsed":2,"processingTime":"1388ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T07:00:40.679Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T07:00:47.933Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T07:00:50.020Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":65,"apiCallsUsed":2,"processingTime":"1536ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T07:01:51.254Z","level":"INFO","message":"Points awarded for tweet 1942120456892387474","summary":{"likes":233,"retweets":165,"replies":510,"total":908},"userCount":18}
+{"timestamp":"2025-07-08T07:01:57.930Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"y4-5I9h-z1VQzZST-2qWj","duration":"2 minutes","summary":{"tweetsProcessed":12,"engagementsFound":191,"pointsAwarded":908,"apiCallsUsed":10,"retweets":8,"replies":183,"uniqueUsers":99,"errors":7}}
+{"timestamp":"2025-07-08T07:01:58.219Z","level":"INFO","message":"📊 Rate limit status","used":6,"remaining":114,"limit":120,"percentUsed":5}
+{"timestamp":"2025-07-08T07:01:58.935Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"y4-5I9h-z1VQzZST-2qWj","startTime":"2025-07-08T07:00:00.492Z","endTime":"2025-07-08T07:01:58.935Z","duration":"118.443s","summary":{"tweetsProcessed":12,"engagementsFound":191,"pointsAwarded":908,"apiCallsUsed":10,"retweets":8,"replies":183,"uniqueUsers":99,"errors":7}}
+{"timestamp":"2025-07-08T08:00:00.468Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"4qKB1Rr9qIKd-MLk3cGwv","startTime":"2025-07-08T08:00:00.468Z"}
+{"timestamp":"2025-07-08T08:00:01.829Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T08:00:02.016Z","level":"INFO","message":"📊 Initial rate limit check","current":6,"remaining":114,"allowed":true,"resetTime":"2025-07-08T08:00:24.648Z"}
+{"timestamp":"2025-07-08T08:00:02.293Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"4qKB1Rr9qIKd-MLk3cGwv","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T08:00:03.699Z","level":"INFO","message":"Processed tweet 1942136401434189881","engagements":0,"apiCallsUsed":2,"processingTime":"769ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T08:00:05.264Z","level":"INFO","message":"Processed tweet 1942143234848776683","engagements":63,"apiCallsUsed":2,"processingTime":"1195ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T08:00:21.133Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":36,"apiCallsUsed":2,"processingTime":"1125ms","remainingApiCalls":108}
+{"timestamp":"2025-07-08T08:00:33.561Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":27,"apiCallsUsed":2,"processingTime":"1008ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T08:00:34.018Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T08:00:41.540Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T08:00:43.004Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":65,"apiCallsUsed":2,"processingTime":"1093ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T08:01:06.427Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"4qKB1Rr9qIKd-MLk3cGwv","duration":"1 minutes","summary":{"tweetsProcessed":12,"engagementsFound":191,"pointsAwarded":0,"apiCallsUsed":10,"retweets":8,"replies":183,"uniqueUsers":98,"errors":7}}
+{"timestamp":"2025-07-08T08:01:06.612Z","level":"INFO","message":"📊 Rate limit status","used":4,"remaining":116,"limit":120,"percentUsed":3}
+{"timestamp":"2025-07-08T08:01:07.017Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"4qKB1Rr9qIKd-MLk3cGwv","startTime":"2025-07-08T08:00:00.468Z","endTime":"2025-07-08T08:01:07.017Z","duration":"66.549s","summary":{"tweetsProcessed":12,"engagementsFound":191,"pointsAwarded":0,"apiCallsUsed":10,"retweets":8,"replies":183,"uniqueUsers":98,"errors":7}}
+{"timestamp":"2025-07-08T09:00:00.538Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"_VAY_lWWBRj5ErtvMf1cB","startTime":"2025-07-08T09:00:00.538Z"}
+{"timestamp":"2025-07-08T09:00:01.931Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T09:00:02.115Z","level":"INFO","message":"📊 Initial rate limit check","current":4,"remaining":116,"allowed":true,"resetTime":"2025-07-08T09:00:32.553Z"}
+{"timestamp":"2025-07-08T09:00:02.388Z","level":"INFO","message":"📊 Found 10 tweets from last 24 hours","batchId":"_VAY_lWWBRj5ErtvMf1cB","tweetCount":10,"maxAllowed":60}
+{"timestamp":"2025-07-08T09:00:04.164Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":37,"apiCallsUsed":2,"processingTime":"1138ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T09:00:16.710Z","level":"INFO","message":"Points awarded for tweet 1942142064717689255","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-08T09:00:17.984Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":30,"apiCallsUsed":2,"processingTime":"900ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T09:00:18.444Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T09:00:29.618Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T09:00:29.621Z","level":"INFO","message":"Points awarded for tweet 1942292590801371399","summary":{"likes":20,"retweets":0,"replies":60,"total":80},"userCount":2}
+{"timestamp":"2025-07-08T09:00:31.202Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1210ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T09:00:48.710Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1121ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T09:00:51.372Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:00:55.633Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:00:58.429Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:00:58.431Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:00.295Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:00.297Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:00.298Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:01.727Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:01.728Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.519Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.522Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.523Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.524Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.525Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.527Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.528Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.529Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:06.530Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:12.134Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T09:01:12.230Z","level":"INFO","message":"Points awarded for tweet 1942197812860527080","summary":{"likes":150,"retweets":40,"replies":450,"total":640},"userCount":15}
+{"timestamp":"2025-07-08T09:01:13.678Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":50,"apiCallsUsed":2,"processingTime":"1074ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T09:01:44.109Z","level":"INFO","message":"Points awarded for tweet 1942240543624573233","summary":{"likes":170,"retweets":80,"replies":510,"total":760},"userCount":17}
+{"timestamp":"2025-07-08T09:01:47.792Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"_VAY_lWWBRj5ErtvMf1cB","duration":"2 minutes","summary":{"tweetsProcessed":10,"engagementsFound":227,"pointsAwarded":1520,"apiCallsUsed":10,"retweets":15,"replies":212,"uniqueUsers":107,"errors":5}}
+{"timestamp":"2025-07-08T09:01:47.980Z","level":"INFO","message":"📊 Rate limit status","used":4,"remaining":116,"limit":120,"percentUsed":3}
+{"timestamp":"2025-07-08T09:01:48.411Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"_VAY_lWWBRj5ErtvMf1cB","startTime":"2025-07-08T09:00:00.538Z","endTime":"2025-07-08T09:01:48.411Z","duration":"107.873s","summary":{"tweetsProcessed":10,"engagementsFound":227,"pointsAwarded":1520,"apiCallsUsed":10,"retweets":15,"replies":212,"uniqueUsers":107,"errors":5}}
+{"timestamp":"2025-07-08T10:00:00.470Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"sPEgCbW9ztJS7HELSbLTF","startTime":"2025-07-08T10:00:00.470Z"}
+{"timestamp":"2025-07-08T10:00:01.863Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T10:00:02.051Z","level":"INFO","message":"📊 Initial rate limit check","current":4,"remaining":116,"allowed":true,"resetTime":"2025-07-08T10:00:47.590Z"}
+{"timestamp":"2025-07-08T10:00:02.332Z","level":"INFO","message":"📊 Found 10 tweets from last 24 hours","batchId":"sPEgCbW9ztJS7HELSbLTF","tweetCount":10,"maxAllowed":60}
+{"timestamp":"2025-07-08T10:00:04.067Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":38,"apiCallsUsed":2,"processingTime":"1087ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T10:00:16.793Z","level":"INFO","message":"Points awarded for tweet 1942142064717689255","summary":{"likes":10,"retweets":20,"replies":0,"total":30},"userCount":1}
+{"timestamp":"2025-07-08T10:00:18.224Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":30,"apiCallsUsed":2,"processingTime":"1054ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T10:00:18.691Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T10:00:27.343Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T10:00:28.822Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1102ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T10:00:45.463Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1077ms","remainingApiCalls":108}
+{"timestamp":"2025-07-08T10:00:46.391Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:47.891Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:48.822Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:48.825Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:49.750Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:49.752Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:49.754Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:50.223Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:50.224Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.076Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.079Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.082Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.083Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.085Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.086Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.089Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.090Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:52.092Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:55.016Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T10:00:56.801Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":50,"apiCallsUsed":2,"processingTime":"1238ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T10:01:14.952Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"sPEgCbW9ztJS7HELSbLTF","duration":"1 minutes","summary":{"tweetsProcessed":10,"engagementsFound":228,"pointsAwarded":30,"apiCallsUsed":10,"retweets":16,"replies":212,"uniqueUsers":107,"errors":5}}
+{"timestamp":"2025-07-08T10:01:15.145Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-08T10:01:15.601Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"sPEgCbW9ztJS7HELSbLTF","startTime":"2025-07-08T10:00:00.470Z","endTime":"2025-07-08T10:01:15.601Z","duration":"75.131s","summary":{"tweetsProcessed":10,"engagementsFound":228,"pointsAwarded":30,"apiCallsUsed":10,"retweets":16,"replies":212,"uniqueUsers":107,"errors":5}}
+{"timestamp":"2025-07-08T11:00:00.415Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"qYLBa35SW79JKFE0ko5r9","startTime":"2025-07-08T11:00:00.415Z"}
+{"timestamp":"2025-07-08T11:00:01.938Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T11:00:02.187Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true,"resetTime":"2025-07-08T11:00:55.563Z"}
+{"timestamp":"2025-07-08T11:00:02.787Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"qYLBa35SW79JKFE0ko5r9","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T11:00:04.717Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":38,"apiCallsUsed":2,"processingTime":"1289ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T11:00:17.691Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":39,"apiCallsUsed":2,"processingTime":"991ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T11:00:18.145Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.236Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.237Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.238Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.238Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.238Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.239Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.239Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.240Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:18.240Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:27.517Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T11:00:28.960Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1075ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T11:00:45.266Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1066ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T11:00:46.169Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:47.914Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:49.376Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:49.378Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:50.397Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:50.398Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:50.398Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:50.863Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:50.865Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.761Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.763Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.766Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.768Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.770Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.773Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.777Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.780Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:52.781Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:55.384Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T11:00:57.618Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":51,"apiCallsUsed":2,"processingTime":"1539ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T11:01:12.888Z","level":"INFO","message":"Points awarded for tweet 1942240543624573233","summary":{"likes":10,"retweets":20,"replies":0,"total":30},"userCount":1}
+{"timestamp":"2025-07-08T11:01:18.301Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"qYLBa35SW79JKFE0ko5r9","duration":"1 minutes","summary":{"tweetsProcessed":12,"engagementsFound":238,"pointsAwarded":30,"apiCallsUsed":10,"retweets":17,"replies":221,"uniqueUsers":107,"errors":7}}
+{"timestamp":"2025-07-08T11:01:18.484Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-08T11:01:19.024Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"qYLBa35SW79JKFE0ko5r9","startTime":"2025-07-08T11:00:00.415Z","endTime":"2025-07-08T11:01:19.024Z","duration":"78.609s","summary":{"tweetsProcessed":12,"engagementsFound":238,"pointsAwarded":30,"apiCallsUsed":10,"retweets":17,"replies":221,"uniqueUsers":107,"errors":7}}
+{"timestamp":"2025-07-08T12:00:00.362Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"uWIQwvGzLbWb86xzcfKvd","startTime":"2025-07-08T12:00:00.362Z"}
+{"timestamp":"2025-07-08T12:00:01.790Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T12:00:01.984Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true,"resetTime":"2025-07-08T12:00:56.080Z"}
+{"timestamp":"2025-07-08T12:00:02.610Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"uWIQwvGzLbWb86xzcfKvd","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T12:00:04.576Z","level":"INFO","message":"Processed tweet 1942142064717689255","engagements":38,"apiCallsUsed":2,"processingTime":"1298ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T12:00:19.272Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":39,"apiCallsUsed":2,"processingTime":"1025ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T12:00:19.809Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.899Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.900Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.900Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.900Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.901Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.901Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.901Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.902Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:19.902Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:28.808Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T12:00:30.376Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1162ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T12:00:47.173Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"973ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T12:00:48.057Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:49.475Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:50.367Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:50.369Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:51.256Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:51.258Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:51.258Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:51.755Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:51.757Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.066Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.068Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.070Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.073Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.074Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.076Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.077Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.079Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:54.080Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:56.719Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T12:00:58.696Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1529ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T12:01:17.453Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"uWIQwvGzLbWb86xzcfKvd","duration":"1 minutes","summary":{"tweetsProcessed":12,"engagementsFound":239,"pointsAwarded":0,"apiCallsUsed":10,"retweets":17,"replies":222,"uniqueUsers":107,"errors":7}}
+{"timestamp":"2025-07-08T12:01:17.656Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-08T12:01:18.179Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"uWIQwvGzLbWb86xzcfKvd","startTime":"2025-07-08T12:00:00.362Z","endTime":"2025-07-08T12:01:18.178Z","duration":"77.816s","summary":{"tweetsProcessed":12,"engagementsFound":239,"pointsAwarded":0,"apiCallsUsed":10,"retweets":17,"replies":222,"uniqueUsers":107,"errors":7}}
+{"timestamp":"2025-07-08T13:00:00.493Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"s6xLcgWm8Ogh5S_7WaL97","startTime":"2025-07-08T13:00:00.493Z"}
+{"timestamp":"2025-07-08T13:00:01.850Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T13:00:02.145Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true,"resetTime":"2025-07-08T13:00:57.167Z"}
+{"timestamp":"2025-07-08T13:00:02.420Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"s6xLcgWm8Ogh5S_7WaL97","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-08T13:00:04.118Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":39,"apiCallsUsed":2,"processingTime":"1063ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T13:00:04.572Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.663Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.664Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.665Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.665Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.665Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.666Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.666Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.666Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:04.666Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:13.972Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T13:00:15.667Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1326ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T13:00:33.073Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1034ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T13:00:34.390Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:36.248Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:37.177Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:37.179Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:38.163Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:38.163Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:38.164Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:38.686Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:38.688Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.486Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.489Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.491Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.493Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.494Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.496Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.497Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.499Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:40.501Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:43.021Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T13:00:45.039Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1565ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T13:01:01.051Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":51,"apiCallsUsed":2,"processingTime":"1133ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T13:01:23.590Z","level":"INFO","message":"Points awarded for tweet 1942297765570064780","summary":{"likes":130,"retweets":20,"replies":390,"total":540},"userCount":13}
+{"timestamp":"2025-07-08T13:01:28.553Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"s6xLcgWm8Ogh5S_7WaL97","duration":"1 minutes","summary":{"tweetsProcessed":11,"engagementsFound":252,"pointsAwarded":540,"apiCallsUsed":10,"retweets":16,"replies":236,"uniqueUsers":126,"errors":6}}
+{"timestamp":"2025-07-08T13:01:28.735Z","level":"INFO","message":"📊 Rate limit status","used":2,"remaining":118,"limit":120,"percentUsed":2}
+{"timestamp":"2025-07-08T13:01:29.357Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"s6xLcgWm8Ogh5S_7WaL97","startTime":"2025-07-08T13:00:00.493Z","endTime":"2025-07-08T13:01:29.357Z","duration":"88.864s","summary":{"tweetsProcessed":11,"engagementsFound":252,"pointsAwarded":540,"apiCallsUsed":10,"retweets":16,"replies":236,"uniqueUsers":126,"errors":6}}
+{"timestamp":"2025-07-08T14:00:00.499Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"D7qFCwwKBlUZAKrdehH7Q","startTime":"2025-07-08T14:00:00.499Z"}
+{"timestamp":"2025-07-08T14:00:01.871Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T14:00:02.057Z","level":"INFO","message":"📊 Initial rate limit check","current":2,"remaining":118,"allowed":true,"resetTime":"2025-07-08T14:00:59.919Z"}
+{"timestamp":"2025-07-08T14:00:02.339Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"D7qFCwwKBlUZAKrdehH7Q","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-08T14:00:04.114Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":40,"apiCallsUsed":2,"processingTime":"1137ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T14:00:04.573Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.757Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.759Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.761Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.762Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.764Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.766Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.766Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.767Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:04.768Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:13.308Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T14:00:14.810Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1135ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T14:00:31.153Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1049ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T14:00:32.072Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:33.538Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:34.451Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:34.454Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:35.365Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:35.367Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:35.369Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:35.824Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:35.827Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.643Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.646Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.647Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.649Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.650Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.651Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.653Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.654Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:37.655Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:40.200Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T14:00:41.835Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1178ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T14:00:57.171Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":51,"apiCallsUsed":2,"processingTime":"1066ms","remainingApiCalls":108}
+{"timestamp":"2025-07-08T14:01:11.968Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"D7qFCwwKBlUZAKrdehH7Q","duration":"1 minutes","summary":{"tweetsProcessed":11,"engagementsFound":253,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":237,"uniqueUsers":127,"errors":6}}
+{"timestamp":"2025-07-08T14:01:12.155Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}
+{"timestamp":"2025-07-08T14:01:12.682Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"D7qFCwwKBlUZAKrdehH7Q","startTime":"2025-07-08T14:00:00.499Z","endTime":"2025-07-08T14:01:12.682Z","duration":"72.183s","summary":{"tweetsProcessed":11,"engagementsFound":253,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":237,"uniqueUsers":127,"errors":6}}
+{"timestamp":"2025-07-08T15:00:00.404Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"MVIH_wj0qep2B_zWQUhQb","startTime":"2025-07-08T15:00:00.404Z"}
+{"timestamp":"2025-07-08T15:00:01.768Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T15:00:01.996Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T15:01:08.076Z"}
+{"timestamp":"2025-07-08T15:00:02.274Z","level":"INFO","message":"📊 Found 11 tweets from last 24 hours","batchId":"MVIH_wj0qep2B_zWQUhQb","tweetCount":11,"maxAllowed":60}
+{"timestamp":"2025-07-08T15:00:04.678Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":40,"apiCallsUsed":2,"processingTime":"1244ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T15:00:05.170Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.369Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.371Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.373Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.374Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.376Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.378Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.379Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.381Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:05.385Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:13.835Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T15:00:15.444Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1237ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T15:00:32.970Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1166ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T15:00:33.881Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:35.323Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:36.228Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:36.230Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:37.134Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:37.135Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:37.135Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:37.584Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:37.585Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.397Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.400Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.402Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.403Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.404Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.407Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.409Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.412Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:39.414Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:41.978Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T15:00:43.732Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1193ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T15:00:59.621Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":51,"apiCallsUsed":2,"processingTime":"1147ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T15:01:14.557Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"MVIH_wj0qep2B_zWQUhQb","duration":"1 minutes","summary":{"tweetsProcessed":11,"engagementsFound":253,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":237,"uniqueUsers":127,"errors":6}}
+{"timestamp":"2025-07-08T15:01:14.743Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}
+{"timestamp":"2025-07-08T15:01:15.256Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"MVIH_wj0qep2B_zWQUhQb","startTime":"2025-07-08T15:00:00.404Z","endTime":"2025-07-08T15:01:15.256Z","duration":"74.852s","summary":{"tweetsProcessed":11,"engagementsFound":253,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":237,"uniqueUsers":127,"errors":6}}
+{"timestamp":"2025-07-08T16:00:00.728Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"k8WTKi2_mnAMUn2trJV4d","startTime":"2025-07-08T16:00:00.728Z"}
+{"timestamp":"2025-07-08T16:00:02.127Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T16:00:02.366Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T16:01:10.768Z"}
+{"timestamp":"2025-07-08T16:00:02.714Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"k8WTKi2_mnAMUn2trJV4d","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T16:00:04.512Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":40,"apiCallsUsed":2,"processingTime":"1157ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T16:00:04.970Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.151Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.153Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.154Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.156Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.157Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.158Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.160Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.161Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:05.163Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:14.130Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T16:00:15.681Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1183ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T16:00:32.877Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1032ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T16:00:33.777Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:35.219Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:36.124Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:36.126Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:37.350Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:37.353Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:37.355Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:38.127Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:38.128Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.231Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.234Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.236Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.237Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.238Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.239Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.241Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.243Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:40.245Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:42.859Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T16:00:44.560Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1235ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T16:01:00.750Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":52,"apiCallsUsed":2,"processingTime":"1527ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T16:01:13.144Z","level":"INFO","message":"Points awarded for tweet 1942297765570064780","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-08T16:01:18.152Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"k8WTKi2_mnAMUn2trJV4d","duration":"1 minutes","summary":{"tweetsProcessed":12,"engagementsFound":254,"pointsAwarded":40,"apiCallsUsed":10,"retweets":16,"replies":238,"uniqueUsers":127,"errors":7}}
+{"timestamp":"2025-07-08T16:01:18.335Z","level":"INFO","message":"📊 Rate limit status","used":0,"remaining":120,"limit":120,"percentUsed":0}
+{"timestamp":"2025-07-08T16:01:18.736Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"k8WTKi2_mnAMUn2trJV4d","startTime":"2025-07-08T16:00:00.728Z","endTime":"2025-07-08T16:01:18.736Z","duration":"78.008s","summary":{"tweetsProcessed":12,"engagementsFound":254,"pointsAwarded":40,"apiCallsUsed":10,"retweets":16,"replies":238,"uniqueUsers":127,"errors":7}}
+{"timestamp":"2025-07-08T17:00:00.422Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"MrRRZIln_ffHpu-h2RzZI","startTime":"2025-07-08T17:00:00.422Z"}
+{"timestamp":"2025-07-08T17:00:01.775Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T17:00:01.956Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T17:01:13.513Z"}
+{"timestamp":"2025-07-08T17:00:02.230Z","level":"INFO","message":"📊 Found 13 tweets from last 24 hours","batchId":"MrRRZIln_ffHpu-h2RzZI","tweetCount":13,"maxAllowed":60}
+{"timestamp":"2025-07-08T17:00:03.992Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":40,"apiCallsUsed":2,"processingTime":"1126ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T17:00:04.446Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.628Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.629Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.630Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.631Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.632Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.632Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.633Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.634Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:04.634Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:12.711Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T17:00:14.189Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1115ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T17:00:30.107Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1047ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T17:00:30.990Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:32.407Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:33.298Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:33.301Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:34.188Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:34.189Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:34.191Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:34.636Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:34.637Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.406Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.407Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.408Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.409Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.410Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.411Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.412Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.413Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:36.414Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:38.908Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T17:00:40.469Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1108ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T17:00:55.186Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":53,"apiCallsUsed":2,"processingTime":"1122ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T17:01:11.174Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"MrRRZIln_ffHpu-h2RzZI","duration":"1 minutes","summary":{"tweetsProcessed":13,"engagementsFound":255,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":239,"uniqueUsers":127,"errors":8}}
+{"timestamp":"2025-07-08T17:01:11.357Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T17:01:11.801Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"MrRRZIln_ffHpu-h2RzZI","startTime":"2025-07-08T17:00:00.422Z","endTime":"2025-07-08T17:01:11.801Z","duration":"71.379s","summary":{"tweetsProcessed":13,"engagementsFound":255,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":239,"uniqueUsers":127,"errors":8}}
+{"timestamp":"2025-07-08T18:00:00.577Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"c90F7OZNDLNm3LAy1CThF","startTime":"2025-07-08T18:00:00.577Z"}
+{"timestamp":"2025-07-08T18:00:01.914Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T18:00:02.096Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T19:00:00.047Z"}
+{"timestamp":"2025-07-08T18:00:02.372Z","level":"INFO","message":"📊 Found 14 tweets from last 24 hours","batchId":"c90F7OZNDLNm3LAy1CThF","tweetCount":14,"maxAllowed":60}
+{"timestamp":"2025-07-08T18:00:04.198Z","level":"INFO","message":"Processed tweet 1942292590801371399","engagements":40,"apiCallsUsed":2,"processingTime":"1200ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T18:00:04.647Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.825Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.827Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.829Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.830Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.832Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.833Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.835Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.836Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:04.838Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:12.829Z","level":"DEBUG","message":"Skipping self-engagement: @yaldamasoudi on their own tweet 1942292590801371399"}
+{"timestamp":"2025-07-08T18:00:14.340Z","level":"INFO","message":"Processed tweet 1942120456892387474","engagements":63,"apiCallsUsed":2,"processingTime":"1151ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T18:00:30.394Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1061ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T18:00:31.287Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:32.702Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:33.599Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:33.602Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:34.485Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:34.487Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:34.489Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:34.932Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:34.935Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.703Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.706Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.708Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.709Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.710Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.711Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.713Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.715Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:36.717Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:39.228Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T18:00:40.888Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1120ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T18:00:55.501Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":53,"apiCallsUsed":2,"processingTime":"1077ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T18:01:12.315Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"c90F7OZNDLNm3LAy1CThF","duration":"1 minutes","summary":{"tweetsProcessed":14,"engagementsFound":255,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":239,"uniqueUsers":127,"errors":9}}
+{"timestamp":"2025-07-08T18:01:12.496Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T18:01:12.919Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"c90F7OZNDLNm3LAy1CThF","startTime":"2025-07-08T18:00:00.577Z","endTime":"2025-07-08T18:01:12.919Z","duration":"72.342s","summary":{"tweetsProcessed":14,"engagementsFound":255,"pointsAwarded":0,"apiCallsUsed":10,"retweets":16,"replies":239,"uniqueUsers":127,"errors":9}}
+{"timestamp":"2025-07-08T19:00:00.507Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"RVuh4FQ_tU0WzcPZWQ6mV","startTime":"2025-07-08T19:00:00.507Z"}
+{"timestamp":"2025-07-08T19:00:01.898Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T19:00:02.088Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T20:00:00.054Z"}
+{"timestamp":"2025-07-08T19:00:02.373Z","level":"INFO","message":"📊 Found 12 tweets from last 24 hours","batchId":"RVuh4FQ_tU0WzcPZWQ6mV","tweetCount":12,"maxAllowed":60}
+{"timestamp":"2025-07-08T19:00:04.260Z","level":"INFO","message":"Processed tweet 1942197812860527080","engagements":47,"apiCallsUsed":2,"processingTime":"1132ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T19:00:05.209Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:06.694Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:07.618Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:07.620Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:08.549Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:08.551Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:08.553Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:09.017Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:09.019Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.868Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.870Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.871Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.873Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.874Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.875Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.877Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.879Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:10.880Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:13.474Z","level":"DEBUG","message":"Skipping self-engagement: @alivakilzade1 on their own tweet 1942197812860527080"}
+{"timestamp":"2025-07-08T19:00:15.121Z","level":"INFO","message":"Processed tweet 1942240543624573233","engagements":52,"apiCallsUsed":2,"processingTime":"1180ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T19:00:30.198Z","level":"INFO","message":"Processed tweet 1942297765570064780","engagements":53,"apiCallsUsed":2,"processingTime":"1057ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T19:00:42.794Z","level":"INFO","message":"Processed tweet 1942306609511752188","engagements":26,"apiCallsUsed":2,"processingTime":"998ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T19:01:02.894Z","level":"INFO","message":"Points awarded for tweet 1942306609511752188","summary":{"likes":140,"retweets":20,"replies":420,"total":580},"userCount":14}
+{"timestamp":"2025-07-08T19:01:04.380Z","level":"INFO","message":"Processed tweet 1942305180327809407","engagements":37,"apiCallsUsed":2,"processingTime":"1112ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T19:01:30.709Z","level":"INFO","message":"Points awarded for tweet 1942305180327809407","summary":{"likes":180,"retweets":20,"replies":540,"total":740},"userCount":18}
+{"timestamp":"2025-07-08T19:01:35.636Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"RVuh4FQ_tU0WzcPZWQ6mV","duration":"2 minutes","summary":{"tweetsProcessed":12,"engagementsFound":215,"pointsAwarded":1320,"apiCallsUsed":10,"retweets":13,"replies":202,"uniqueUsers":109,"errors":7}}
+{"timestamp":"2025-07-08T19:01:35.825Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T19:01:36.375Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"RVuh4FQ_tU0WzcPZWQ6mV","startTime":"2025-07-08T19:00:00.507Z","endTime":"2025-07-08T19:01:36.375Z","duration":"95.868s","summary":{"tweetsProcessed":12,"engagementsFound":215,"pointsAwarded":1320,"apiCallsUsed":10,"retweets":13,"replies":202,"uniqueUsers":109,"errors":7}}
+{"timestamp":"2025-07-08T20:00:00.594Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"8GZKcTZa0QABCKOqpo33P","startTime":"2025-07-08T20:00:00.594Z"}
+{"timestamp":"2025-07-08T20:00:02.438Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T20:00:02.686Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T21:00:00.056Z"}
+{"timestamp":"2025-07-08T20:00:03.295Z","level":"INFO","message":"📊 Found 7 tweets from last 24 hours","batchId":"8GZKcTZa0QABCKOqpo33P","tweetCount":7,"maxAllowed":60}
+{"timestamp":"2025-07-08T20:00:05.122Z","level":"INFO","message":"Processed tweet 1942317770831716787","engagements":24,"apiCallsUsed":2,"processingTime":"1152ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T20:00:22.691Z","level":"INFO","message":"Points awarded for tweet 1942317770831716787","summary":{"likes":130,"retweets":0,"replies":390,"total":520},"userCount":13}
+{"timestamp":"2025-07-08T20:00:24.001Z","level":"INFO","message":"Processed tweet 1942318230376165852","engagements":21,"apiCallsUsed":2,"processingTime":"945ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T20:00:42.564Z","level":"INFO","message":"Points awarded for tweet 1942318230376165852","summary":{"likes":140,"retweets":0,"replies":420,"total":560},"userCount":14}
+{"timestamp":"2025-07-08T20:00:43.940Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"965ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T20:01:06.494Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":20,"replies":450,"total":630},"userCount":16}
+{"timestamp":"2025-07-08T20:01:07.995Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":47,"apiCallsUsed":2,"processingTime":"1140ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T20:01:34.527Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":190,"retweets":0,"replies":570,"total":760},"userCount":19}
+{"timestamp":"2025-07-08T20:01:36.055Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":53,"apiCallsUsed":2,"processingTime":"1168ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T20:01:50.618Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":70,"retweets":20,"replies":210,"total":300},"userCount":7}
+{"timestamp":"2025-07-08T20:01:52.214Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"8GZKcTZa0QABCKOqpo33P","duration":"2 minutes","summary":{"tweetsProcessed":7,"engagementsFound":167,"pointsAwarded":2770,"apiCallsUsed":10,"retweets":6,"replies":161,"uniqueUsers":101,"errors":2}}
+{"timestamp":"2025-07-08T20:01:52.393Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T20:01:52.979Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"8GZKcTZa0QABCKOqpo33P","startTime":"2025-07-08T20:00:00.594Z","endTime":"2025-07-08T20:01:52.979Z","duration":"112.385s","summary":{"tweetsProcessed":7,"engagementsFound":167,"pointsAwarded":2770,"apiCallsUsed":10,"retweets":6,"replies":161,"uniqueUsers":101,"errors":2}}
+{"timestamp":"2025-07-08T21:00:00.463Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"LM0MigG8oeaKBW4FYDN22","startTime":"2025-07-08T21:00:00.463Z"}
+{"timestamp":"2025-07-08T21:00:01.792Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":20,"reply":30,"like":10},"rising":{"retweet":30,"reply":45,"like":15},"star":{"retweet":40,"reply":60,"like":20},"legend":{"retweet":50,"reply":75,"like":25},"hero":{"retweet":60,"reply":90,"like":30}}}
+{"timestamp":"2025-07-08T21:00:02.060Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-08T22:00:01.794Z"}
+{"timestamp":"2025-07-08T21:00:02.328Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"LM0MigG8oeaKBW4FYDN22","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-08T21:00:03.931Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"982ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T21:00:13.191Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":47,"apiCallsUsed":2,"processingTime":"1088ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T21:00:26.798Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":56,"apiCallsUsed":2,"processingTime":"1152ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T21:00:35.823Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":10,"retweets":0,"replies":30,"total":40},"userCount":1}
+{"timestamp":"2025-07-08T21:00:37.164Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":32,"apiCallsUsed":2,"processingTime":"986ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T21:00:52.258Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":20,"replies":300,"total":420},"userCount":10}
+{"timestamp":"2025-07-08T21:00:53.539Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"924ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T21:01:10.475Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":360,"total":480},"userCount":12}
+{"timestamp":"2025-07-08T21:01:10.832Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"LM0MigG8oeaKBW4FYDN22","duration":"1 minutes","summary":{"tweetsProcessed":5,"engagementsFound":174,"pointsAwarded":940,"apiCallsUsed":10,"retweets":5,"replies":169,"uniqueUsers":103,"errors":0}}
+{"timestamp":"2025-07-08T21:01:11.053Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T21:01:11.452Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"LM0MigG8oeaKBW4FYDN22","startTime":"2025-07-08T21:00:00.463Z","endTime":"2025-07-08T21:01:11.452Z","duration":"70.989s","summary":{"tweetsProcessed":5,"engagementsFound":174,"pointsAwarded":940,"apiCallsUsed":10,"retweets":5,"replies":169,"uniqueUsers":103,"errors":0}}
+{"timestamp":"2025-07-08T22:00:00.305Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"AiMkV0-c9DZr_TLk_5N1n","startTime":"2025-07-08T22:00:00.305Z"}
+{"timestamp":"2025-07-08T22:00:01.756Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-08T22:00:01.936Z","level":"INFO","message":"📊 Initial rate limit check","current":10,"remaining":110,"allowed":true,"resetTime":"2025-07-08T22:00:01.794Z"}
+{"timestamp":"2025-07-08T22:00:02.208Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"AiMkV0-c9DZr_TLk_5N1n","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-08T22:00:03.908Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1078ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T22:00:27.896Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-08T22:00:29.449Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":47,"apiCallsUsed":2,"processingTime":"1195ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T22:01:00.197Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":190,"retweets":0,"replies":380,"total":570},"userCount":19}
+{"timestamp":"2025-07-08T22:01:02.096Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":52,"apiCallsUsed":2,"processingTime":"1314ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T22:01:19.630Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-08T22:01:20.982Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":32,"apiCallsUsed":2,"processingTime":"989ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T22:01:37.212Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":35,"replies":200,"total":335},"userCount":10}
+{"timestamp":"2025-07-08T22:01:38.725Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"1010ms","remainingApiCalls":110}
+{"timestamp":"2025-07-08T22:01:56.974Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-08T22:01:57.474Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"AiMkV0-c9DZr_TLk_5N1n","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":170,"pointsAwarded":2045,"apiCallsUsed":10,"retweets":5,"replies":165,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-08T22:01:57.655Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-08T22:01:58.291Z","level":"INFO","message":"Cleared 2 cache entries","batchId":"AiMkV0-c9DZr_TLk_5N1n"}
+{"timestamp":"2025-07-08T22:01:58.292Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"AiMkV0-c9DZr_TLk_5N1n","startTime":"2025-07-08T22:00:00.305Z","endTime":"2025-07-08T22:01:58.292Z","duration":"117.987s","summary":{"tweetsProcessed":5,"engagementsFound":170,"pointsAwarded":2045,"apiCallsUsed":10,"retweets":5,"replies":165,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-08T23:00:00.347Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"q7NwVc8PwDseLl6Ri16gC","startTime":"2025-07-08T23:00:00.347Z"}
+{"timestamp":"2025-07-08T23:00:01.705Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-08T23:00:01.889Z","level":"INFO","message":"📊 Initial rate limit check","current":10,"remaining":110,"allowed":true,"resetTime":"2025-07-08T23:00:02.830Z"}
+{"timestamp":"2025-07-08T23:00:02.168Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"q7NwVc8PwDseLl6Ri16gC","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-08T23:00:03.997Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1179ms","remainingApiCalls":120}
+{"timestamp":"2025-07-08T23:00:24.793Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-08T23:00:26.265Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":47,"apiCallsUsed":2,"processingTime":"1121ms","remainingApiCalls":118}
+{"timestamp":"2025-07-08T23:00:52.615Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":190,"retweets":0,"replies":380,"total":570},"userCount":19}
+{"timestamp":"2025-07-08T23:00:54.093Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1113ms","remainingApiCalls":116}
+{"timestamp":"2025-07-08T23:01:09.259Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-08T23:01:10.627Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":32,"apiCallsUsed":2,"processingTime":"998ms","remainingApiCalls":114}
+{"timestamp":"2025-07-08T23:01:26.020Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":35,"replies":200,"total":335},"userCount":10}
+{"timestamp":"2025-07-08T23:01:27.299Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"914ms","remainingApiCalls":112}
+{"timestamp":"2025-07-08T23:01:42.750Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-08T23:01:43.110Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"q7NwVc8PwDseLl6Ri16gC","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":169,"pointsAwarded":2045,"apiCallsUsed":10,"retweets":5,"replies":164,"uniqueUsers":100,"errors":0}}
+{"timestamp":"2025-07-08T23:01:43.291Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-08T23:01:43.807Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"q7NwVc8PwDseLl6Ri16gC","startTime":"2025-07-08T23:00:00.347Z","endTime":"2025-07-08T23:01:43.807Z","duration":"103.46s","summary":{"tweetsProcessed":5,"engagementsFound":169,"pointsAwarded":2045,"apiCallsUsed":10,"retweets":5,"replies":164,"uniqueUsers":100,"errors":0}}
+{"timestamp":"2025-07-09T00:00:00.360Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"l-hGiqulgYXS2zVHzU5Uh","startTime":"2025-07-09T00:00:00.360Z"}
+{"timestamp":"2025-07-09T00:00:01.727Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T00:00:01.909Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T00:00:03.723Z"}
+{"timestamp":"2025-07-09T00:00:02.204Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"l-hGiqulgYXS2zVHzU5Uh","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T00:00:04.166Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1313ms","remainingApiCalls":120}
+{"timestamp":"2025-07-09T00:00:25.206Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T00:00:26.798Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":47,"apiCallsUsed":2,"processingTime":"1223ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T00:00:53.815Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":190,"retweets":0,"replies":380,"total":570},"userCount":19}
+{"timestamp":"2025-07-09T00:00:55.328Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1141ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T00:01:10.765Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T00:01:12.330Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1155ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T00:01:28.806Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T00:01:30.153Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"975ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T00:01:45.986Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T00:01:46.356Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"l-hGiqulgYXS2zVHzU5Uh","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":170,"pointsAwarded":2080,"apiCallsUsed":10,"retweets":6,"replies":164,"uniqueUsers":100,"errors":0}}
+{"timestamp":"2025-07-09T00:01:46.539Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T00:01:46.975Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"l-hGiqulgYXS2zVHzU5Uh","startTime":"2025-07-09T00:00:00.360Z","endTime":"2025-07-09T00:01:46.975Z","duration":"106.615s","summary":{"tweetsProcessed":5,"engagementsFound":170,"pointsAwarded":2080,"apiCallsUsed":10,"retweets":6,"replies":164,"uniqueUsers":100,"errors":0}}
+{"timestamp":"2025-07-09T01:00:00.376Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"pbhk-U1G5EyZcBrOvdEIL","startTime":"2025-07-09T01:00:00.376Z"}
+{"timestamp":"2025-07-09T01:00:01.805Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T01:00:01.994Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T01:00:03.893Z"}
+{"timestamp":"2025-07-09T01:00:02.280Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"pbhk-U1G5EyZcBrOvdEIL","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T01:00:03.972Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1028ms","remainingApiCalls":110}
+{"timestamp":"2025-07-09T01:00:25.561Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T01:00:27.109Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":49,"apiCallsUsed":2,"processingTime":"1167ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T01:00:56.053Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":200,"retweets":0,"replies":400,"total":600},"userCount":20}
+{"timestamp":"2025-07-09T01:00:57.535Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1105ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T01:01:13.285Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T01:01:14.695Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1034ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T01:01:31.694Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T01:01:33.026Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"943ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T01:01:49.335Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T01:01:49.713Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"pbhk-U1G5EyZcBrOvdEIL","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T01:01:49.905Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T01:01:50.475Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"pbhk-U1G5EyZcBrOvdEIL","startTime":"2025-07-09T01:00:00.376Z","endTime":"2025-07-09T01:01:50.475Z","duration":"110.099s","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T02:00:00.347Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"Q6P8WuV5NWIHRUN8eKAWy","startTime":"2025-07-09T02:00:00.344Z"}
+{"timestamp":"2025-07-09T02:00:01.791Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T02:00:01.982Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T02:00:25.943Z"}
+{"timestamp":"2025-07-09T02:00:02.269Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"Q6P8WuV5NWIHRUN8eKAWy","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T02:00:04.010Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1073ms","remainingApiCalls":110}
+{"timestamp":"2025-07-09T02:00:25.841Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T02:00:27.403Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":49,"apiCallsUsed":2,"processingTime":"1183ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T02:00:56.757Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":200,"retweets":0,"replies":400,"total":600},"userCount":20}
+{"timestamp":"2025-07-09T02:00:58.224Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1084ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T02:01:14.212Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T02:01:15.616Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1021ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T02:01:32.629Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T02:01:34.392Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"1380ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T02:01:50.766Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T02:01:51.149Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"Q6P8WuV5NWIHRUN8eKAWy","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T02:01:51.337Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T02:01:51.762Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"Q6P8WuV5NWIHRUN8eKAWy","startTime":"2025-07-09T02:00:00.344Z","endTime":"2025-07-09T02:01:51.762Z","duration":"111.418s","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T03:00:00.401Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"tHD-mMAux6ujVl6K5CxCc","startTime":"2025-07-09T03:00:00.401Z"}
+{"timestamp":"2025-07-09T03:00:01.834Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T03:00:02.050Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T03:00:26.221Z"}
+{"timestamp":"2025-07-09T03:00:02.510Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"tHD-mMAux6ujVl6K5CxCc","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T03:00:04.582Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1362ms","remainingApiCalls":110}
+{"timestamp":"2025-07-09T03:00:27.576Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T03:00:29.304Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":49,"apiCallsUsed":2,"processingTime":"1345ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T03:01:01.151Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":200,"retweets":0,"replies":400,"total":600},"userCount":20}
+{"timestamp":"2025-07-09T03:01:02.952Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1422ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T03:01:20.225Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T03:01:21.665Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1054ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T03:01:41.175Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T03:01:42.629Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"1076ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T03:02:01.659Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T03:02:02.333Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"tHD-mMAux6ujVl6K5CxCc","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T03:02:02.526Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T03:02:03.091Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"tHD-mMAux6ujVl6K5CxCc","startTime":"2025-07-09T03:00:00.401Z","endTime":"2025-07-09T03:02:03.091Z","duration":"122.69s","summary":{"tweetsProcessed":5,"engagementsFound":172,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":166,"uniqueUsers":101,"errors":0}}
+{"timestamp":"2025-07-09T04:00:00.399Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"D5T_3RHkOqYapaZQWU_IN","startTime":"2025-07-09T04:00:00.399Z"}
+{"timestamp":"2025-07-09T04:00:01.811Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T04:00:02.000Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T04:00:27.959Z"}
+{"timestamp":"2025-07-09T04:00:02.284Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"D5T_3RHkOqYapaZQWU_IN","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T04:00:03.969Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1025ms","remainingApiCalls":110}
+{"timestamp":"2025-07-09T04:00:33.294Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T04:00:35.399Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":50,"apiCallsUsed":2,"processingTime":"1634ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T04:01:17.861Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":200,"retweets":0,"replies":400,"total":600},"userCount":20}
+{"timestamp":"2025-07-09T04:01:19.360Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1114ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T04:01:37.387Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T04:01:38.834Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1066ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T04:01:59.001Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T04:02:00.363Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"983ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T04:02:19.349Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T04:02:19.732Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"D5T_3RHkOqYapaZQWU_IN","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":173,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":167,"uniqueUsers":102,"errors":0}}
+{"timestamp":"2025-07-09T04:02:19.918Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T04:02:20.493Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"D5T_3RHkOqYapaZQWU_IN","startTime":"2025-07-09T04:00:00.399Z","endTime":"2025-07-09T04:02:20.493Z","duration":"140.094s","summary":{"tweetsProcessed":5,"engagementsFound":173,"pointsAwarded":2110,"apiCallsUsed":10,"retweets":6,"replies":167,"uniqueUsers":102,"errors":0}}
+{"timestamp":"2025-07-09T05:00:00.416Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"JMEFqyCp0JdihdV0yP8vX","startTime":"2025-07-09T05:00:00.416Z"}
+{"timestamp":"2025-07-09T05:00:01.817Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-09T05:00:02.005Z","level":"INFO","message":"📊 Initial rate limit check","current":8,"remaining":112,"allowed":true,"resetTime":"2025-07-09T05:00:33.766Z"}
+{"timestamp":"2025-07-09T05:00:02.289Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"JMEFqyCp0JdihdV0yP8vX","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-09T05:00:04.179Z","level":"INFO","message":"Processed tweet 1942533297512292444","engagements":22,"apiCallsUsed":2,"processingTime":"1005ms","remainingApiCalls":110}
+{"timestamp":"2025-07-09T05:00:33.601Z","level":"INFO","message":"Points awarded for tweet 1942533297512292444","summary":{"likes":160,"retweets":35,"replies":300,"total":495},"userCount":16}
+{"timestamp":"2025-07-09T05:00:35.651Z","level":"INFO","message":"Processed tweet 1942517621192044974","engagements":51,"apiCallsUsed":2,"processingTime":"1669ms","remainingApiCalls":118}
+{"timestamp":"2025-07-09T05:01:15.725Z","level":"INFO","message":"Points awarded for tweet 1942517621192044974","summary":{"likes":210,"retweets":0,"replies":420,"total":630},"userCount":21}
+{"timestamp":"2025-07-09T05:01:17.350Z","level":"INFO","message":"Processed tweet 1942600305012564001","engagements":51,"apiCallsUsed":2,"processingTime":"1251ms","remainingApiCalls":116}
+{"timestamp":"2025-07-09T05:01:37.379Z","level":"INFO","message":"Points awarded for tweet 1942600305012564001","summary":{"likes":90,"retweets":35,"replies":160,"total":285},"userCount":9}
+{"timestamp":"2025-07-09T05:01:38.942Z","level":"INFO","message":"Processed tweet 1942628847347712138","engagements":33,"apiCallsUsed":2,"processingTime":"1190ms","remainingApiCalls":114}
+{"timestamp":"2025-07-09T05:02:02.404Z","level":"INFO","message":"Points awarded for tweet 1942628847347712138","summary":{"likes":100,"retweets":70,"replies":200,"total":370},"userCount":10}
+{"timestamp":"2025-07-09T05:02:03.711Z","level":"INFO","message":"Processed tweet 1942540807300391420","engagements":17,"apiCallsUsed":2,"processingTime":"929ms","remainingApiCalls":112}
+{"timestamp":"2025-07-09T05:02:25.708Z","level":"INFO","message":"Points awarded for tweet 1942540807300391420","summary":{"likes":120,"retweets":0,"replies":240,"total":360},"userCount":12}
+{"timestamp":"2025-07-09T05:02:26.086Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"JMEFqyCp0JdihdV0yP8vX","duration":"2 minutes","summary":{"tweetsProcessed":5,"engagementsFound":174,"pointsAwarded":2140,"apiCallsUsed":10,"retweets":6,"replies":168,"uniqueUsers":106,"errors":0}}
+{"timestamp":"2025-07-09T05:02:26.272Z","level":"INFO","message":"📊 Rate limit status","used":8,"remaining":112,"limit":120,"percentUsed":7}
+{"timestamp":"2025-07-09T05:02:26.944Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"JMEFqyCp0JdihdV0yP8vX","startTime":"2025-07-09T05:00:00.416Z","endTime":"2025-07-09T05:02:26.944Z","duration":"146.528s","summary":{"tweetsProcessed":5,"engagementsFound":174,"pointsAwarded":2140,"apiCallsUsed":10,"retweets":6,"replies":168,"uniqueUsers":106,"errors":0}}
+{"timestamp":"2025-07-09T06:00:00.503Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"bWQKn1m1zPwya3zMm2bRt","startTime":"2025-07-09T06:00:00.503Z"}
