@@ -12756,3 +12756,143 @@
 2025-07-08T23:43:34: [SHARD 0] Resumed, replayed 1 events
 2025-07-09T00:55:48: [SHARD 0] Reconnecting... 2025-07-09T04:55:48.078Z
 2025-07-09T00:55:48: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T02:29:26: 📥 Received interaction: 2 - Command: points - User: ahmed._.11
+2025-07-09T02:29:26: 🎯 Processing command: points
+2025-07-09T03:04:31: [SHARD 0] Reconnecting... 2025-07-09T07:04:31.088Z
+2025-07-09T03:04:31: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T04:02:20: 📥 Received interaction: 2 - Command: leaderboard - User: .yaldajoon
+2025-07-09T04:02:20: 🎯 Processing command: leaderboard
+2025-07-09T05:49:42: [SHARD 0] Reconnecting... 2025-07-09T09:49:42.666Z
+2025-07-09T05:49:43: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T05:54:21: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-09T05:54:21: 🎯 Processing command: points
+2025-07-09T06:02:00: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-09T06:02:00: 🎯 Processing command: points
+2025-07-09T06:40:53: 📥 Received interaction: 2 - Command: points - User: _flux96
+2025-07-09T06:40:53: 🎯 Processing command: points
+2025-07-09T06:58:25: [SHARD 0] Reconnecting... 2025-07-09T10:58:25.380Z
+2025-07-09T06:58:26: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T07:02:36: 📥 Received interaction: 2 - Command: submit - User: afshinx06
+2025-07-09T07:02:36: 🎯 Processing command: submit
+2025-07-09T07:02:37: [SUBMIT] User afshinx06 submitting tweet: https://x.com/afshinx06/status/1942900877443936442?t=S7j1oHlTA7--MZSOBZ8Q6Q&s=19
+2025-07-09T07:02:37: [SUBMIT] Tweet ID extracted: 1942900877443936442
+2025-07-09T07:02:37: [SUBMIT] User connected as @afshinx06
+2025-07-09T07:02:37: [SUBMIT] Checking approval status for @afshinx06...
+2025-07-09T07:02:37: [SUBMIT] Approval status: true
+2025-07-09T07:02:37: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T07:02:37: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T07:02:37: [SUBMIT] User's current points: 0
+2025-07-09T07:02:37: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T09:16:18: 📥 Received interaction: 2 - Command: points - User: shafagh74
+2025-07-09T09:16:18: 🎯 Processing command: points
+2025-07-09T09:17:05: 📥 Received interaction: 2 - Command: submit - User: shafagh74
+2025-07-09T09:17:05: 🎯 Processing command: submit
+2025-07-09T09:17:05: [SUBMIT] User shafagh74 submitting tweet: https://x.com/Shafagh74/status/1942919664528454034?t=zZZjzE2b_xMnNPk76Nqkog&s=19
+2025-07-09T09:17:05: [SUBMIT] Tweet ID extracted: 1942919664528454034
+2025-07-09T09:17:05: [SUBMIT] User connected as @shafagh74
+2025-07-09T09:17:05: [SUBMIT] Checking approval status for @shafagh74...
+2025-07-09T09:17:05: [SUBMIT] Approval status: true
+2025-07-09T09:17:05: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T09:17:06: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T09:17:06: [SUBMIT] User's current points: 0
+2025-07-09T09:17:06: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T09:34:40: [SHARD 0] Reconnecting... 2025-07-09T13:34:40.564Z
+2025-07-09T09:34:41: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T10:12:12: 📥 Received interaction: 2 - Command: submit - User: zahrazareiw
+2025-07-09T10:12:12: 🎯 Processing command: submit
+2025-07-09T10:12:12: [SUBMIT] User zahrazareiw submitting tweet: https://x.com/zahrazareiw/status/1942880564228268104?t=MCwCEibz1x4GN7RBLcvStQ&s=19
+2025-07-09T10:12:12: [SUBMIT] Tweet ID extracted: 1942880564228268104
+2025-07-09T10:12:12: [SUBMIT] User connected as @zahrazareiw
+2025-07-09T10:12:12: [SUBMIT] Checking approval status for @zahrazareiw...
+2025-07-09T10:12:13: [SUBMIT] Approval status: true
+2025-07-09T10:12:13: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T10:12:13: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T10:12:13: [SUBMIT] User's current points: 0
+2025-07-09T10:12:13: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T10:21:03: 📥 Received interaction: 2 - Command: submit - User: danyalrh
+2025-07-09T10:21:03: 🎯 Processing command: submit
+2025-07-09T10:21:03: [SUBMIT] User danyalrh submitting tweet: https://x.com/DanialRH_7/status/1942908144692150514?t=0k3af26i5LDZcO2P8G0k5g&s=19
+2025-07-09T10:21:03: [SUBMIT] Tweet ID extracted: 1942908144692150514
+2025-07-09T10:21:03: [SUBMIT] User connected as @danialrh_7
+2025-07-09T10:21:03: [SUBMIT] Checking approval status for @danialrh_7...
+2025-07-09T10:21:04: [SUBMIT] Approval status: true
+2025-07-09T10:21:04: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T10:21:04: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T10:21:04: [SUBMIT] User's current points: 0
+2025-07-09T10:21:04: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T10:22:03: 📥 Received interaction: 2 - Command: submit - User: zahrazareiw
+2025-07-09T10:22:03: 🎯 Processing command: submit
+2025-07-09T10:22:03: [SUBMIT] User zahrazareiw submitting tweet: https://x.com/zahrazareiw/status/1942880564228268104?t=3mvhO3GcY0nNbv6Pfq9hNw&s=19
+2025-07-09T10:22:03: [SUBMIT] Tweet ID extracted: 1942880564228268104
+2025-07-09T10:22:03: [SUBMIT] User connected as @zahrazareiw
+2025-07-09T10:22:03: [SUBMIT] Checking approval status for @zahrazareiw...
+2025-07-09T10:22:04: [SUBMIT] Approval status: true
+2025-07-09T10:22:04: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T10:22:04: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T10:22:04: [SUBMIT] User's current points: 0
+2025-07-09T10:22:04: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T10:25:18: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-09T10:25:18: 🎯 Processing command: submit
+2025-07-09T10:25:18: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942819807667314696?t=XOyYFv7jkGYBRWj4-_lPJw&s=19
+2025-07-09T10:25:18: [SUBMIT] Tweet ID extracted: 1942819807667314696
+2025-07-09T10:25:18: [SUBMIT] User connected as @bull_base
+2025-07-09T10:25:18: [SUBMIT] Checking approval status for @bull_base...
+2025-07-09T10:25:18: [SUBMIT] Approval status: true
+2025-07-09T10:25:18: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T10:25:19: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T10:25:19: [SUBMIT] User's current points: 0
+2025-07-09T10:25:19: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T11:43:09: 📥 Received interaction: 2 - Command: points - User: peirov_78474
+2025-07-09T11:43:09: 🎯 Processing command: points
+2025-07-09T12:11:21: [SHARD 0] Reconnecting... 2025-07-09T16:11:21.325Z
+2025-07-09T12:11:22: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T12:16:16: 📥 Received interaction: 2 - Command: submit - User: hadimasoudi
+2025-07-09T12:16:16: 🎯 Processing command: submit
+2025-07-09T12:16:16: [SUBMIT] User hadimasoudi submitting tweet: https://x.com/hadimasoudii/status/1942980619463487518?t=mVIFW4wSIdx6fPIfhwoHPg&s=19
+2025-07-09T12:16:16: [SUBMIT] Tweet ID extracted: 1942980619463487518
+2025-07-09T12:16:16: [SUBMIT] User connected as @hadimasoudii
+2025-07-09T12:16:16: [SUBMIT] Checking approval status for @hadimasoudii...
+2025-07-09T12:16:16: [SUBMIT] Approval status: true
+2025-07-09T12:16:16: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T12:16:16: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T12:16:16: [SUBMIT] User's current points: 0
+2025-07-09T12:16:16: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T12:23:00: 📥 Received interaction: 2 - Command: submit - User: bull_base
+2025-07-09T12:23:00: 🎯 Processing command: submit
+2025-07-09T12:23:00: [SUBMIT] User bull_base submitting tweet: https://x.com/bull_base/status/1942957045533057520?t=doYCskOldtRpzPR6zmAR6Q&s=19
+2025-07-09T12:23:00: [SUBMIT] Tweet ID extracted: 1942957045533057520
+2025-07-09T12:23:00: [SUBMIT] User connected as @bull_base
+2025-07-09T12:23:00: [SUBMIT] Checking approval status for @bull_base...
+2025-07-09T12:23:01: [SUBMIT] Approval status: true
+2025-07-09T12:23:01: [SUBMIT] Getting tier scenarios for tier: micro
+2025-07-09T12:23:01: [SUBMIT] Tier scenarios loaded: daily limit = 2
+2025-07-09T12:23:01: [SUBMIT] User's current points: 0
+2025-07-09T12:23:01: [SUBMIT] Required submission cost for tier micro: 500 points
+2025-07-09T12:32:15: [SHARD 0] Reconnecting... 2025-07-09T16:32:15.891Z
+2025-07-09T12:32:16: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T13:27:44: [SHARD 0] Reconnecting... 2025-07-09T17:27:44.727Z
+2025-07-09T13:27:45: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T13:54:04: 📥 Received interaction: 2 - Command: points - User: navlld
+2025-07-09T13:54:04: 🎯 Processing command: points
+2025-07-09T14:12:39: 📥 Received interaction: 2 - Command: leaderboard - User: enemend
+2025-07-09T14:12:39: 🎯 Processing command: leaderboard
+2025-07-09T14:47:45: [SHARD 0] Reconnecting... 2025-07-09T18:47:45.624Z
+2025-07-09T14:47:46: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T15:50:32: [SHARD 0] Reconnecting... 2025-07-09T19:50:32.003Z
+2025-07-09T15:50:32: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T16:04:44: 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+2025-07-09T16:04:44: 🎯 Processing command: leaderboard
+2025-07-09T19:07:43: 📥 Received interaction: 2 - Command: leaderboard - User: enemend
+2025-07-09T19:07:43: 🎯 Processing command: leaderboard
+2025-07-09T19:23:02: 📥 Received interaction: 2 - Command: points - User: peirov_78474
+2025-07-09T19:23:02: 🎯 Processing command: points
+2025-07-09T19:24:49: [SHARD 0] Reconnecting... 2025-07-09T23:24:49.135Z
+2025-07-09T19:24:49: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T20:20:02: [SHARD 0] Reconnecting... 2025-07-10T00:20:02.427Z
+2025-07-09T20:20:03: [SHARD 0] Resumed, replayed 1 events
+2025-07-09T21:57:22: [SHARD 0] Reconnecting... 2025-07-10T01:57:22.775Z
+2025-07-09T21:57:23: [SHARD 0] Resumed, replayed 1 events
+2025-07-10T00:55:31: [SHARD 0] Reconnecting... 2025-07-10T04:55:31.785Z
+2025-07-10T00:55:32: [SHARD 0] Resumed, replayed 1 events
+2025-07-10T01:48:18: [SHARD 0] Reconnecting... 2025-07-10T05:48:18.700Z
+2025-07-10T01:48:19: [SHARD 0] Resumed, replayed 1 events
