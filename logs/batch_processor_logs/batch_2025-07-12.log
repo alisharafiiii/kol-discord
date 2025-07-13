@@ -1,0 +1,18 @@
+{"timestamp":"2025-07-13T00:58:25.203Z","level":"INFO","message":"🚀 Starting batch processing","batchId":"VjmkmKcPiu2_Lb-l2P-Os","startTime":"2025-07-13T00:58:25.203Z"}
+{"timestamp":"2025-07-13T00:58:30.230Z","level":"INFO","message":"📊 Points configuration loaded","pointsConfig":{"micro":{"retweet":35,"reply":20,"like":10},"rising":{"retweet":35,"reply":20,"like":10},"star":{"retweet":35,"reply":20,"like":10},"legend":{"retweet":35,"reply":20,"like":10},"hero":{"retweet":35,"reply":20,"like":10}}}
+{"timestamp":"2025-07-13T00:58:30.964Z","level":"INFO","message":"📊 Initial rate limit check","current":0,"remaining":120,"allowed":true,"resetTime":"2025-07-13T01:58:30.232Z"}
+{"timestamp":"2025-07-13T00:58:31.630Z","level":"INFO","message":"📊 Found 5 tweets from last 24 hours","batchId":"VjmkmKcPiu2_Lb-l2P-Os","tweetCount":5,"maxAllowed":60}
+{"timestamp":"2025-07-13T00:58:34.778Z","level":"INFO","message":"Processed tweet 1944072007341031470","engagements":75,"apiCallsUsed":2,"processingTime":"1902ms","remainingApiCalls":118}
+{"timestamp":"2025-07-13T00:59:43.909Z","level":"INFO","message":"Points awarded for tweet 1944072007341031470","summary":{"likes":210,"retweets":175,"replies":400,"total":785},"userCount":21}
+{"timestamp":"2025-07-13T00:59:46.203Z","level":"INFO","message":"Processed tweet 1943892274745594326","engagements":44,"apiCallsUsed":2,"processingTime":"1683ms","remainingApiCalls":116}
+{"timestamp":"2025-07-13T01:00:28.611Z","level":"INFO","message":"Points awarded for tweet 1943892274745594326","summary":{"likes":150,"retweets":0,"replies":300,"total":450},"userCount":15}
+{"timestamp":"2025-07-13T01:00:31.046Z","level":"INFO","message":"Processed tweet 1944120632733487184","engagements":24,"apiCallsUsed":2,"processingTime":"1771ms","remainingApiCalls":114}
+{"timestamp":"2025-07-13T01:01:12.002Z","level":"INFO","message":"Points awarded for tweet 1944120632733487184","summary":{"likes":115,"retweets":70,"replies":230,"total":415},"userCount":10}
+{"timestamp":"2025-07-13T01:01:15.850Z","level":"INFO","message":"Processed tweet 1944122251386765395","engagements":46,"apiCallsUsed":2,"processingTime":"3045ms","remainingApiCalls":112}
+{"timestamp":"2025-07-13T01:02:26.595Z","level":"INFO","message":"Points awarded for tweet 1944122251386765395","summary":{"likes":115,"retweets":70,"replies":230,"total":415},"userCount":10}
+{"timestamp":"2025-07-13T01:02:38.997Z","level":"INFO","message":"Processed tweet 1943993590914724198","engagements":40,"apiCallsUsed":2,"processingTime":"6574ms","remainingApiCalls":110}
+{"timestamp":"2025-07-13T01:03:28.971Z","level":"INFO","message":"Points awarded for tweet 1943993590914724198","summary":{"likes":145,"retweets":0,"replies":290,"total":435},"userCount":13}
+{"timestamp":"2025-07-13T01:03:29.828Z","level":"SUCCESS","message":"✅ Batch processing completed","batchId":"VjmkmKcPiu2_Lb-l2P-Os","duration":"5 minutes","summary":{"tweetsProcessed":5,"engagementsFound":229,"pointsAwarded":2500,"apiCallsUsed":10,"retweets":24,"replies":205,"uniqueUsers":147,"errors":0}}
+{"timestamp":"2025-07-13T01:03:30.118Z","level":"INFO","message":"📊 Rate limit status","used":10,"remaining":110,"limit":120,"percentUsed":8}
+{"timestamp":"2025-07-13T01:03:37.515Z","level":"INFO","message":"Cleared 2 cache entries","batchId":"VjmkmKcPiu2_Lb-l2P-Os"}
+{"timestamp":"2025-07-13T01:03:37.515Z","level":"SUCCESS","message":"✅ Batch completed successfully","batchId":"VjmkmKcPiu2_Lb-l2P-Os","startTime":"2025-07-13T00:58:25.203Z","endTime":"2025-07-13T01:03:37.515Z","duration":"312.312s","summary":{"tweetsProcessed":5,"engagementsFound":229,"pointsAwarded":2500,"apiCallsUsed":10,"retweets":24,"replies":205,"uniqueUsers":147,"errors":0}}

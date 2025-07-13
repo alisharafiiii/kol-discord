@@ -2804,3 +2804,57 @@ To github.com:alisharafiiii/kol-discord.git
 error: failed to push some refs to 'github.com:alisharafiiii/kol-discord.git'
 Fri Jul 11 02:00:12 EDT 2025: Backup completed successfully
 Sat Jul 12 02:00:01 EDT 2025: Changes detected, creating backup commit...
+🔒 Checking for modifications to LOCKED SECTIONS...
+✅ Pre-commit check passed
+[main 04fddfd] Auto-backup: 2025-07-12 02:00:01
+ Committer: nabu <nabu@nabus-MacBook-Pro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 160 insertions(+)
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— Discord Bot Token —————————————————————————————————        
+remote:        locations:        
+remote:          - blob id: 092d068296e363a1010c08932e8a0eb5e9e588e3        
+remote:          - blob id: 67170830eec47e5d507b9bcb7edbf441f3ca1e2f        
+remote:          - blob id: 67170830eec47e5d507b9bcb7edbf441f3ca1e2f        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/alisharafiiii/kol-discord/security/secret-scanning/unblock-secret/2ziUuqQGd5hPY0XAJW6jIzCkMmS        
+remote:             
+remote:             
+remote:     ——[ WARNING ]—————————————————————————————————————————        
+remote:      Scan incomplete: This push was large and we didn't finish on time.        
+remote:      It can still contain undetected secrets.        
+remote:             
+remote:      (?) Use the following command to find the path of the detected secret(s):        
+remote:          git rev-list --objects --all | grep blobid        
+remote:     ——————————————————————————————————————————————————————        
+remote: 
+remote: 
+To github.com:alisharafiiii/kol-discord.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'github.com:alisharafiiii/kol-discord.git'
+Sat Jul 12 02:00:15 EDT 2025: Backup completed successfully
+Sun Jul 13 02:00:01 EDT 2025: Changes detected, creating backup commit...

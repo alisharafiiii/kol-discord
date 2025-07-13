@@ -7,7 +7,7 @@ console.log('🔍 Loading environment from:', envPath)
 require('dotenv').config({ path: envPath })
 
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, REST, Routes } = require('discord.js')
-const { Redis } = require('@upstash/redis')
+const { ResilientRedis } = require('./lib/redis-resilient.js')
 const { GoogleGenerativeAI } = require('@google/generative-ai')
 const { toEdtIsoString, getEdtDateString, getCurrentEdt } = require('./lib/timezone')
 
@@ -37,10 +37,11 @@ if (!hasAiKey) {
   console.warn('   Sentiment analysis will be disabled')
 }
 
-// Initialize Redis
-const redis = new Redis({
+// Initialize Redis with resilient wrapper
+const redis = new ResilientRedis({
   url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  botName: 'Discord Engagement Bot'
 })
 
 // Initialize Gemini for sentiment analysis (if available)
@@ -878,6 +879,11 @@ client.on('interactionCreate', async (interaction) => {
           // Store in sorted set for admin panel compatibility
           await redis.zadd('engagement:tweets:recent', { score: Date.now(), member: tweet.id })
           await redis.set(`engagement:tweetid:${tweet.tweetId}`, tweet.id)
+          
+          // Add to pending queue for batch processing
+          const pendingDate = getEdtDateString(new Date())
+          await redis.sadd(`engagement:pending:${pendingDate}`, tweet.id)
+          console.log(`[SUBMIT] Added tweet ${tweet.id} to pending queue for ${pendingDate}`)
         }, 'save tweet', 3)
         
         // Increment daily counter
