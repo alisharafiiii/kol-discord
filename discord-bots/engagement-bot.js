@@ -38,9 +38,11 @@ if (!hasAiKey) {
 }
 
 // Initialize Redis with resilient wrapper
+// Updated to use new Upstash Redis instance specifically for engagement bot
+console.log('🔄 Connecting to new Redis instance: caring-spider-49388.upstash.io')
 const redis = new ResilientRedis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  url: 'https://caring-spider-49388.upstash.io',
+  token: 'AcDsAAIjcDE2YjY4YmUzNDg5YTY0ODQxOGU3ZWI0MjliOGM3MzM2MnAxMA',
   botName: 'Discord Engagement Bot'
 })
 
