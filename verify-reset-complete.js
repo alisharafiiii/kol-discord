@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
-const { Redis } = require('@upstash/redis')
-require('dotenv').config({ path: '.env.local' })
+const Redis = require('ioredis')
+require('dotenv').config()
 
 async function verifyResetComplete() {
   console.log('🔍 Verifying Factory Reset Status')
   console.log('==================================\n')
   
-  const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN
-  })
+  const redis = new Redis(process.env.REDIS_URL)
   
   let issues = []
   
@@ -52,8 +49,9 @@ async function verifyResetComplete() {
   if (pendingKeys.length > 0) issues.push('Pending queues still exist')
   
   console.log('\n6️⃣ Checking for Configuration...')
-  const tierConfig = await redis.json.get('engagement:tier-config:micro')
-  if (tierConfig) {
+  const tierConfigRaw = await redis.get('engagement:tier-config:micro')
+  if (tierConfigRaw) {
+    const tierConfig = JSON.parse(tierConfigRaw)
     console.log(`   Micro tier config found:`)
     console.log(`     - Submission cost: ${tierConfig.submissionCost} points`)
     if (tierConfig.submissionCost !== 500) {
@@ -93,6 +91,8 @@ async function verifyResetComplete() {
     console.log(`\n   Total engagement keys remaining: ${allEngagementKeys.length}`)
     console.log('\n   Run factory-reset-engagement.js again to clear remaining data')
   }
+  
+  redis.quit()
 }
 
 verifyResetComplete().catch(console.error) 

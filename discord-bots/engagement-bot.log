@@ -47,3 +47,221 @@ Error submitting tweet: TypeError: redis.zadd is not a function
 🎯 Processing command: points
 📥 Received interaction: 2 - Command: points - User: soroshlp
 🎯 Processing command: points
+📥 Received interaction: 2 - Command: connect - User: soroshlp
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: soroshlp
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: connect - User: alinabu
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: soroshlp
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: points - User: soroshlp
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: connect - User: soroshlp
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: submit - User: ahmed._.11
+🎯 Processing command: submit
+[SUBMIT] User ahmed._.11 submitting tweet: https://x.com/EMAhmad0/status/1945345052261408949?t=J9uvC1-rc7v6786L4DxvTQ&s=19
+[SUBMIT] Tweet ID extracted: 1945345052261408949
+📥 Received interaction: 2 - Command: connect - User: ahmed._.11
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: soroshlp
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: submit - User: ahmed._.11
+🎯 Processing command: submit
+[SUBMIT] User ahmed._.11 submitting tweet: https://x.com/EMAhmad0/status/1945345052261408949?t=J9uvC1-rc7v6786L4DxvTQ&s=19
+[SUBMIT] Tweet ID extracted: 1945345052261408949
+[SUBMIT] User connected as @emahmad0
+[SUBMIT] Checking approval status for @emahmad0...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 5
+[SUBMIT] User's current points: 0
+[SUBMIT] Required submission cost for tier micro: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: points - User: saka_sol
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: leaderboard - User: soroshlp
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: submit - User: ahmed._.11
+🎯 Processing command: submit
+[SUBMIT] User ahmed._.11 submitting tweet: https://x.com/EMAhmad0/status/1945345052261408949?t=J9uvC1-rc7v6786L4DxvTQ&s=19
+[SUBMIT] Tweet ID extracted: 1945345052261408949
+[SUBMIT] User connected as @emahmad0
+[SUBMIT] Checking approval status for @emahmad0...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 5
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: submit - User: ahmed._.11
+🎯 Processing command: submit
+[SUBMIT] User ahmed._.11 submitting tweet: https://x.com/EMAhmad0/status/1945329242008367287?t=_JRaB775bJeXG009EOyMQw&s=19
+[SUBMIT] Tweet ID extracted: 1945329242008367287
+[SUBMIT] User connected as @emahmad0
+[SUBMIT] Checking approval status for @emahmad0...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 5
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: connect - User: saka_sol
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1945194910237307205
+[SUBMIT] Tweet ID extracted: 1945194910237307205
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 30
+[SUBMIT] User's current points: 300
+[SUBMIT] Required submission cost for tier legend: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: submit - User: soroshlp
+🎯 Processing command: submit
+[SUBMIT] User soroshlp submitting tweet: https://x.com/soroshlp/status/1945192941158269075?s=46
+[SUBMIT] Tweet ID extracted: 1945192941158269075
+[SUBMIT] User connected as @soroshlp
+[SUBMIT] Checking approval status for @soroshlp...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 5
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: submit - User: soroshlp
+🎯 Processing command: submit
+[SUBMIT] User soroshlp submitting tweet: https://x.com/soroshlp/status/1945192941158269075
+[SUBMIT] Tweet ID extracted: 1945192941158269075
+[SUBMIT] User connected as @soroshlp
+[SUBMIT] Checking approval status for @soroshlp...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 5
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: connect - User: saka_sol
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: saka_sol
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: connect - User: 04100442534493
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: connect - User: loki.base.eth
+🎯 Processing command: connect
+[SHARD 0] Reconnecting... 2025-07-16T08:50:17.688Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: points - User: navlld
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: points - User: grayledger
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: submit - User: grayledger
+🎯 Processing command: submit
+[SUBMIT] User grayledger submitting tweet: https://x.com/mohamadhere/status/1945424887411081520?s=46
+[SUBMIT] Tweet ID extracted: 1945424887411081520
+📥 Received interaction: 2 - Command: connect - User: grayledger
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: peirov_78474
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: connect - User: peirov_78474
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: peirov_78474
+🎯 Processing command: points
+[SHARD 0] Reconnecting... 2025-07-16T10:55:30.751Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-16T12:24:11.774Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: leaderboard - User: navlld
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: peirov_78474
+🎯 Processing command: leaderboard
+[SHARD 0] Reconnecting... 2025-07-16T13:29:53.105Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1945463269516267602
+[SUBMIT] Tweet ID extracted: 1945463269516267602
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 30
+[SUBMIT] User's current points: 300
+[SUBMIT] Required submission cost for tier legend: 0 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: submit - User: .yaldajoon
+🎯 Processing command: submit
+[SUBMIT] User .yaldajoon submitting tweet: https://x.com/yaldamasoudi/status/1945449107855671526?s=46
+[SUBMIT] Tweet ID extracted: 1945449107855671526
+📥 Received interaction: 2 - Command: connect - User: .yaldajoon
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: connect - User: 04100442534493
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: connect - User: 04100442534493
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: connect - User: 04100442534493
+🎯 Processing command: connect

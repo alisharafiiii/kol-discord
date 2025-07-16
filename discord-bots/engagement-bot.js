@@ -39,7 +39,7 @@ if (!hasAiKey) {
 
 // Initialize Redis with resilient wrapper
 // Updated to use new Upstash Redis instance specifically for engagement bot
-console.log('🔄 Connecting to main Redis instance: polished-vulture-15957.upstash.io')
+console.log('🔄 Connecting to main Redis instance: caring-spider-49388.upstash.io')
 const redis = new ResilientRedis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
