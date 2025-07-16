@@ -405,6 +405,8 @@ export default function DiscordRoadmapPage() {
   const [visibleMonths, setVisibleMonths] = useState<number[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
 
+
+
   useEffect(() => {
     // Ensure all months are visible initially
     setVisibleMonths(discordRoadmap.monthlyPlans.map((_, i) => i))
@@ -426,6 +428,8 @@ export default function DiscordRoadmapPage() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+
 
   const handleMonthClick = (index: number) => {
     setExpandedMonth(expandedMonth === index ? null : index)
@@ -454,19 +458,7 @@ export default function DiscordRoadmapPage() {
     return path
   }
 
-  // Generate branching paths at the end
-  const generateBranchPaths = () => {
-    const startY = 300 * discordRoadmap.monthlyPlans.length
-    const startX = 400 // Center of the 800px wide SVG
-    const branchLength = 200 // Increased for better connection
-    const boxSpacing = 280 // Adjusted for bigger boxes
-    
-    return {
-      left: `M ${startX} ${startY} Q ${startX - 50} ${startY + 100} ${startX - boxSpacing} ${startY + branchLength}`,
-      middle: `M ${startX} ${startY} L ${startX} ${startY + branchLength}`,
-      right: `M ${startX} ${startY} Q ${startX + 50} ${startY + 100} ${startX + boxSpacing} ${startY + branchLength}`
-    }
-  }
+
 
   // Generate tool connection paths
   const generateToolPaths = () => {
@@ -751,10 +743,10 @@ export default function DiscordRoadmapPage() {
             {isLoaded && (
               <svg 
                 width="800" 
-                height={`${300 * discordRoadmap.monthlyPlans.length + 400}`} 
+                height={`${300 * discordRoadmap.monthlyPlans.length}`} 
                 className="absolute"
                 style={{ left: '50%', transform: 'translateX(-50%)' }}
-                viewBox={`0 0 800 ${300 * discordRoadmap.monthlyPlans.length + 400}`}
+                viewBox={`0 0 800 ${300 * discordRoadmap.monthlyPlans.length}`}
               >
                 <defs>
                   <linearGradient id="roadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -808,41 +800,7 @@ export default function DiscordRoadmapPage() {
                   />
                 )}
                 
-                {/* Branching paths - only show after all months */}
-                {scrollProgress * (300 * discordRoadmap.monthlyPlans.length + 400) > 300 * discordRoadmap.monthlyPlans.length && (
-                  <>
-                    <motion.path
-                      d={generateBranchPaths().left}
-                      fill="none"
-                      stroke="#10b981"
-                      strokeOpacity="0.4"
-                      strokeWidth="3"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                    />
-                    <motion.path
-                      d={generateBranchPaths().middle}
-                      fill="none"
-                      stroke="#10b981"
-                      strokeOpacity="0.4"
-                      strokeWidth="3"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                    />
-                    <motion.path
-                      d={generateBranchPaths().right}
-                      fill="none"
-                      stroke="#10b981"
-                      strokeOpacity="0.4"
-                      strokeWidth="3"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.5, delay: 0.4 }}
-                    />
-                  </>
-                )}
+
               </svg>
             )}
 
@@ -1000,8 +958,8 @@ export default function DiscordRoadmapPage() {
             </div>
           </div>
           
-          {/* Branching End Section */}
-          {isLoaded && scrollProgress * (300 * discordRoadmap.monthlyPlans.length + 400) > 300 * discordRoadmap.monthlyPlans.length && (
+          {/* End Section Boxes - No progress line */}
+          {isLoaded && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
