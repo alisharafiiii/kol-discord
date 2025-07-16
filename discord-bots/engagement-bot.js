@@ -39,10 +39,10 @@ if (!hasAiKey) {
 
 // Initialize Redis with resilient wrapper
 // Updated to use new Upstash Redis instance specifically for engagement bot
-console.log('🔄 Connecting to new Redis instance: caring-spider-49388.upstash.io')
+console.log('🔄 Connecting to main Redis instance: polished-vulture-15957.upstash.io')
 const redis = new ResilientRedis({
-  url: 'https://caring-spider-49388.upstash.io',
-  token: 'AcDsAAIjcDE2YjY4YmUzNDg5YTY0ODQxOGU3ZWI0MjliOGM3MzM2MnAxMA',
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
   botName: 'Discord Engagement Bot'
 })
 
@@ -704,7 +704,7 @@ client.on('interactionCreate', async (interaction) => {
           discordUsername: interaction.user.username,
           discordTag: interaction.user.tag,
           timestamp: Date.now()
-        }), { EX: 600 }) // Expires in 10 minutes
+        }), { ex: 600 }) // Expires in 10 minutes
         
         // Create verification URL that will use the website's Twitter OAuth
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'

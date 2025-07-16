@@ -1,14 +1,49 @@
 🔍 Loading environment from: /Users/nabu/kol/.env.local
+🔄 Connecting to main Redis instance: polished-vulture-15957.upstash.io
+🔄 Attempting Redis connection...
 ✅ AI model initialized for sentiment analysis
+✅ Redis connection established
 🚀 Engagement bot starting...
-[SHARD 0] Ready! 2025-06-27T01:45:18.750Z
+[SHARD 0] Ready! 2025-07-16T05:27:54.071Z
 ✅ Engagement bot logged in as nabulines_engagement#3015
-📋 Permissions in NABU LINES: 17 permissions
+📋 Permissions in NABU LINES: 10 permissions
 ⚠️  Missing permissions in NABU LINES:
+   - UseExternalEmojis
    - ManageRoles
    Please grant these permissions to the bot for full functionality
-⚠️  Bot role position too low in NABU LINES
-   Move bot role above 'kol' role to enable role assignment
+📋 Permissions in naratu's server: 28 permissions
+⚠️  Missing permissions in naratu's server:
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
 🔄 Refreshing application (/) commands...
 ✅ Registered commands to guild: NABU LINES
+✅ Registered commands to guild: naratu's server
 ✅ Slash commands registered
+📥 Received interaction: 2 - Command: points - User: ahmed._.11
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: submit - User: ahmed._.11
+🎯 Processing command: submit
+[SUBMIT] User ahmed._.11 submitting tweet: https://x.com/EMAhmad0/status/1945345052261408949?t=J9uvC1-rc7v6786L4DxvTQ&s=19
+[SUBMIT] Tweet ID extracted: 1945345052261408949
+[SUBMIT] User connected as @emahmad0
+[SUBMIT] Checking approval status for @emahmad0...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = undefined
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 100 points
+📝 Fetched tweet content: Success
+[RETRY] save tweet failed (attempt 1/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 2/3): redis.zadd is not a function
+[RETRY] save tweet failed (attempt 3/3): redis.zadd is not a function
+Error submitting tweet: TypeError: redis.zadd is not a function
+    at /Users/nabu/kol/discord-bots/engagement-bot.js:882:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async retryOperation (/Users/nabu/kol/discord-bots/engagement-bot.js:330:14)
+    at async Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:879:9)
+📥 Received interaction: 2 - Command: leaderboard - User: soroshlp
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: points - User: soroshlp
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: points - User: soroshlp
+🎯 Processing command: points
