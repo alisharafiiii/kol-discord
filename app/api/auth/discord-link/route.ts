@@ -22,25 +22,36 @@ import { nanoid } from 'nanoid'
 import { DiscordPointsBridge } from '@/lib/services/discord-points-bridge'
 
 export async function POST(request: NextRequest) {
+  console.log('=== Discord Link API Called ===')
+  console.log('Method:', request.method)
+  console.log('URL:', request.url)
+  console.log('Headers:', Object.fromEntries(request.headers.entries()))
+  
   try {
     // Get the current session
     const session = await getServerSession(authOptions)
     console.log('Discord link API - Session:', JSON.stringify(session, null, 2))
     
     const twitterHandleFromSession = (session as any)?.twitterHandle || (session?.user as any)?.twitterHandle
+    console.log('Twitter handle from session:', twitterHandleFromSession)
     
     if (!session?.user || !twitterHandleFromSession) {
       console.log('Discord link API - No session or Twitter handle')
+      console.log('Session exists?', !!session)
+      console.log('Session user exists?', !!session?.user)
       return NextResponse.json(
         { error: 'Not authenticated or missing Twitter handle' },
         { status: 401 }
       )
     }
     
-    const { sessionId } = await request.json()
+    const body = await request.json()
+    console.log('Request body:', body)
+    const { sessionId } = body
     console.log('Discord link API - Session ID:', sessionId)
     
     if (!sessionId) {
+      console.log('No session ID provided in request')
       return NextResponse.json(
         { error: 'No session ID provided' },
         { status: 400 }
@@ -49,9 +60,30 @@ export async function POST(request: NextRequest) {
     
     // Get the Discord verification session
     const sessionKey = `discord:verify:${sessionId}`
+    console.log('Looking for session key:', sessionKey)
+    
+    // Log Redis connection status
+    console.log('Redis connected?', redis.status === 'ready')
+    console.log('Redis status:', redis.status)
+    
     const sessionData = await redis.get(sessionKey)
+    console.log('Session data retrieved:', sessionData ? 'Found' : 'Not found')
+    console.log('Session data type:', typeof sessionData)
+    console.log('Session data length:', sessionData ? String(sessionData).length : 0)
     
     if (!sessionData) {
+      console.log('Session not found in Redis')
+      console.log('Checking for any Discord sessions...')
+      try {
+        const allKeys = await redis.keys('discord:verify:*')
+        console.log('Total Discord sessions in Redis:', allKeys.length)
+        if (allKeys.length > 0) {
+          console.log('Sample sessions:', allKeys.slice(0, 3))
+        }
+      } catch (e) {
+        console.log('Error checking keys:', e)
+      }
+      
       return NextResponse.json(
         { error: 'Verification session expired or not found' },
         { status: 404 }
@@ -59,8 +91,11 @@ export async function POST(request: NextRequest) {
     }
     
     const parsedData = typeof sessionData === 'string' ? JSON.parse(sessionData) : sessionData
+    console.log('Parsed session data:', parsedData)
     const { discordId, discordUsername, discordTag } = parsedData
     const twitterHandle = twitterHandleFromSession.toLowerCase().replace('@', '')
+    
+    console.log('Processing link for:', { discordId, discordUsername, twitterHandle })
     
     // Check if user profile exists
     const userIds = await redis.smembers(`idx:username:${twitterHandle}`)
@@ -71,6 +106,7 @@ export async function POST(request: NextRequest) {
       // Create new profile
       userId = `user_${twitterHandle}`
       isNewUser = true
+      console.log('Creating new profile for:', userId)
       
       const newProfile = {
         id: userId,
@@ -107,15 +143,18 @@ export async function POST(request: NextRequest) {
       
       // Add to pending users set
       await redis.sadd('users:pending', userId)
+      console.log('New profile created successfully')
     } else {
       // Update existing profile
       userId = userIds[0]
+      console.log('Updating existing profile:', userId)
       
       // Get the existing profile first
       const existingProfile = await redis.json.get(userId) as any
       
       // If profile doesn't exist in Redis, create a new one
       if (!existingProfile) {
+        console.log('Profile not found in Redis, creating new one')
         const newProfile = {
           id: userId,
           twitterHandle: `@${twitterHandle}`,
@@ -145,6 +184,7 @@ export async function POST(request: NextRequest) {
         
         await redis.json.set(userId, '$', newProfile)
       } else {
+        console.log('Updating existing profile with Discord info')
         // Update the profile with Discord info
         const updatedProfile = {
           ...existingProfile,
@@ -168,6 +208,7 @@ export async function POST(request: NextRequest) {
     
     // Get the profile data
     const profile = await redis.json.get(userId) as any
+    console.log('Profile retrieved:', profile ? 'Success' : 'Failed')
     
     // Create engagement connection
     const connection = {
@@ -179,6 +220,7 @@ export async function POST(request: NextRequest) {
       role: profile?.role || 'user'
     }
     
+    console.log('Creating engagement connection...')
     await redis.json.set(`engagement:connection:${discordId}`, '$', connection)
     await redis.set(`engagement:twitter:${twitterHandle}`, discordId)
     
@@ -189,9 +231,10 @@ export async function POST(request: NextRequest) {
     console.log(`Discord points bridge link result: ${linkResult}`)
     
     // Clean up verification session
+    console.log('Cleaning up verification session...')
     await redis.del(sessionKey)
     
-    return NextResponse.json({
+    const response = {
       success: true,
       message: isNewUser ? 'Account created and linked successfully' : 'Accounts linked successfully',
       profile: {
@@ -200,11 +243,20 @@ export async function POST(request: NextRequest) {
         approvalStatus: profile?.approvalStatus || 'pending',
         isNewUser
       }
-    })
+    }
+    
+    console.log('=== Discord Link API Success ===')
+    console.log('Response:', response)
+    
+    return NextResponse.json(response)
     
   } catch (error) {
+    console.error('=== Discord Link API Error ===')
     console.error('Error linking Discord account:', error)
     console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace')
+    console.error('Error type:', error?.constructor?.name)
+    console.error('Error message:', error instanceof Error ? error.message : String(error))
+    
     return NextResponse.json(
       { error: 'Failed to link accounts', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
