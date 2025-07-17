@@ -38,8 +38,7 @@ if (!hasAiKey) {
 }
 
 // Initialize Redis with resilient wrapper
-// Updated to use new Upstash Redis instance specifically for engagement bot
-console.log('🔄 Connecting to main Redis instance: caring-spider-49388.upstash.io')
+console.log('🔄 Connecting to main Redis instance:', process.env.UPSTASH_REDIS_REST_URL)
 const redis = new ResilientRedis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
@@ -707,7 +706,7 @@ client.on('interactionCreate', async (interaction) => {
         }), { ex: 600 }) // Expires in 10 minutes
         
         // Create verification URL that will use the website's Twitter OAuth
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nabulines.com'
         const verificationUrl = `${baseUrl}/auth/discord-link?session=${sessionId}`
         
         const embed = new EmbedBuilder()
