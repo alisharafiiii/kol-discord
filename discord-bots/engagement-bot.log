@@ -29,3 +29,47 @@
 [SHARD 0] Resumed, replayed 1 events
 📥 Received interaction: 2 - Command: connect - User: alinabu
 🎯 Processing command: connect
+[SHARD 0] Reconnecting... 2025-07-17T06:16:25.889Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T09:54:48.829Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T11:13:39.426Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+[SHARD 0] Reconnecting... 2025-07-17T13:29:51.897Z
+[SHARD 0] Resumed, replayed 2 events
+📥 Received interaction: 2 - Command: connect - User: enemend
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: peirov_78474
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: leaderboard - User: peirov_78474
+🎯 Processing command: leaderboard
+[SHARD 0] Reconnecting... 2025-07-17T14:29:14.494Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T15:49:43.889Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: leaderboard - User: daiipeyman.
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: submit - User: daiipeyman.
+🎯 Processing command: submit
+[SUBMIT] User daiipeyman. submitting tweet: https://x.com/hopcofficial/status/1945732133911142606?s=46
+[SUBMIT] Tweet ID extracted: 1945732133911142606
+📥 Received interaction: 2 - Command: connect - User: daiipeyman.
+🎯 Processing command: connect
+[SHARD 0] Reconnecting... 2025-07-17T18:34:45.844Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T19:11:16.160Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T20:18:42.370Z
+[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: points - User: shafagh74
+🎯 Processing command: points
+[SHARD 0] Reconnecting... 2025-07-17T21:06:37.759Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-17T22:58:30.759Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-18T02:34:56.133Z
+[SHARD 0] Resumed, replayed 1 events
+[SHARD 0] Reconnecting... 2025-07-18T04:36:48.317Z
+[SHARD 0] Resumed, replayed 1 events
