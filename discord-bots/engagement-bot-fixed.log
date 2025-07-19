@@ -1,0 +1,21 @@
+🔍 Loading environment from: /Users/nabu/kol/.env.local
+🔄 Connecting to main Redis instance: https://polished-vulture-15957.upstash.io
+🔄 Attempting Redis connection...
+✅ AI model initialized for sentiment analysis
+✅ Redis connection established
+🚀 Engagement bot starting...
+[SHARD 0] Ready! 2025-07-19T04:59:39.993Z
+✅ Engagement bot logged in as nabulines_engagement#3015
+📋 Permissions in NABU LINES: 10 permissions
+⚠️  Missing permissions in NABU LINES:
+   - UseExternalEmojis
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+📋 Permissions in naratu's server: 28 permissions
+⚠️  Missing permissions in naratu's server:
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+🔄 Refreshing application (/) commands...
+✅ Registered commands to guild: NABU LINES
+✅ Registered commands to guild: naratu's server
+✅ Slash commands registered

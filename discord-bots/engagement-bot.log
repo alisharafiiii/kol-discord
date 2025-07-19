@@ -4,7 +4,7 @@
 ✅ AI model initialized for sentiment analysis
 ✅ Redis connection established
 🚀 Engagement bot starting...
-[SHARD 0] Ready! 2025-07-17T03:18:22.503Z
+[SHARD 0] Ready! 2025-07-19T01:50:40.632Z
 ✅ Engagement bot logged in as nabulines_engagement#3015
 📋 Permissions in NABU LINES: 10 permissions
 ⚠️  Missing permissions in NABU LINES:
@@ -21,55 +21,247 @@
 ✅ Slash commands registered
 📥 Received interaction: 2 - Command: connect - User: alinabu
 🎯 Processing command: connect
-[SHARD 0] Reconnecting... 2025-07-17T03:26:56.570Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T04:14:39.865Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T04:49:06.518Z
-[SHARD 0] Resumed, replayed 1 events
-📥 Received interaction: 2 - Command: connect - User: alinabu
-🎯 Processing command: connect
-[SHARD 0] Reconnecting... 2025-07-17T06:16:25.889Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T09:54:48.829Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T11:13:39.426Z
-[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1946285151735943479
+[SUBMIT] Tweet ID extracted: 1946285151735943479
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 30
+[SUBMIT] User's current points: 0
+[SUBMIT] Required submission cost for tier legend: 0 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: pVfG-2G60PH76wQXE6Kqn
+[SUBMIT] Tweet object: {
+  "id": "pVfG-2G60PH76wQXE6Kqn",
+  "tweetId": "1946285151735943479",
+  "submitterDiscordId": "918575895374082078",
+  "submittedAt": "2025-07-19T01:52:10.911Z",
+  "category": "General",
+  "url": "https://x.com/sharafi_eth/status/1946285151735943479",
+  "authorHandle": "sharafi_eth",
+  "content": "tag someone who never learns...🦦 https://t.co/LRdwgU8od5",
+  "tier": "legend",
+  "bonusMultiplier": 2.5
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet pVfG-2G60PH76wQXE6Kqn to pending queue
+[SUBMIT] Incrementing daily counter for user 918575895374082078 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1946285151735943479
+[SUBMIT] Tweet ID extracted: 1946285151735943479
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 10
+[SUBMIT] User's current points: 0
+[SUBMIT] Required submission cost for tier legend: 300 points
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1946260344306839970
+[SUBMIT] Tweet ID extracted: 1946260344306839970
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 10
+[SUBMIT] User's current points: 300
+[SUBMIT] Required submission cost for tier legend: 300 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: qwRrCI7ml5zf2ZkTfQ7tK
+[SUBMIT] Tweet object: {
+  "id": "qwRrCI7ml5zf2ZkTfQ7tK",
+  "tweetId": "1946260344306839970",
+  "submitterDiscordId": "918575895374082078",
+  "submittedAt": "2025-07-19T02:41:17.058Z",
+  "category": "General",
+  "url": "https://x.com/sharafi_eth/status/1946260344306839970",
+  "authorHandle": "sharafi_eth",
+  "content": "the one on the left is on 𝕏 with 500 engagement worth 0$ (OK maybe 1$)\n\nthe on the right with 5 engagements after 20minutes is worth 49$ on @baseapp https://t.co/0rq1KuGVxS https://t.co/gBP1Stxmex",
+  "tier": "legend",
+  "bonusMultiplier": 2.5
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet qwRrCI7ml5zf2ZkTfQ7tK to pending queue
+[SUBMIT] Incrementing daily counter for user 918575895374082078 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+[SUBMIT] Deducting 300 points from user @sharafi_eth
+[SUBMIT] Error deducting points: TypeError: redis.json.numincrby is not a function
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:919:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
 📥 Received interaction: 2 - Command: leaderboard - User: alinabu
 🎯 Processing command: leaderboard
-[SHARD 0] Reconnecting... 2025-07-17T13:29:51.897Z
-[SHARD 0] Resumed, replayed 2 events
-📥 Received interaction: 2 - Command: connect - User: enemend
-🎯 Processing command: connect
-📥 Received interaction: 2 - Command: points - User: peirov_78474
-🎯 Processing command: points
-📥 Received interaction: 2 - Command: leaderboard - User: peirov_78474
-🎯 Processing command: leaderboard
-[SHARD 0] Reconnecting... 2025-07-17T14:29:14.494Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T15:49:43.889Z
-[SHARD 0] Resumed, replayed 1 events
-📥 Received interaction: 2 - Command: leaderboard - User: daiipeyman.
-🎯 Processing command: leaderboard
-📥 Received interaction: 2 - Command: submit - User: daiipeyman.
+📥 Received interaction: 2 - Command: submit - User: alinabu
 🎯 Processing command: submit
-[SUBMIT] User daiipeyman. submitting tweet: https://x.com/hopcofficial/status/1945732133911142606?s=46
-[SUBMIT] Tweet ID extracted: 1945732133911142606
-📥 Received interaction: 2 - Command: connect - User: daiipeyman.
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1946260344306839970
+[SUBMIT] Tweet ID extracted: 1946260344306839970
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 10
+[SUBMIT] User's current points: 300
+[SUBMIT] Required submission cost for tier legend: 300 points
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: connect - User: grayledger
 🎯 Processing command: connect
-[SHARD 0] Reconnecting... 2025-07-17T18:34:45.844Z
+[SHARD 0] Reconnecting... 2025-07-19T02:56:34.058Z
 [SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T19:11:16.160Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T20:18:42.370Z
-[SHARD 0] Resumed, replayed 1 events
-📥 Received interaction: 2 - Command: points - User: shafagh74
+📥 Received interaction: 2 - Command: points - User: grayledger
 🎯 Processing command: points
-[SHARD 0] Reconnecting... 2025-07-17T21:06:37.759Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-17T22:58:30.759Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-18T02:34:56.133Z
-[SHARD 0] Resumed, replayed 1 events
-[SHARD 0] Reconnecting... 2025-07-18T04:36:48.317Z
-[SHARD 0] Resumed, replayed 1 events
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: submit - User: grayledger
+🎯 Processing command: submit
+[SUBMIT] User grayledger submitting tweet: https://x.com/mohamadhere/status/1946406441369116808?s=46
+[SUBMIT] Tweet ID extracted: 1946406441369116808
+[SUBMIT] User connected as @mohamadhere
+[SUBMIT] Checking approval status for @mohamadhere...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 3
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 500 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: UsmzPn9rKno-2FHaKfQKK
+[SUBMIT] Tweet object: {
+  "id": "UsmzPn9rKno-2FHaKfQKK",
+  "tweetId": "1946406441369116808",
+  "submitterDiscordId": "1378232537708499048",
+  "submittedAt": "2025-07-19T03:07:31.976Z",
+  "category": "General",
+  "url": "https://x.com/mohamadhere/status/1946406441369116808?s=46",
+  "authorHandle": "mohamadhere",
+  "content": "Gm family ☀️\n\nHave a wonderful weekend  🔝 https://t.co/9HJoGxzlYf",
+  "tier": "micro",
+  "bonusMultiplier": 1
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet UsmzPn9rKno-2FHaKfQKK to pending queue
+[SUBMIT] Incrementing daily counter for user 1378232537708499048 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+[SUBMIT] Deducting 500 points from user @mohamadhere
+[SUBMIT] Error deducting points: TypeError: redis.json.numincrby is not a function
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:919:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
+📥 Received interaction: 2 - Command: connect - User: masoud08455
+🎯 Processing command: connect
+📥 Received interaction: 2 - Command: points - User: masoud08455
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: leaderboard - User: masoud08455
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: submit - User: soroshlp
+🎯 Processing command: submit
+[SUBMIT] User soroshlp submitting tweet: https://x.com/soroshlp/status/1946217424803532994?s=46
+[SUBMIT] Tweet ID extracted: 1946217424803532994
+[SUBMIT] User connected as @soroshlp
+[SUBMIT] Checking approval status for @soroshlp...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 3
+[SUBMIT] User's current points: 500
+[SUBMIT] Required submission cost for tier micro: 500 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: FiyhdbyWHYpLAfzNu82xu
+[SUBMIT] Tweet object: {
+  "id": "FiyhdbyWHYpLAfzNu82xu",
+  "tweetId": "1946217424803532994",
+  "submitterDiscordId": "1255397970375999498",
+  "submittedAt": "2025-07-19T04:02:33.951Z",
+  "category": "General",
+  "url": "https://x.com/soroshlp/status/1946217424803532994?s=46",
+  "authorHandle": "soroshlp",
+  "content": "I was just HODLing my $btc\nThen $BOB blew my mind, I can earn yield with it?!  \nThis is my face now. 🤯\nno react or say anything for it, cuz I'm shocking.  \n@build_on_bob \n@cookiedotfun https://t.co/EWdZI5bEo2",
+  "tier": "micro",
+  "bonusMultiplier": 1
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet FiyhdbyWHYpLAfzNu82xu to pending queue
+[SUBMIT] Incrementing daily counter for user 1255397970375999498 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+[SUBMIT] Deducting 500 points from user @soroshlp
+[SUBMIT] Error deducting points: TypeError: redis.json.numincrby is not a function
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:919:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: soroshlp
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: points - User: masoud08455
+🎯 Processing command: points
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard

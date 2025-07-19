@@ -1,0 +1,123 @@
+🔍 Loading environment from: /Users/nabu/kol/.env.local
+🔄 Connecting to main Redis instance: https://polished-vulture-15957.upstash.io
+🔄 Attempting Redis connection...
+✅ AI model initialized for sentiment analysis
+✅ Redis connection established
+🚀 Engagement bot starting...
+[SHARD 0] Ready! 2025-07-19T04:26:45.345Z
+✅ Engagement bot logged in as nabulines_engagement#3015
+📋 Permissions in NABU LINES: 10 permissions
+⚠️  Missing permissions in NABU LINES:
+   - UseExternalEmojis
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+📋 Permissions in naratu's server: 28 permissions
+⚠️  Missing permissions in naratu's server:
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+🔄 Refreshing application (/) commands...
+✅ Registered commands to guild: NABU LINES
+✅ Registered commands to guild: naratu's server
+✅ Slash commands registered
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard
+📥 Received interaction: 2 - Command: submit - User: masoud08455
+🎯 Processing command: submit
+[SUBMIT] User masoud08455 submitting tweet: https://x.com/d_vattan/status/1946244569110073409?t=4js4ksp7dHw2lBZRX6r1GA&s=19
+[SUBMIT] Tweet ID extracted: 1946244569110073409
+[SUBMIT] User connected as @d_vattan
+[SUBMIT] Checking approval status for @d_vattan...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 3
+[SUBMIT] User's current points: 590
+[SUBMIT] Required submission cost for tier micro: 500 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: to8vzoEZEkuCB9HzlWXZ9
+[SUBMIT] Tweet object: {
+  "id": "to8vzoEZEkuCB9HzlWXZ9",
+  "tweetId": "1946244569110073409",
+  "submitterDiscordId": "696421328760340620",
+  "submittedAt": "2025-07-19T04:55:48.192Z",
+  "category": "General",
+  "url": "https://x.com/d_vattan/status/1946244569110073409?t=4js4ksp7dHw2lBZRX6r1GA&s=19",
+  "authorHandle": "d_vattan",
+  "content": "On-chain signals are metrics derived directly from blockchain data used by @NetworkNoya:\n- Active address counts  \n- Transaction volumes and values  \n- Total value locked (TVL) in smart contracts  \n- Exchange inflows and outflows  \n- Gas fees and block times  \n- Liquidity https://t.co/sKxmltwmY9 https://t.co/seqh3zYri6",
+  "tier": "micro",
+  "bonusMultiplier": 1
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet to8vzoEZEkuCB9HzlWXZ9 to pending queue
+[SUBMIT] Incrementing daily counter for user 696421328760340620 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+[SUBMIT] Deducting 500 points from user @d_vattan
+[SUBMIT] Error deducting points: TypeError: redis.json.numincrby is not a function
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:919:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
+📥 Received interaction: 2 - Command: submit - User: alinabu
+🎯 Processing command: submit
+[SUBMIT] User alinabu submitting tweet: https://x.com/sharafi_eth/status/1887537257264853105
+[SUBMIT] Tweet ID extracted: 1887537257264853105
+[SUBMIT] User connected as @sharafi_eth
+[SUBMIT] Checking approval status for @sharafi_eth...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: legend
+[SUBMIT] Tier scenarios loaded: daily limit = 10
+[SUBMIT] User's current points: 360
+[SUBMIT] Required submission cost for tier legend: 300 points
+📝 Fetched tweet content: Success
+[SUBMIT] Saving tweet data...
+[SUBMIT] Tweet ID: Hki26kkj_7ZUtmXw-hlCd
+[SUBMIT] Tweet object: {
+  "id": "Hki26kkj_7ZUtmXw-hlCd",
+  "tweetId": "1887537257264853105",
+  "submitterDiscordId": "918575895374082078",
+  "submittedAt": "2025-07-19T04:58:23.851Z",
+  "category": "General",
+  "url": "https://x.com/sharafi_eth/status/1887537257264853105",
+  "authorHandle": "sharafi_eth",
+  "content": "if your phone shares everything… what makes you think it won’t share your crypto? https://t.co/uO4brST5QY",
+  "tier": "legend",
+  "bonusMultiplier": 2.5
+}
+[SUBMIT] ✅ Tweet JSON saved
+[SUBMIT] Adding to recent tweets sorted set...
+[SUBMIT] ✅ Added to sorted set
+[SUBMIT] Setting tweet ID mapping...
+[SUBMIT] ✅ Tweet ID mapping set
+[SUBMIT] Adding to pending queue for date: 2025-07-18
+[SUBMIT] ✅ Added tweet Hki26kkj_7ZUtmXw-hlCd to pending queue
+[SUBMIT] Incrementing daily counter for user 918575895374082078 on 2025-07-18
+[SUBMIT] ✅ Daily counter incremented
+[SUBMIT] Setting counter expiry...
+[SUBMIT] ✅ Counter expiry set
+[SUBMIT] Deducting 300 points from user @sharafi_eth
+[SUBMIT] Error deducting points: TypeError: redis.json.numincrby is not a function
+    at Client.<anonymous> (/Users/nabu/kol/discord-bots/engagement-bot.js:919:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Bot permissions in #engagement-tracker: {
+  viewChannel: true,
+  sendMessages: true,
+  embedLinks: true,
+  readMessageHistory: true,
+  useExternalEmojis: false
+}
+✅ Posted tweet preview to #engagement-tracker
+📥 Received interaction: 2 - Command: leaderboard - User: alinabu
+🎯 Processing command: leaderboard

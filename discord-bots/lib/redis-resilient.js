@@ -43,6 +43,15 @@ class ResilientRedis {
               }
               return this.redis.json.set(key, path, value)
             }, `json.set(${key})`)
+          },
+          numincrby: async (key, path, value) => {
+            return this.executeWithRetry(async () => {
+              if (!this.redis || !this.redis.json) {
+                throw new Error('Redis not connected')
+              }
+              const result = await this.redis.json.numincrby(key, path, value)
+              return result
+            }, `json.numincrby(${key})`)
           }
         }
       }
@@ -196,13 +205,31 @@ class ResilientRedis {
     return this.executeWithRetry(() => this.redis.sadd(key, ...members), `sadd(${key})`)
   }
   
+  async sAdd(key, ...members) {
+    return this.executeWithRetry(() => this.redis.sadd(key, ...members), `sAdd(${key})`)
+  }
+  
   async smembers(key) {
     return this.executeWithRetry(() => this.redis.smembers(key), `smembers(${key})`)
+  }
+  
+  async zadd(key, ...args) {
+    return this.executeWithRetry(() => this.redis.zadd(key, ...args), `zadd(${key})`)
+  }
+  
+  async incr(key) {
+    return this.executeWithRetry(() => this.redis.incr(key), `incr(${key})`)
+  }
+  
+  async expire(key, seconds) {
+    return this.executeWithRetry(() => this.redis.expire(key, seconds), `expire(${key}, ${seconds})`)
   }
   
   async ping() {
     return this.executeWithRetry(() => this.redis.ping(), 'ping')
   }
+  
+
   
   // Cleanup method
   destroy() {

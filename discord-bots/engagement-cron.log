@@ -1,0 +1,231 @@
+🤖 Starting Engagement Cron Job v2...
+⏰ Current time: 2025-07-19T04:14:33.650Z
+📅 Schedule: Every hour at :00
+🎯 Manual trigger: pm2 trigger engagement-cron-v2 manual-run
+🔍 IPC Channel Available: false
+🔍 Process PID: 37401
+🔍 PM2 Environment: false
+
+⏳ Cron job scheduled - will run every hour at :00
+📝 Logs are written to: logs/batch_processor_logs/
+⚠️  Note: No immediate batch run on startup to preserve API rate limits
+⏭️  Next batch will run in 45 minutes at 2025-07-19T05:00:00.000Z
+📊 Current rate limit: 0/120 (0% used)
+
+================================================================================
+⏰ Running scheduled batch processing at 2025-07-19T05:00:00.011Z
+================================================================================
+ℹ️ [2025-07-19T05:00:00.310Z] 🚀 Starting batch processing {
+  batchId: 'VLwmr5W0rb7J0rWxZZy2d',
+  startTime: '2025-07-19T05:00:00.309Z'
+}
+
+============================================================
+📊 FETCHING CURRENT POINTS CONFIGURATION
+============================================================
+
+📌 MICRO Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)
+
+📌 RISING Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)
+
+📌 STAR Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)
+
+📌 LEGEND Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)
+
+📌 HERO Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)
+ℹ️ [2025-07-19T05:00:01.716Z] 📊 Points configuration loaded {
+  pointsConfig: {
+    micro: { retweet: 35, reply: 20, like: 10 },
+    rising: { retweet: 35, reply: 20, like: 10 },
+    star: { retweet: 35, reply: 20, like: 10 },
+    legend: { retweet: 35, reply: 20, like: 10 },
+    hero: { retweet: 35, reply: 20, like: 10 }
+  }
+}
+
+============================================================
+
+🔍 TWITTER API RATE LIMIT STATUS
+========================================
+📈 Requests Used: 8/120
+📉 Requests Remaining: 112
+⏰ Reset Time: 2025-07-19T05:14:33.652Z
+✅ Can Proceed: YES
+ℹ️ [2025-07-19T05:00:01.902Z] 📊 Initial rate limit check {
+  current: 8,
+  remaining: 112,
+  allowed: true,
+  resetTime: '2025-07-19T05:14:33.652Z'
+}
+========================================
+
+ℹ️ [2025-07-19T05:00:02.477Z] 📊 Found 7 tweets from last 24 hours { batchId: 'VLwmr5W0rb7J0rWxZZy2d', tweetCount: 7, maxAllowed: 60 }
+
+📝 Processing tweet 1946285151735943479 by @sharafi_eth
+   🔍 Current API usage: 8/120 (112 remaining)
+   📊 Fetching retweets...
+   ✅ Found 8 retweets (API calls used: 1)
+   📊 Fetching replies...
+   ✅ Found 100 replies (API calls used: 2)
+   📈 Tweet processing complete:
+      • Engagements found: 98
+      • API calls used: 2
+      • API remaining: 110
+ℹ️ [2025-07-19T05:00:04.885Z] Processed tweet 1946285151735943479 {
+  engagements: 98,
+  apiCallsUsed: 2,
+  processingTime: '1470ms',
+  remainingApiCalls: 110
+}
+
+📝 Processing tweet 1946260344306839970 by @sharafi_eth
+   🔍 Current API usage: 10/120 (110 remaining)
+   📊 Fetching retweets...
+   ✅ Found 11 retweets (API calls used: 1)
+   📊 Fetching replies...
+   ✅ Found 93 replies (API calls used: 2)
+   📈 Tweet processing complete:
+      • Engagements found: 99
+      • API calls used: 2
+      • API remaining: 108
+ℹ️ [2025-07-19T05:00:19.573Z] Processed tweet 1946260344306839970 {
+  engagements: 99,
+  apiCallsUsed: 2,
+  processingTime: '1529ms',
+  remainingApiCalls: 108
+}
+
+📝 Processing tweet 1946406441369116808 by @mohamadhere
+   🔍 Current API usage: 12/120 (108 remaining)
+   📊 Fetching retweets...
+   ✅ Found 0 retweets (API calls used: 1)
+   📊 Fetching replies...
+   ✅ Found 27 replies (API calls used: 2)
+   📈 Tweet processing complete:
+      • Engagements found: 22
+      • API calls used: 2
+      • API remaining: 106
+ℹ️ [2025-07-19T05:00:34.529Z] Processed tweet 1946406441369116808 {
+  engagements: 22,
+  apiCallsUsed: 2,
+  processingTime: '1193ms',
+  remainingApiCalls: 106
+}
+
+📝 Processing tweet 1946217424803532994 by @soroshlp
+   🔍 Current API usage: 14/120 (106 remaining)
+   📊 Fetching retweets...
+   ✅ Found 0 retweets (API calls used: 1)
+   📊 Fetching replies...
+   ✅ Found 51 replies (API calls used: 2)
+   📈 Tweet processing complete:
+      • Engagements found: 46
+      • API calls used: 2
+      • API remaining: 104
+ℹ️ [2025-07-19T05:00:39.553Z] Processed tweet 1946217424803532994 {
+  engagements: 46,
+  apiCallsUsed: 2,
+  processingTime: '1354ms',
+  remainingApiCalls: 104
+}
+
+📝 Processing tweet 1946312643410604125 by @mohamadhere
+   🔍 Current API usage: 16/120 (104 remaining)
+   📊 Fetching retweets...
+   ✅ Found 1 retweets (API calls used: 1)
+   📊 Fetching replies...
+   ✅ Found 17 replies (API calls used: 2)
+   📈 Tweet processing complete:
+      • Engagements found: 18
+      • API calls used: 2
+      • API remaining: 102
+ℹ️ [2025-07-19T05:00:47.021Z] Processed tweet 1946312643410604125 {
+  engagements: 18,
+  apiCallsUsed: 2,
+  processingTime: '1195ms',
+  remainingApiCalls: 102
+}
+💰 Awarding REPLY/COMMENT points:
+   • User: @amirali2111111 (micro tier)
+   • Base Points: 20
+   • Multiplier: 1x
+   • Total Points: 20
+   • Auto-awarding LIKE points: 10
+ℹ️ [2025-07-19T05:00:51.074Z] Points awarded for tweet 1946312643410604125 {
+  summary: { likes: 10, retweets: 0, replies: 20, total: 30 },
+  userCount: 1
+}
+
+📝 Processing tweet 1946244569110073409 by @d_vattan
+   🔍 Current API usage: 18/120 (102 remaining)
+   📊 Fetching retweets...
+
+📝 Processing tweet 1887537257264853105 by @sharafi_eth
+   🔍 Current API usage: 18/120 (102 remaining)
+   📊 Fetching retweets...
+✅ [2025-07-19T05:00:53.378Z] ✅ Batch processing completed {
+  batchId: 'VLwmr5W0rb7J0rWxZZy2d',
+  duration: '1 minutes',
+  summary: {
+    tweetsProcessed: 7,
+    engagementsFound: 283,
+    pointsAwarded: 30,
+    apiCallsUsed: 10,
+    retweets: 20,
+    replies: 263,
+    uniqueUsers: 189,
+    errors: 2
+  }
+}
+ℹ️ [2025-07-19T05:00:53.563Z] 📊 Rate limit status { used: 18, remaining: 102, limit: 120, percentUsed: 15 }
+✅ [2025-07-19T05:00:54.796Z] ✅ Batch completed successfully {
+  batchId: 'VLwmr5W0rb7J0rWxZZy2d',
+  startTime: '2025-07-19T05:00:00.309Z',
+  endTime: '2025-07-19T05:00:54.796Z',
+  duration: '54.487s',
+  summary: {
+    tweetsProcessed: 7,
+    engagementsFound: 283,
+    pointsAwarded: 30,
+    apiCallsUsed: 10,
+    retweets: 20,
+    replies: 263,
+    uniqueUsers: 189,
+    errors: 2
+  }
+}
+
+✅ Batch processing completed successfully
+📊 Summary: 7 tweets, 283 engagements, 30 points awarded
+
+================================================================================
+⏰ Running scheduled batch processing at 2025-07-19T06:00:00.065Z
+================================================================================
+ℹ️ [2025-07-19T06:00:00.791Z] 🚀 Starting batch processing {
+  batchId: 'uJ13fWOhyandYtSjhCae8',
+  startTime: '2025-07-19T06:00:00.791Z'
+}
+
+============================================================
+📊 FETCHING CURRENT POINTS CONFIGURATION
+============================================================
+
+📌 MICRO Tier Points:
+   • Retweet: 35 points
+   • Reply/Comment: 20 points
+   • Like: 10 points (auto-awarded with RT/Reply)

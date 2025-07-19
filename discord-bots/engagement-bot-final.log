@@ -1,0 +1,32 @@
+🔍 Loading environment from: /Users/nabu/kol/.env.local
+🔄 Connecting to main Redis instance: https://polished-vulture-15957.upstash.io
+🔄 Attempting Redis connection...
+✅ AI model initialized for sentiment analysis
+✅ Redis connection established
+🚀 Engagement bot starting...
+[SHARD 0] Ready! 2025-07-19T05:04:09.886Z
+✅ Engagement bot logged in as nabulines_engagement#3015
+📋 Permissions in NABU LINES: 10 permissions
+⚠️  Missing permissions in NABU LINES:
+   - UseExternalEmojis
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+📋 Permissions in naratu's server: 28 permissions
+⚠️  Missing permissions in naratu's server:
+   - ManageRoles
+   Please grant these permissions to the bot for full functionality
+🔄 Refreshing application (/) commands...
+✅ Registered commands to guild: NABU LINES
+✅ Registered commands to guild: naratu's server
+✅ Slash commands registered
+📥 Received interaction: 2 - Command: submit - User: 04100442534493
+🎯 Processing command: submit
+[SUBMIT] User 04100442534493 submitting tweet: https://x.com/amirali2111111/status/1946432263949865174?t=Er3lFaVyyhQvaQuFtUF6_w&s=19
+[SUBMIT] Tweet ID extracted: 1946432263949865174
+[SUBMIT] User connected as @amirali2111111
+[SUBMIT] Checking approval status for @amirali2111111...
+[SUBMIT] Approval status: true
+[SUBMIT] Getting tier scenarios for tier: micro
+[SUBMIT] Tier scenarios loaded: daily limit = 3
+[SUBMIT] User's current points: 30
+[SUBMIT] Required submission cost for tier micro: 500 points
